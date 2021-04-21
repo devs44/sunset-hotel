@@ -28,7 +28,7 @@ class RoomForm(forms.ModelForm):
             'room_type': forms.Select(attrs={
                 'class': 'form-control',
                 'placeholder': 'room type'
-            })
+            }),
             'slug': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'slug'
