@@ -1,54 +1,61 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from django.contrib.auth.models import User 
+from django.contrib.auth.models import User
 
 
 # Create your models here.
 
 
 class TimeStamp(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    deleted_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    deleted_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+
+    def delete(self):
+        self.deleted_at = timezone.now()
+
+        return super().delete()
 
     class Meta:
         abstract = True
 
 
-class About(models.Model):
+class About(TimeStamp):
     title = models.CharField(max_length=100)
     image = models.ImageField(upload_to="about")
-    slogan = models.TextField()
     description = models.TextField()
 
     def __str__(self):
         return self.title
 
 
-class Room_Category(models.Model):
+class Room_Category(TimeStamp):
     title = models.CharField(max_length=255)
 
     def __str__(self):
         return self.title
 
 
-FEATURES = (
-    (1, 'DOUBLE KING BED'),
-    (2, 'BREAKFAST'),
-    (3, 'AIR CONDITIONING'),
-    (4, 'MINIBAR'),
-    (5, 'WIFI SERVICE'),
-    (6, 'FREE PARKING')
-)
+class Feature(TimeStamp):
+    title = models.CharField(max_length=250)
+    image = models.ImageField(upload_to="features")
+
+    class Meta:
+        verbose_name = _('Feature')
+        verbose_name_plural = _('Features')
+
+    def __str__(self):
+        return self.title
 
 
-class Room(models.Model):
+class Room(TimeStamp):
     room_type = models.ForeignKey(Room_Category, on_delete=models.CASCADE)
     slug = models.SlugField(unique=True)
     description = models.TextField()
+    availability = models.BooleanField(default=False)
     price = models.PositiveIntegerField()
     image = models.ImageField(upload_to="rooms")
-    features = models.CharField(max_length=200, choices=FEATURES)
+    features = models.ManyToManyField(Feature, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = _('Room')
@@ -58,7 +65,7 @@ class Room(models.Model):
         return self.room_type
 
 
-class Image(models.Model):
+class Image(TimeStamp):
     image_type = models.ForeignKey(Room_Category, on_delete=models.CASCADE)
     caption = models.CharField(max_length=100)
     slug = models.SlugField(unique=True)
@@ -136,7 +143,7 @@ class Event(TimeStamp):
         return self.title
 
 
-class Contact(models.Model):
+class Contact(TimeStamp):
     address = models.CharField(max_length=100)
     phone = models.CharField(max_length=30)
     fax = models.CharField(max_length=30, null=True, blank=True)
@@ -170,8 +177,9 @@ class Reservation(TimeStamp):
     address_2 = models.CharField(max_length=255, null=True, blank=True)
     state = models.CharField(max_length=30)
     city = models.CharField(max_length=30)
+    zip_code = models.CharField(max_length=250, null=True, blank=True)
     country = models.CharField(max_length=40)
-    special_req = models.TextField()
+    special_req = models.TextField(null=True, blank=True)
 
     class Meta:
         verbose_name = _('Reservation')

@@ -11,6 +11,9 @@ class StaffLoginForm(forms.Form):
         'placeholder': 'Password'
     }))
 
-    # def clean_usernameself):
+    # def clean_username(self):
     #     username = self.cleaned_data.get('username')
-    #     if
+    #     if username in Account.objects.all():
+    #         return username
+    #     else:
+    #         raise ValidationError('')
