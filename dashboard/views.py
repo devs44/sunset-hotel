@@ -39,3 +39,6 @@ class LogoutView(View):
 
 class AdminDashboardView(TemplateView):
     template_name = 'base/admindashboard.html'
+
+
+# rooms
