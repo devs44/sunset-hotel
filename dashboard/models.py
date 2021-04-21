@@ -62,7 +62,7 @@ class Room(TimeStamp):
         verbose_name_plural = _('Rooms')
 
     def __str__(self):
-        return self.room_type
+        return str(self.room_type)
 
 
 class Image(TimeStamp):

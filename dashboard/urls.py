@@ -7,4 +7,8 @@ urlpatterns = [
     path('admin-logout/', LogoutView.as_view(), name="admin_logout"),
     path('admin-dashboard/', AdminDashboardView.as_view(), name="admin_dashboard"),
 
+    # room
+    path('admin-room-list/', RoomListView.as_view(), name='room_list'),
+    path('admin-room-create/', RoomCreateView.as_view(), name='room_create'),
+
 ]

@@ -248,6 +248,7 @@
               <i class="fas fa-expand-arrows-alt"></i>
             </a>
           </li>
+          {% comment %}
           <li class="nav-item">
             <a
               class="nav-link"
@@ -259,11 +260,13 @@
               <i class="fas fa-th-large"></i>
             </a>
           </li>
+          {% endcomment %}
         </ul>
       </nav>
       <!-- /.navbar -->
 
-      {% include 'base/sidebar.html' %} {% block content %} {% endblock %}
+      {% include 'dashboard/base/sidebar.html' %} {% comment %} content from
+      others {% endcomment %} {% block content %} {% endblock %}
 
       <footer class="main-footer">
         <strong

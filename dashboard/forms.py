@@ -1,4 +1,5 @@
 from django import forms
+from .models import Room
 
 
 class StaffLoginForm(forms.Form):
@@ -17,3 +18,36 @@ class StaffLoginForm(forms.Form):
     #         return username
     #     else:
     #         raise ValidationError('')
+
+
+class RoomForm(forms.ModelForm):
+    class Meta:
+        model = Room
+        fields = '__all__'
+        widgets = {
+            'room_type': forms.Select(attrs={
+                'class': 'form-control',
+                'placeholder': 'room type'
+            })
+            'slug': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'slug'
+            }),
+            'description': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'description'
+            }),
+            'availability': forms.BooleanField(),
+            'price': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'price'
+            }),
+            'features': forms.Select(attrs={
+                'class': 'form-control',
+                'placeholder': 'select features'
+            }),
+            'image': forms.FileInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'choose image'
+            })
+        }
