@@ -55,7 +55,7 @@ class Room(TimeStamp):
     availability = models.BooleanField(default=False)
     price = models.PositiveIntegerField()
     image = models.ImageField(upload_to="rooms")
-    features = models.ManyToManyField(Feature, on_delete=models.CASCADE)
+    features = models.ManyToManyField(Feature)
 
     class Meta:
         verbose_name = _('Room')
