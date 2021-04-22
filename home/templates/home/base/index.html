@@ -145,7 +145,7 @@
 <section class="section__best-rooms">
     <div class="container">
         <div class="row">
-          <div class="col-sm-12"> 		  	
+          <div class="col-sm-12">
                 <h2 class="section__title">Our <strong>Best rooms</strong></h2>
                 <div class="divider">
                     <hr class="line1">
@@ -159,61 +159,24 @@
     <div class="container">
         <div class="best-rooms__content">
             <div class="row">
+              {% for room in room %}
               <div class="col-sm-6">
                   <figure class="best-rooms__item">
-                      <img src="{% static 'home/assets/img/single_room.jpg' %}" class="img-responsive" alt="...">
+                      <img src="{{ room.image.url }}" class="img-responsive" alt="...">
                             <figcaption>
-                                <h3>Single room</h3>
+                                <h3>{{ room.room_type }}</h3>
                                 <div class="item__price">
-                                    $50 <small>/ night</small>
+                                    {{ room.price }} <small>/ night</small>
                                 </div>
-                                <p class="item__desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti sit dicta quae natus quasi ratione quis id, tenetur atque blanditiis.</p>
+                                <p class="item__desc">{{ room.description|truncatewords:20 }}</p>
                                 <a href="reservation.html" class="btn-book">Book now <i class="icon ion-chevron-right"></i><i class="icon ion-chevron-right"></i></a>
                             </figcaption>
                         </figure> <!-- / .best-rooms__item -->
               </div>
-              <div class="col-sm-6">
-                  <figure class="best-rooms__item">
-                            <img src="{% static 'home/assets/img/double_room.jpg' %}" class="img-responsive" alt="...">
-                            <figcaption>
-                                <h3>Double room</h3>
-                                <div class="item__price">
-                                    $135 <small>/ night</small>
-                                </div>
-                                <p class="item__desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti sit dicta quae natus quasi ratione quis id, tenetur atque blanditiis.</p>
-                                <a href="reservation.html" class="btn-book">Book now <i class="icon ion-chevron-right"></i><i class="icon ion-chevron-right"></i></a>
-                            </figcaption>
-                        </figure> <!-- / .best-rooms__item -->
-              </div>
+              
+              {% endfor %}
             </div> <!-- / .row -->
-            <div class="row">
-              <div class="col-sm-6">
-                  <figure class="best-rooms__item">
-                            <img src="{% static 'home/assets/img/deluxe_room.jpg' %}" class="img-responsive" alt="...">
-                            <figcaption>
-                                <h3>Deluxe room</h3>
-                                <div class="item__price">
-                                    $240 <small>/ night</small>
-                                </div>
-                                <p class="item__desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti sit dicta quae natus quasi ratione quis id, tenetur atque blanditiis.</p>
-                                <a href="reservation.html" class="btn-book">Book now <i class="icon ion-chevron-right"></i><i class="icon ion-chevron-right"></i></a>
-                            </figcaption>
-                        </figure> <!-- / .best-rooms__item -->
-              </div>
-              <div class="col-sm-6">
-                  <figure class="best-rooms__item">
-                            <img src="{% static 'home/assets/img/royal_room.jpg' %}" class="img-responsive" alt="...">
-                            <figcaption>
-                                <h3>Royal room</h3>
-                                <div class="item__price">
-                                    $320 <small>/ night</small>
-                                </div>
-                                <p class="item__desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam illum modi explicabo obcaecati odit, omnis quis alias.</p>
-                                <a href="reservation.html" class="btn-book">Book now <i class="icon ion-chevron-right"></i><i class="icon ion-chevron-right"></i></a>
-                            </figcaption>
-                        </figure> <!-- / .best-rooms__item -->
-              </div>
-            </div> <!-- / .row -->
+
             <div class="row">
                 <div class="col-xs-12">
                     <div class="rooms__button">
@@ -224,6 +187,7 @@
         </div> <!-- / .best-rooms__content -->
     </div> <!-- / .container -->
 </section> <!-- / .section__best-rooms -->
+
 
 <!-- section services -->
 <section class="section__services">
