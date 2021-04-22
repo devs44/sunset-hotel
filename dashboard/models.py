@@ -169,8 +169,17 @@ class Reservation(TimeStamp):
     selected_room = models.ForeignKey(Room, on_delete=models.CASCADE)
     check_in_date = models.DateTimeField()
     check_out_date = models.DateTimeField()
-    no_of_adults = models.CharField(max_length=255)
-    no_of_children = models.CharField(max_length=255, null=True, blank=True)
+    no_of_adults_choice = (
+        ('1 adult'),
+        ('2 adults'),
+        ('3 adults'),
+    )
+    no_of_children_choice = (
+        ('0 child'),
+        ('1 child'),
+        ('2 child'),
+        ('3 child'),
+    )
     email = models.EmailField(null=True, blank=True)
     phone = models.CharField(max_length=40)
     address_1 = models.CharField(max_length=255)
@@ -187,3 +196,12 @@ class Reservation(TimeStamp):
 
     def __str__(self):
         return self.first_name + self.last_name
+
+class Services_description(models.Model):
+    description = models.CharField(max_length=200)
+    service_video = models.FileField(upload_to="service_description")
+
+class Services_type(models.Model):
+    service_type_name = models.CharField(max_length=100)
+    service_png = models.ImageField(upload_to="service_type")
+    service_type_description = models.CharField(max_length=200)
