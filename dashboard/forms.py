@@ -29,10 +29,6 @@ class RoomForm(forms.ModelForm):
                 'class': 'form-control select2',
                 'placeholder': 'room type'
             }),
-            'slug': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'slug'
-            }),
             'description': forms.Textarea(attrs={
                 'class': 'form-control',
                 'placeholder': 'description'
