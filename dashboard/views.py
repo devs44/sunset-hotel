@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, FormView, View, ListView, CreateView
-
+from django.views.generic import TemplateView, DetailView, FormView, View, ListView, CreateView, UpdateView, DeleteView
 from .models import Room
 
 from .forms import StaffLoginForm, RoomForm
@@ -52,4 +52,23 @@ class RoomListView(ListView):
 class RoomCreateView(CreateView):
     template_name = 'dashboard/room/roomcreate.html'
     form_class = RoomForm
+    success_url = reverse_lazy('dashboard:room_list')
+
+
+class RoomUpdateView(UpdateView):
+    template_name = 'dashboard/room/roomcreate.html'
+    model = Room
+    form_class = RoomForm
+    success_url = reverse_lazy('dashboard:room_list')
+
+
+class RoomDetailView(DetailView):
+    template_name = 'dashboard/room/roomdetail.html'
+    model = Room
+    context_object_name = 'roomdetail'
+
+
+class RoomDeleteView(DeleteView):
+    template_name = 'dashboard/room/roomdelete.html'
+    model = Room
     success_url = reverse_lazy('dashboard:room_list')

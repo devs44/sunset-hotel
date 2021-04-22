@@ -10,5 +10,10 @@ urlpatterns = [
     # room
     path('admin-room-list/', RoomListView.as_view(), name='room_list'),
     path('admin-room-create/', RoomCreateView.as_view(), name='room_create'),
-
+    path('admin-room-/<int:pk>/-update/',
+         RoomUpdateView.as_view(), name='room_update'),
+    path('admin-room-/<int:pk>/-delete/',
+         RoomDeleteView.as_view(), name='room_delete'),
+    path('admin-room-/<int:pk>/-detail/',
+         RoomDetailView.as_view(), name="room_detail"),
 ]
