@@ -1,0 +1,123 @@
+{% extends 'dashboard/base/index.html' %} 
+{% block content %}
+<div class="wrapper">
+  <div class="content-wrapper">
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Simple Tables</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Simple Tables</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Our Room List</h3>
+
+                <div class="card-tools">
+                  <div class="input-group input-group-sm" style="width: 150px">
+                    <input
+                      type="text"
+                      name="table_search"
+                      class="form-control float-right"
+                      placeholder="Search"
+                    />
+
+                    <div class="input-group-append">
+                      <button type="submit" class="btn btn-default">
+                        <i class="fas fa-search"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body table-responsive p-0">
+                <table class="table table-hover text-nowrap">
+                  <thead>
+                    <tr>
+                      <th>SN</th>
+                      <th>Room Type</th>
+                      <th>Availability</th>
+                      <th>Price</th>
+                      <th>Description</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for room in object_list %}
+                    <tr>
+                      <td>{{forloop.counter}}</td>
+                      <td>{{room.room_type}}</td>
+                      <td>{{room.availability}}</td>
+                      <td>{{room.price}}</td>
+                      <td>{{room.description}}</td>
+                      <td>
+                        <span
+                          ><a href="#"><i class="fa fa-trash m-1"></i></a></span
+                        >|
+                        <span
+                          ><a href="{% url 'dashboard:room_create' %}"
+                            ><i
+                              class="fa fa-edit m-1"
+                              aria-hidden="true"
+                            ></i></a
+                        ></span>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                      <td>219</td>
+                      <td>Alexander Pierce</td>
+                      <td>11-7-2014</td>
+                      <td><span class="tag tag-warning">Pending</span></td>
+                      <td>
+                        Bacon ipsum dolor sit amet salami venison chicken flank
+                        fatback doner.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>657</td>
+                      <td>Bob Doe</td>
+                      <td>11-7-2014</td>
+                      <td><span class="tag tag-primary">Approved</span></td>
+                      <td>
+                        Bacon ipsum dolor sit amet salami venison chicken flank
+                        fatback doner.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>175</td>
+                      <td>Mike Doe</td>
+                      <td>11-7-2014</td>
+                      <td><span class="tag tag-danger">Denied</span></td>
+                      <td>
+                        Bacon ipsum dolor sit amet salami venison chicken flank
+                        fatback doner.
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+{% endblock %}

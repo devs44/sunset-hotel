@@ -50,7 +50,6 @@ class Feature(TimeStamp):
 
 class Room(TimeStamp):
     room_type = models.ForeignKey(Room_Category, on_delete=models.CASCADE)
-    slug = models.SlugField(unique=True)
     description = models.TextField()
     availability = models.BooleanField(default=False)
     price = models.PositiveIntegerField()
@@ -62,13 +61,12 @@ class Room(TimeStamp):
         verbose_name_plural = _('Rooms')
 
     def __str__(self):
-        return self.room_type
+        return str(self.room_type)
 
 
 class Image(TimeStamp):
     image_type = models.ForeignKey(Room_Category, on_delete=models.CASCADE)
     caption = models.CharField(max_length=100)
-    slug = models.SlugField(unique=True)
     image = models.ImageField(upload_to='gallery')
 
     class Meta:
@@ -93,27 +91,10 @@ class Testomonial(TimeStamp):
         return self.name
 
 
-class Comment(TimeStamp):
-    full_name = models.CharField(max_length=30)
-    email = models.EmailField()
-    website = models.CharField(max_length=255, null=True, blank=True)
-    comment = models.TextField()
-
-    class Meta:
-        verbose_name = _('Comment')
-        verbose_name_plural = _('Comments')
-
-    def __str__(self):
-        return self.first_name + self.middle_name + self.last_name
-
-
 class News(TimeStamp):
     title = models.CharField(max_length=1255)
-    slug = models.SlugField(unique=True)
     image = models.ImageField(upload_to="News")
     description = models.TextField()
-    comment = models.ForeignKey(
-        Comment, related_name='n_comment', on_delete=models.SET_NULL, null=True, blank=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     view_count = models.PositiveIntegerField(default=0)
 
@@ -127,11 +108,8 @@ class News(TimeStamp):
 
 class Event(TimeStamp):
     title = models.CharField(max_length=1255)
-    slug = models.SlugField(unique=True)
     image = models.ImageField(upload_to="Events")
     description = models.TextField()
-    comment = models.ForeignKey(
-        Comment, related_name="e_comment", on_delete=models.SET_NULL, null=True, blank=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     view_count = models.PositiveIntegerField(default=0)
 
@@ -141,6 +119,24 @@ class Event(TimeStamp):
 
     def __str__(self):
         return self.title
+
+
+class Comment(TimeStamp):
+    full_name = models.CharField(max_length=30)
+    email = models.EmailField()
+    website = models.CharField(max_length=255, null=True, blank=True)
+    news = models.ForeignKey(
+        News, related_name="news_comment", on_delete=models.CASCADE, null=True, blank=True)
+    events = models.ForeignKey(
+        Event, related_name="event_comment", on_delete=models.CASCADE, null=True, blank=True)
+    comment = models.TextField()
+
+    class Meta:
+        verbose_name = _('Comment')
+        verbose_name_plural = _('Comments')
+
+    def __str__(self):
+        return self.first_name + self.middle_name + self.last_name
 
 
 class Contact(TimeStamp):
