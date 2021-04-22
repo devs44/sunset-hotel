@@ -38,7 +38,7 @@ class RoomForm(forms.ModelForm):
                 'placeholder': 'price'
             }),
             'image': forms.FileInput(attrs={
-                'class': 'custom-file-input',
+                'class': 'form-control',
                 'placeholder': 'choose image'
             })
         }
