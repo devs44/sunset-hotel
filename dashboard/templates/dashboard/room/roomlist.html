@@ -1,4 +1,5 @@
-{% extends 'dashboard/base/index.html' %} {% block content %}
+{% extends 'dashboard/base/index.html' %} 
+{% block content %}
 <div class="wrapper">
   <div class="content-wrapper">
     <section class="content-header">
@@ -68,7 +69,7 @@
                           ><a href="#"><i class="fa fa-trash m-1"></i></a></span
                         >|
                         <span
-                          ><a href="#"
+                          ><a href="{% url 'dashboard:room_create' %}"
                             ><i
                               class="fa fa-edit m-1"
                               aria-hidden="true"

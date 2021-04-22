@@ -50,7 +50,6 @@ class Feature(TimeStamp):
 
 class Room(TimeStamp):
     room_type = models.ForeignKey(Room_Category, on_delete=models.CASCADE)
-    slug = models.SlugField(unique=True)
     description = models.TextField()
     availability = models.BooleanField(default=False)
     price = models.PositiveIntegerField()
@@ -68,7 +67,6 @@ class Room(TimeStamp):
 class Image(TimeStamp):
     image_type = models.ForeignKey(Room_Category, on_delete=models.CASCADE)
     caption = models.CharField(max_length=100)
-    slug = models.SlugField(unique=True)
     image = models.ImageField(upload_to='gallery')
 
     class Meta:
@@ -109,7 +107,6 @@ class Comment(TimeStamp):
 
 class News(TimeStamp):
     title = models.CharField(max_length=1255)
-    slug = models.SlugField(unique=True)
     image = models.ImageField(upload_to="News")
     description = models.TextField()
     comment = models.ForeignKey(
@@ -127,7 +124,6 @@ class News(TimeStamp):
 
 class Event(TimeStamp):
     title = models.CharField(max_length=1255)
-    slug = models.SlugField(unique=True)
     image = models.ImageField(upload_to="Events")
     description = models.TextField()
     comment = models.ForeignKey(

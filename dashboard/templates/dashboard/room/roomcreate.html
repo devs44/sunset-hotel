@@ -1,0 +1,89 @@
+{% extends 'dashboard/base/index.html' %}
+ {% block content %}
+<div class="wrapper">
+    <div class="content-wrapper">
+        <section class="content-header">
+            <div class="container-fluid">
+              <div class="row mb-2">
+                <div class="col-sm-6">
+                  <h1> Room</h1>
+                </div>
+                <div class="col-sm-6">
+                  <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="{% url 'dashboard:admin_dashboard' %}">Home</a></li>
+                    <li class="breadcrumb-item active">Room</li>
+                  </ol>
+                </div>
+              </div>
+            </div><!-- /.container-fluid -->
+          </section>
+<!-- Main content -->
+        <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+            <!-- left column -->
+            <div class="col-md-6">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Add / Edit Room</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="card-body">
+                            
+                        <!-- <div class="form-group">
+                            <label for="roomType">Room Type</label>
+                            <p>{{form.room_type}}</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="slug">Slug(must be unique)</label>
+                            <p>{{form.slug}}</p>
+                        </div>
+                        <div class="form-group">
+                            <label>Features</label>
+                            <p>{{form.features}}</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <p>{{form.description}}</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="price">Price</label>
+                            <p>{{form.price}}</p>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputFile">Image</label>
+                            <div class="input-group">
+                            <div class="custom-file">
+                                <p>{{form.image}}</p>
+
+                            </div>
+                            </div>
+                        </div>
+                        <div class="form-check">
+                            <span>{{form.availability}}</span>
+                            <label class="form-check-label" for="exampleCheck1"
+                            >Room Availability</label
+                            >
+                        </div> -->
+                        {{form.as_p}}
+                    </div>
+                    <!-- /.card-body -->
+
+                    <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+                </div>
+                <!-- /.card -->
+            </div>
+            </div>
+        </div>
+        </section>
+    </div>
+</div>
+{% endblock %}
+

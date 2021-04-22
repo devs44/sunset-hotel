@@ -26,7 +26,7 @@ class RoomForm(forms.ModelForm):
         fields = '__all__'
         widgets = {
             'room_type': forms.Select(attrs={
-                'class': 'form-control',
+                'class': 'form-control select2',
                 'placeholder': 'room type'
             }),
             'slug': forms.TextInput(attrs={
@@ -37,17 +37,12 @@ class RoomForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': 'description'
             }),
-            'availability': forms.BooleanField(),
             'price': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'price'
             }),
-            'features': forms.Select(attrs={
-                'class': 'form-control',
-                'placeholder': 'select features'
-            }),
             'image': forms.FileInput(attrs={
-                'class': 'form-control',
+                'class': 'custom-file-input',
                 'placeholder': 'choose image'
             })
         }
