@@ -163,45 +163,25 @@
               <div class="similar__rooms">
                 <p class="subheading">Similar rooms</p>
                 <ul class="similar-rooms__list">
+                {% for room in rooms %}
+                  
                   <li class="list__item">
                     <a href="#">
                       <figure class="list_item__body">
-                        <img src="assets/img/single_room.jpg" class="img-responsive" alt="...">
+                        <img src="{{ room.image.url }}" class="img-responsive" alt="...">
                         <figcaption>
-                          <h3>Double room</h3>
+                          <h3>{{ room.room_type}} </h3>
                           <div class="item__price">
-                            $120 <small>/ night</small>
+                            {{ room.price }} <small>/ night</small>
                           </div>
                         </figcaption>
                       </figure> <!-- / .list_item__body -->  
                     </a>
                   </li>  <!-- .list__item -->
-                  <li class="list__item">
-                    <a href="#">
-                      <figure class="list_item__body">
-                        <img src="assets/img/double_room.jpg" class="img-responsive" alt="...">
-                        <figcaption>
-                          <h3>Double room</h3>
-                          <div class="item__price">
-                            $98 <small>/ night</small>
-                          </div>
-                        </figcaption>
-                      </figure> <!-- / .list_item__body -->  
-                    </a>
-                  </li>  <!-- .list__item -->
-                  <li class="list__item">
-                    <a href="#">
-                      <figure class="list_item__body">
-                        <img src="assets/img/royal_room.jpg" class="img-responsive" alt="...">
-                        <figcaption>
-                          <h3>Family room</h3>
-                          <div class="item__price">
-                            $135 <small>/ night</small>
-                          </div>
-                        </figcaption>
-                      </figure> <!-- / .list_item__body -->
-                    </a>
-                  </li> <!-- .list__item -->
+                  
+                {% endfor %}
+                  
+                  
                 </ul> <!-- .similar-rooms__list -->
               </div> <!-- .similar__rooms -->
               <div class="info__body">
