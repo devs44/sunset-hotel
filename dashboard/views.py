@@ -48,11 +48,18 @@ class RoomListView(ListView):
     template_name = 'dashboard/room/roomlist.html'
     model = Room
 
+    def get_queryset(self):
+        return super().get_queryset().order_by('-id')
+
 
 class RoomCreateView(CreateView):
     template_name = 'dashboard/room/roomcreate.html'
     form_class = RoomForm
     success_url = reverse_lazy('dashboard:room_list')
+
+    def form_invalid(self, form):
+        print(form.errors)
+        return super().form_invalid(form)
 
 
 class RoomUpdateView(UpdateView):

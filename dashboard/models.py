@@ -12,13 +12,15 @@ class TimeStamp(models.Model):
     updated_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     deleted_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
-    def delete(self):
-        self.deleted_at = timezone.now()
-
-        return super().delete()
-
     class Meta:
         abstract = True
+
+    def delete(self, hard=False):
+        if not hard:
+            self.deleted_at = timezone.now()
+            return super().save()
+        else:
+            return super().delete()
 
 
 class About(TimeStamp):
@@ -194,9 +196,11 @@ class Reservation(TimeStamp):
     def __str__(self):
         return self.first_name + self.last_name
 
+
 class Services_description(models.Model):
     description = models.CharField(max_length=200)
     service_video = models.FileField(upload_to="service_description")
+
 
 class Services_type(models.Model):
     service_type_name = models.CharField(max_length=100)

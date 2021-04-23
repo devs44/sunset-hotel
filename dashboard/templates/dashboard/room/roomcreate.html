@@ -1,4 +1,12 @@
-{% extends 'dashboard/base/index.html' %} {% block content %}
+{% extends 'dashboard/base/index.html' %} 
+{% block style %}
+	<style>
+		.select2-selection__choice__display{
+			color: black;
+		}
+	</style>
+{% endblock %}
+{% block content %}
 <div class="wrapper">
   <div class="content-wrapper">
     <section class="content-header">
@@ -45,7 +53,7 @@
                   </div>
                   <div class="form-group">
                     <label>Features</label>
-                    <p>{{form.features}}</p>
+                    <p style="color:black">{{form.features}}</p>
                   </div>
                   <div class="form-group">
                     <label for="description">Description</label>
@@ -84,4 +92,11 @@
     </section>
   </div>
 </div>
+{% endblock %} 
+{% block script %} 
+  <script>
+	$(document).ready(function() {
+    	$('.feature-select').select2();
+}	);
+  </script>
 {% endblock %}

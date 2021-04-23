@@ -40,5 +40,14 @@ class RoomForm(forms.ModelForm):
             'image': forms.FileInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'choose image'
-            })
+            }),
+
+
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['features'].widget.attrs.update({
+            'class': 'form-control select2 feature-select',
+            'multiple': 'multiple'
+        })
