@@ -1,17 +1,22 @@
-{% extends 'dashboard/base/index.html' %} 
-{% block content %}
+{% extends 'dashboard/base/index.html' %} {% block content %}
 <div class="wrapper">
   <div class="content-wrapper">
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Simple Tables</h1>
+            <button class="btn btn-primary">
+              <a class="text-white" href="{% url 'dashboard:room_create' %}"
+                >Add Room</a
+              >
+            </button>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Simple Tables</li>
+              <li class="breadcrumb-item">
+                <a href="{% url 'dashboard:admin_dashboard' %}">Home</a>
+              </li>
+              <li class="breadcrumb-item active">Room</li>
             </ol>
           </div>
         </div>
@@ -60,16 +65,21 @@
                     {% for room in object_list %}
                     <tr>
                       <td>{{forloop.counter}}</td>
-                      <td>{{room.room_type}}</td>
+                      <td>
+                        <a href="{% url 'dashboard:room_detail' room.id %}"
+                          >{{room.room_type}}</a
+                        >
+                      </td>
                       <td>{{room.availability}}</td>
                       <td>{{room.price}}</td>
-                      <td>{{room.description}}</td>
+                      <td>{{room.description|truncatewords:10 }}</td>
                       <td>
                         <span
-                          ><a href="#"><i class="fa fa-trash m-1"></i></a></span
+                          ><a href="{% url 'dashboard:room_delete' room.id %}"
+                            ><i class="fa fa-trash m-1"></i></a></span
                         >|
                         <span
-                          ><a href="{% url 'dashboard:room_create' %}"
+                          ><a href="{% url 'dashboard:room_update' room.id %}"
                             ><i
                               class="fa fa-edit m-1"
                               aria-hidden="true"
@@ -78,36 +88,6 @@
                       </td>
                     </tr>
                     {% endfor %}
-                    <tr>
-                      <td>219</td>
-                      <td>Alexander Pierce</td>
-                      <td>11-7-2014</td>
-                      <td><span class="tag tag-warning">Pending</span></td>
-                      <td>
-                        Bacon ipsum dolor sit amet salami venison chicken flank
-                        fatback doner.
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>657</td>
-                      <td>Bob Doe</td>
-                      <td>11-7-2014</td>
-                      <td><span class="tag tag-primary">Approved</span></td>
-                      <td>
-                        Bacon ipsum dolor sit amet salami venison chicken flank
-                        fatback doner.
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>175</td>
-                      <td>Mike Doe</td>
-                      <td>11-7-2014</td>
-                      <td><span class="tag tag-danger">Denied</span></td>
-                      <td>
-                        Bacon ipsum dolor sit amet salami venison chicken flank
-                        fatback doner.
-                      </td>
-                    </tr>
                   </tbody>
                 </table>
               </div>
