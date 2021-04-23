@@ -39,29 +39,29 @@
     	    		<figure class="room__details">
 								<img src="assets/img/gallery_img1.jpg" class="img-responsive" alt="...">
 								<figcaption>
-									<h3>Double room</h3>
+									<h3>{{ room.room_type }}</h3>
 									<div class="room__price">
-										$50 <small>/ night</small>
+										{{ room.price }} <small>/ night</small>
 									</div>
-									<p class="room__desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis mollitia voluptas vero vel eligendi sint.</p>
+									<p class="room__desc">{{ room .description }}</p>
 								</figcaption>
 							</figure> <!-- / .room__details -->
 							<ul class="details-info">
                 <li>
                   <label>Check in</label>
-                  <p>2017-04-09</p>
+                  <p>{{ room.check_in_date }}</p>
                 </li>
                 <li>
                   <label>Check out</label>
-                  <p>2017-04-18</p>
+                  <p>{{ room.check_out_date }]</p>
                 </li>
                 <li>
                   <label>Adults</label>
-                  <p>2 Person</p>
+                  <p>{{ room.no_of_adults_choice }}</p>
                 </li>
                 <li>
                   <label>Children</label>
-                  <p>1 Chind</p>
+                  <p>{{ room.no_of_children_choice }}</p>
                 </li>
                 <li>
                   <label>Nights</label>
@@ -73,7 +73,7 @@
                 </li>
                 <li class="total-price">
                   <label>Total price</label>
-                  <p>$ 515</p>
+                  <p>{{ room.price }}</p>
                 </li>
             </ul>
   	    		</div> <!-- .booking__details-body -->
