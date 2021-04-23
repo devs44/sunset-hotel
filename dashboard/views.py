@@ -4,9 +4,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, DetailView, FormView, View, ListView, CreateView, UpdateView, DeleteView
-from .models import Room
+from .models import Room, News
 
-from .forms import StaffLoginForm, RoomForm
+from .forms import StaffLoginForm, RoomForm, NewsForm
 # Create your views here.
 
 
@@ -72,3 +72,37 @@ class RoomDeleteView(DeleteView):
     template_name = 'dashboard/room/roomdelete.html'
     model = Room
     success_url = reverse_lazy('dashboard:room_list')
+
+
+#news
+
+class NewsListView(ListView):
+    model = News
+    template_name = 'dashboard/news/news.html'
+
+class NewsCreateView(CreateView):
+    template_name = 'dashboard/news/newscreate.html'
+    form_class = NewsForm
+    success_url = reverse_lazy('dashboard:news_list')
+    
+    
+
+class NewsUpdateView(UpdateView):
+    template_name = 'dashboard/news/newscreate.html'
+    model = News
+    form_class = NewsForm
+    success_url = reverse_lazy('dashboard:news_list')
+
+
+class NewsDetailView(DetailView):
+    template_name = 'dashboard/news/newsdetail.html'
+    model = News
+    context_object_name = 'newsdetail'
+
+
+class NewsDeleteView(DeleteView):
+    template_name = 'dashboard/news/newsdelete.html'
+    model = News
+    success_url = reverse_lazy('dashboard:news_list')
+
+    
