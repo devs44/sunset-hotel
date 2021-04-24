@@ -1,5 +1,5 @@
 from django import forms
-from .models import Room
+from .models import Room, News
 
 
 class StaffLoginForm(forms.Form):
@@ -51,3 +51,30 @@ class RoomForm(forms.ModelForm):
             'class': 'form-control select2 feature-select',
             'multiple': 'multiple'
         })
+
+
+class NewsForm(forms.ModelForm):
+
+    class Meta:
+        model = News
+        fields = '__all__'
+        widgets = {
+            'title': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'title'
+            }),
+            'description': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'description'
+            }),
+
+            'image': forms.FileInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'choose image'
+            }),
+
+            'Created By': forms.Select(attrs={
+                'class': 'form-control select2',
+            })
+
+        }
