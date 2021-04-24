@@ -48,11 +48,18 @@ class RoomListView(ListView):
     template_name = 'dashboard/room/roomlist.html'
     model = Room
 
+    def get_queryset(self):
+        return super().get_queryset().order_by('-id')
+
 
 class RoomCreateView(CreateView):
     template_name = 'dashboard/room/roomcreate.html'
     form_class = RoomForm
     success_url = reverse_lazy('dashboard:room_list')
+
+    def form_invalid(self, form):
+        print(form.errors)
+        return super().form_invalid(form)
 
 
 class RoomUpdateView(UpdateView):
@@ -74,18 +81,27 @@ class RoomDeleteView(DeleteView):
     success_url = reverse_lazy('dashboard:room_list')
 
 
-#news
+class RoomSearchView(View):
+    def get(self, request, *args, **kwargs):
+        room = request.GET.get('room_search')
+        print(room, '#############')
+        queryset = Room.objects.all()
+        if room:
+            queryset = queryset.filter(room_type__icontains=room)
+        return queryset
+# news
+
 
 class NewsListView(ListView):
     model = News
     template_name = 'dashboard/news/news.html'
 
+
 class NewsCreateView(CreateView):
     template_name = 'dashboard/news/newscreate.html'
     form_class = NewsForm
     success_url = reverse_lazy('dashboard:news_list')
-    
-    
+
 
 class NewsUpdateView(UpdateView):
     template_name = 'dashboard/news/newscreate.html'
@@ -104,5 +120,3 @@ class NewsDeleteView(DeleteView):
     template_name = 'dashboard/news/newsdelete.html'
     model = News
     success_url = reverse_lazy('dashboard:news_list')
-
-    

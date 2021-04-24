@@ -40,33 +40,41 @@ class RoomForm(forms.ModelForm):
             'image': forms.FileInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'choose image'
-            })
+            }),
+
+
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['features'].widget.attrs.update({
+            'class': 'form-control select2 feature-select',
+            'multiple': 'multiple'
+        })
 
 
 class NewsForm(forms.ModelForm):
-    
+
     class Meta:
         model = News
         fields = '__all__'
         widgets = {
-           'title': forms.TextInput(attrs={
+            'title': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'title'
-        }),
-           'description': forms.Textarea(attrs={
+            }),
+            'description': forms.Textarea(attrs={
                 'class': 'form-control',
-                'placeholder': 'description' 
-        }),
-           
+                'placeholder': 'description'
+            }),
+
             'image': forms.FileInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'choose image'
-        }),
-            
-             'Created By': forms.Select(attrs={
+            }),
+
+            'Created By': forms.Select(attrs={
                 'class': 'form-control select2',
-        })
-           
+            })
+
         }
-        

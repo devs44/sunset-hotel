@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from ckeditor.fields import RichTextField
 from django.contrib.auth.models import User
 import datetime
 from django.utils import timezone
@@ -12,13 +13,15 @@ class TimeStamp(models.Model):
     updated_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     deleted_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
 
-    def delete(self):
-        self.deleted_at = timezone.now()
-
-        return super().delete()
-
     class Meta:
         abstract = True
+
+    def delete(self, hard=False):
+        if not hard:
+            self.deleted_at = timezone.now()
+            return super().save()
+        else:
+            return super().delete()
 
 
 class About(TimeStamp):
@@ -51,7 +54,7 @@ class Feature(TimeStamp):
 
 class Room(TimeStamp):
     room_type = models.ForeignKey(Room_Category, on_delete=models.CASCADE)
-    description = models.TextField()
+    description = RichTextField()
     availability = models.BooleanField(default=False)
     price = models.PositiveIntegerField()
     image = models.ImageField(upload_to="rooms")
@@ -194,9 +197,11 @@ class Reservation(TimeStamp):
     def __str__(self):
         return self.first_name + self.last_name
 
+
 class Services_description(models.Model):
     description = models.CharField(max_length=200)
     service_video = models.FileField(upload_to="service_description")
+
 
 class Services_type(models.Model):
     service_type_name = models.CharField(max_length=100)
