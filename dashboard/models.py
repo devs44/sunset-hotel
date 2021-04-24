@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from ckeditor.fields import RichTextField
 from django.contrib.auth.models import User
 import datetime
 from django.utils import timezone
@@ -53,7 +54,7 @@ class Feature(TimeStamp):
 
 class Room(TimeStamp):
     room_type = models.ForeignKey(Room_Category, on_delete=models.CASCADE)
-    description = models.TextField()
+    description = RichTextField()
     availability = models.BooleanField(default=False)
     price = models.PositiveIntegerField()
     image = models.ImageField(upload_to="rooms")

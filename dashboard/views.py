@@ -79,3 +79,13 @@ class RoomDeleteView(DeleteView):
     template_name = 'dashboard/room/roomdelete.html'
     model = Room
     success_url = reverse_lazy('dashboard:room_list')
+
+
+class RoomSearchView(View):
+    def get(self, request, *args, **kwargs):
+        room = request.GET.get('room_search')
+        print(room, '#############')
+        queryset = Room.objects.all()
+        if room:
+            queryset = queryset.filter(room_type__icontains=room)
+        return queryset

@@ -46,6 +46,7 @@
               <!-- form start -->
               <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
+                {{ form.media }}
                 <div class="card-body">
                   <div class="form-group">
                     <label for="roomType">Room Type</label>

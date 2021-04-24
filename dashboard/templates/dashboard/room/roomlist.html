@@ -33,10 +33,10 @@
 
                 <div class="card-tools">
                   <div class="input-group input-group-sm" style="width: 150px">
-                    <form action="" method="GET">
+                    <form action="{% url 'dashboard:roomsearch' %}" method="GET">
                       <input
                         type="text"
-                        name="table_search"
+                        name="room_search"
                         class="form-control float-right"
                         placeholder="Search"
                       />
@@ -59,7 +59,7 @@
                       <th>Room Type</th>
                       <th>Availability</th>
                       <th>Price</th>
-                      <th>Description</th>
+                      <th>Deleted at</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -74,7 +74,7 @@
                       </td>
                       <td>{{room.availability}}</td>
                       <td>{{room.price}}</td>
-                      <td>{{room.description|truncatewords:10 }}</td>
+                      <td>{{room.deleted_at}}</td>
                       <td>
                         <span
                           ><a href="{% url 'dashboard:room_delete' room.id %}"

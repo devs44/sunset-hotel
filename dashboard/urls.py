@@ -16,4 +16,7 @@ urlpatterns = [
          RoomDeleteView.as_view(), name='room_delete'),
     path('admin-room-/<int:pk>/-detail/',
          RoomDetailView.as_view(), name="room_detail"),
+
+    path("room-search/", RoomSearchView.as_view(), name='roomsearch'),
+
 ]
