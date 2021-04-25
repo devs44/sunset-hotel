@@ -64,11 +64,11 @@
                     <tr>
                       <td>{{forloop.counter}}</td>
                       <td>
-                        <a href="#"
+                        <a href="{%url 'dashboard:news_detail' news.id%}"
                           >{{news.title}}</a
                         >
                       </td>
-                      <td>{{news.description}}</td>
+                      <td>{{news.description|truncatewords:10}}</td>
                       <td><img src="{{news.image.url}}" style="width: 20%;"></td>
                       <td>
                         <span

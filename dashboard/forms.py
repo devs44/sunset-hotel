@@ -1,6 +1,6 @@
 from django import forms
-from .models import Room, Event, Comment
-from .models import Room, News
+from .models import Room, News, Comment, Event
+
 
 
 class StaffLoginForm(forms.Form):
@@ -76,10 +76,10 @@ class NewsForm(forms.ModelForm):
 
             'description': forms.Textarea(attrs={
                 'class': 'form-control',
-                'placeholder': 'description',
-            }),
-
-            'image': forms.FileInput(attrs={
+                'placeholder': 'description' 
+        }),
+           
+            'image': forms.ClearableFileInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'choose image'
             }),
@@ -89,6 +89,12 @@ class NewsForm(forms.ModelForm):
             })
 
         }
+        
+class NewsCommentForm(forms.ModelForm):
+    
+    class Meta:
+        model = Comment
+        fields = ('full_name','email', 'news','comment')
 
 class EventForm(forms.ModelForm):
     class Meta:
