@@ -7,7 +7,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Room Detail</h1>
+            <h1>News Detail</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -57,7 +57,7 @@
                   <div class="info-box bg-light">
                     <div class="info-box-content">
                       <span class="info-box-text text-center text-muted"
-                        >Room Type</span
+                        >News Type</span
                       >
                       <span class="info-box-number text-center text-muted mb-0"
                         >{{ roomdetail.room_type }}</span
@@ -101,10 +101,10 @@
                   <h4>Description</h4>
                   <div class="post">
                     <div class="user-block">
-                      <span class="description">{{roomdetail.created_at}}</span>
+                      <span class="description">{{newsdetail.created_at}}</span>
                     </div>
                     <!-- /.user-block -->
-                    <p>{{roomdetail.description|safe}}</p>
+                    <p>{{roomdetail.description|linebreaks}}</p>
                   </div>
 
                   <div class="post clearfix">
@@ -138,21 +138,10 @@
               </h3>
               <img
                 style="height: 20rem; width: 20rem"
-                src="{{roomdetail.image.url}}"
-                alt="room image"
+                src="{{news.image.url}}"
+                alt="News image"
               />
-              {% for img in  roomdetail.r_image.all %}
-                <img style="height: 20rem; width: 20rem;" src="{{ img.image.url}}" alt="">
-                <br>
-              {% endfor %}
             </div>
-          </div>
-          <div class="row">
-            {% for img in  roomdetail.r_image.all %}
-            <div class="col-md-4">
-              <img style="width: 100%;" src="{{ img.image.url}}" alt="">
-            </div>
-            {% endfor %}
           </div>
         </div>
         <!-- /.card-body -->

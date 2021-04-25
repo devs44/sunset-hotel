@@ -30,4 +30,19 @@ urlpatterns = [
      path('admin-eventcomment-/<int:pk>/-update/', EventCommentUpdateView.as_view(), name='eventcomment_update'),
      path('admin-eventcomment/<int:pk>/-delete/', EventCommentDelteView.as_view(), name='eventcomment_delete'),
      path('admin-eventcomment-/<int:pk>/-detail/', EventCommentDetailView.as_view(), name='eventcomment_detail'),
+    path("room-search/", RoomSearchView.as_view(), name='roomsearch'),
+
+
+
+    # news
+
+    path('admin-news-list/', NewsListView.as_view(), name='news_list'),
+    path('admin-news-create/', NewsCreateView.as_view(), name='news_create'),
+    path('admin-news-/<int:pk>/-update/',
+         NewsUpdateView.as_view(), name='news_update'),
+    path('admin-news-/<int:pk>/-delete/',
+         NewsDeleteView.as_view(), name='news_delete'),
+    path('admin-news-/<int:pk>/-detail/',
+         NewsDetailView.as_view(), name="news_detail"),
+
 ]
