@@ -16,4 +16,18 @@ urlpatterns = [
          RoomDeleteView.as_view(), name='room_delete'),
     path('admin-room-/<int:pk>/-detail/',
          RoomDetailView.as_view(), name="room_detail"),
+
+     # event
+     path('admin-event-list/', EventListView.as_view(), name='event_list'),
+     path('admin-event-create/', EventCreateView.as_view(), name='event_create'),
+     path('admin-event-/<int:pk>/-update/', EventUpdateView.as_view(), name='event_update'),
+     path('admin-event/<int:pk>/-delete/', EventDelteView.as_view(), name='event_delete'),
+     path('admin-event-/<int:pk>/-detail/', EventDetailView.as_view(), name='event_detail'),
+
+     #event_comments
+     path('admin-eventcomment-list/', EventCommentListView.as_view(), name='eventcomment_list'),
+     path('admin-eventcomment-create/', EventCommentCreateView.as_view(), name='eventcomment_create'),
+     path('admin-eventcomment-/<int:pk>/-update/', EventCommentUpdateView.as_view(), name='eventcomment_update'),
+     path('admin-eventcomment/<int:pk>/-delete/', EventCommentDelteView.as_view(), name='eventcomment_delete'),
+     path('admin-eventcomment-/<int:pk>/-detail/', EventCommentDetailView.as_view(), name='eventcomment_detail'),
 ]

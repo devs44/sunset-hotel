@@ -125,7 +125,7 @@ class Event(TimeStamp):
 class Comment(TimeStamp):
     full_name = models.CharField(max_length=30)
     email = models.EmailField()
-    website = models.CharField(max_length=255, null=True, blank=True)
+    website = models.URLField(null=True, blank=True)
     news = models.ForeignKey(
         News, related_name="news_comment", on_delete=models.CASCADE, null=True, blank=True)
     events = models.ForeignKey(
@@ -138,6 +138,8 @@ class Comment(TimeStamp):
 
     def __str__(self):
         return self.first_name + self.middle_name + self.last_name
+
+    
 
 
 class Contact(TimeStamp):
