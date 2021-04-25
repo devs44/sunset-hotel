@@ -33,4 +33,11 @@ urlpatterns = [
     path('news/comment/<int:pk>/delete/', NewsCommentDeleteView.as_view(), name='news_comment_delete'),
     path('news/comment/<int:pk>/detail/', NewsCommentDetailView.as_view(), name="news_comment_detail"),
     
+
+    path("room-search/", RoomSearchView.as_view(), name='roomsearch'),
+
+
+
+   
+
 ]

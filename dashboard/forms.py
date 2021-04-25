@@ -21,6 +21,11 @@ class StaffLoginForm(forms.Form):
 
 
 class RoomForm(forms.ModelForm):
+    more_images = forms.FileField(required=False, widget=forms.FileInput(attrs={
+        'class': 'form-control select2',
+        'multiple': True
+    }))
+
     class Meta:
         model = Room
         fields = '__all__'
@@ -28,6 +33,10 @@ class RoomForm(forms.ModelForm):
             'room_type': forms.Select(attrs={
                 'class': 'form-control select2',
                 'placeholder': 'room type'
+            }),
+            'room_no': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'room no'
             }),
             'description': forms.Textarea(attrs={
                 'class': 'form-control',
@@ -37,24 +46,34 @@ class RoomForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': 'price'
             }),
-            'image': forms.FileInput(attrs={
+            'image': forms.ClearableFileInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'choose image'
-            })
+            }),
+
+
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['features'].widget.attrs.update({
+            'class': 'form-control select2 feature-select',
+            'multiple': 'multiple'
+        })
 
 
 class NewsForm(forms.ModelForm):
-    
+
     class Meta:
         model = News
         fields = '__all__'
         widgets = {
-           'title': forms.TextInput(attrs={
+            'title': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'title'
-        }),
-           'description': forms.Textarea(attrs={
+            }),
+
+            'description': forms.Textarea(attrs={
                 'class': 'form-control',
                 'placeholder': 'description' 
         }),
@@ -62,12 +81,12 @@ class NewsForm(forms.ModelForm):
             'image': forms.ClearableFileInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'choose image'
-        }),
-            
-             'Created By': forms.Select(attrs={
+            }),
+
+            'Created By': forms.Select(attrs={
                 'class': 'form-control select2',
-        })
-           
+            })
+
         }
         
 class NewsCommentForm(forms.ModelForm):

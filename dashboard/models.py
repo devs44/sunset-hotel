@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from ckeditor.fields import RichTextField
 from django.contrib.auth.models import User
 import datetime
 from django.utils import timezone
@@ -10,15 +11,17 @@ from django.utils import timezone
 class TimeStamp(models.Model):
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    deleted_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-
-    def delete(self):
-        self.deleted_at = timezone.now()
-
-        return super().delete()
+    deleted_at = models.DateTimeField(null=True, blank=True)
 
     class Meta:
         abstract = True
+
+    def delete(self, hard=False):
+        if not hard:
+            self.deleted_at = timezone.now()
+            return super().save()
+        else:
+            return super().delete()
 
 
 class About(TimeStamp):
@@ -51,7 +54,9 @@ class Feature(TimeStamp):
 
 class Room(TimeStamp):
     room_type = models.ForeignKey(Room_Category, on_delete=models.CASCADE)
-    description = models.TextField()
+    room_no = models.CharField(
+        max_length=250, primary_key=True)
+    description = RichTextField()
     availability = models.BooleanField(default=False)
     price = models.PositiveIntegerField()
     image = models.ImageField(upload_to="rooms")
@@ -62,7 +67,16 @@ class Room(TimeStamp):
         verbose_name_plural = _('Rooms')
 
     def __str__(self):
-        return str(self.room_type)
+        return self.room_no
+
+
+class RoomImage(TimeStamp):
+    room = models.ForeignKey(
+        Room, related_name="r_image", on_delete=models.CASCADE)
+    image = models.ImageField(upload_to="room")
+
+    def __str__(self):
+        return self.room.room_no
 
 
 class Image(TimeStamp):
@@ -194,9 +208,11 @@ class Reservation(TimeStamp):
     def __str__(self):
         return self.first_name + self.last_name
 
+
 class Services_description(models.Model):
     description = models.CharField(max_length=200)
     service_video = models.FileField(upload_to="service_description")
+
 
 class Services_type(models.Model):
     service_type_name = models.CharField(max_length=100)
