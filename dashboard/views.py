@@ -4,10 +4,10 @@ from django.contrib.auth.models import User
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, DetailView, FormView, View, ListView, CreateView, UpdateView, DeleteView
 
-from .models import Room, Event, Comment, RoomImage, News
 
-from .forms import StaffLoginForm, RoomForm, EventForm, EventCommentForm, NewsForm
 
+from .models import Room, News, Comment, RoomImage,Event
+from .forms import StaffLoginForm, RoomForm, NewsForm, NewsCommentForm, EventForm, EventCommentForm
 
 # Create your views here.
 
@@ -176,29 +176,64 @@ class RoomSearchView(View):
 
 class NewsListView(ListView):
     model = News
-    template_name = 'dashboard/news/news.html'
+    template_name = 'dashboard/news/list.html'
 
 
 class NewsCreateView(CreateView):
-    template_name = 'dashboard/news/newscreate.html'
+    template_name = 'dashboard/news/form.html'
     form_class = NewsForm
     success_url = reverse_lazy('dashboard:news_list')
 
 
 class NewsUpdateView(UpdateView):
-    template_name = 'dashboard/news/newscreate.html'
+    template_name = 'dashboard/news/form.html'
     model = News
     form_class = NewsForm
     success_url = reverse_lazy('dashboard:news_list')
 
 
 class NewsDetailView(DetailView):
-    template_name = 'dashboard/news/newsdetail.html'
+    template_name = 'dashboard/news/detail.html'
     model = News
     context_object_name = 'newsdetail'
 
 
 class NewsDeleteView(DeleteView):
-    template_name = 'dashboard/news/newsdelete.html'
+    template_name = 'dashboard/news/delete.html'
     model = News
     success_url = reverse_lazy('dashboard:news_list')
+
+    
+
+#newscomments
+
+class NewsCommentListView(ListView):
+    model = Comment
+    template_name = 'dashboard/news_comment/list.html'
+
+class NewsCommentCreateView(CreateView):
+    template_name = 'dashboard/news_comment/form.html'
+    form_class = NewsCommentForm
+    success_url = reverse_lazy('dashboard:news_comment_list')
+    
+    
+
+class NewsCommentUpdateView(UpdateView):
+    template_name = 'dashboard/news_comment/form.html'
+    model = Comment
+    form_class = NewsCommentForm
+    success_url = reverse_lazy('dashboard:news_comment_list')
+
+
+class NewsCommentDetailView(DetailView):
+    template_name = 'dashboard/news_comment/detail.html'
+    model = Comment
+    context_object_name = 'commentdetail'
+
+
+class NewsCommentDeleteView(DeleteView):
+    template_name = 'dashboard/news_comment/delete.html'
+    model = Comment
+    success_url = reverse_lazy('dashboard:news_comment_list')
+
+    
