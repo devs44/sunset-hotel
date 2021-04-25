@@ -21,6 +21,11 @@ class StaffLoginForm(forms.Form):
 
 
 class RoomForm(forms.ModelForm):
+    more_images = forms.FileField(required=False, widget=forms.FileInput(attrs={
+        'class': 'form-control select2',
+        'multiple': True
+    }))
+
     class Meta:
         model = Room
         fields = '__all__'
@@ -28,6 +33,10 @@ class RoomForm(forms.ModelForm):
             'room_type': forms.Select(attrs={
                 'class': 'form-control select2',
                 'placeholder': 'room type'
+            }),
+            'room_no': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'room no'
             }),
             'description': forms.Textarea(attrs={
                 'class': 'form-control',
@@ -37,7 +46,7 @@ class RoomForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': 'price'
             }),
-            'image': forms.FileInput(attrs={
+            'image': forms.ClearableFileInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'choose image'
             }),
@@ -63,9 +72,10 @@ class NewsForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': 'title'
             }),
+
             'description': forms.Textarea(attrs={
                 'class': 'form-control',
-                'placeholder': 'description'
+                'placeholder': 'description',
             }),
 
             'image': forms.FileInput(attrs={

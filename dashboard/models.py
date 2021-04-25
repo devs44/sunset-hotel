@@ -11,7 +11,7 @@ from django.utils import timezone
 class TimeStamp(models.Model):
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    deleted_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    deleted_at = models.DateTimeField(null=True, blank=True)
 
     class Meta:
         abstract = True
@@ -54,6 +54,8 @@ class Feature(TimeStamp):
 
 class Room(TimeStamp):
     room_type = models.ForeignKey(Room_Category, on_delete=models.CASCADE)
+    room_no = models.CharField(
+        max_length=250, primary_key=True)
     description = RichTextField()
     availability = models.BooleanField(default=False)
     price = models.PositiveIntegerField()
@@ -65,7 +67,16 @@ class Room(TimeStamp):
         verbose_name_plural = _('Rooms')
 
     def __str__(self):
-        return str(self.room_type)
+        return self.room_no
+
+
+class RoomImage(TimeStamp):
+    room = models.ForeignKey(
+        Room, related_name="r_image", on_delete=models.CASCADE)
+    image = models.ImageField(upload_to="room")
+
+    def __str__(self):
+        return self.room.room_no
 
 
 class Image(TimeStamp):

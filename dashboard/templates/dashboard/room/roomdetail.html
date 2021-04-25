@@ -141,7 +141,18 @@
                 src="{{roomdetail.image.url}}"
                 alt="room image"
               />
+              {% for img in  roomdetail.r_image.all %}
+                <img style="height: 20rem; width: 20rem;" src="{{ img.image.url}}" alt="">
+                <br>
+              {% endfor %}
             </div>
+          </div>
+          <div class="row">
+            {% for img in  roomdetail.r_image.all %}
+            <div class="col-md-4">
+              <img style="width: 100%;" src="{{ img.image.url}}" alt="">
+            </div>
+            {% endfor %}
           </div>
         </div>
         <!-- /.card-body -->
