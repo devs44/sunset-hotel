@@ -169,7 +169,7 @@
                                     {{ room.price }} <small>/ night</small>
                                 </div>
                                 <p class="item__desc">{{ room.description|truncatewords:20 }}</p>
-                                <a href="reservation.html" class="btn-book">Book now <i class="icon ion-chevron-right"></i><i class="icon ion-chevron-right"></i></a>
+                                <a href={% url 'reservation' %} class="btn-book">Book now <i class="icon ion-chevron-right"></i><i class="icon ion-chevron-right"></i></a>
                             </figcaption>
                         </figure> <!-- / .best-rooms__item -->
               </div>
@@ -180,7 +180,7 @@
             <div class="row">
                 <div class="col-xs-12">
                     <div class="rooms__button">
-                        <a href="rooms-1.html" class="btn">See all rooms</a>
+                        <a href="[% url 'rooms' %}" class="btn">See all rooms</a>
                     </div> <!-- / .rooms__button -->
                 </div>
             </div> <!-- / .row -->
@@ -373,226 +373,164 @@
 <!-- section Events -->
 <section class="section__events">
     <div class="container">
-        <div class="row">
-          <div class="col-sm-12"> 		  	
-                <h2 class="section__title">Our news <strong>& events</strong></h2>
-                <div class="divider">
-                    <hr class="line1">
-                    <hr class="line2">
-                    <hr class="line1">
-                </div> <!-- / .divider -->
-          </div>
-        </div> <!-- / .row -->
+      <div class="row">
+        <div class="col-sm-12">
+          <h2 class="section__title">Our news <strong>& events</strong></h2>
+          <div class="divider">
+            <hr class="line1">
+            <hr class="line2">
+            <hr class="line1">
+          </div> <!-- / .divider -->
+        </div>
+      </div> <!-- / .row -->
     </div> <!-- / .container -->
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-xs-12 hidden-xs col-sm-6 col-md-6 col-lg-3 col-lg-push-9">
-                    <div class="news__title">
-                        <div>News</div>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-lg-pull-3">
-                    <div class="events__item">
-                        <div class="events-item__img">
-            <img src="{% static 'home/assets/img/events_img1.jpg' %}" class="img-responsive" alt="...">
+      <div class="row">
+        <div class="col-xs-12 hidden-xs col-sm-6 col-md-6 col-lg-3 col-lg-push-9">
+          <div class="news__title">
+            <div>News</div>
           </div>
-          <div class="events-item__body">
-            <div class="events-item__header">
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-lg-pull-3">
+          <div class="events__item">
+            <div class="events-item__img">
+              <img src="assets/img/events_img1.jpg" class="img-responsive" alt="...">
+            </div>
+            <div class="events-item__body">
+              <div class="events-item__header">
                 <div class="events-item__date">
-                    <p class="item_date__nbr">15</p>
-                    <p class="item_date__mounth">March</p>
+                  <p class="item_date__nbr">15</p>
+                  <p class="item_date__mounth">March</p>
                 </div> <!-- .events-item__date -->
                 <div class="events-item__content">
-                    <div class="events-item__title">
-                      <h3>News post title</h3>
-                    </div>
-                    <div class="events-item__info">
-                      <ul class="item-info__list">
-                        <li class="info-list__item"><i class="ion ion-android-person"></i> by John Doe</li>
-                        <li class="info-list__item"><i class="ion ion-android-chat" aria-hidden="true"></i> 5 Comments</li>
-                      </ul> <!-- .item-info__list -->
-                    </div> <!-- .events-item__info -->
+                  <div class="events-item__title">
+                    <h3>News post title</h3>
+                  </div>
+                  <div class="events-item__info">
+                    <ul class="item-info__list">
+                      <li class="info-list__item"><i class="ion ion-android-person"></i> by John Doe</li>
+                      <li class="info-list__item"><i class="ion ion-android-chat" aria-hidden="true"></i> 5 Comments</li>
+                    </ul> <!-- .item-info__list -->
+                  </div> <!-- .events-item__info -->
                 </div> <!-- .events-item__content -->
-            </div> <!-- .events-item__header -->
-            <div class="events-item__text">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab eius dicta, magni, placeat sed excepturi tenetur. Unde esse repellendus saepe ipsa odio in laborum voluptas. Obcaecati quae.
-            </div> <!-- .events-item__text -->
-            <div class="events-item__link">
-              <a href="blog-item.html">Read More ➔</a>
-            </div> <!-- .events-item__link -->
-          </div> <!-- / .events-item__body -->
-                    </div> <!-- .events__item -->
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-lg-pull-3">
-                    <div class="events__item">
-                        <div class="events-item__img">
-            <img src="{% static 'home/assets/img/events_img2.jpg' %}" class="img-responsive" alt="...">
-          </div>
-          <div class="events-item__body">
-            <div class="events-item__header">
+              </div> <!-- .events-item__header -->
+              <div class="events-item__text">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab eius dicta, magni, placeat sed excepturi tenetur. Unde esse repellendus saepe ipsa odio in laborum voluptas. Obcaecati quae.
+              </div> <!-- .events-item__text -->
+              <div class="events-item__link">
+                <a href="blog-item.html">Read More ➔</a>
+              </div> <!-- .events-item__link -->
+            </div> <!-- / .events-item__body -->
+          </div> <!-- .events__item -->
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-lg-pull-3">
+          <div class="events__item">
+            <div class="events-item__img">
+              <img src="assets/img/events_img2.jpg" class="img-responsive" alt="...">
+            </div>
+            <div class="events-item__body">
+              <div class="events-item__header">
                 <div class="events-item__date">
-                    <p class="item_date__nbr">18</p>
-                    <p class="item_date__mounth">March</p>
+                  <p class="item_date__nbr">18</p>
+                  <p class="item_date__mounth">March</p>
                 </div> <!-- .events-item__date -->
                 <div class="events-item__content">
-                    <div class="events-item__title">
-                      <h3>News post title</h3>
-                    </div>
-                    <div class="events-item__info">
-                      <ul class="item-info__list">
-                        <li class="info-list__item"><i class="ion ion-android-person"></i> by John Doe</li>
-                        <li class="info-list__item"><i class="ion ion-android-chat" aria-hidden="true"></i> 7 Comments</li>
-                      </ul> <!-- .item-info__list -->
-                    </div> <!-- .events-item__info -->
+                  <div class="events-item__title">
+                    <h3>News post title</h3>
+                  </div>
+                  <div class="events-item__info">
+                    <ul class="item-info__list">
+                      <li class="info-list__item"><i class="ion ion-android-person"></i> by John Doe</li>
+                      <li class="info-list__item"><i class="ion ion-android-chat" aria-hidden="true"></i> 7 Comments</li>
+                    </ul> <!-- .item-info__list -->
+                  </div> <!-- .events-item__info -->
                 </div> <!-- .events-item__content -->
-            </div> <!-- .events-item__header -->
-            <div class="events-item__text">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab eius dicta, magni, placeat sed excepturi tenetur. Unde esse repellendus saepe ipsa odio in laborum voluptas. Obcaecati quae.
-            </div> <!-- .events-item__text -->
-            <div class="events-item__link">
-              <a href="blog-item.html">Read More ➔</a>
-            </div> <!-- .events-item__link -->
-          </div> <!-- / .events-item__body -->
-                    </div> <!-- .events__item -->
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-lg-pull-3">
-                    <div class="events__item">
-                        <div class="events-item__img">
-            <img src="{% static 'home/assets/img/events_img3.jpg' %}" class="img-responsive" alt="...">
-          </div>
-          <div class="events-item__body">
-            <div class="events-item__header">
+              </div> <!-- .events-item__header -->
+              <div class="events-item__text">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab eius dicta, magni, placeat sed excepturi tenetur. Unde esse repellendus saepe ipsa odio in laborum voluptas. Obcaecati quae.
+              </div> <!-- .events-item__text -->
+              <div class="events-item__link">
+                <a href="blog-item.html">Read More ➔</a>
+              </div> <!-- .events-item__link -->
+            </div> <!-- / .events-item__body -->
+          </div> <!-- .events__item -->
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-lg-pull-3">
+          <div class="events__item">
+            <div class="events-item__img">
+              <img src="assets/img/events_img3.jpg" class="img-responsive" alt="...">
+            </div>
+            <div class="events-item__body">
+              <div class="events-item__header">
                 <div class="events-item__date">
-                    <p class="item_date__nbr">21</p>
-                    <p class="item_date__mounth">March</p>
+                  <p class="item_date__nbr">21</p>
+                  <p class="item_date__mounth">March</p>
                 </div> <!-- .events-item__date -->
                 <div class="events-item__content">
-                    <div class="events-item__title">
-                      <h3>News post title</h3>
-                    </div>
-                    <div class="events-item__info">
-                      <ul class="item-info__list">
-                        <li class="info-list__item"><i class="ion ion-android-person"></i> by John Doe</li>
-                        <li class="info-list__item"><i class="ion ion-android-chat" aria-hidden="true"></i> 9 Comments</li>
-                      </ul> <!-- .item-info__list -->
-                    </div> <!-- .events-item__info -->
+                  <div class="events-item__title">
+                    <h3>News post title</h3>
+                  </div>
+                  <div class="events-item__info">
+                    <ul class="item-info__list">
+                      <li class="info-list__item"><i class="ion ion-android-person"></i> by John Doe</li>
+                      <li class="info-list__item"><i class="ion ion-android-chat" aria-hidden="true"></i> 9 Comments</li>
+                    </ul> <!-- .item-info__list -->
+                  </div> <!-- .events-item__info -->
                 </div> <!-- .events-item__content -->
-            </div> <!-- .events-item__header -->
-            <div class="events-item__text">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab eius dicta, magni, placeat sed excepturi tenetur. Unde esse repellendus saepe ipsa odio in laborum voluptas. Obcaecati quae.
-            </div> <!-- .events-item__text -->
-            <div class="events-item__link">
-              <a href="blog-item.html">Read More ➔</a>
-            </div> <!-- .events-item__link -->
-          </div> <!-- / .events-item__body -->
-                    </div> <!-- .events__item -->
-                </div>
+              </div> <!-- .events-item__header -->
+              <div class="events-item__text">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab eius dicta, magni, placeat sed excepturi tenetur. Unde esse repellendus saepe ipsa odio in laborum voluptas. Obcaecati quae.
+              </div> <!-- .events-item__text -->
+              <div class="events-item__link">
+                <a href="blog-item.html">Read More ➔</a>
+              </div> <!-- .events-item__link -->
+            </div> <!-- / .events-item__body -->
+          </div> <!-- .events__item -->
+        </div>
       </div> <!-- / .row -->
       <div class="row">
-          <div class="col-xs-12 hidden-xs col-sm-6 col-md-6 col-lg-3">
-              <div class="events__title">
-                        <div>Events</div>
-                    </div>
+        <div class="col-xs-12 hidden-xs col-sm-6 col-md-6 col-lg-3">
+          <div class="events__title">
+            <div>Events</div>
           </div>
-                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
-                    <div class="events__item ">
-                        <div class="events-item__img">
-            <img src="{% static 'home/assets/img/events_img4.jpg' %}" class="img-responsive" alt="...">
-          </div>
-          <div class="events-item__body">
-            <div class="events-item__header">
+        </div>
+        {% for event in event %}
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
+          <div class="events__item ">
+            <div class="events-item__img">
+              <img src="{{ event.image.url }}" class="img-responsive" alt="...">
+            </div>
+            <div class="events-item__body">
+              <div class="events-item__header">
                 <div class="events-item__date">
-                    <p class="item_date__nbr">11</p>
-                    <p class="item_date__mounth">April</p>
+                  <p class="item_date__nbr">{{ event.created_at|date:"d" }}</p>
+                  <p class="item_date__mounth">{{ event.created_at|date:"M" }}</p>
                 </div> <!-- .events-item__date -->
                 <div class="events-item__content">
-                    <div class="events-item__title">
-                      <h3>Event post title</h3>
-                    </div>
-                    <div class="events-item__info">
-                      <ul class="item-info__list">
-                        <li class="info-list__item"><i class="ion ion-android-person"></i> by John Doe</li>
-                        <li class="info-list__item"><i class="ion ion-android-chat" aria-hidden="true"></i> 2 Comments</li>
-                      </ul> <!-- .item-info__list -->
-                    </div> <!-- .events-item__info -->
+                  <div class="events-item__title">
+                    <h3>{{ event.title }}</h3>
+                  </div>
+                  <div class="events-item__info">
+                    <ul class="item-info__list">
+                      <li class="info-list__item"><i class="ion ion-android-person"></i> by {{event.created_by }}</li>
+                      <li class="info-list__item"><i class="ion ion-android-chat" aria-hidden="true"></i> 2 Comments</li>
+                    </ul> <!-- .item-info__list -->
+                  </div> <!-- .events-item__info -->
                 </div> <!-- .events-item__content -->
-            </div> <!-- .events-item__header -->
-            <div class="events-item__text">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab eius dicta, magni, placeat sed excepturi tenetur. Unde esse repellendus saepe ipsa odio in laborum voluptas. Obcaecati quae.
-            </div> <!-- .events-item__text -->
-            <div class="events-item__link">
-              <a href="blog-item.html">Read More ➔</a>
-            </div> <!-- .events-item__link -->
-          </div> <!-- / .events-item__body -->
-                    </div> <!-- .events__item -->
+              </div> <!-- .events-item__header -->
+              <div class="events-item__text">
+                {{ event.description|truncatewords:20 }}
                 </div>
-                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
-                    <div class="events__item">
-                        <div class="events-item__img">
-            <img src="{% static 'home/assets/img/events_img5.jpg' %}" class="img-responsive" alt="...">
-          </div>
-          <div class="events-item__body">
-            <div class="events-item__header">
-                <div class="events-item__date">
-                    <p class="item_date__nbr">14</p>
-                    <p class="item_date__mounth">April</p>
-                </div> <!-- .events-item__date -->
-                <div class="events-item__content">
-                    <div class="events-item__title">
-                      <h3>Event post title</h3>
-                    </div>
-                    <div class="events-item__info">
-                      <ul class="item-info__list">
-                        <li class="info-list__item"><i class="ion ion-android-person"></i> by John Doe</li>
-                        <li class="info-list__item"><i class="ion ion-android-chat" aria-hidden="true"></i> 11 Comments</li>
-                      </ul> <!-- .item-info__list -->
-                    </div> <!-- .events-item__info -->
-                </div> <!-- .events-item__content -->
-            </div> <!-- .events-item__header -->
-            <div class="events-item__text">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab eius dicta, magni, placeat sed excepturi tenetur. Unde esse repellendus saepe ipsa odio in laborum voluptas. Obcaecati quae.
-            </div> <!-- .events-item__text -->
-            <div class="events-item__link">
-              <a href="blog-item.html">Read More ➔</a>
-            </div> <!-- .events-item__link -->
-          </div> <!-- / .events-item__body -->
-                    </div> <!-- .events__item -->
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
-                    <div class="events__item">
-                        <div class="events-item__img">
-            <img src="{% static 'home/assets/img/events_img6.jpg' %}" class="img-responsive" alt="...">
-          </div>
-          <div class="events-item__body">
-            <div class="events-item__header">
-                <div class="events-item__date">
-                    <p class="item_date__nbr">16</p>
-                    <p class="item_date__mounth">April</p>
-                </div> <!-- .events-item__date -->
-                <div class="events-item__content">
-                    <div class="events-item__title">
-                      <h3>Event post title</h3>
-                    </div>
-                    <div class="events-item__info">
-                      <ul class="item-info__list">
-                        <li class="info-list__item"><i class="ion ion-android-person"></i> by John Doe</li>
-                        <li class="info-list__item"><i class="ion ion-android-chat" aria-hidden="true"></i> 8 Comments</li>
-                      </ul> <!-- .item-info__list -->
-                    </div> <!-- .events-item__info -->
-                </div> <!-- .events-item__content -->
-            </div> <!-- .events-item__header -->
-            <div class="events-item__text">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab eius dicta, magni, placeat sed excepturi tenetur. Unde esse repellendus saepe ipsa odio in laborum voluptas. Obcaecati quae.
-            </div> <!-- .events-item__text -->
-            <div class="events-item__link">
-              <a href="blog-item.html">Read More ➔</a>
-            </div> <!-- .events-item__link -->
-          </div> <!-- / .events-item__body -->
-                    </div> <!-- .events__item -->
-                </div>
+              <div class="events-item__link">
+                <a href="{% url 'event_detail' event.pk %}">Read More ➔</a>
+              </div> <!-- .events-item__link -->
+            </div> <!-- / .events-item__body -->
+          </div> <!-- .events__item -->
+        </div>
+        {% endfor %}
       </div> <!-- / .row -->
-  </div> <!-- / .container -->
-</section> <!-- / .section__events -->
+    </div> <!-- / .container -->
+  </section> <!-- / .section__events -->
 
     <!-- section Contacts -->
 <section class="section__contacts">

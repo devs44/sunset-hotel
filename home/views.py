@@ -11,7 +11,8 @@ class HomeTemplateView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['photos'] = Image.objects.all()  
-        context['room'] = Room.objects.all()      
+        context['room'] = Room.objects.all()  
+        context['event'] = Event.objects.all()    
         return context
 
 class RoomListView(ListView):
@@ -41,3 +42,17 @@ class ServiceListView(ListView):
 
 class ReservationView(TemplateView):
     template_name = 'home/reservation/reservation.html'
+
+
+
+
+
+class EventDetailView(DetailView):
+    template_name = 'home/events/event_detail.html'
+    model = Event
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['events'] = Event.objects.exclude(id=self.get_object().id)
+        print(context['events'])
+        return context
