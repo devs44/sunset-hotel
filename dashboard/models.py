@@ -124,7 +124,7 @@ class News(TimeStamp):
 class Event(TimeStamp):
     title = models.CharField(max_length=1255)
     image = models.ImageField(upload_to="Events")
-    description = models.TextField()
+    description = RichTextField()
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     view_count = models.PositiveIntegerField(default=0)
 
