@@ -33,12 +33,20 @@
 
                 <div class="card-tools">
                   <div class="input-group input-group-sm" style="width: 150px">
-                    <form action="{% url 'dashboard:roomsearch' %}" method="GET">
+                    <form action="{% url 'dashboard:room_list' %}" method="GET">
                       <input
                         type="text"
-                        name="room_search"
-                        class="form-control float-right"
-                        placeholder="Search"
+                        name="room_type"
+                        class="form-control float-right searchInput"
+                        id="SearchRoom"
+                        placeholder="Room type"
+                      />
+                      <input
+                        type="text"
+                        name="room_no"
+                        class="form-control float-right searchInput"
+                        id="SearchRoom"
+                        placeholder="Room no"
                       />
 
                       <div class="input-group-append">
@@ -52,11 +60,12 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body table-responsive p-0">
-                <table class="table table-hover text-nowrap">
+                <table class="table table-hover text-nowrap" id="rooms">
                   <thead>
                     <tr>
                       <th>SN</th>
                       <th>Room Type</th>
+                      <th>Room No</th>
                       <th>Availability</th>
                       <th>Price</th>
                       <th>Deleted at</th>
@@ -68,32 +77,58 @@
                     <tr>
                       <td>{{forloop.counter}}</td>
                       <td>
-                        <a href="{% url 'dashboard:room_detail' room.id %}"
+                        <a href="{% url 'dashboard:room_detail' room.pk %}"
                           >{{room.room_type}}</a
                         >
+                      <td>{{room.room_no}}</td>
                       </td>
                       <td>{{room.availability}}</td>
                       <td>{{room.price}}</td>
                       <td>{{room.deleted_at}}</td>
                       <td>
+                          <span ><a class="btn btn-warning mr-2" href="{% url 'dashboard:room_update' room.pk %}"
+                              ><i
+                                class="fa fa-edit m-1"
+                                aria-hidden="true"
+                              ></i>Edit</a
+                          ></span>
                         <span
-                          ><a href="{% url 'dashboard:room_delete' room.id %}"
+                          ><a class="btn btn-danger" href="{% url 'dashboard:room_delete' room.pk %}"
                             ><i class="fa fa-trash m-1"></i></a></span
-                        >|
-                        <span
-                          ><a href="{% url 'dashboard:room_update' room.id %}"
-                            ><i
-                              class="fa fa-edit m-1"
-                              aria-hidden="true"
-                            ></i></a
-                        ></span>
+                        >
                       </td>
                     </tr>
                     {% endfor %}
                   </tbody>
                 </table>
+                
+                </div>
               </div>
               <!-- /.card-body -->
+              <div class="pagination">
+                <span>
+                  {% if page_obj.has_previous %}
+                    {% if page_obj.previous_page_number != 1 %}
+                        <a class="btn btn-primary" href="?page1">1</a>
+                    {% endif %}
+                    <a class="btn btn-primary" href="?page={{page_obj.previous_page_number}}">
+                        {{ page_obj.previous_page_number }}
+                    </a>
+                  {% endif %}
+                  <span>
+                      {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                  </span>
+                  {% if page_obj.has_next %}
+                  <a class="btn btn-primary" href="?page={{page_obj.next_page_number}}">
+                      {{ page_obj.next_page_number }}
+                  </a>
+                  {% if page_obj.next_page_number != page_obj.paginator.num_pages %}
+                  <a class="btn btn-primary" href="?page={{ page_obj.paginator.num_pages }}">
+                      {{ page_obj.paginator.num_pages }}
+                  </a>
+                  {% endif %}
+                  {% endif %}
+                </span>
             </div>
             <!-- /.card -->
           </div>
@@ -102,4 +137,29 @@
     </section>
   </div>
 </div>
+{% endblock %}
+{% block script %}
+<script>
+function searchRooms() {
+  // Declare variables
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("SearchRoom");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("rooms");
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[2];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+</script>
 {% endblock %}
