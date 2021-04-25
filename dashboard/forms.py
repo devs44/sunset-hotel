@@ -1,5 +1,5 @@
 from django import forms
-from .models import Room, News
+from .models import Room, News, Comment
 
 
 class StaffLoginForm(forms.Form):
@@ -59,7 +59,7 @@ class NewsForm(forms.ModelForm):
                 'placeholder': 'description' 
         }),
            
-            'image': forms.FileInput(attrs={
+            'image': forms.ClearableFileInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'choose image'
         }),
@@ -70,3 +70,8 @@ class NewsForm(forms.ModelForm):
            
         }
         
+class NewsCommentForm(forms.ModelForm):
+    
+    class Meta:
+        model = Comment
+        fields = ('full_name','email', 'news','comment')
