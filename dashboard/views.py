@@ -117,6 +117,15 @@ class RoomCategoryListView(QuerysetMixin, ListView):
     model = Room_Category
     paginate_by = 10
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        if "room_category" in self.request.GET:
+            if self.request.GET.get('room_category') != '':
+                queryset = queryset.filter(
+                    title__contains=self.request.GET.get("room_category"))
+
+        return queryset
+
 
 class RoomCategoryCreateView(CreateView):
     template_name = 'dashboard/room_category/roomcategorycreate.html'
@@ -137,6 +146,15 @@ class FeatureListView(QuerysetMixin, ListView):
     template_name = 'dashboard/feature/feature.html'
     model = Feature
     paginate_by = 10
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        if 'room_feature' in self.request.GET:
+            if self.request.GET.get('room_feature') != '':
+                queryset = queryset.filter(
+                    title__icontains=self.request.GET.get('room_feature')
+                )
+        return queryset
 
 
 class FeatureCreateView(CreateView):
@@ -219,12 +237,14 @@ class EventDelteView(DeleteView):
     success_url = reverse_lazy('dashboard:event_list')
 
 # event comment
+
+
 class EventCommentTemplateView(TemplateView):
     template_name = 'dashboard/event_comment/eventcommentlist.html'
     model = Comment
     form_class = EventCommentForm
-    
-    def get_context_data(self,**kwargs):
+
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['events'] = Event_type.objects.all()
         return context
@@ -302,7 +322,7 @@ class NewsCommentTemplateView(TemplateView):
     template_name = 'dashboard/news_comment/list.html'
     form_class = 'NewsForm'
 
-    def get_context_data(self,**kwargs):
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['news'] = News_type.objects.all()
         return context
@@ -332,9 +352,9 @@ class NewsCommentDeleteView(DeleteView):
     model = Comment
     success_url = reverse_lazy('dashboard:news_comment_list')
 
-    
+
 # testimonial
-class TestimonialListView(QuerysetMixin,ListView):
+class TestimonialListView(QuerysetMixin, ListView):
     model = Testomonial
     template_name = 'dashboard/testimonial/list.html'
 
@@ -377,7 +397,9 @@ class TestimonialDeleteView(DeleteView):
     success_url = reverse_lazy('dashboard:testimonial_list')
 
 # message
-class MessageListView(QuerysetMixin,ListView):
+
+
+class MessageListView(QuerysetMixin, ListView):
     model = Message
     template_name = 'dashboard/message/list.html'
 
@@ -420,7 +442,9 @@ class MessageDeleteView(DeleteView):
     success_url = reverse_lazy('dashboard:message_list')
 
 # reservation
-class ReservationListView(QuerysetMixin,ListView):
+
+
+class ReservationListView(QuerysetMixin, ListView):
     model = Reservation
     template_name = 'dashboard/reservation/list.html'
 
@@ -432,7 +456,8 @@ class ReservationListView(QuerysetMixin,ListView):
                     room_no=self.request.GET.get("first_name"))
         if "selected_room" in self.request.GET:
             queryset = queryset.filter(
-                room_type__title__contains=self.request.GET.get("selected_room")
+                room_type__title__contains=self.request.GET.get(
+                    "selected_room")
             )
 
         return queryset
