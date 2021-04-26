@@ -1,6 +1,5 @@
 from django import forms
-from .models import Room, News, Comment, Event
-
+from .models import Room, News, Comment, Event, Room_Category, Feature, Image
 
 
 class StaffLoginForm(forms.Form):
@@ -76,9 +75,9 @@ class NewsForm(forms.ModelForm):
 
             'description': forms.Textarea(attrs={
                 'class': 'form-control',
-                'placeholder': 'description' 
-        }),
-           
+                'placeholder': 'description'
+            }),
+
             'image': forms.ClearableFileInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'choose image'
@@ -89,12 +88,59 @@ class NewsForm(forms.ModelForm):
             })
 
         }
-        
+
+
+class RoomCategoryForm(forms.ModelForm):
+    class Meta:
+        model = Room_Category
+        fields = ['title']
+        widgets = {
+            'title': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Room category here...'
+            })
+        }
+
+
+class FeatureForm(forms.ModelForm):
+    class Meta:
+        model = Feature
+        fields = ['title', 'image']
+        widgets = {
+            'title': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'room feature...'
+            }),
+            'image': forms.ClearableFileInput(attrs={
+                'class': 'form-control'
+            })
+        }
+
+
+class ImageForm(forms.ModelForm):
+    class Meta:
+        model = Image
+        fields = '__all__'
+        widgets = {
+            'image_type': forms.Select(attrs={
+                'class': 'form-control select2',
+            }),
+            'caption': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'caption...'
+            }),
+            'image': forms.ClearableFileInput(attrs={
+                'class': 'form-control'
+            })
+        }
+
+
 class NewsCommentForm(forms.ModelForm):
-    
+
     class Meta:
         model = Comment
-        fields = ('full_name','email', 'news','comment')
+        fields = ('full_name', 'email', 'news', 'comment')
+
 
 class EventForm(forms.ModelForm):
     class Meta:
@@ -119,13 +165,14 @@ class EventForm(forms.ModelForm):
             })
         }
 
+
 class EventCommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = '__all__'
         widgets = {
-            'events' : forms.Select(attrs={
-                'class' : 'form-control select2'
+            'events': forms.Select(attrs={
+                'class': 'form-control select2'
             }),
             'full_name': forms.TextInput(attrs={
                 'class': 'form-control select2',
@@ -149,7 +196,6 @@ class EventCommentForm(forms.ModelForm):
             })
         }
 
-    
     # def __init__(self, *args, **kwargs):
     #     super(EventCommentForm, self).__init__(*args, **kwargs)
     #     self.fields['name'].widget.attrs.update({
@@ -168,5 +214,3 @@ class EventCommentForm(forms.ModelForm):
     #         'class': 'form-control',
     #         'placeholder': 'Please enter your message'
     #     })
-
-         
