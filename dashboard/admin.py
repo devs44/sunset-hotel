@@ -5,5 +5,5 @@ from .models import*
 
 
 admin.site.register([Room, Room_Category, Feature, Event, Comment, Services_description,
-                     Services_type, Image, News, RoomImage])
+                     Services_type, Image, News, RoomImage, Reservation])
 

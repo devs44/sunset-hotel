@@ -1,5 +1,14 @@
 from django import forms
-from .models import Room, News, Comment, Event
+from .models import Room, News, Comment, Event, Testomonial, Message, Reservation
+
+
+class FormControlMixin:
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[fields].widget.attrs.update({
+                'class': 'form-control'
+            })
 
 
 
@@ -21,10 +30,11 @@ class StaffLoginForm(forms.Form):
     #         raise ValidationError('')
 
 
-class RoomForm(forms.ModelForm):
+class RoomForm(FormControlMixin, forms.ModelForm):
     more_images = forms.FileField(required=False, widget=forms.FileInput(attrs={
         'class': 'form-control select2',
         'multiple': True
+    
     }))
 
     class Meta:
@@ -32,7 +42,7 @@ class RoomForm(forms.ModelForm):
         fields = '__all__'
         widgets = {
             'room_type': forms.Select(attrs={
-                'class': 'form-control select2',
+                'class': 'select2',
                 'placeholder': 'room type'
             }),
             'room_no': forms.TextInput(attrs={
@@ -150,23 +160,119 @@ class EventCommentForm(forms.ModelForm):
         }
 
     
-    # def __init__(self, *args, **kwargs):
-    #     super(EventCommentForm, self).__init__(*args, **kwargs)
-    #     self.fields['name'].widget.attrs.update({
-    #         'class': 'form-control',
-    #         'placeholder': 'Name'
-    #     })
-    #     self.fields['email_address'].widget.attrs.update({
-    #         'class': 'form-control',
-    #         'placeholder': 'Please enter your valid email address'
-    #     })
-    #     self.fields['website'].widget.attrs.update({
-    #         'class': 'form-control',
-    #         'placeholder': 'Please enter your website'
-    #     })
-    #     self.message['message'].widget.attrs.update({
-    #         'class': 'form-control',
-    #         'placeholder': 'Please enter your message'
-    #     })
+class TestimonialForm(forms.ModelForm):
+    class Meta:
+        model = Testomonial
+        fields = '__all__'
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'class': 'form-control select2',
+                'placeholder': 'Enter name'
+            }),
+            'profession': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'profession'
+            }),
+            'voice': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'voice'
+            }),
+            'image': forms.FileInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'choose image'
+            })
+        }
 
+class MessageForm(forms.ModelForm):
+    class Meta:
+        model = Message
+        fields = '__all__'
+        widgets = {
+            'full_name': forms.TextInput(attrs={
+                'class': 'form-control select2',
+                'placeholder': 'Enter name'
+            }),
+            'email': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter your email'
+            }),
+            'message': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter your message'
+            })
+        }
          
+class ReservationForm(forms.ModelForm):
+    class Meta:
+        model = Reservation
+        exclude = ['deleted_at']
+        widgets = {
+            'first_name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter your first name'
+            }),
+            'last_name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter your last name'
+            }),
+            'selected_room': forms.Select(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter your room'
+            }),       
+            'adult': forms.Select(attrs={
+                'class': 'form-control', 
+            }),
+            'check_in_date' : forms.DateTimeInput(attrs={
+                'class' : 'form-control',
+                'placeholder' : 'check in date'
+            }),
+            'check_out_date' : forms.DateTimeInput(attrs={
+                'class' : 'form-control',
+                'placeholder' : 'check out date'
+            }),
+            'children': forms.Select(attrs={
+                'class': 'form-control select2',
+                
+            }),
+            'email': forms.EmailInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter your email'
+            }),
+            'phone': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter your phone number'
+            }),
+            'address_1': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter your phone address_1'
+            }),
+            'address_2': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter your phone address_2'
+            }),
+            'state': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter your state '
+            }),
+            'city': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter your city'
+            }),
+            'zip_code': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter your zip_code'
+            }),
+            'country': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter your country'
+            }),
+            'special_req': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter your special request'
+            }),
+        }
+    
+    def clean_adult(self):
+        adult = self.cleaned_data['adult']
+        print(adult,111111111111111111111111)
+        return adult

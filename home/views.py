@@ -28,7 +28,7 @@ class RoomDetailView(DetailView):
    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['rooms'] = Room.objects.exclude(id=self.get_object().id)
+        context['rooms'] = Room.objects.exclude(room_no=self.get_object().room_no)
         print(context['rooms'])
         return context
 
@@ -58,9 +58,6 @@ class NewsDetailView(DetailView):
         return context
     
     
-
-
-
 
 
 class EventDetailView(DetailView):

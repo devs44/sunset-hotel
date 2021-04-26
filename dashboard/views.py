@@ -6,8 +6,8 @@ from django.views.generic import TemplateView, DetailView, FormView, View, ListV
 
 
 
-from .models import Room, News, Comment, RoomImage,Event
-from .forms import StaffLoginForm, RoomForm, NewsForm, NewsCommentForm, EventForm, EventCommentForm
+from .models import Room, News, Comment, RoomImage, Event, Testomonial, Message, Reservation
+from .forms import StaffLoginForm, RoomForm, NewsForm, NewsCommentForm, EventForm, EventCommentForm, TestimonialForm, MessageForm, ReservationForm
 
 # Create your views here.
 
@@ -133,10 +133,16 @@ class EventDelteView(DeleteView):
     model = Event
     success_url = reverse_lazy('dashboard:event_list')
 
-#eventcomment
-class EventCommentListView(ListView):
+# event comment
+class EventCommentTemplateView(TemplateView):
     template_name = 'dashboard/event_comment/eventcommentlist.html'
     model = Comment
+    form_class = EventCommentForm
+    
+    def get_context_data(self,**kwargs):
+        context = super().get_context_data(**kwargs)
+        context['events'] = Event_type.objects.all()
+        return context
 
 class EventCommentCreateView(CreateView):
     template_name = 'dashboard/event_comment/eventcommentcreate.html'
@@ -158,10 +164,7 @@ class EventCommentDelteView(DeleteView):
     template_name = 'dashboard/event_comment/eventcommentdelete.html'
     model = Comment
     success_url = reverse_lazy('dashboard:event_list')
-    def form_valid(self, form):
-        pk = form.save()
-        pk.delete()
-        return super().form_valid(form)
+
 
 
 class RoomSearchView(View):
@@ -171,9 +174,9 @@ class RoomSearchView(View):
         if room:
             queryset = queryset.filter(room_type__icontains=room)
         return queryset
+
+
 # news
-
-
 class NewsListView(ListView):
     model = News
     template_name = 'dashboard/news/list.html'
@@ -207,9 +210,15 @@ class NewsDeleteView(DeleteView):
 
 #newscomments
 
-class NewsCommentListView(ListView):
+class NewsCommentTemplateView(TemplateView):
     model = Comment
     template_name = 'dashboard/news_comment/list.html'
+    form_class = 'NewsForm'
+
+    def get_context_data(self,**kwargs):
+        context = super().get_context_data(**kwargs)
+        context['news'] = News_type.objects.all()
+        return context
 
 class NewsCommentCreateView(CreateView):
     template_name = 'dashboard/news_comment/form.html'
@@ -237,3 +246,131 @@ class NewsCommentDeleteView(DeleteView):
     success_url = reverse_lazy('dashboard:news_comment_list')
 
     
+# testimonial
+class TestimonialListView(QuerysetMixin,ListView):
+    model = Testomonial
+    template_name = 'dashboard/testimonial/list.html'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        if "name" in self.request.GET:
+            if self.request.GET.get('name') != None and self.request.GET.get('name') != '':
+                queryset = queryset.filter(
+                    room_no=self.request.GET.get("name"))
+        if "profession" in self.request.GET:
+            queryset = queryset.filter(
+                room_type__title__contains=self.request.GET.get("profession")
+            )
+
+        return queryset
+
+
+class TestimonialCreateView(CreateView):
+    template_name = 'dashboard/testimonial/form.html'
+    form_class = TestimonialForm
+    success_url = reverse_lazy('dashboard:testimonial_list')
+
+
+class TestimonialUpdateView(UpdateView):
+    template_name = 'dashboard/testimonial/form.html'
+    model = Testomonial
+    form_class = TestimonialForm
+    success_url = reverse_lazy('dashboard:testimonial_list')
+
+
+class TestimonialDetailView(DetailView):
+    template_name = 'dashboard/testimonial/detail.html'
+    model = Testomonial
+    context_object_name = 'testimonialdetail'
+
+
+class TestimonialDeleteView(DeleteView):
+    template_name = 'dashboard/testimonial/delete.html'
+    model = Testomonial
+    success_url = reverse_lazy('dashboard:testimonial_list')
+
+# message
+class MessageListView(QuerysetMixin,ListView):
+    model = Message
+    template_name = 'dashboard/message/list.html'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        if "full_name" in self.request.GET:
+            if self.request.GET.get('full_name') != None and self.request.GET.get('full_name') != '':
+                queryset = queryset.filter(
+                    room_no=self.request.GET.get("full_name"))
+        if "message" in self.request.GET:
+            queryset = queryset.filter(
+                room_type__title__contains=self.request.GET.get("message")
+            )
+
+        return queryset
+
+
+class MessageCreateView(CreateView):
+    template_name = 'dashboard/message/form.html'
+    form_class = MessageForm
+    success_url = reverse_lazy('dashboard:message_list')
+
+
+class MessageUpdateView(UpdateView):
+    template_name = 'dashboard/message/form.html'
+    model = Message
+    form_class = MessageForm
+    success_url = reverse_lazy('dashboard:message_list')
+
+
+class MessageDetailView(DetailView):
+    template_name = 'dashboard/message/detail.html'
+    model = Message
+    context_object_name = 'messagedetail'
+
+
+class MessageDeleteView(DeleteView):
+    template_name = 'dashboard/message/delete.html'
+    model = Message
+    success_url = reverse_lazy('dashboard:message_list')
+
+# reservation
+class ReservationListView(QuerysetMixin,ListView):
+    model = Reservation
+    template_name = 'dashboard/reservation/list.html'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        if "first_name" in self.request.GET:
+            if self.request.GET.get('first_name') != None and self.request.GET.get('first_name') != '':
+                queryset = queryset.filter(
+                    room_no=self.request.GET.get("first_name"))
+        if "selected_room" in self.request.GET:
+            queryset = queryset.filter(
+                room_type__title__contains=self.request.GET.get("selected_room")
+            )
+
+        return queryset
+
+
+class ReservationCreateView(CreateView):
+    template_name = 'dashboard/reservation/form.html'
+    form_class = ReservationForm
+    success_url = reverse_lazy('dashboard:reservation_list')
+
+
+class ReservationUpdateView(UpdateView):
+    template_name = 'dashboard/reservation/form.html'
+    model = Reservation
+    form_class = ReservationForm
+    success_url = reverse_lazy('dashboard:reservation_list')
+
+
+class ReservationDetailView(DetailView):
+    template_name = 'dashboard/reservation/detail.html'
+    model = Reservation
+    context_object_name = 'reservationdetail'
+
+
+class ReservationDeleteView(DeleteView):
+    template_name = 'dashboard/reservation/delete.html'
+    model = Reservation
+    success_url = reverse_lazy('dashboard:reservation_list')
