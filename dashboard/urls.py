@@ -8,21 +8,45 @@ urlpatterns = [
     path('admin-dashboard/', AdminDashboardView.as_view(), name="admin_dashboard"),
 
     # room
-    path('admin-room-list/', RoomListView.as_view(), name='room_list'),
-    path('admin-room-create/', RoomCreateView.as_view(), name='room_create'),
-    path('admin-room-/<int:pk>/-update/',
+    path('room/list/', RoomListView.as_view(), name='room_list'),
+    path('room/create/', RoomCreateView.as_view(), name='room_create'),
+    path('room/<int:pk>/update/',
          RoomUpdateView.as_view(), name='room_update'),
-    path('admin-room-/<int:pk>/-delete/',
+    path('room/<int:pk>/delete/',
          RoomDeleteView.as_view(), name='room_delete'),
-    path('admin-room-/<int:pk>/-detail/',
+    path('room/<int:pk>/detail/',
          RoomDetailView.as_view(), name="room_detail"),
-    
-    
-    #news
-    
+
+    # room category
+    path('room/category/', RoomCategoryListView.as_view(), name='room_category'),
+    path('room/category/create/',
+         RoomCategoryCreateView.as_view(), name="room_cat_create"),
+    path('room/category/<int:pk>/update/',
+         RoomCategoryUpdateView.as_view(), name="room_cat_update"),
+    path('room/category/<int:pk>/delete/',
+         RoomCategoryDelete.as_view(), name='room_cat_delete'),
+
+
+    # feature
+    path('feature/list/', FeatureListView.as_view(), name="feature_list"),
+    path('feature/create/', FeatureCreateView.as_view(), name='feature_create'),
+    path('feature/<int:pk>/update/',
+         FeatureUpdateView.as_view(), name='feature_update'),
+    path('feature/<int:pk>/delete/',
+         FeatureDeleteView.as_view(), name='feature_delete'),
+
+    # image
+    path('gallery/', ImageListView.as_view(), name='image_list'),
+    path('image/create/', ImageCreateView.as_view(), name='image_create'),
+    path('image/<int:pk>/update/', ImageUpdateView.as_view(), name='image_update'),
+    path('image/<int:pk>/delete/', ImageDeleteView.as_view(), name='image_delete'),
+
+
+    # news
+
     path('news', NewsListView.as_view(), name='news_list'),
     path('news/create', NewsCreateView.as_view(), name='news_create'),
-    path('news-/<int:pk>/update/' ,NewsUpdateView.as_view(), name='news_update'),
+    path('news-/<int:pk>/update/', NewsUpdateView.as_view(), name='news_update'),
     path('news-/<int:pk>/delete/', NewsDeleteView.as_view(), name='news_delete'),
     path('news-/<int:pk>/detail/', NewsDetailView.as_view(), name="news_detail"),
     

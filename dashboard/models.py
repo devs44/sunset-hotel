@@ -163,6 +163,7 @@ class Comment(TimeStamp):
     def __str__(self):
         return self.first_name + self.middle_name + self.last_name
 
+
 class Contact(TimeStamp):
     address = models.CharField(max_length=100)
     phone = models.CharField(max_length=30)
