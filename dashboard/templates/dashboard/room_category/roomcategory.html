@@ -6,9 +6,7 @@
         <div class="row mb-2">
           <div class="col-sm-6">
             <button class="btn btn-primary">
-              <a class="text-white" href="{% url 'dashboard:room_create' %}"
-                >Add Room</a
-              >
+              <a class="text-white" href="{% url 'dashboard:room_cat_create' %}">Add Room Category</a>
             </button>
           </div>
           <div class="col-sm-6">
@@ -29,7 +27,7 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Our Room List</h3>
+                <h3 class="card-title"> Room Categories</h3>
 
                 <div class="card-tools">
                   <div class="input-group input-group-sm" style="width: 150px">
@@ -37,23 +35,8 @@
                       <input
                         type="text"
                         name="room_type"
-                        class="form-control float-right searchInput"
-                        id="SearchRoom"
+                        class="form-control float-right "
                         placeholder="Room type"
-                      />
-                      <input
-                        type="text"
-                        name="room_no"
-                        class="form-control float-right searchInput"
-                        id="SearchRoom"
-                        placeholder="Room no"
-                      />
-                      <input
-                        type="text"
-                        name="price"
-                        class="form-control float-right searchInput"
-                        id="SearchRoom"
-                        placeholder="Price"
                       />
 
                       <div class="input-group-append">
@@ -67,45 +50,29 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body table-responsive p-0">
-                <table class="table table-hover text-nowrap" id="rooms">
+                <table class="table table-hover text-nowrap text-center" >
                   <thead>
                     <tr>
                       <th>SN</th>
-                      <th>Room Type</th>
-                      <th>Room No</th>
-                      <th>Availability</th>
-                      <th>Price</th>
-                      <th>Deleted at</th>
+                      <th width="50%">Title</th>
                       <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {% for room in object_list %}
+                    {% for cat in object_list %}
                     <tr>
                       <td>{{forloop.counter}}</td>
                       <td>
-                        <a href="{% url 'dashboard:room_detail' room.pk %}"
-                          >{{room.room_type}}</a
-                        >
-                      <td>{{room.room_no}}</td>
-                      </td>
-                      {% if room.availability %}
-                      <td>Yes</td>
-                      {% else %}
-                      <td>No</td>
-                      {% endif %}
-                      <!-- <td>{{room.availability}}</td> -->
-                      <td>{{room.price}}</td>
-                      <td>{{room.deleted_at}}</td>
+                        <a href="#">{{cat.title}}</a>
                       <td>
-                          <span ><a class="btn btn-warning mr-2" href="{% url 'dashboard:room_update' room.pk %}"
+                          <span ><a class="btn btn-warning mr-2" href="{% url 'dashboard:room_cat_update' cat.id %}"
                               ><i
                                 class="fa fa-edit m-1"
                                 aria-hidden="true"
                               ></i>Edit</a
                           ></span>
                         <span
-                          ><a class="btn btn-danger" href="{% url 'dashboard:room_delete' room.pk %}"
+                          ><a class="btn btn-danger" href="{% url 'dashboard:room_cat_delete' cat.id %}"
                             ><i class="fa fa-trash m-1"></i></a></span
                         >
                       </td>
@@ -150,28 +117,4 @@
   </div>
 </div>
 {% endblock %}
-{% block script %}
-<script>
-function searchRooms() {
-  // Declare variables
-  var input, filter, table, tr, td, i, txtValue;
-  input = document.getElementById("SearchRoom");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("rooms");
-  tr = table.getElementsByTagName("tr");
 
-  // Loop through all table rows, and hide those who don't match the search query
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[2];
-    if (td) {
-      txtValue = td.textContent || td.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
-    }
-  }
-}
-</script>
-{% endblock %}

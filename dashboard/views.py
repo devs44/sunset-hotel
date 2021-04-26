@@ -5,16 +5,12 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView, DetailView, FormView, View, ListView, CreateView, UpdateView, DeleteView
 
 
+from .models import Room, News, Comment, RoomImage, Event, Room_Category, Feature, Image
+from .forms import *
 
-from .models import Room, News, Comment, RoomImage,Event
-from .forms import StaffLoginForm, RoomForm, NewsForm, NewsCommentForm, EventForm, EventCommentForm
+from .mixin import *
 
 # Create your views here.
-
-
-class QuerysetMixin(object):
-    def get_queryset(self):
-        return super().get_queryset().filter(deleted_at__isnull=True)
 
 
 class LoginView(FormView):
@@ -59,13 +55,20 @@ class RoomListView(QuerysetMixin, ListView):
     def get_queryset(self):
         queryset = super().get_queryset()
         if "room_no" in self.request.GET:
-            if self.request.GET.get('room_no') != None and self.request.GET.get('room_no') != '':
+            if self.request.GET.get('room_no') != '':
                 queryset = queryset.filter(
                     room_no=self.request.GET.get("room_no"))
         if "room_type" in self.request.GET:
-            queryset = queryset.filter(
-                room_type__title__contains=self.request.GET.get("room_type")
-            )
+            if self.request.GET.get('room_type') != '':
+                queryset = queryset.filter(
+                    room_type__title__contains=self.request.GET.get(
+                        "room_type")
+                )
+        if "price" in self.request.GET:
+            if self.request.GET.get('price') != '':
+                queryset = queryset.filter(
+                    price=self.request.GET.get("price")
+                )
 
         return queryset
 
@@ -103,19 +106,99 @@ class RoomDetailView(DetailView):
     context_object_name = 'roomdetail'
 
 
-class RoomDeleteView(DeleteView):
+class RoomDeleteView(DeleteMixin, DeleteView):
     template_name = 'dashboard/room/roomdelete.html'
     model = Room
     success_url = reverse_lazy('dashboard:room_list')
+
+
+class RoomCategoryListView(QuerysetMixin, ListView):
+    template_name = 'dashboard/room_category/roomcategory.html'
+    model = Room_Category
+    paginate_by = 10
+
+
+class RoomCategoryCreateView(CreateView):
+    template_name = 'dashboard/room_category/roomcategorycreate.html'
+    form_class = RoomCategoryForm
+    success_url = reverse_lazy('dashboard:room_category')
+
+
+class RoomCategoryUpdateView(UpdateView):
+    template_name = 'dashboard/room_category/roomcategorycreate.html'
+    model = Room_Category
+    form_class = RoomCategoryForm
+    success_url = reverse_lazy('dashboard:room_category')
+
+# Feature
+
+
+class FeatureListView(QuerysetMixin, ListView):
+    template_name = 'dashboard/feature/feature.html'
+    model = Feature
+    paginate_by = 10
+
+
+class FeatureCreateView(CreateView):
+    template_name = 'dashboard/feature/featurecreate.html'
+    form_class = FeatureForm
+    success_url = reverse_lazy('dashboard:feature_list')
+
+
+class FeatureUpdateView(UpdateView):
+    template_name = 'dashboard/feature/featurecreate.html'
+    model = Feature
+    form_class = FeatureForm
+    success_url = reverse_lazy('dashboard:feature_list')
+
+
+class FeatureDeleteView(DeleteView):
+    template_name = 'dashboard/feature/featuredelete.html'
+    model = Feature
+    success_url = reverse_lazy('dashboard:feature_list')
+
+
+class RoomCategoryDelete(DeleteMixin, DeleteView):
+    template_name = 'dashboard/room_category/roomcategorydelete.html'
+    model = Room_Category
+    success_url = reverse_lazy('dashboard:room_category')
+
+
+# Image
+class ImageListView(QuerysetMixin, ListView):
+    template_name = 'dashboard/gallery/imagelist.html'
+    model = Image
+
+
+class ImageCreateView(CreateView):
+    template_name = 'dashboard/gallery/imagecreate.html'
+    form_class = ImageForm
+    success_url = reverse_lazy('dashboard:image_list')
+
+
+class ImageUpdateView(UpdateView):
+    template_name = 'dashboard/gallery/imagecreate.html'
+    model = Image
+    form_class = ImageForm
+    success_url = reverse_lazy('dashboard:image_list')
+
+
+class ImageDeleteView(DeleteMixin, DeleteView):
+    template_name = 'dashboard/gallery/imagedelete.html'
+    model = Image
+    success_url = reverse_lazy('dashboard:image_list')
+
 
 class EventListView(ListView):
     template_name = 'dashboard/event/eventlist.html'
     model = Event
 
+
 class EventCreateView(CreateView):
     template_name = 'dashboard/event/eventcreate.html'
     form_class = EventForm
     success_url = reverse_lazy('dashboard:event_list')
+
 
 class EventUpdateView(UpdateView):
     template_name = 'dashboard/event/eventcreate.html'
@@ -123,25 +206,31 @@ class EventUpdateView(UpdateView):
     form_class = EventForm
     success_url = reverse_lazy('dashboard:event_list')
 
+
 class EventDetailView(DetailView):
     template_name = 'dashboard/event/eventdetail.html'
     model = Event
     context_object_name = 'eventdetail'
+
 
 class EventDelteView(DeleteView):
     template_name = 'dashboard/event/eventdelete.html'
     model = Event
     success_url = reverse_lazy('dashboard:event_list')
 
-#eventcomment
+# eventcomment
+
+
 class EventCommentListView(ListView):
     template_name = 'dashboard/event_comment/eventcommentlist.html'
     model = Comment
+
 
 class EventCommentCreateView(CreateView):
     template_name = 'dashboard/event_comment/eventcommentcreate.html'
     form_class = EventCommentForm
     success_url = reverse_lazy('dashboard:eventcomment_list')
+
 
 class EventCommentUpdateView(UpdateView):
     template_name = 'dashboard/event_comment/eventcommentcreate.html'
@@ -149,19 +238,17 @@ class EventCommentUpdateView(UpdateView):
     form_class = EventCommentForm
     success_url = reverse_lazy('dashboard:eventcomment_list')
 
+
 class EventCommentDetailView(DetailView):
     template_name = 'dashboard/event_comment/eventcommentdetail.html'
     model = Comment
     context_object_name = 'eventdetail'
 
-class EventCommentDelteView(DeleteView):
+
+class EventCommentDelteView(DeleteMixin, DeleteView):
     template_name = 'dashboard/event_comment/eventcommentdelete.html'
     model = Comment
     success_url = reverse_lazy('dashboard:event_list')
-    def form_valid(self, form):
-        pk = form.save()
-        pk.delete()
-        return super().form_valid(form)
 
 
 class RoomSearchView(View):
@@ -198,25 +285,24 @@ class NewsDetailView(DetailView):
     context_object_name = 'newsdetail'
 
 
-class NewsDeleteView(DeleteView):
+class NewsDeleteView(DeleteMixin, DeleteView):
     template_name = 'dashboard/news/delete.html'
     model = News
     success_url = reverse_lazy('dashboard:news_list')
 
-    
 
-#newscomments
+# newscomments
 
 class NewsCommentListView(ListView):
     model = Comment
     template_name = 'dashboard/news_comment/list.html'
 
+
 class NewsCommentCreateView(CreateView):
     template_name = 'dashboard/news_comment/form.html'
     form_class = NewsCommentForm
     success_url = reverse_lazy('dashboard:news_comment_list')
-    
-    
+
 
 class NewsCommentUpdateView(UpdateView):
     template_name = 'dashboard/news_comment/form.html'
@@ -235,5 +321,3 @@ class NewsCommentDeleteView(DeleteView):
     template_name = 'dashboard/news_comment/delete.html'
     model = Comment
     success_url = reverse_lazy('dashboard:news_comment_list')
-
-    
