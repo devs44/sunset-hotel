@@ -69,7 +69,7 @@ urlpatterns = [
      path('admin-eventcomment-list/', EventCommentTemplateView.as_view(), name='eventcomment_list'),
      path('admin-eventcomment-create/', EventCommentCreateView.as_view(), name='eventcomment_create'),
      path('admin-eventcomment-/<int:pk>/-update/', EventCommentUpdateView.as_view(), name='eventcomment_update'),
-     path('admin-eventcomment/<int:pk>/-delete/', EventCommentDelteView.as_view(), name='eventcomment_delete'),
+     path('admin-eventcomment/<int:pk>/-delete/', EventCommentDeleteView.as_view(), name='eventcomment_delete'),
      path('admin-eventcomment-/<int:pk>/-detail/', EventCommentDetailView.as_view(), name='eventcomment_detail'),
      
 

@@ -28,21 +28,24 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Our Event List</h3>
-
                 <div class="card-tools">
                   <div class="input-group input-group-sm" style="width: 150px">
-                    <input
-                      type="text"
-                      name="table_search"
-                      class="form-control float-right"
-                      placeholder="Search"
-                    />
+                    <form action="{% url 'dashboard:event_list' %}" method="GET">
+                      <input
+                        type="text"
+                        name="title"
+                        class="form-control float-right searchInput"
+                        id="Searchname"
+                        placeholder="First Name"
+                      />
+                      
 
-                    <div class="input-group-append">
-                      <button type="submit" class="btn btn-default">
-                        <i class="fas fa-search"></i>
-                      </button>
-                    </div>
+                      <div class="input-group-append">
+                        <button type="submit" class="btn btn-default">
+                          <i class="fas fa-search"></i>
+                        </button>
+                      </div>
+                    </form>
                   </div>
                 </div>
               </div>
@@ -54,7 +57,7 @@
                       <th>SN</th>
                       <th>Event Title </th>
                       <th>Created By</th>
-                      
+                      <th>Image</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -62,14 +65,25 @@
                     <tr>
                       <td>{{forloop.counter}}</td>
                       <td>
-                        <a href="{% url 'dashboard:event_detail' event.id %}">{{event.title}}</a>
+                        <a href="{%url 'dashboard:event_detail' event.id%}"
+                          >{{event.title}}</a
+                        >
                       </td>
-                      <td>{{event.created_by}}</td>
-                      
+                      <td>{{event.description|truncatewords:10|safe}}</td>
+                      <td><img src="{{event.image.url}}" style="width: 20%;"></td>
                       <td>
-                        <span><a href="{% url 'dashboard:event_delete' event.id %}"><i class="fa fa-trash m-1"></i></a></span>|
-                        <span><a href="{% url 'dashboard:event_update' event.id %}"><i class="fa fa-edit m-1" aria-hidden="true"></i></a></span>
-                      </td>
+                        <span
+                          ><a href="{% url 'dashboard:event_delete' event.id %}"
+                            ><i class="fa fa-trash m-1"></i></a></span
+                        >|
+                        <span
+                          ><a href="{% url 'dashboard:event_update' event.id %}"
+                            ><i
+                              class="fa fa-edit m-1"
+                              aria-hidden="true"
+                            ></i></a
+                        ></span>
+                      </td> 
                     </tr>
                     {% endfor %}
                   </tbody>

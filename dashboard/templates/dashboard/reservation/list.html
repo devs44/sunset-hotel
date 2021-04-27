@@ -30,21 +30,37 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Reservation List</h3>
-
-                <div class="card-tools">
+               <div class="card-tools">
                   <div class="input-group input-group-sm" style="width: 150px">
-                    <input
-                      type="text"
-                      name="table_search"
-                      class="form-control float-right"
-                      placeholder="Search"
-                    />
+                    <form action="{% url 'dashboard:reservation_list' %}" method="GET">
+                      <input
+                        type="text"
+                        name="first_name"
+                        class="form-control float-right searchInput"
+                        id="Searchname"
+                        placeholder="First Name"
+                      />
+                      <input
+                        type="text"
+                        name="selected_room"
+                        class="form-control float-right searchInput"
+                        id="SearchSelectedRoom"
+                        placeholder="Room no"
+                      />
+                      <input
+                        type="text"
+                        name="check_in_date"
+                        class="form-control float-right searchInput"
+                        id="CheckInDate"
+                        placeholder="Check in Date"
+                      />
 
-                    <div class="input-group-append">
-                      <button type="submit" class="btn btn-default">
-                        <i class="fas fa-search"></i>
-                      </button>
-                    </div>
+                      <div class="input-group-append">
+                        <button type="submit" class="btn btn-default">
+                          <i class="fas fa-search"></i>
+                        </button>
+                      </div>
+                    </form>
                   </div>
                 </div>
               </div>

@@ -93,7 +93,7 @@ class NewsForm(forms.ModelForm):
                 'placeholder': 'choose image'
             }),
 
-            'Created By': forms.Select(attrs={
+            'created_by': forms.Select(attrs={
                 'class': 'form-control select2',
             })
 
@@ -178,27 +178,32 @@ class NewsCommentForm(forms.ModelForm):
         }
 
 class EventForm(forms.ModelForm):
+
     class Meta:
         model = Event
         fields = '__all__'
         widgets = {
             'title': forms.TextInput(attrs={
-                'class': 'form-control select2',
-                'placeholder': 'event title'
+                'class': 'form-control',
+                'placeholder': 'title'
             }),
+
             'description': forms.Textarea(attrs={
                 'class': 'form-control',
                 'placeholder': 'description'
             }),
-            'created_by': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'created by'
-            }),
-            'image': forms.FileInput(attrs={
+
+            'image': forms.ClearableFileInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'choose image'
+            }),
+
+            'created_by': forms.Select(attrs={
+                'class': 'form-control select2',
             })
+
         }
+
 
 
 class EventCommentForm(forms.ModelForm):
@@ -221,9 +226,8 @@ class EventCommentForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': 'Enter your website'
             }),
-            'created_by': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'created by'
+            'created_by': forms.Select(attrs={
+                'class': 'form-control select2',
             }),
             'comment': forms.Textarea(attrs={
                 'class': 'form-control',

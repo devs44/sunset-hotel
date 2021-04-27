@@ -39,6 +39,7 @@
               <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="card-body">
+                {% comment %} {{ form }} {% endcomment %}
                   <div class="form-group">
                     <label for="title">Event Title</label>
                     <p>{{form.title}}</p>
@@ -48,10 +49,6 @@
                     <p>{{form.description}}</p>
                   </div>
                   <div class="form-group">
-                    <label for="created_by">Created By</label>
-                    <p>{{form.created_by}}</p>
-                  </div>
-                  <div class="form-group">
                     <label for="exampleInputFile">Image</label>
                     <div class="input-group">
                       <div class="custom-file">
@@ -59,8 +56,16 @@
                       </div>
                     </div>
                   </div>
-                  
+                  <div class="form-group">
+                    <label for="exampleInputFile">Created By:</label>
+                    <div class="input-group">
+                      <div class="custom-file">
+                        <p>{{form.created_by}}</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
+
                 <!-- /.card-body -->
 
                 <div class="card-footer">

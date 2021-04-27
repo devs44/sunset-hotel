@@ -28,21 +28,22 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Our Event Comment List</h3>
-
                 <div class="card-tools">
                   <div class="input-group input-group-sm" style="width: 150px">
-                    <input
-                      type="text"
-                      name="table_search"
-                      class="form-control float-right"
-                      placeholder="Search"
-                    />
-
-                    <div class="input-group-append">
-                      <button type="submit" class="btn btn-default">
-                        <i class="fas fa-search"></i>
-                      </button>
-                    </div>
+                    <form action="{% url 'dashboard:eventcomment_list' %}" method="GET">
+                      <input
+                        type="text"
+                        name="full_name"
+                        class="form-control float-right"
+                        
+                        placeholder="Name"
+                      />
+                      <div class="input-group-append">
+                        <button type="submit" class="btn btn-default">
+                          <i class="fas fa-search"></i>
+                        </button>
+                      </div>
+                    </form>
                   </div>
                 </div>
               </div>
@@ -59,7 +60,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    {% for event in object_list %}
+                    {% for event in events %}
                     <tr>
                       <td>{{forloop.counter}}</td>
                       <td>
@@ -67,7 +68,8 @@
                       </td>
                       <td>{{event.email}}</td>
                       <td>{{event.website}}</td>
-                      
+                      <td>{{event.comment}}</td>
+        
                       <td>
                         <span><a href="{% url 'dashboard:eventcomment_delete' event.id %}"><i class="fa fa-trash m-1"></i></a></span>|
                         <span><a href="{% url 'dashboard:eventcomment_update' event.id %}"><i class="fa fa-edit m-1" aria-hidden="true"></i></a></span>

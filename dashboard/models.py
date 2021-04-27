@@ -136,7 +136,7 @@ class Event(TimeStamp):
     image = models.ImageField(upload_to="Events")
     description = RichTextField()
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    view_count = models.PositiveIntegerField(default=0)
+    view_count = models.PositiveIntegerField(default=0,null=True,blank=True)
 
     class Meta:
         verbose_name = _('Event')
