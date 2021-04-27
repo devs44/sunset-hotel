@@ -1,3 +1,5 @@
+from .mixin import *
+from .forms import *
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -7,10 +9,9 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView, DetailView, FormView, View, ListView, CreateView, UpdateView, DeleteView
 
 
-from .models import Room, News, Comment, RoomImage, Event, Room_Category, Feature, Image, Testomonial, Message, Reservation, Services_type, Services_description
-from .forms import *
+from .models import Room, News, Comment, RoomImage, Event, Room_Category, Feature, Image, Testomonial, Message, Reservation, Services_type, Services_description, Contact,  About
+from django.shortcuts import render, redirect
 
-from .mixin import *
 
 # Create your views here.
 
@@ -247,7 +248,7 @@ class EventDetailView(DetailView):
         return obj
 
 
-class EventDelteView(DeleteView):
+class EventDeleteView(DeleteView):
     template_name = 'dashboard/event/eventdelete.html'
     model = Event
     success_url = reverse_lazy('dashboard:event_list')
@@ -262,7 +263,7 @@ class EventCommentTemplateView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['events'] = Comment.objects.filter(Q(news__isnull=True) &
-                                                    Q(deleted_at__isnull=True))
+                                                   Q(deleted_at__isnull=True))
         return context
 
     def get_queryset(self):
@@ -272,7 +273,8 @@ class EventCommentTemplateView(TemplateView):
                 queryset = queryset.filter(
                     full_name=self.request.GET.get("full_name"))
         return queryset
-        
+
+
 class EventCommentCreateView(CreateView):
     template_name = 'dashboard/event_comment/eventcommentcreate.html'
     form_class = EventCommentForm
@@ -296,7 +298,6 @@ class EventCommentDeleteView(DeleteMixin, DeleteView):
     template_name = 'dashboard/event_comment/eventcommentdelete.html'
     model = Comment
     success_url = reverse_lazy('dashboard:eventcomment_list')
-
 
 
 class RoomSearchView(View):
@@ -438,7 +439,7 @@ class MessageListView(QuerysetMixin, ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        
+
         if "email" in self.request.GET:
             queryset = queryset.filter(
                 email=self.request.GET.get("email")
@@ -522,15 +523,48 @@ class ReservationDeleteView(DeleteView):
     template_name = 'dashboard/reservation/delete.html'
     model = Reservation
     success_url = reverse_lazy('dashboard:reservation_list')
-    
-    
+
+
+class AboutView(QuerysetMixin, ListView):
+    template_name = 'dashboard/about/about.html'
+    model = About
+    paginate_by = 7
+
+# About
+
+
+class AboutCreateView(CreateView):
+    template_name = 'dashboard/about/aboutcreate.html'
+    form_class = AboutForm
+    success_url = reverse_lazy('dashboard:about_list')
+
+
+class AboutUpdateView(UpdateView):
+    template_name = 'dashboard/about/aboutcreate.html'
+    form_class = AboutForm
+    model = About
+    success_url = reverse_lazy('dashboard:about_list')
+
+
+class AboutDetailView(DetailView):
+    template_name = 'dashboard/about/aboutdetail.html'
+    model = About
+    context_object_name = 'aboutdetail'
+
+
+class AboutDeleteView(DeleteMixin, DeleteView):
+    template_name = 'dashboard/about/aboutdelete.html'
+    model = About
+    success_url = reverse_lazy('dashboard:about_list')
+
+
 # Service Type
 
 class ServiceListView (ListView):
     template_name = 'dashboard/services-type/list.html'
     model = Services_type
     context_object_name = 'servicetype'
-    
+
 
 class ServiceCreateView(CreateView):
     template_name = 'dashboard/services-type/form.html'
@@ -555,15 +589,15 @@ class ServiceDeleteView(DeleteView):
     template_name = 'dashboard/services-type/delete.html'
     model = Services_type
     success_url = reverse_lazy('dashboard:service_type_list')
-    
 
-#service video
+
+# service video
 
 class ServiceVideoListView (ListView):
     template_name = 'dashboard/service-video/list.html'
     model = Services_description
     context_object_name = 'servicevideo'
-    
+
 
 class ServiceVideoCreateView(CreateView):
     template_name = 'dashboard/service-video/form.html'
@@ -588,4 +622,39 @@ class ServiceVideoDeleteView(DeleteView):
     template_name = 'dashboard/services-video/delete.html'
     model = Services_description
     success_url = reverse_lazy('dashboard:service_video_list')
+    
+
+#contact
+
+class ContactListView(ListView):
+    model = Contact
+    template_name = 'dashboard/contact/list.html'
+    context_object_name = 'contact'
+    
+
+class ContactCreateView(CreateView):
+    template_name = 'dashboard/contact/form.html'
+    form_class = ContactForm
+    success_url = reverse_lazy('dashboard:contact_list')
+
+
+class ContactUpdateView(UpdateView):
+    template_name = 'dashboard/contact/form.html'
+    model = Contact
+    form_class = ContactForm
+    success_url = reverse_lazy('dashboard:contact_list')
+
+
+class ContactDetailView(DetailView):
+    template_name = 'dashboard/contact/detail.html'
+    model = Contact
+    context_object_name = 'contactdetail'
+
+
+class ContactDeleteView(DeleteView):
+    template_name = 'dashboard/contact/delete.html'
+    model = Contact
+    success_url = reverse_lazy('dashboard:contact_list')
+    
+
     

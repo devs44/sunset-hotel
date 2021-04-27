@@ -62,7 +62,7 @@ urlpatterns = [
      path('admin-event-list/', EventListView.as_view(), name='event_list'),
      path('admin-event-create/', EventCreateView.as_view(), name='event_create'),
      path('admin-event-/<int:pk>/-update/', EventUpdateView.as_view(), name='event_update'),
-     path('admin-event/<int:pk>/-delete/', EventDelteView.as_view(), name='event_delete'),
+     path('admin-event/<int:pk>/-delete/', EventDeleteView.as_view(), name='event_delete'),
      path('admin-event-/<int:pk>/-detail/', EventDetailView.as_view(), name='event_detail'),
 
      #event_comments
@@ -108,6 +108,20 @@ urlpatterns = [
      path('service/video/<int:pk>/update/', ServiceVideoUpdateView.as_view(), name='service_video_update'),
      path('service/video/<int:pk>/delete/', ServiceVideoDeleteView.as_view(), name='service_video_delete'),
      path('service/video/<int:pk>/detail/', ServiceVideoDetailView.as_view(), name='service_video_detail'),
+     
+      #contact
+     path('contact/list/', ContactListView.as_view(), name='contact_list'),
+     path('contact/create/', ContactCreateView.as_view(), name='contact_create'),
+     path('contact/<int:pk>/update/', ContactUpdateView.as_view(), name='contact_update'),
+     path('contact/<int:pk>/delete/', ContactDeleteView.as_view(), name='contact_delete'),
+     path('contact/<int:pk>/detail/', ContactDetailView.as_view(), name='contact_detail'),
+     
+      # About
+    path('about/list/', AboutView.as_view(), name="about_list"),
+    path('about/create/', AboutCreateView.as_view(), name="about_create"),
+    path('about/<int:pk>/update/', AboutUpdateView.as_view(), name="about_update"),
+    path('about/<int:pk>/detail/', AboutDetailView.as_view(), name="about_detail"),
+    path('about/<int:pk>/delete/', AboutDeleteView.as_view(), name="about_delete"),
      
      
 ]
