@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView, DetailView, FormView, View, ListView, CreateView, UpdateView, DeleteView
 
 
-from .models import Room, News, Comment, RoomImage, Event, Room_Category, Feature, Image, Testomonial, Message, Reservation, Services_type, Services_description
+from .models import Room, News, Comment, RoomImage, Event, Room_Category, Feature, Image, Testomonial, Message, Reservation, Services_type, Services_description, Contact
 from .forms import *
 
 from .mixin import *
@@ -553,4 +553,39 @@ class ServiceVideoDeleteView(DeleteView):
     template_name = 'dashboard/services-video/delete.html'
     model = Services_description
     success_url = reverse_lazy('dashboard:service_video_list')
+    
+
+#contact
+
+class ContactListView(ListView):
+    model = Contact
+    template_name = 'dashboard/contact/list.html'
+    context_object_name = 'contact'
+    
+
+class ContactCreateView(CreateView):
+    template_name = 'dashboard/contact/form.html'
+    form_class = ContactForm
+    success_url = reverse_lazy('dashboard:contact_list')
+
+
+class ContactUpdateView(UpdateView):
+    template_name = 'dashboard/contact/form.html'
+    model = Contact
+    form_class = ContactForm
+    success_url = reverse_lazy('dashboard:contact_list')
+
+
+class ContactDetailView(DetailView):
+    template_name = 'dashboard/contact/detail.html'
+    model = Contact
+    context_object_name = 'contactdetail'
+
+
+class ContactDeleteView(DeleteView):
+    template_name = 'dashboard/contact/delete.html'
+    model = Contact
+    success_url = reverse_lazy('dashboard:contact_list')
+    
+
     

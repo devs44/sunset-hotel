@@ -109,5 +109,12 @@ urlpatterns = [
      path('service/video/<int:pk>/delete/', ServiceVideoDeleteView.as_view(), name='service_video_delete'),
      path('service/video/<int:pk>/detail/', ServiceVideoDetailView.as_view(), name='service_video_detail'),
      
+      #servicevideo
+     path('contact/list/', ContactListView.as_view(), name='contact_list'),
+     path('contact/create/', ContactCreateView.as_view(), name='contact_create'),
+     path('contact/<int:pk>/update/', ContactUpdateView.as_view(), name='contact_update'),
+     path('contact/<int:pk>/delete/', ContactDeleteView.as_view(), name='contact_delete'),
+     path('contact/<int:pk>/detail/', ContactDetailView.as_view(), name='contact_detail'),
+     
      
 ]
