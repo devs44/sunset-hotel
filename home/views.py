@@ -15,7 +15,7 @@ class HomeTemplateView(TemplateView):
         context['room'] = Room.objects.all()
         context['news'] = News.objects.all().order_by("-id")
         context['event'] = Event.objects.all()
-
+        context['test'] = Testomonial.objects.all()
         return context
 
 
@@ -43,7 +43,7 @@ class ServiceListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['services'] = Services_type.objects.all()
-
+        context['test'] = Testomonial.objects.all()
         return context
 
 
