@@ -6,8 +6,11 @@
         <div class="row mb-2">
           <div class="col-sm-6">
             <button class="btn btn-primary">
-              <a class="text-white" href="{% url 'dashboard:news_comment_create' %}"
-                >Add comment</a>
+              <a
+                class="text-white"
+                href="{% url 'dashboard:news_comment_create' %}"
+                >Add comment</a
+              >
             </button>
           </div>
           <div class="col-sm-6">
@@ -72,32 +75,40 @@
                       <th>News Title</th>
                       <th>Full Name</th>
                       <th>Email</th>
-                    
+
                       <th>Comment</th>
-                      <th>Action </th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {% for comment in object_list %}
+                    {% for comment in news %}
                     <tr>
                       <td>{{forloop.counter}}</td>
-                      <td><a href="{% url 'dashboard:news_comment_detail' comment.id %}">{{comment.news}}</a></td>
+                      <td>
+                        <a
+                          href="{% url 'dashboard:news_comment_detail' comment.id %}"
+                          >{{comment.news}}</a
+                        >
+                      </td>
                       <td>{{comment.full_name}}</td>
                       <td>{{comment.email}}</td>
                       <td>{{comment.comment}}</td>
                       <td>
                         <span
-                          ><a href="{% url 'dashboard:news_comment_delete' comment.id %}"
-                            ><i class="fa fa-trash m-1"></i></a></span
-                        >|
+                          ><a
+                            class="btn btn-warning mr-2"
+                            href="{% url 'dashboard:news_comment_update' comment.id %}"
+                            ><i class="fa fa-edit m-1" aria-hidden="true"></i
+                            >Edit</a
+                          ></span
+                        >
                         <span
-                          ><a href="{% url 'dashboard:news_comment_update' comment.id %}"
-                            ><i
-                              class="fa fa-edit m-1"
-                              aria-hidden="true"
-                            ></i></a
+                          ><a
+                            class="btn btn-danger"
+                            href="{% url 'dashboard:news_comment_delete' comment.id %}"
+                            ><i class="fa fa-trash m-1"></i></a
                         ></span>
-                      </td> 
+                      </td>
                     </tr>
                     {% endfor %}
                   </tbody>

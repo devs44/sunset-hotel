@@ -6,7 +6,7 @@
         <div class="row mb-2">
           <div class="col-sm-6">
             <button class="btn btn-primary">
-              <a class="text-white" href="{% url 'dashboard:news_list' %}"
+              <a class="text-white" href="{% url 'dashboard:news_comment_list' %}"
                 >Cancel</a
               >
             </button>
@@ -38,18 +38,31 @@
               <!-- form start -->
               <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
-
                 <div class="card-body">
-                  {% for fields in form%}
+                  {% comment %} {{ form }} {% endcomment %}
                   <div class="form-group">
-                  <label>{{ fields.label }}</label>
-                  <div class="custom-file">
-                     <p>{{ fields }}</p> 
-                     </div>
+                    <label for="news">news</label>
+                    <p>{{form.news}}</p>
                   </div>
-                  {% endfor %}
+                  <div class="form-group">
+                    <label for="full_name">full_name</label>
+                    <p>{{form.full_name}}</p>
+                  </div>
+                  <div class="form-group">
+                    <label for="email">email</label>
+                    <p>{{form.email}}</p>
+                  </div>
+                  <div class="form-group">
+                    <label for="website">website</label>
+                    <p>{{form.website}}</p>
+                  </div>
 
-                 
+                  <div class="form-group">
+                    <label for="message">News Comment</label>
+                    <p>{{form.comment}}</p>
+                  </div>
+                </div>
+
                 <!-- /.card-body -->
 
                 <div class="card-footer">

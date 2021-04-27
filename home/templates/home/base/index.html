@@ -227,6 +227,7 @@
 	    </div> <!-- / .container -->
     </section> <!-- / .section__best-rooms -->
 
+
 <!-- section services -->
 <section class="section__services">
   <div class="container-fluid">
@@ -550,76 +551,84 @@
 
 <!-- section Events -->
 <section class="section__events">
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-12">
-          <h2 class="section__title">Our news <strong>& events</strong></h2>
-          <div class="divider">
-            <hr class="line1">
-            <hr class="line2">
-            <hr class="line1">
-          </div> <!-- / .divider -->
+
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <h2 class="section__title">Our news <strong>& events</strong></h2>
+        <div class="divider">
+          <hr class="line1" />
+          <hr class="line2" />
+          <hr class="line1" />
         </div>
-      </div> <!-- / .row -->
-    </div> <!-- / .container -->
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-xs-12 hidden-xs col-sm-6 col-md-6 col-lg-3 col-lg-push-9">
-          <div class="news__title">
-            <div>News</div>
+        <!-- / .divider -->
+      </div>
+    </div>
+    <!-- / .row -->
+  </div>
+  <!-- / .container -->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-xs-12 hidden-xs col-sm-6 col-md-6 col-lg-3 col-lg-push-9">
+        <div class="news__title">
+          <div>News</div>
+        </div>
+      </div>
+      {% for n in news %}
+      <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-lg-pull-3">
+        <div class="events__item">
+          <div class="events-item__img">
+            <img src="{{ n.image.url }}" class="img-responsive" alt="..." />
           </div>
+          <div class="events-item__body">
+            <div class="events-item__header">
+              <div class="events-item__date">
+                <p class="item_date__nbr">{{n.created_at|date:"d"}}</p>
+                <p class="item_date__mounth">{{n.created_at|date:"M"}}</p>
+              </div>
+              <!-- .events-item__date -->
+              <div class="events-item__content">
+                <div class="events-item__title">
+                  <h3>{{n.title}}</h3>
+                </div>
+                <div class="events-item__info">
+                  <ul class="item-info__list">
+                    <li class="info-list__item">
+                      <i class="ion ion-android-person"></i> by {{n.created_by}}
+                    </li>
+                    <li class="info-list__item">
+                      <i class="ion ion-android-chat" aria-hidden="true"></i> 5
+                      Comments
+                    </li>
+                  </ul>
+                  <!-- .item-info__list -->
+                </div>
+                <!-- .events-item__info -->
+              </div>
+              <!-- .events-item__content -->
+            </div>
+            <!-- .events-item__header -->
+            <div class="events-item__text">
+              {{n.description | truncatewords:10 }}
+            </div>
+
+            <!-- .events-item__text -->
+            <div class="events-item__link">
+              <a href="{% url 'news_detail' n.pk %}">Read More ➔</a>
+            </div>
+            <!-- .events-item__link -->
+          </div>
+          <!-- / .events-item__body -->
         </div>
-       {% for n in news %}
-<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-lg-pull-3">
-<div class="events__item">
-<div class="events-item__img">
-<img src="{{ n.image.url }}" class="img-responsive" alt="..." />
-</div>
-<div class="events-item__body">
-<div class="events-item__header">
-<div class="events-item__date">
-<p class="item_date__nbr">{{n.created_at|date:"d"}}</p>
-<p class="item_date__mounth">{{n.created_at|date:"M"}}</p>
-</div>
-<!-- .events-item__date -->
-<div class="events-item__content">
-<div class="events-item__title">
-<h3>{{n.title}}</h3>
-</div>
-<div class="events-item__info">
-<ul class="item-info__list">
-<li class="info-list__item">
-<i class="ion ion-android-person"></i> by {{n.created_by}}
-</li>
-<li class="info-list__item">
-<i class="ion ion-android-chat" aria-hidden="true"></i> 5
-Comments
-</li>
-</ul>
-<!-- .item-info__list -->
-</div>
-<!-- .events-item__info -->
-</div>
-<!-- .events-item__content -->
-</div>
-<!-- .events-item__header -->
-<div class="events-item__text">
-{{n.description | truncatewords:10 }}
-</div>
+        <!-- .events__item -->
+      </div>
+      {%endfor%}
+    </div>
+    <!-- / .row -->
+ 
 
-<!-- .events-item__text -->
-<div class="events-item__link">
-<a href="{% url 'news_detail' n.pk %}">Read More ➔</a>
-</div>
-<!-- .events-item__link -->
-</div>
-<!-- / .events-item__body -->
-</div>
-<!-- .events__item -->
-</div>
-{%endfor%}
 
-      </div> <!-- / .row -->
+  
       <div class="row">
         <div class="col-xs-12 hidden-xs col-sm-6 col-md-6 col-lg-3">
           <div class="events__title">
@@ -663,6 +672,7 @@ Comments
       </div> <!-- / .row -->
     </div> <!-- / .container -->
   </section> <!-- / .section__events -->
+
 
 <!-- section Contacts -->
 <section class="section__contacts">

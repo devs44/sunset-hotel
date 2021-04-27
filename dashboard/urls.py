@@ -50,7 +50,7 @@ urlpatterns = [
     path('news-/<int:pk>/delete/', NewsDeleteView.as_view(), name='news_delete'),
     path('news-/<int:pk>/detail/', NewsDetailView.as_view(), name="news_detail"),
     
-    #comment
+    #newscomment
     path('news/comment', NewsCommentTemplateView.as_view(), name='news_comment_list'),
      path('news/comment/create/', NewsCommentCreateView.as_view(), name='news_comment_create'),
     path('news/comment/<int:pk>/update/' , NewsCommentUpdateView.as_view(), name='news_comment_update'),
@@ -94,4 +94,20 @@ urlpatterns = [
      path('reservation/<int:pk>/update/', ReservationUpdateView.as_view(), name='reservation_update'),
      path('reservation/<int:pk>/delete/', ReservationDeleteView.as_view(), name='reservation_delete'),
      path('reservation/<int:pk>/detail/', ReservationDetailView.as_view(), name='reservation_detail'),
+     
+     #servicetype
+     path('service/type/list/', ServiceListView.as_view(), name='service_type_list'),
+     path('service/type/create/', ServiceCreateView.as_view(), name='service_type_create'),
+     path('service/type/<int:pk>/update/', ServiceUpdateView.as_view(), name='service_type_update'),
+     path('service/type/<int:pk>/delete/', ServiceDeleteView.as_view(), name='service_type_delete'),
+     path('service/type/<int:pk>/detail/', ServiceDetailView.as_view(), name='service_type_detail'),
+     
+      #servicevideo
+     path('service/video/list/', ServiceVideoListView.as_view(), name='service_video_list'),
+     path('service/video/create/', ServiceVideoCreateView.as_view(), name='service_video_create'),
+     path('service/video/<int:pk>/update/', ServiceVideoUpdateView.as_view(), name='service_video_update'),
+     path('service/video/<int:pk>/delete/', ServiceVideoDeleteView.as_view(), name='service_video_delete'),
+     path('service/video/<int:pk>/detail/', ServiceVideoDetailView.as_view(), name='service_video_detail'),
+     
+     
 ]
