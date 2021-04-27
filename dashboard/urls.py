@@ -49,49 +49,82 @@ urlpatterns = [
     path('news-/<int:pk>/update/', NewsUpdateView.as_view(), name='news_update'),
     path('news-/<int:pk>/delete/', NewsDeleteView.as_view(), name='news_delete'),
     path('news-/<int:pk>/detail/', NewsDetailView.as_view(), name="news_detail"),
-    
-    #comment
-    path('news/comment', NewsCommentTemplateView.as_view(), name='news_comment_list'),
-     path('news/comment/create/', NewsCommentCreateView.as_view(), name='news_comment_create'),
-    path('news/comment/<int:pk>/update/' , NewsCommentUpdateView.as_view(), name='news_comment_update'),
-    path('news/comment/<int:pk>/delete/', NewsCommentDeleteView.as_view(), name='news_comment_delete'),
-    path('news/comment/<int:pk>/detail/', NewsCommentDetailView.as_view(), name="news_comment_detail"),
-    
 
-     # event
-     path('admin-event-list/', EventListView.as_view(), name='event_list'),
-     path('admin-event-create/', EventCreateView.as_view(), name='event_create'),
-     path('admin-event-/<int:pk>/-update/', EventUpdateView.as_view(), name='event_update'),
-     path('admin-event/<int:pk>/-delete/', EventDelteView.as_view(), name='event_delete'),
-     path('admin-event-/<int:pk>/-detail/', EventDetailView.as_view(), name='event_detail'),
+    # comment
+    path('news/comment', NewsCommentTemplateView.as_view(),
+         name='news_comment_list'),
+    path('news/comment/create/', NewsCommentCreateView.as_view(),
+         name='news_comment_create'),
+    path('news/comment/<int:pk>/update/',
+         NewsCommentUpdateView.as_view(), name='news_comment_update'),
+    path('news/comment/<int:pk>/delete/',
+         NewsCommentDeleteView.as_view(), name='news_comment_delete'),
+    path('news/comment/<int:pk>/detail/',
+         NewsCommentDetailView.as_view(), name="news_comment_detail"),
 
-     #event_comments
-     path('admin-eventcomment-list/', EventCommentTemplateView.as_view(), name='eventcomment_list'),
-     path('admin-eventcomment-create/', EventCommentCreateView.as_view(), name='eventcomment_create'),
-     path('admin-eventcomment-/<int:pk>/-update/', EventCommentUpdateView.as_view(), name='eventcomment_update'),
-     path('admin-eventcomment/<int:pk>/-delete/', EventCommentDelteView.as_view(), name='eventcomment_delete'),
-     path('admin-eventcomment-/<int:pk>/-detail/', EventCommentDetailView.as_view(), name='eventcomment_detail'),
-     
 
-     #testimonials
-     path('admin-testimonial-list/', TestimonialListView.as_view(), name='testimonial_list'),
-     path('admin-testimonial-create/', TestimonialCreateView.as_view(), name='testimonial_create'),
-     path('admin-testimonial/<int:pk>/-update/', TestimonialUpdateView.as_view(), name='testimonial_update'),
-     path('admin-testimonial/<int:pk>/-delete/', TestimonialDeleteView.as_view(), name='testimonial_delete'),
-     path('admin-testimonial-/<int:pk>/-detail/', TestimonialDetailView.as_view(), name='testimonial_detail'),
-    
+    # event
+    path('admin-event-list/', EventListView.as_view(), name='event_list'),
+    path('admin-event-create/', EventCreateView.as_view(), name='event_create'),
+    path('admin-event-/<int:pk>/-update/',
+         EventUpdateView.as_view(), name='event_update'),
+    path('admin-event/<int:pk>/-delete/',
+         EventDelteView.as_view(), name='event_delete'),
+    path('admin-event-/<int:pk>/-detail/',
+         EventDetailView.as_view(), name='event_detail'),
 
-     #message
-     path('messagelist/', MessageListView.as_view(), name='message_list'),
-     path('messagecreate/', MessageCreateView.as_view(), name='message_create'),
-     path('message/<int:pk>/update/', MessageUpdateView.as_view(), name='message_update'),
-     path('message/<int:pk>/delete/', MessageDeleteView.as_view(), name='message_delete'),
-     path('message/<int:pk>/detail/', MessageDetailView.as_view(), name='message_detail'),
-    
-     #reservation
-     path('reservationlist/', ReservationListView.as_view(), name='reservation_list'),
-     path('reservationcreate/', ReservationCreateView.as_view(), name='reservation_create'),
-     path('reservation/<int:pk>/update/', ReservationUpdateView.as_view(), name='reservation_update'),
-     path('reservation/<int:pk>/delete/', ReservationDeleteView.as_view(), name='reservation_delete'),
-     path('reservation/<int:pk>/detail/', ReservationDetailView.as_view(), name='reservation_detail'),
+    # event_comments
+    path('admin-eventcomment-list/',
+         EventCommentTemplateView.as_view(), name='eventcomment_list'),
+    path('admin-eventcomment-create/',
+         EventCommentCreateView.as_view(), name='eventcomment_create'),
+    path('admin-eventcomment-/<int:pk>/-update/',
+         EventCommentUpdateView.as_view(), name='eventcomment_update'),
+    path('admin-eventcomment/<int:pk>/-delete/',
+         EventCommentDelteView.as_view(), name='eventcomment_delete'),
+    path('admin-eventcomment-/<int:pk>/-detail/',
+         EventCommentDetailView.as_view(), name='eventcomment_detail'),
+
+
+    # testimonials
+    path('admin-testimonial-list/',
+         TestimonialListView.as_view(), name='testimonial_list'),
+    path('admin-testimonial-create/',
+         TestimonialCreateView.as_view(), name='testimonial_create'),
+    path('admin-testimonial/<int:pk>/-update/',
+         TestimonialUpdateView.as_view(), name='testimonial_update'),
+    path('admin-testimonial/<int:pk>/-delete/',
+         TestimonialDeleteView.as_view(), name='testimonial_delete'),
+    path('admin-testimonial-/<int:pk>/-detail/',
+         TestimonialDetailView.as_view(), name='testimonial_detail'),
+
+
+    # message
+    path('messagelist/', MessageListView.as_view(), name='message_list'),
+    path('messagecreate/', MessageCreateView.as_view(), name='message_create'),
+    path('message/<int:pk>/update/',
+         MessageUpdateView.as_view(), name='message_update'),
+    path('message/<int:pk>/delete/',
+         MessageDeleteView.as_view(), name='message_delete'),
+    path('message/<int:pk>/detail/',
+         MessageDetailView.as_view(), name='message_detail'),
+
+    # reservation
+    path('reservationlist/', ReservationListView.as_view(),
+         name='reservation_list'),
+    path('reservationcreate/', ReservationCreateView.as_view(),
+         name='reservation_create'),
+    path('reservation/<int:pk>/update/',
+         ReservationUpdateView.as_view(), name='reservation_update'),
+    path('reservation/<int:pk>/delete/',
+         ReservationDeleteView.as_view(), name='reservation_delete'),
+    path('reservation/<int:pk>/detail/',
+         ReservationDetailView.as_view(), name='reservation_detail'),
+
+    # About
+    path('about/list/', AboutView.as_view(), name="about_list"),
+    path('about/create/', AboutCreateView.as_view(), name="about_create"),
+    path('about/<int:pk>/update/', AboutUpdateView.as_view(), name="about_update"),
+    path('about/<int:pk>/detail/', AboutDetailView.as_view(), name="about_detail"),
+    path('about/<int:pk>/delete/', AboutDeleteView.as_view(), name="about_delete"),
 ]

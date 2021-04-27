@@ -1,13 +1,13 @@
 from django import forms
-from .models import Room, News, Comment, Event, Testomonial, Message, Reservation, Room_Category, Feature, Image
+from .models import Room, News, Comment, Event, Testomonial, Message, Reservation, Room_Category, Feature, Image, About
 
 
 class FormControlMixin:
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields:
-            self.fields[fields].widget.attrs.update({
-                'class': 'form-control'
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control',
             })
 
 
@@ -33,7 +33,7 @@ class RoomForm(FormControlMixin, forms.ModelForm):
     more_images = forms.FileField(required=False, widget=forms.FileInput(attrs={
         'class': 'form-control select2',
         'multiple': True
-    
+
     }))
 
     class Meta:
@@ -45,19 +45,15 @@ class RoomForm(FormControlMixin, forms.ModelForm):
                 'placeholder': 'room type'
             }),
             'room_no': forms.TextInput(attrs={
-                'class': 'form-control',
                 'placeholder': 'room no'
             }),
             'description': forms.Textarea(attrs={
-                'class': 'form-control',
                 'placeholder': 'description'
             }),
             'price': forms.TextInput(attrs={
-                'class': 'form-control',
                 'placeholder': 'price'
             }),
             'image': forms.ClearableFileInput(attrs={
-                'class': 'form-control',
                 'placeholder': 'choose image'
             }),
 
@@ -206,7 +202,7 @@ class EventCommentForm(forms.ModelForm):
             })
         }
 
-    
+
 class TestimonialForm(forms.ModelForm):
     class Meta:
         model = Testomonial
@@ -230,6 +226,7 @@ class TestimonialForm(forms.ModelForm):
             })
         }
 
+
 class MessageForm(forms.ModelForm):
     class Meta:
         model = Message
@@ -248,7 +245,8 @@ class MessageForm(forms.ModelForm):
                 'placeholder': 'Enter your message'
             })
         }
-         
+
+
 class ReservationForm(forms.ModelForm):
     class Meta:
         model = Reservation
@@ -265,21 +263,21 @@ class ReservationForm(forms.ModelForm):
             'selected_room': forms.Select(attrs={
                 'class': 'form-control',
                 'placeholder': 'Enter your room'
-            }),       
+            }),
             'adult': forms.Select(attrs={
-                'class': 'form-control', 
+                'class': 'form-control',
             }),
-            'check_in_date' : forms.DateTimeInput(attrs={
-                'class' : 'form-control',
-                'placeholder' : 'check in date'
+            'check_in_date': forms.DateTimeInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'check in date'
             }),
-            'check_out_date' : forms.DateTimeInput(attrs={
-                'class' : 'form-control',
-                'placeholder' : 'check out date'
+            'check_out_date': forms.DateTimeInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'check out date'
             }),
             'children': forms.Select(attrs={
                 'class': 'form-control select2',
-                
+
             }),
             'email': forms.EmailInput(attrs={
                 'class': 'form-control',
@@ -318,26 +316,14 @@ class ReservationForm(forms.ModelForm):
                 'placeholder': 'Enter your special request'
             }),
         }
-    
+
     def clean_adult(self):
         adult = self.cleaned_data['adult']
-        print(adult,111111111111111111111111)
+        print(adult, 111111111111111111111111)
         return adult
-    # def __init__(self, *args, **kwargs):
-    #     super(EventCommentForm, self).__init__(*args, **kwargs)
-    #     self.fields['name'].widget.attrs.update({
-    #         'class': 'form-control',
-    #         'placeholder': 'Name'
-    #     })
-    #     self.fields['email_address'].widget.attrs.update({
-    #         'class': 'form-control',
-    #         'placeholder': 'Please enter your valid email address'
-    #     })
-    #     self.fields['website'].widget.attrs.update({
-    #         'class': 'form-control',
-    #         'placeholder': 'Please enter your website'
-    #     })
-    #     self.message['message'].widget.attrs.update({
-    #         'class': 'form-control',
-    #         'placeholder': 'Please enter your message'
-    #     })
+
+
+class AboutForm(FormControlMixin, forms.ModelForm):
+    class Meta:
+        model = About
+        fields = '__all__'

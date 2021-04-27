@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView, DetailView, FormView, View, ListView, CreateView, UpdateView, DeleteView
 
 
-from .models import Room, News, Comment, RoomImage, Event, Room_Category, Feature, Image, Testomonial, Message, Reservation
+from .models import Room, News, Comment, RoomImage, Event, Room_Category, Feature, Image, Testomonial, Message, Reservation, About
 from .forms import *
 
 from .mixin import *
@@ -486,3 +486,36 @@ class ReservationDeleteView(DeleteView):
     template_name = 'dashboard/reservation/delete.html'
     model = Reservation
     success_url = reverse_lazy('dashboard:reservation_list')
+
+
+class AboutView(QuerysetMixin, ListView):
+    template_name = 'dashboard/about/about.html'
+    model = About
+    paginate_by = 7
+
+# About
+
+
+class AboutCreateView(CreateView):
+    template_name = 'dashboard/about/aboutcreate.html'
+    form_class = AboutForm
+    success_url = reverse_lazy('dashboard:about_list')
+
+
+class AboutUpdateView(UpdateView):
+    template_name = 'dashboard/about/aboutcreate.html'
+    form_class = AboutForm
+    model = About
+    success_url = reverse_lazy('dashboard:about_list')
+
+
+class AboutDetailView(DetailView):
+    template_name = 'dashboard/about/aboutdetail.html'
+    model = About
+    context_object_name = 'aboutdetail'
+
+
+class AboutDeleteView(DeleteMixin, DeleteView):
+    template_name = 'dashboard/about/aboutdelete.html'
+    model = About
+    success_url = reverse_lazy('dashboard:about_list')
