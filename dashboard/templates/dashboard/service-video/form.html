@@ -1,4 +1,5 @@
 {% extends 'dashboard/base/index.html' %} {% block content %}
+
 <div class="wrapper">
   <div class="content-wrapper">
     <section class="content-header">
@@ -6,7 +7,9 @@
         <div class="row mb-2">
           <div class="col-sm-6">
             <button class="btn btn-primary">
-              <a class="text-white" href="{% url 'dashboard:event_list' %}"
+              <a
+                class="text-white"
+                href="{% url 'dashboard:service_video_list' %}"
                 >Cancel</a
               >
             </button>
@@ -16,7 +19,7 @@
               <li class="breadcrumb-item">
                 <a href="{% url 'dashboard:admin_dashboard' %}">Home</a>
               </li>
-              <li class="breadcrumb-item active">Event</li>
+              <li class="breadcrumb-item active">Service Video</li>
             </ol>
           </div>
         </div>
@@ -32,37 +35,21 @@
             <!-- general form elements -->
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">Add / Edit Event</h3>
+                <h3 class="card-title">Add / Edit Video</h3>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
               <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="card-body">
-                {% comment %} {{ form }} {% endcomment %}
+                  {% comment %} {{ form }} {% endcomment %}
                   <div class="form-group">
-                    <label for="title">Event Title</label>
-                    <p>{{form.title}}</p>
-                  </div>
-                  <div class="form-group">
-                    <label for="description">Description</label>
+                    <label for="service-type">Service</label>
                     <p>{{form.description}}</p>
                   </div>
                   <div class="form-group">
-                    <label for="exampleInputFile">Image</label>
-                    <div class="input-group">
-                      <div class="custom-file">
-                        <p>{{form.image}}</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label for="exampleInputFile">Created By:</label>
-                    <div class="input-group">
-                      <div class="custom-file">
-                        <p>{{form.created_by}}</p>
-                      </div>
-                    </div>
+                    <label for="service-type-description">Service Video</label>
+                    <p>{{form.service_video}}</p>
                   </div>
                 </div>
 

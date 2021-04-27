@@ -137,7 +137,7 @@ class Event(TimeStamp):
     image = models.ImageField(upload_to="Events")
     description = RichTextField()
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    view_count = models.PositiveIntegerField(default=0)
+    view_count = models.PositiveIntegerField(default=0,null=True,blank=True)
 
     class Meta:
         verbose_name = _('Event')
@@ -162,7 +162,7 @@ class Comment(TimeStamp):
         verbose_name_plural = _('Comments')
 
     def __str__(self):
-        return self.first_name + self.middle_name + self.last_name
+        return self.full_name
 
 
 class Contact(TimeStamp):

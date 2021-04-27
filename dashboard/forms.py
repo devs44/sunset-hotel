@@ -1,5 +1,5 @@
 from django import forms
-from .models import Room, News, Comment, Event, Testomonial, Message, Reservation, Room_Category, Feature, Image, About
+from .models import Room, News, Comment, Event, Testomonial, Message, Reservation, Room_Category, Feature, Image, About, Services_description, Services_type
 
 
 class FormControlMixin:
@@ -7,7 +7,9 @@ class FormControlMixin:
         super().__init__(*args, **kwargs)
         for field in self.fields:
             self.fields[field].widget.attrs.update({
-                'class': 'form-control',
+
+                'class': 'form-control'
+
             })
 
 
@@ -89,7 +91,7 @@ class NewsForm(forms.ModelForm):
                 'placeholder': 'choose image'
             }),
 
-            'Created By': forms.Select(attrs={
+            'created_by': forms.Select(attrs={
                 'class': 'form-control select2',
             })
 
@@ -145,30 +147,59 @@ class NewsCommentForm(forms.ModelForm):
 
     class Meta:
         model = Comment
-        fields = ('full_name', 'email', 'news', 'comment')
-
-
-class EventForm(forms.ModelForm):
-    class Meta:
-        model = Event
         fields = '__all__'
         widgets = {
-            'title': forms.TextInput(attrs={
-                'class': 'form-control select2',
-                'placeholder': 'event title'
+            'news': forms.Select(attrs={
+                'class': 'form-control select2'
             }),
-            'description': forms.Textarea(attrs={
+            'full_name': forms.TextInput(attrs={
+                'class': 'form-control select2',
+                'placeholder': 'Enter name'
+            }),
+            'email': forms.EmailInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'description'
+                'placeholder': 'Enter your email'
+            }),
+            'website': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter your website'
             }),
             'created_by': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'created by'
             }),
-            'image': forms.FileInput(attrs={
+            'comment': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'enter message'
+            })
+        }
+
+
+class EventForm(forms.ModelForm):
+
+    class Meta:
+        model = Event
+        fields = '__all__'
+        widgets = {
+            'title': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'title'
+            }),
+
+            'description': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'description'
+            }),
+
+            'image': forms.ClearableFileInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'choose image'
+            }),
+
+            'created_by': forms.Select(attrs={
+                'class': 'form-control select2',
             })
+
         }
 
 
@@ -192,9 +223,8 @@ class EventCommentForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': 'Enter your website'
             }),
-            'created_by': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'created by'
+            'created_by': forms.Select(attrs={
+                'class': 'form-control select2',
             }),
             'comment': forms.Textarea(attrs={
                 'class': 'form-control',
@@ -327,3 +357,39 @@ class AboutForm(FormControlMixin, forms.ModelForm):
     class Meta:
         model = About
         fields = '__all__'
+
+
+class ServiceTypeForm(forms.ModelForm):
+    class Meta:
+        model = Services_type
+        fields = '__all__'
+        widgets = {
+            'service_type_name': forms.TextInput(attrs={
+                'class': 'form-control select2',
+                'placeholder': 'service type name'
+            }),
+            'service_type_description': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'Service description'
+            }),
+            'service_png': forms.ClearableFileInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'choose image'
+            })
+        }
+
+
+class ServiceVideoForm(forms.ModelForm):
+    class Meta:
+        model = Services_description
+        fields = '__all__'
+        widgets = {
+            'description': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'Description'
+            }),
+            'service_video': forms.ClearableFileInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Choose Video'
+            })
+        }

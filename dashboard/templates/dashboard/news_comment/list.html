@@ -6,8 +6,11 @@
         <div class="row mb-2">
           <div class="col-sm-6">
             <button class="btn btn-primary">
-              <a class="text-white" href="{% url 'dashboard:news_comment_create' %}"
-                >Add comment</a>
+              <a
+                class="text-white"
+                href="{% url 'dashboard:news_comment_create' %}"
+                >Add comment</a
+              >
             </button>
           </div>
           <div class="col-sm-6">
@@ -29,21 +32,37 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Comment List</h3>
-
-                <div class="card-tools">
+                 <div class="card-tools">
                   <div class="input-group input-group-sm" style="width: 150px">
-                    <input
-                      type="text"
-                      name="table_search"
-                      class="form-control float-right"
-                      placeholder="Search"
-                    />
+                    <form action="{% url 'dashboard:news_comment_list' %}" method="GET">
+                      <input
+                        type="text"
+                        name="first_name"
+                        class="form-control float-right searchInput"
+                        id="Searchname"
+                        placeholder="First Name"
+                      />
+                      <input
+                        type="text"
+                        name="selected_room"
+                        class="form-control float-right searchInput"
+                        id="SearchSelectedRoom"
+                        placeholder="Room no"
+                      />
+                      <input
+                        type="text"
+                        name="check_in_date"
+                        class="form-control float-right searchInput"
+                        id="CheckInDate"
+                        placeholder="Check in Date"
+                      />
 
-                    <div class="input-group-append">
-                      <button type="submit" class="btn btn-default">
-                        <i class="fas fa-search"></i>
-                      </button>
-                    </div>
+                      <div class="input-group-append">
+                        <button type="submit" class="btn btn-default">
+                          <i class="fas fa-search"></i>
+                        </button>
+                      </div>
+                    </form>
                   </div>
                 </div>
               </div>
@@ -56,32 +75,40 @@
                       <th>News Title</th>
                       <th>Full Name</th>
                       <th>Email</th>
-                    
+
                       <th>Comment</th>
-                      <th>Action </th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {% for comment in object_list %}
+                    {% for comment in news %}
                     <tr>
                       <td>{{forloop.counter}}</td>
-                      <td><a href="{% url 'dashboard:news_comment_detail' comment.id %}">{{comment.news}}</a></td>
+                      <td>
+                        <a
+                          href="{% url 'dashboard:news_comment_detail' comment.id %}"
+                          >{{comment.news}}</a
+                        >
+                      </td>
                       <td>{{comment.full_name}}</td>
                       <td>{{comment.email}}</td>
                       <td>{{comment.comment}}</td>
                       <td>
                         <span
-                          ><a href="{% url 'dashboard:news_comment_delete' comment.id %}"
-                            ><i class="fa fa-trash m-1"></i></a></span
-                        >|
+                          ><a
+                            class="btn btn-warning mr-2"
+                            href="{% url 'dashboard:news_comment_update' comment.id %}"
+                            ><i class="fa fa-edit m-1" aria-hidden="true"></i
+                            >Edit</a
+                          ></span
+                        >
                         <span
-                          ><a href="{% url 'dashboard:news_comment_update' comment.id %}"
-                            ><i
-                              class="fa fa-edit m-1"
-                              aria-hidden="true"
-                            ></i></a
+                          ><a
+                            class="btn btn-danger"
+                            href="{% url 'dashboard:news_comment_delete' comment.id %}"
+                            ><i class="fa fa-trash m-1"></i></a
                         ></span>
-                      </td> 
+                      </td>
                     </tr>
                     {% endfor %}
                   </tbody>
