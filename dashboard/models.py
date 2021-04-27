@@ -6,7 +6,17 @@ import datetime
 from django.utils import timezone
 
 # Create your models here.
-
+ADULT = (
+        ('1','1 Adult'),
+        ('2','2 Adults'),
+        ('3','3 Adults'),
+    )
+CHILDREN = (
+        ('0','0 child'),
+        ('1','1 child'),
+        ('2','2 children'),
+        ('3','3 children'),
+    )
 
 class TimeStamp(models.Model):
     created_at = models.DateTimeField(auto_now=True)
@@ -124,7 +134,7 @@ class News(TimeStamp):
 class Event(TimeStamp):
     title = models.CharField(max_length=1255)
     image = models.ImageField(upload_to="Events")
-    description = models.TextField()
+    description = RichTextField()
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     view_count = models.PositiveIntegerField(default=0)
 
@@ -153,8 +163,6 @@ class Comment(TimeStamp):
     def __str__(self):
         return self.first_name + self.middle_name + self.last_name
 
-    
-
 
 class Contact(TimeStamp):
     address = models.CharField(max_length=100)
@@ -182,17 +190,8 @@ class Reservation(TimeStamp):
     selected_room = models.ForeignKey(Room, on_delete=models.CASCADE)
     check_in_date = models.DateTimeField()
     check_out_date = models.DateTimeField()
-    no_of_adults_choice = (
-        ('1 adult'),
-        ('2 adults'),
-        ('3 adults'),
-    )
-    no_of_children_choice = (
-        ('0 child'),
-        ('1 child'),
-        ('2 child'),
-        ('3 child'),
-    )
+    adult = models.CharField(max_length=250,choices=ADULT)
+    children = models.CharField(max_length=250,choices=CHILDREN)
     email = models.EmailField(null=True, blank=True)
     phone = models.CharField(max_length=40)
     address_1 = models.CharField(max_length=255)
