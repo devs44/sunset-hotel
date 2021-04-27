@@ -158,10 +158,7 @@ class EventCommentDelteView(DeleteView):
     template_name = 'dashboard/event_comment/eventcommentdelete.html'
     model = Comment
     success_url = reverse_lazy('dashboard:event_list')
-    def form_valid(self, form):
-        pk = form.save()
-        pk.delete()
-        return super().form_valid(form)
+
 
 
 class RoomSearchView(View):
