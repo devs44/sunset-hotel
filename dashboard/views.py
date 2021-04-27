@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.db.models import Q
+
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, DetailView, FormView, View, ListView, CreateView, UpdateView, DeleteView
 
@@ -211,6 +213,14 @@ class EventListView(ListView):
     template_name = 'dashboard/event/eventlist.html'
     model = Event
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        if "title" in self.request.GET:
+            if self.request.GET.get('title') != '':
+                queryset = queryset.filter(
+                    title__icontains=self.request.GET.get("title"))
+        return queryset
+
 
 class EventCreateView(CreateView):
     template_name = 'dashboard/event/eventcreate.html'
@@ -230,6 +240,12 @@ class EventDetailView(DetailView):
     model = Event
     context_object_name = 'eventdetail'
 
+    def get_object(self):
+        obj = super().get_object()
+        obj.view_count += 1
+        obj.save()
+        return obj
+
 
 class EventDelteView(DeleteView):
     template_name = 'dashboard/event/eventdelete.html'
@@ -242,14 +258,21 @@ class EventDelteView(DeleteView):
 class EventCommentTemplateView(TemplateView):
     template_name = 'dashboard/event_comment/eventcommentlist.html'
     model = Comment
-    form_class = EventCommentForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['events'] = Event_type.objects.all()
+        context['events'] = Comment.objects.filter(Q(news__isnull=True) &
+                                                    Q(deleted_at__isnull=True))
         return context
 
-
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        if "full_name" in self.request.GET:
+            if self.request.GET.get('full_name') != '':
+                queryset = queryset.filter(
+                    full_name=self.request.GET.get("full_name"))
+        return queryset
+        
 class EventCommentCreateView(CreateView):
     template_name = 'dashboard/event_comment/eventcommentcreate.html'
     form_class = EventCommentForm
@@ -269,10 +292,10 @@ class EventCommentDetailView(DetailView):
     context_object_name = 'eventdetail'
 
 
-class EventCommentDelteView(DeleteMixin, DeleteView):
+class EventCommentDeleteView(DeleteMixin, DeleteView):
     template_name = 'dashboard/event_comment/eventcommentdelete.html'
     model = Comment
-    success_url = reverse_lazy('dashboard:event_list')
+    success_url = reverse_lazy('dashboard:eventcomment_list')
 
 
 class RoomSearchView(View):
@@ -285,9 +308,18 @@ class RoomSearchView(View):
 
 
 # news
-class NewsListView(ListView):
+class NewsListView(QuerysetMixin, ListView):
     model = News
     template_name = 'dashboard/news/list.html'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        if 'title' in self.request.GET:
+            if self.request.GET.get('title') != '':
+                queryset = queryset.filter(
+                    title__icontains=self.request.GET.get('title')
+                )
+        return queryset
 
 
 class NewsCreateView(CreateView):
@@ -324,7 +356,7 @@ class NewsCommentTemplateView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['news'] = News_type.objects.all()
+        context['news'] = News.objects.all()
         return context
 
 
@@ -405,13 +437,10 @@ class MessageListView(QuerysetMixin, ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        if "full_name" in self.request.GET:
-            if self.request.GET.get('full_name') != None and self.request.GET.get('full_name') != '':
-                queryset = queryset.filter(
-                    room_no=self.request.GET.get("full_name"))
-        if "message" in self.request.GET:
+        
+        if "email" in self.request.GET:
             queryset = queryset.filter(
-                room_type__title__contains=self.request.GET.get("message")
+                email=self.request.GET.get("email")
             )
 
         return queryset
@@ -451,14 +480,20 @@ class ReservationListView(QuerysetMixin, ListView):
     def get_queryset(self):
         queryset = super().get_queryset()
         if "first_name" in self.request.GET:
-            if self.request.GET.get('first_name') != None and self.request.GET.get('first_name') != '':
+            if self.request.GET.get('first_name') != '':
                 queryset = queryset.filter(
-                    room_no=self.request.GET.get("first_name"))
+                    first_name=self.request.GET.get("first_name"))
         if "selected_room" in self.request.GET:
-            queryset = queryset.filter(
-                room_type__title__contains=self.request.GET.get(
-                    "selected_room")
-            )
+            if self.request.GET.get('selected_room') != '':
+                queryset = queryset.filter(
+                    selected_room=self.request.GET.get(
+                        "selected_room")
+                )
+        if "check_in_date" in self.request.GET:
+            if self.request.GET.get('check_in_date') != '':
+                queryset = queryset.filter(
+                    check_in_date=self.request.GET.get("check_in_date")
+                )
 
         return queryset
 
