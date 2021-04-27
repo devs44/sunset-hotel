@@ -1,4 +1,6 @@
-{% extends 'dashboard/base/index.html' %} {% block content %}
+{% extends 'dashboard/base/index.html' %} 
+{% block content %}
+
 <div class="wrapper">
   <div class="content-wrapper">
     <section class="content-header">
@@ -6,7 +8,7 @@
         <div class="row mb-2">
           <div class="col-sm-6">
             <button class="btn btn-primary">
-              <a class="text-white" href="{% url 'dashboard:news_comment_list' %}"
+              <a class="text-white" href="{% url 'dashboard:service_type_list' %}"
                 >Cancel</a
               >
             </button>
@@ -16,7 +18,7 @@
               <li class="breadcrumb-item">
                 <a href="{% url 'dashboard:admin_dashboard' %}">Home</a>
               </li>
-              <li class="breadcrumb-item active">News</li>
+              <li class="breadcrumb-item active">Service Type</li>
             </ol>
           </div>
         </div>
@@ -32,7 +34,7 @@
             <!-- general form elements -->
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">Add / Edit News</h3>
+                <h3 class="card-title">Add / Edit Services</h3>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
@@ -41,25 +43,16 @@
                 <div class="card-body">
                   {% comment %} {{ form }} {% endcomment %}
                   <div class="form-group">
-                    <label for="news">news</label>
-                    <p>{{form.news}}</p>
+                    <label for="service-type">Service Type</label>
+                    <p>{{form.service_type_name}}</p>
                   </div>
                   <div class="form-group">
-                    <label for="full_name">full_name</label>
-                    <p>{{form.full_name}}</p>
+                    <label for="service-type-description">Service Description</label>
+                    <p>{{form.service_type_description}}</p>
                   </div>
                   <div class="form-group">
-                    <label for="email">email</label>
-                    <p>{{form.email}}</p>
-                  </div>
-                  <div class="form-group">
-                    <label for="website">website</label>
-                    <p>{{form.website}}</p>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="message">News Comment</label>
-                    <p>{{form.comment}}</p>
+                    <label for="service-image">Image</label>
+                    <p>{{form.service_png}}</p>
                   </div>
                 </div>
 

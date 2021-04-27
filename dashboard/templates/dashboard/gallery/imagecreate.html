@@ -1,4 +1,5 @@
-{% extends 'dashboard/base/index.html' %} {% block content %}
+{% extends 'dashboard/base/index.html' %} 
+{% block content %}
 <div class="wrapper">
   <div class="content-wrapper">
     <section class="content-header">
@@ -6,7 +7,7 @@
         <div class="row mb-2">
           <div class="col-sm-6">
             <button class="btn btn-primary">
-              <a class="text-white" href="{% url 'dashboard:news_comment_list' %}"
+              <a class="text-white" href="{% url 'dashboard:image_list' %}"
                 >Cancel</a
               >
             </button>
@@ -16,7 +17,7 @@
               <li class="breadcrumb-item">
                 <a href="{% url 'dashboard:admin_dashboard' %}">Home</a>
               </li>
-              <li class="breadcrumb-item active">News</li>
+              <li class="breadcrumb-item active">Image</li>
             </ol>
           </div>
         </div>
@@ -32,37 +33,30 @@
             <!-- general form elements -->
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">Add / Edit News</h3>
+                <h3 class="card-title">Add / Edit Image</h3>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
               <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="card-body">
-                  {% comment %} {{ form }} {% endcomment %}
                   <div class="form-group">
-                    <label for="news">news</label>
-                    <p>{{form.news}}</p>
+                    <label for="roomType">Image Type</label>
+                    <p>{{form.image_type}}</p>
                   </div>
                   <div class="form-group">
-                    <label for="full_name">full_name</label>
-                    <p>{{form.full_name}}</p>
+                    <label for="roomType">Caption</label>
+                    <p>{{form.caption}}</p>
                   </div>
                   <div class="form-group">
-                    <label for="email">email</label>
-                    <p>{{form.email}}</p>
-                  </div>
-                  <div class="form-group">
-                    <label for="website">website</label>
-                    <p>{{form.website}}</p>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="message">News Comment</label>
-                    <p>{{form.comment}}</p>
+                    <label for="exampleInputFile">Image</label>
+                    <div class="input-group">
+                      <div class="custom-file">
+                        <p>{{form.image}}</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
-
                 <!-- /.card-body -->
 
                 <div class="card-footer">
@@ -77,4 +71,4 @@
     </section>
   </div>
 </div>
-{% endblock %}
+{% endblock %} 

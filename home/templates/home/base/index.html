@@ -146,91 +146,86 @@
 <!-- .section__availability -->
 
 <!-- section about -->
-<section class="section__about" id="section__about">
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-12">
-        <h2 class="section__title">Welcome to <strong>Sunset Hotel</strong></h2>
-        <div class="divider">
-          <hr class="line1" />
-          <hr class="line2" />
-          <hr class="line1" />
-        </div>
-        <!-- / .divider -->
-      </div>
-    </div>
-    <!-- / .row -->
-  </div>
-  <!-- / .container -->
-  <div class="container-fluid">
-    <div class="row">
-      <div class="section_about__content">
-        <div class="col-md-6">
-          <div class="about__pic">
-            <img
-              src="{% static 'home/assets/img/about_img.jpg' %}"
-              class="img-responsive"
-              alt="..."
-            />
-          </div>
-        </div> <!-- / .row -->
-    </div> <!-- / .container -->
-    <div class="container">
-        <div class="best-rooms__content">
-            <div class="row">
-              {% for room in room %}
-              <div class="col-sm-6">
-                  <figure class="best-rooms__item">
-                      <img src="{{ room.image.url }}" class="img-responsive" alt="...">
-                            <figcaption>
-                                <h3>{{ room.room_type }}</h3>
-                                <div class="item__price">
-                                    {{ room.price }} <small>/ night</small>
-                                </div>
-                                <p class="item__desc">{{ room.description|truncatewords:20 }}</p>
-                                <a href={% url 'reservation' %} class="btn-book">Book now <i class="icon ion-chevron-right"></i><i class="icon ion-chevron-right"></i></a>
-                            </figcaption>
-                        </figure> <!-- / .best-rooms__item -->
-              </div>
-              <p class="item__desc">{{ room.description|truncatewords:20 }}</p>
-              <a href="reservation.html" class="btn-book"
-                >Book now <i class="icon ion-chevron-right"></i
-                ><i class="icon ion-chevron-right"></i
-              ></a>
-            </figcaption>
-          </figure>
-          <!-- / .best-rooms__item -->
-        </div>
-
-        {% endfor %}
-      </div>
-      <!-- / .row -->
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="rooms__button">
-                        <a href="[% url 'rooms' %}" class="btn">See all rooms</a>
-                    </div> <!-- / .rooms__button -->
-                </div>
-            </div> <!-- / .row -->
-        </div> <!-- / .best-rooms__content -->
-    </div> <!-- / .container -->
-</section> <!-- / .section__best-rooms -->
-
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="rooms__button">
-            <a href="rooms-1.html" class="btn">See all rooms</a>
-          </div>
-          <!-- / .rooms__button -->
-        </div>
-      </div>
-      <!-- / .row -->
-    </div>
-    <!-- / .best-rooms__content -->
-  </div>
-  <!-- / .container -->
-</section>
-<!-- / .section__best-rooms -->
+    <section class="section__about" id="section__about">
+    	<div class="container">
+    		<div class="row">
+    			<div class="col-sm-12"> 		  	
+    				<h2 class="section__title">Welcome to <strong>Sunset Hotel</strong></h2>
+    				<div class="divider">
+    					<hr class="line1">
+    					<hr class="line2">
+    					<hr class="line1">
+    				</div> <!-- / .divider -->
+    			</div>
+    		</div> <!-- / .row -->
+    	</div> <!-- / .container -->
+    	<div class="container-fluid">
+    		<div class="row">
+		    	<div class="section_about__content">
+		    	  <div class="col-md-6">
+		    	  	<div class="about__pic">
+		    				<img src="{% static 'home/assets/img/about_img.jpg' %}" class="img-responsive" alt="...">
+		    			</div> <!-- / .about__pic -->
+		    	  </div>
+		    	  <div class="col-md-6">
+			    	  <div class="about__desc">
+			    	  	<p class="about_desc__subtitle">About us</p>
+			  				<h3 class="about_desc__title">Probably the best place to enjoy your life</h3>
+								<p class="about_desc__desc">A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine. I am so happy, my dear friend, so absorbed in the exquisite sense of mere tranquil existence. When, while the lovely valley teems with vapour around me, and the meridian sun strikes the upper surface of the impenetrable foliage of my trees, and but a few stray gleams steal into the inner sanctuary.</p>
+								<h4 class="about_desc__quote">The European languages are members of the same family. Their separate existence is a myth. For science, music, sport, etc, Europe uses the same vocabulary.</h4>
+								<a href="about.html" class="btn btn-default">Learn More</a>
+			  			</div> <!-- / .about__desc -->
+		    	  </div>
+		    	</div> <!-- / .section_about__content -->
+		    </div> <!-- / .row -->
+    	</div>
+	    
+    </section> <!-- / .section__about -->
+		
+		<!-- section best-rooms -->
+    <section class="section__best-rooms">
+    	<div class="container">
+    		<div class="row">
+    		  <div class="col-sm-12"> 		  	
+    				<h2 class="section__title">Our <strong>Best rooms</strong></h2>
+    				<div class="divider">
+    					<hr class="line1">
+    					<hr class="line2">
+    					<hr class="line1">
+    				</div> <!-- / .divider -->
+    				<p class="section__subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti sit dicta quae natus quasi ratione quis id, tenetur atque blanditiis.</p>
+    		  </div>
+    		</div> <!-- / .row -->
+    	</div> <!-- / .container -->
+    	<div class="container">
+    		<div class="best-rooms__content">
+		    	<div class="row">
+            {% for room in room %}
+		    	  <div class="col-sm-6">
+		    	  	<figure class="best-rooms__item">
+	    	  			<img src="{{ room.image.url }}" class="img-responsive" alt="...">
+								<figcaption>
+									<h3>{{ room.title }}</h3>
+									<div class="item__price">
+										{{ room.price }} <small>/ night</small>
+									</div>
+									<p class="item__desc">{{room.description.truncatewords:20|safe </p>
+									<a href="reservation.html" class="btn-book">Book now <i class="icon ion-chevron-right"></i><i class="icon ion-chevron-right"></i></a>
+								</figcaption>
+							</figure> <!-- / .best-rooms__item -->
+		    	  </div>
+		    	  {% endfor %}
+		    	</div> <!-- / .row -->
+		    	<div class="row">
+			    	<div class="col-xs-12">
+			    		<div class="rooms__button">
+			    			<a href="rooms-1.html" class="btn">See all rooms</a>
+			    		</div> <!-- / .rooms__button -->
+			    	</div>
+		    	</div> <!-- / .row -->
+		    </div> <!-- / .best-rooms__content -->
+	    </div> <!-- / .container -->
+    </section> <!-- / .section__best-rooms -->
 
 <!-- section services -->
 <section class="section__services">
@@ -555,6 +550,7 @@
 
 <!-- section Events -->
 <section class="section__events">
+
   <div class="container">
     <div class="row">
       <div class="col-sm-12">
@@ -629,6 +625,7 @@
     </div>
     <!-- / .row -->
  
+
 
       <div class="row">
         <div class="col-xs-12 hidden-xs col-sm-6 col-md-6 col-lg-3">

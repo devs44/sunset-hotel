@@ -6,8 +6,8 @@
         <div class="row mb-2">
           <div class="col-sm-6">
             <button class="btn btn-primary">
-              <a class="text-white" href="{% url 'dashboard:news_create' %}"
-                >Add News</a
+              <a class="text-white" href="{% url 'dashboard:reservation_create' %}"
+                >Add Reservation</a
               >
             </button>
           </div>
@@ -16,7 +16,7 @@
               <li class="breadcrumb-item">
                 <a href="{% url 'dashboard:admin_dashboard' %}">Home</a>
               </li>
-              <li class="breadcrumb-item active">News</li>
+              <li class="breadcrumb-item active">Reservation</li>
             </ol>
           </div>
         </div>
@@ -29,7 +29,7 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">News List</h3>
+                <h3 class="card-title">Reservation List</h3>
 
                 <div class="card-tools">
                   <div class="input-group input-group-sm" style="width: 150px">
@@ -54,40 +54,31 @@
                   <thead>
                     <tr>
                       <th>SN</th>
-                      <th>News Title</th>
-                      <th>Description</th>
-                      <th>Image</th>
+                      <th>First Name</th>
+                      <th>Last Name</th>
+                      <th>Selected Room</th>
+                      <th>Check-in date</th>
+                      <th>Check-out date</th>
+                      
                     </tr>
                   </thead>
                   <tbody>
-                    {% for news in object_list %}
+                    {% for reserve in object_list %}
                     <tr>
                       <td>{{forloop.counter}}</td>
                       <td>
-                        <a href="{%url 'dashboard:news_detail' news.id%}"
-                          >{{news.title}}</a
-                        >
+                        <a href="{% url 'dashboard:reservation_detail' reserve.id %}">{{reserve.first_name}}</a>
                       </td>
-                      <td>{{news.description|truncatewords:10}}</td>
+                      <td>{{reserve.last_name}}</td>
+                      <td>{{reserve.selected_room}}</td>
+                      <td>{{reserve.check_in_date}}</td>
+                      <td>{{reserve.check_out_date}}</td>
+                    
+                      
                       <td>
-                        <img src="{{news.image.url}}" style="width: 20%" />
-                      </td>
-                      <td>
-                        <span
-                          ><a
-                            class="btn btn-warning mr-2"
-                            href="{% url 'dashboard:news_delete' news.id %}"
-                            ><i class="fa fa-edit m-1" aria-hidden="true"></i
-                            >Edit</a
-                          ></span
-                        >
-                        <span
-                          ><a
-                            class="btn btn-danger"
-                            href="{% url 'dashboard:news_update' news.id %}"
-                            ><i class="fa fa-trash m-1"></i></a
-                        ></span>
-                      </td>
+                        <span><a href="{% url 'dashboard:reservation_delete' reserve.id %}"><i class="fa fa-trash m-1"></i></a></span>|
+                        <span><a href="{% url 'dashboard:reservation_update' reserve.id %}"><i class="fa fa-edit m-1" aria-hidden="true"></i></a></span>
+                      </td> 
                     </tr>
                     {% endfor %}
                   </tbody>

@@ -156,26 +156,27 @@
                 </li> <!-- .comment -->
               </ul> <!-- .comments__list -->
               <p class="subheading">Leave a comment</p>
-              <form class="comments__form" data-animate-in="animateUp">
-
+              <form class="comments__form" data-animate-in="animateUp" method="post" action={% url 'event_detail' event.pk %}>
+                {% csrf_token %}
+                {{form}}
                 <div class="form-group">
-                  <label for="name">Name (Required)</label>
-                  <input type="text" name="name" class="form-control" id="name" placeholder="Enter Your Full Name">
+                  <label for="name">Full Name</label>
+                  <input type="text" name="name" class="form-control" id="name" placeholder="Enter Your Full Name">{{ event.full_name }}
                 </div>
 
                 <div class="form-group">
-                  <label for="email">Email address (Required)</label>
-                  <input type="email" name="email" class="form-control" id="email" placeholder="Enter Your E-mail">
+                  <label for="email">Email address </label>
+                  <input type="email" name="email" class="form-control" id="email" placeholder="Enter Your E-mail">{{event.email}}
                 </div>
 
                 <div class="form-group">
                   <label for="website">Website</label>
-                  <input type="email" name="website" class="form-control" id="website" placeholder="Enter website">
+                  <input type="website" name="website" class="form-control" id="website" placeholder="Enter website">{{event.website}}
                 </div>
 
                 <div class="form-group">
-                  <label for="message">Message (Required)</label>
-                  <textarea name="message" class="form-control" rows="6" id="message" placeholder="Enter Your Message"></textarea>
+                  <label for="message">Message</label>
+                  <textarea name="message" class="form-control" rows="6" id="message" placeholder="Enter Your Message">{{ event.comment }}</textarea>
                   <span class="help-block"></span>
                 </div>
 
