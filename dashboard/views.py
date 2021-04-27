@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView, DetailView, FormView, View, ListView, CreateView, UpdateView, DeleteView
 
 
-from .models import Room, News, Comment, RoomImage, Event, Room_Category, Feature, Image, Testomonial, Message, Reservation
+from .models import Room, News, Comment, RoomImage, Event, Room_Category, Feature, Image, Testomonial, Message, Reservation, Services_type, Services_description
 from .forms import *
 
 from .mixin import *
@@ -325,7 +325,7 @@ class NewsCommentTemplateView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['news'] = News_type.objects.all()
+        context['news'] = Comment.objects.filter(events__isnull=True)
         return context
 
 
@@ -487,3 +487,70 @@ class ReservationDeleteView(DeleteView):
     template_name = 'dashboard/reservation/delete.html'
     model = Reservation
     success_url = reverse_lazy('dashboard:reservation_list')
+    
+    
+# Service Type
+
+class ServiceListView (ListView):
+    template_name = 'dashboard/services-type/list.html'
+    model = Services_type
+    context_object_name = 'servicetype'
+    
+
+class ServiceCreateView(CreateView):
+    template_name = 'dashboard/services-type/form.html'
+    form_class = ServiceTypeForm
+    success_url = reverse_lazy('dashboard:service_type_list')
+
+
+class ServiceUpdateView(UpdateView):
+    template_name = 'dashboard/services-type/form.html'
+    model = Services_type
+    form_class = ServiceTypeForm
+    success_url = reverse_lazy('dashboard:service_type_list')
+
+
+class ServiceDetailView(DetailView):
+    template_name = 'dashboard/services-type/detail.html'
+    model = Services_type
+    context_object_name = 'servicedetail'
+
+
+class ServiceDeleteView(DeleteView):
+    template_name = 'dashboard/services-type/delete.html'
+    model = Services_type
+    success_url = reverse_lazy('dashboard:service_type_list')
+    
+
+#service video
+
+class ServiceVideoListView (ListView):
+    template_name = 'dashboard/service-video/list.html'
+    model = Services_description
+    context_object_name = 'servicevideo'
+    
+
+class ServiceVideoCreateView(CreateView):
+    template_name = 'dashboard/service-video/form.html'
+    form_class = ServiceVideoForm
+    success_url = reverse_lazy('dashboard:service_video_list')
+
+
+class ServiceVideoUpdateView(UpdateView):
+    template_name = 'dashboard/service-video/form.html'
+    model = Services_description
+    form_class = ServiceVideoForm
+    success_url = reverse_lazy('dashboard:service_video_list')
+
+
+class ServiceVideoDetailView(DetailView):
+    template_name = 'dashboard/service-video/detail.html'
+    model = Services_description
+    context_object_name = 'servicevideodetail'
+
+
+class ServiceVideoDeleteView(DeleteView):
+    template_name = 'dashboard/services-video/delete.html'
+    model = Services_description
+    success_url = reverse_lazy('dashboard:service_video_list')
+    

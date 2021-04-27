@@ -1,4 +1,6 @@
-{% extends 'dashboard/base/index.html' %} {% block content %}
+{% extends 'dashboard/base/index.html' %} 
+{% block content %}
+
 <div class="wrapper">
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -7,12 +9,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Event Detail</h1>
+            <h1>Service Type Detail</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Event Detail</li>
+              <li class="breadcrumb-item active">Service Type Detail</li>
             </ol>
           </div>
         </div>
@@ -26,7 +28,7 @@
       <div class="card">
         <div class="card-header">
           <button class="btn btn-primary">
-            <a class="text-white" href="{% url 'dashboard:news_comment_list' %}"
+            <a class="text-white" href="{% url 'dashboard:service_type_list' %}"
               >Cancel</a
             >
           </button>
@@ -54,11 +56,11 @@
             <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1">
               <div class="row">
                 <div class="col-12">
-                  <h4>Commenter's Name</h4>
+                  <h4>Service Type</h4>
                   <div class="post">
                     <div class="user-block">
-                      <span class="description"
-                        >{{commentdetail.full_name }}</span
+                      <span class="service-name"
+                        >{{servicedetail.service_type_name }}</span
                       >
                     </div>
                   </div>
@@ -66,20 +68,24 @@
               </div>
               <div class="row">
                 <div class="col-12">
-                  <h4>Commenter's Email Address</h4>
+                  <h4>Service Details</h4>
                   <div class="post">
                     <div class="user-block">
-                      <span class="description">{{commentdetail.email}}</span>
+                      <span class="description">{{servicedetail.service_type_description}}</span>
                     </div>
                   </div>
                 </div>
               </div>
               <div class="row">
                 <div class="col-12">
-                  <h4>Comment Message</h4>
+                  <h4>Service Image</h4>
                   <div class="post">
                     <div class="user-block">
-                      <span class="description">{{commentdetail.comment}}</span>
+                    <img
+                        style="height: 20rem; width: 20rem"
+                        src="{{servicedetail.service_png.url}}"
+                        alt="Service image"
+                    />
                     </div>
                   </div>
                 </div>

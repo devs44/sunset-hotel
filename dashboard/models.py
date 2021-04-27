@@ -161,7 +161,7 @@ class Comment(TimeStamp):
         verbose_name_plural = _('Comments')
 
     def __str__(self):
-        return self.first_name + self.middle_name + self.last_name
+        return self.full_name
 
 
 class Contact(TimeStamp):
