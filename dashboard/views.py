@@ -275,6 +275,7 @@ class EventCommentDelteView(DeleteMixin, DeleteView):
     success_url = reverse_lazy('dashboard:event_list')
 
 
+
 class RoomSearchView(View):
     def get(self, request, *args, **kwargs):
         room = request.GET.get('room_search')
