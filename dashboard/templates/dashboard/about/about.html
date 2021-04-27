@@ -1,0 +1,123 @@
+{% extends 'dashboard/base/index.html' %} {% block content %}
+<div class="wrapper">
+  <div class="content-wrapper">
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <button class="btn btn-primary">
+              <a class="text-white" href="{% url 'dashboard:about_create' %}"
+                >Add About</a
+              >
+            </button>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item">
+                <a href="{% url 'dashboard:admin_dashboard' %}">Home</a>
+              </li>
+              <li class="breadcrumb-item active">About</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">About</h3>
+
+                <div class="card-tools">
+                  <div class="input-group input-group-sm" style="width: 150px">
+                    <form action="{% url 'dashboard:about_list' %}" method="GET">
+                      <input
+                        type="text"
+                        name="room_feature"
+                        class="form-control float-right "
+                        placeholder="Room type"
+                      />
+                      
+                      <div class="input-group-append">
+                        <button type="submit" class="btn btn-default">
+                          <i class="fas fa-search"></i>
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body table-responsive p-0">
+                <table class="table table-hover text-nowrap">
+                  <thead>
+                    <tr>
+                      <th>SN</th>
+                      <th width="45%">Title</th>
+                      <th>Image</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for about in object_list %}
+                    <tr>
+                      <td>{{forloop.counter}}</td>
+                      <td><a href="{% url 'dashboard:about_detail' about.id %}">{{about.title}}</a></td>
+                      <td><img width="20%" src="{{ about.image.url }}" alt=""></td>
+                      <td>
+                          <span ><a class="btn btn-warning mr-2" href="{% url 'dashboard:about_update' about.pk %}"
+                              ><i
+                                class="fa fa-edit m-1"
+                                aria-hidden="true"
+                              ></i>Edit</a
+                          ></span>
+                        <span
+                          ><a class="btn btn-danger" href="{% url 'dashboard:about_delete' about.pk %}"
+                            ><i class="fa fa-trash m-1"></i></a></span
+                        >
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+                
+                </div>
+              </div>
+              <!-- /.card-body -->
+              <div class="pagination">
+                <span>
+                  {% if page_obj.has_previous %}
+                    {% if page_obj.previous_page_number != 1 %}
+                        <a class="btn btn-primary" href="?page1">1</a>
+                    {% endif %}
+                    <a class="btn btn-primary" href="?page={{page_obj.previous_page_number}}">
+                        {{ page_obj.previous_page_number }}
+                    </a>
+                  {% endif %}
+                  <span>
+                      {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                  </span>
+                  {% if page_obj.has_next %}
+                  <a class="btn btn-primary" href="?page={{page_obj.next_page_number}}">
+                      {{ page_obj.next_page_number }}
+                  </a>
+                  {% if page_obj.next_page_number != page_obj.paginator.num_pages %}
+                  <a class="btn btn-primary" href="?page={{ page_obj.paginator.num_pages }}">
+                      {{ page_obj.paginator.num_pages }}
+                  </a>
+                  {% endif %}
+                  {% endif %}
+                </span>
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+{% endblock %}
+
