@@ -167,8 +167,8 @@ class Comment(TimeStamp):
 
 class Contact(TimeStamp):
     address = models.CharField(max_length=100)
-    phone = models.CharField(max_length=30)
-    fax = models.CharField(max_length=30, null=True, blank=True)
+    phone = models.PositiveIntegerField(max_length=30)
+    fax = models.PositiveIntegerField(max_length=30, null=True, blank=True)
     email = models.EmailField()
 
 
