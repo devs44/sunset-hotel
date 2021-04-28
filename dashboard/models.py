@@ -137,7 +137,7 @@ class Event(TimeStamp):
     image = models.ImageField(upload_to="Events")
     description = RichTextField()
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    view_count = models.PositiveIntegerField(default=0,null=True,blank=True)
+    view_count = models.PositiveIntegerField(default=0, null=True, blank=True)
 
     class Meta:
         verbose_name = _('Event')
@@ -167,8 +167,8 @@ class Comment(TimeStamp):
 
 class Contact(TimeStamp):
     address = models.CharField(max_length=100)
-    phone = models.PositiveIntegerField(max_length=30)
-    fax = models.PositiveIntegerField(max_length=30, null=True, blank=True)
+    phone = models.PositiveIntegerField()
+    fax = models.PositiveIntegerField(null=True, blank=True)
     email = models.EmailField()
 
 
