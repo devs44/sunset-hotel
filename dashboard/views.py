@@ -559,7 +559,18 @@ class AboutDeleteView(DeleteMixin, DeleteView):
 class ServiceListView (ListView):
     template_name = 'dashboard/services-type/list.html'
     model = Services_type
-    context_object_name = 'servicetype'
+
+    
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        if "service_type_name" in self.request.GET:
+            if self.request.GET.get('service_type_name') != '':
+                queryset = queryset.filter(
+                    service_type_name__contains=self.request.GET.get(
+                        "service_type_name")
+                )
+        
+        return queryset
 
 
 class ServiceCreateView(CreateView):
@@ -593,6 +604,17 @@ class ServiceVideoListView (ListView):
     template_name = 'dashboard/service-video/list.html'
     model = Services_description
     context_object_name = 'servicevideo'
+    
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        if "description" in self.request.GET:
+            if self.request.GET.get('description') != '':
+                queryset = queryset.filter(
+                    description__icontains=self.request.GET.get(
+                        "description")
+                )
+        
+        return queryset
 
 
 class ServiceVideoCreateView(CreateView):
@@ -615,7 +637,7 @@ class ServiceVideoDetailView(DetailView):
 
 
 class ServiceVideoDeleteView(DeleteView):
-    template_name = 'dashboard/services-video/delete.html'
+    template_name = 'dashboard/service-video/delete.html'
     model = Services_description
     success_url = reverse_lazy('dashboard:service_video_list')
     
