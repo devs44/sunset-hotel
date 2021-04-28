@@ -96,7 +96,6 @@
 	    </div> <!-- / .container -->
     </section> <!-- / .section__data -->
 
-<<<<<<< HEAD
    <!-- section services alt -->
    <section class="section__services-alt">
      <div class="container">
@@ -117,7 +116,7 @@
             <div class="col-sm-6">
               <div class="services__item">
               <div class="services_item__logo">
-                <img src="{{ser.service_png.url }}" height="100px" width="100px"></i>
+                <img src="{{ser.service_png.url }}" height="100px" width="100px">
               </div>
                 <div class="services_item__title">
                   <h3>{{ser.service_type_name}}</h3>
@@ -177,94 +176,6 @@
      </div> <!-- / .row -->
    </div> <!-- / .container -->
  </section> <!-- / .section__testimonials -->
-=======
-    <!-- section services alt -->
-    <section class="section__services-alt">
-    	<div class="container">
-		    <div class="row">
-				{% for service in object_list %}
-					<div class="col-sm-5">
-						<h2 class="section__title services__title">Our <strong>Services</strong></h2>
-						<p class="services__text">{{ service.description }}</p>
-						 	
-							   <video
-                          src="{{service.service_video.url}}"
-                          type="video/mp4"
-                          controls
-                          width="320" height="240"
-                        ></video>
-						
-					</div>
-					{% endfor %}
-					<div class="col-sm-7">
-						<div class="row">
-							{% for service in services %}
-							<div class="col-sm-6">
-								<div class="services__item">
-									<div class="services_item__logo">
-										<img width="100px" height="100px" src="{{ service.service_png.url }}">
-									</div>
-									<div class="services_item__title">
-										<h3>{{ service.service_type_name }}</h3>
-									</div>
-									<div class="services_item__desc">
-										{{ service.service_type_description }}
-									</div>
-								</div> <!-- .services__item -->
-							</div>
-							{% endfor %}
-							  
-						</div> <!-- .row -->
-						
-					</div>
-					
-		    </div> <!-- / .row -->
-	    </div> <!-- / .container -->
-    </section> <!-- / .section__services-alt -->
-
-    <section class="section__testimonials">
-    	<div class="container">
-    		<div class="row">
-    		  <div class="col-sm-12">
-    				<h2 class="section__title"><strong>Testimonials</strong></h2>
-    				<div class="divider">
-    					<hr class="line1">
-    					<hr class="line2">
-    					<hr class="line1">
-    				</div> <!-- / .divider -->
-    				<p class="section__subtitle testimonials__subtitle">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti sit dicta quae natus quasi ratione quis id, tenetur atque blanditiis aperiam.</p>
-    		  </div>
-    		</div> <!-- / .row -->
-    	</div> <!-- / .container -->
-    	<div class="container">
-    		<div class="row">
-					<div class="col-xs-12">
-		    		<div id="testimonials__carousel" class="owl-carousel owl-theme testimonials__body">
-              {% for test in test %}
-		    			<div class="testimonials__wrapper">
-		    				<div class="testimonials__item">
-				    			<div class="testimonials__img">
-				    				<img src="{{test.image.url}}" class="img-responsive" alt="...">
-				    			</div>
-		              <div class="testimonials__caption">
-		              	<h3 class="testimonials_caption__name">{{test.name}}</h3>
-		              	<p class="testimonials_caption__prof">{{test.profession}}</p>
-		              	<p class="testimonials_caption__text">{{test.voice}}</p>
-		              </div> <!-- .testimonials__caption -->
-		            </div> <!-- .testimonials__item -->
-		    			</div><!-- .testimonials__wrapper -->
-
-		         {% endfor %}
-
-
-
-		    		</div> <!-- .testimonials__body -->
-		    	</div>
-		    </div> <!-- / .row -->
-	    </div> <!-- / .container -->
-    </section> <!-- / .section__testimonials -->
-
->>>>>>> b7a0e33ed8d40f2063efe00049bacfeb6d445002
     <!-- section quote -->
     <section class="section__quote">
     	<div class="container">
