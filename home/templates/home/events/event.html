@@ -2,33 +2,16 @@
 {% load static %}
 {% block content %}
 
-    <!-- CONTENT
-      ================================================== -->
+   
 
-    <!-- section text header -->
-    <section class="section__text-header">
-    	<div class="container">
-    	  <div class="row">
-    	    <div class="col-sm-12">
-    	    	<div class="welcome__content">
-							<h1 class="welcome_content__title">Events</h1>
-              <div class="divider blog-divider">
-                <hr class="line1">
-                <hr class="line2">
-                <hr class="line1">
-              </div> <!-- / .divider -->
-    				</div> <!-- .welcome__content -->
-    	    </div>
-    	  </div> <!-- / .row -->
-    	</div> <!-- / .container -->
-    </section> <!-- / .section text-header -->
-
-    <!-- section blog-item -->
-    <section class="section__blog-item">
+    <!-- section blog -->
+    <section class="section__blog">
     	<div class="container">
     	  <div class="row">
     	    <div class="col-sm-8">
-    	    	<div class="blog__item">
+    	    	
+            {% for event in event %}
+            <div class="blog__item">
     	    		<div class="blog-item__img">
                 <img src="{{ event.image.url }}" class="img-responsive" alt="...">
               </div>
@@ -37,7 +20,7 @@
                   <p>/ <span>Events</span> /</p>
                 </div>
             		<div class="blog-item__title">
-                  <h3>{{ event.title }}</h3>
+                  <h3>{{event.title}}</h3>
                 </div>
                 <div class="divider blog-divider">
 		    					<hr class="line1">
@@ -45,28 +28,22 @@
 		    					<hr class="line1">
 		    				</div> <!-- / .divider -->
 		    				<div class="blog-item__date">
-                  <p>{{ event.created_by }}</p>
+                  <p>{{ event.created_at }}</p>
                 </div>
                 <div class="blog-item__text">
-                   {{ event.description }}
+                 {{event.description|truncatewords:20|safe}}
                 </div> <!-- .blog-item__text -->
-
-
-
-
-
-                <div class="blog-item__tags">
-                  <p>Tags:</p>
-                  <a href="#">#travel</a>
-                  <a href="#">#news</a>
-                  <a href="#">#themeforest</a>
-                </div>
                 <div class="blog-item__footer">
                 	<div class="footer__item">
                 		<ul class="item-info__list">
-	                    <li class="info-list__item"><i class="ion ion-android-person"></i> by John Doe</li>
+	                    <li class="info-list__item"><i class="ion ion-android-person"></i> by {{ event.created_by}}</li>
 	                    <li class="info-list__item"><i class="ion ion-android-chat" aria-hidden="true"></i> 5 Comments</li>
 	                  </ul> <!-- .item-info__list -->
+                	</div> <!-- .footer__item -->
+                	<div class="footer__item">
+                		<div class="blog-item__link">
+		                  <a href="{% url 'event_detail' event.id %}">/ Read More /</a>
+		                </div> <!-- .blog-item__link -->
                 	</div> <!-- .footer__item -->
                 	<div class="footer__item">
                 		<ul class="social__icons">
@@ -79,91 +56,7 @@
                 </div> <!-- .blog-item__footer -->
               </div> <!-- / .blog-item__content -->
             </div> <!-- .blog__item -->
-            <div class="comments">
-              <p class="subheading">Comments</p>
-              <ul class="comments__list">
-                <li class="comment">
-                  <div class="comment__user">
-                    Robert Jones
-                  </div>
-                  <div class="comment__date">
-                    April 8, 2017 at 1:15 pm
-                  </div>
-                  <div class="comment__message">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni dicta alias enim quasi sapiente saepe, repellat soluta commodi delectus doloribus, veniam odit hic ratione quae modi earum dolor dignissimos quas?
-                  </div>
-                  <div class="comment__reply">
-                    <a href="#">Reply</a>
-                  </div>
-                  <ul class="comments-list__cildren">
-                    <li class="comment">
-                      <div class="comment__user">
-                        John Doe
-                      </div>
-                      <div class="comment__date">
-                        April 8, 2017 at 4:15 pm
-                      </div>
-                      <div class="comment__message">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                      </div>
-                      <div class="comment__reply">
-                        <a href="#">Reply</a>
-                      </div>
-                    </li>
-                  </ul>
-                </li> <!-- .comment -->
-                <li class="comment">
-                  <div class="comment__user">
-                    Maria Atkinson
-                  </div>
-                  <div class="comment__date">
-                    March 24, 2017 at 1:38 am
-                  </div>
-                  <div class="comment__message">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit eaque magni aliquam dolore cum aliquid ipsa, asperiores modi voluptates.
-                  </div>
-                  <div class="comment__reply">
-                    <a href="#">Reply</a>
-                  </div>
-                </li> <!-- .comment -->
-                <li class="comment">
-                  <div class="comment__user">
-                    Brad pitt
-                  </div>
-                  <div class="comment__date">
-                    March 20, 2017 at 3:40 pm
-                  </div>
-                  <div class="comment__message">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti provident adipisci eos reiciendis. Ab dolore natus nam temporibus quidem esse soluta. Accusamus sapiente, officia architecto accusantium sunt amet harum quis!
-                  </div>
-                  <div class="comment__reply">
-                    <a href="#">Reply</a>
-                  </div>
-                </li> <!-- .comment -->
-                <li class="comment">
-                  <div class="comment__user">
-                    Jessica Doe
-                  </div>
-                  <div class="comment__date">
-                    March 15, 2017 at 10:30 am
-                  </div>
-                  <div class="comment__message">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi quas iste et dolor harum accusamus.
-                  </div>
-                  <div class="comment__reply">
-                    <a href="#">Reply</a>
-                  </div>
-                </li> <!-- .comment -->
-              </ul> <!-- .comments__list -->
-              <p class="subheading">Leave a comment</p>
-              <form class="comments__form" data-animate-in="animateUp" method="post">
-                {% csrf_token %}
-                  {{form.as_p}}
-                <button type="submit" class="btn">
-                    Post comment
-                </button>
-              </form>
-            </div> <!-- .comments -->
+            {% endfor %}
           </div>
           <div class="col-sm-4">
     	    	<div class="blog__sidebar">
@@ -180,7 +73,7 @@
     	    				
     	    				<li><a href="{% url 'rooms' %}">Rooms</a></li>
     	    				<li><a href="#">Services</a></li>
-    	    				<li><a href="#">Events</a></li>
+    	    				<li><a href="">News</a></li>
     	    			</ul> <!-- .categories -->
     	    		</div> <!-- .sidebar__item -->
     	    		<div class="sidebar__item">
@@ -222,18 +115,46 @@
     	    		<div class="sidebar__item">
     	    			<p class="subheading">Recent posts</p>
     	    			<ul class="recent__posts">
-                {% for event in events %}
     	    				<li>
     	    					<a href="#" class="post__title">
-    	    						<h5 class="post__title">{{ event.title }}</h5>
+    	    						<h5 class="post__title">Lorem ipsum dolor sit amet.</h5>
     	    						<p class="post__desc">
-	    	    						{{event.description|truncatewords:20 }}
+	    	    						One morning, when Gregor Samsa woke from troubled dreams, he found...
 	    	    					</p>
-	    	    					<p class="post__info"><i class="ion ion-android-calendar"></i>{{ event.created_at }}</p>
-	    	    					<p class="post__info"><i class="ion ion-android-person"></i> by {{ event.created_by }}</p>
+	    	    					<p class="post__info"><i class="ion ion-android-calendar"></i> 15 March, 2017</p>
+	    	    					<p class="post__info"><i class="ion ion-android-person"></i> by John Doe</p>
     	    					</a>
     	    				</li>
-    	    	    {% endfor %}
+    	    				<li>
+    	    					<a href="#">
+    	    						<h5 class="post__title">Lorem ipsum dolor sit amet.</h5>
+    	    						<p class="post__desc">
+	    	    						One morning, when Gregor Samsa woke from troubled dreams, he found...
+	    	    					</p>
+	    	    					<p class="post__info"><i class="ion ion-android-calendar"></i> 15 March, 2017</p>
+	    	    					<p class="post__info"><i class="ion ion-android-person"></i> by John Doe</p>
+    	    					</a>
+    	    				</li>
+    	    				<li>
+    	    					<a href="#" class="post__title">
+    	    						<h5 class="post__title">Lorem ipsum dolor sit amet.</h5>
+    	    						<p class="post__desc">
+	    	    						One morning, when Gregor Samsa woke from troubled dreams, he found...
+	    	    					</p>
+	    	    					<p class="post__info"><i class="ion ion-android-calendar"></i> 15 March, 2017</p>
+	    	    					<p class="post__info"><i class="ion ion-android-person"></i> by John Doe</p>
+    	    					</a>
+    	    				</li>
+    	    				<li>
+    	    					<a href="#" class="post__title">
+    	    						<h5 class="post__title">Lorem ipsum dolor sit amet.</h5>
+    	    						<p class="post__desc">
+	    	    						One morning, when Gregor Samsa woke from troubled dreams, he found...
+	    	    					</p>
+	    	    					<p class="post__info"><i class="ion ion-android-calendar"></i> 15 March, 2017</p>
+	    	    					<p class="post__info"><i class="ion ion-android-person"></i> by John Doe</p>
+    	    					</a>
+    	    				</li>
     	    			</ul>
     	    		</div> <!-- .sidebar__item -->
     	    		<div class="sidebar__item">
@@ -252,6 +173,20 @@
   	    		</div> <!-- .blog__sidebar -->
     	    </div>
     	  </div> <!-- / .row -->
+    	  <div class="row">
+    	    <div class="col-sm-8">
+		    	  <nav aria-label="...">
+						  <ul class="pager">
+						    <li class="previous disabled"><a href="#"><span aria-hidden="true">&larr;</span> Older</a></li>
+						    <li class="next"><a href="#">Newer <span aria-hidden="true">&rarr;</span></a></li>
+						  </ul>
+						</nav>
+    	    </div>
+    	  </div> <!-- / .row -->
     	</div> <!-- / .container -->
-    </section> <!-- / .section blog-item -->
+    </section> <!-- / .section reservation -->
+
+
+
+
 {% endblock %}

@@ -107,3 +107,9 @@ class ContactTemplateView(TemplateView):
     template_name = 'home/contact/contact.html'
 
     
+class EventListView(ListView):
+    model = Event
+    template_name = 'home/events/event.html'
+    context_object_name = 'event'
+    paginate_by = 3
+    context_object_name = 'event'
