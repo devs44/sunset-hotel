@@ -248,7 +248,7 @@ class EventDetailView(DashboardMixin, DetailView):
         return obj
 
 
-class EventDelteView(DashboardMixin, DeleteView):
+class EventDeleteView(DashboardMixin, DeleteView):
     template_name = 'dashboard/event/eventdelete.html'
     model = Event
     success_url = reverse_lazy('dashboard:event_list')
