@@ -206,7 +206,7 @@ class EventForm(forms.ModelForm):
 class EventCommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = '__all__'
+        exclude = ['deleted_at','news']
         widgets = {
             'events': forms.Select(attrs={
                 'class': 'form-control select2'

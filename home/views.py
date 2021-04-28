@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.views.generic import ListView, TemplateView, DetailView
 from dashboard.models import *
 
@@ -27,6 +28,7 @@ class RoomListView(ListView):
     model = Room
     template_name = 'home/room/room.html'
     context_object_name = 'room'
+    paginate_by = 4
 
 
 class RoomDetailView(DetailView):
@@ -37,6 +39,8 @@ class RoomDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['rooms'] = Room.objects.exclude(room_no=self.get_object().room_no)
         print(context['rooms'])
+        context['feature'] = Feature.objects.all()
+
         return context
 
 
@@ -96,9 +100,12 @@ class NewsDetailView(FormMixin,DetailView):
         return super(NewsDetailView, self).form_valid(form)
     
 
-class EventDetailView(DetailView):
+class EventDetailView(FormMixin, DetailView):
     template_name = 'home/events/event_detail.html'
     model = Event
+    form_class = EventCommentForm
+
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -106,8 +113,30 @@ class EventDetailView(DetailView):
         print(context['events'])
         return context
 
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
+
+
+    def get_success_url(self):
+        return reverse("event_detail", kwargs={"id": self.object.id})
+
 class ContactTemplateView(TemplateView):
     model = Contact
     template_name = 'home/contact/contact.html'
 
     
+class EventListView(ListView):
+    model = Event
+    template_name = 'home/events/event.html'
+    context_object_name = 'event'
+    paginate_by = 3
+    context_object_name = 'event'

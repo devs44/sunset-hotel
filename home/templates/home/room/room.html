@@ -41,7 +41,7 @@
                 <div class="col-md-6">
                 <div class="rooms__desc">
                     <div class="rooms_desc__header">
-                    <h2 class="rooms_desc__title">Single room</h2>
+                    <h2 class="rooms_desc__title">{{ room.room_type }}</h2>
                     <p class="rooms_desc__price"><span>{{ room.price }}</span> / night</p>
                     </div> <!-- .rooms_desc__header -->
                     <p class="rooms_desc__desc">{{ room.description|truncatewords:20 }}</p>
@@ -73,20 +73,28 @@
 
             <nav aria-label="Page navigation">
               <ul class="pagination">
+                {% if page_obj.has_previous %}
                 <li>
-                  <a href="#" aria-label="Previous">
+                  <a href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                   </a>
                 </li>
-                <li><a href="#">1</a></li>
-                <li class="active"><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
+                <li><a href="?page={{page_obj.previous_page_number}}">{{ page_obj.previous_page_number }}</a></li>
+                {% endif %}
+                <li class="active"><a href="?page={{ page_obj.number }}">{{ page_obj.number }}</a></li>
+                {% if page_obj.has_next %}
+                <li><a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a></li>
+                {% endif  %}
+                {% if page_obj.next_page_number != page_obj.paginator.num_pages %}
+                <li><a href="?page={{page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a></li>
+                {% endif %}
+                {% if page_obj.has_next %}
                 <li>
-                  <a href="#" aria-label="Next">
+                  <a href="?page={{ page_obj.next_page_number }}" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                   </a>
                 </li>
+                {% endif %}
               </ul>
             </nav>
 
