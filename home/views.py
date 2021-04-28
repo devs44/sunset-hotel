@@ -15,7 +15,7 @@ class HomeTemplateView(TemplateView):
         context['room'] = Room.objects.all()
         context['news'] = News.objects.all().order_by("-id")
         context['event'] = Event.objects.all()
-
+        
         return context
 
 
