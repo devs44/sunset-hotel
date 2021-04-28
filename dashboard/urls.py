@@ -3,9 +3,9 @@ from .views import *
 
 app_name = 'dashboard'
 urlpatterns = [
-    path('admin-login/', LoginView.as_view(), name="admin_login"),
-    path('admin-logout/', LogoutView.as_view(), name="admin_logout"),
-    path('admin-dashboard/', AdminDashboardView.as_view(), name="admin_dashboard"),
+    path('login/', LoginView.as_view(), name="admin_login"),
+    path('logout/', LogoutView.as_view(), name="admin_logout"),
+    path('dashboard/', AdminDashboardView.as_view(), name="admin_dashboard"),
 
     # room
     path('room/list/', RoomListView.as_view(), name='room_list'),
@@ -46,9 +46,9 @@ urlpatterns = [
 
     path('news', NewsListView.as_view(), name='news_list'),
     path('news/create', NewsCreateView.as_view(), name='news_create'),
-    path('news-/<int:pk>/update/', NewsUpdateView.as_view(), name='news_update'),
-    path('news-/<int:pk>/delete/', NewsDeleteView.as_view(), name='news_delete'),
-    path('news-/<int:pk>/detail/', NewsDetailView.as_view(), name="news_detail"),
+    path('news/<int:pk>/update/', NewsUpdateView.as_view(), name='news_update'),
+    path('news/<int:pk>/delete/', NewsDeleteView.as_view(), name='news_delete'),
+    path('news/<int:pk>/detail/', NewsDetailView.as_view(), name="news_detail"),
     
     #newscomment
     path('news/comment', NewsCommentTemplateView.as_view(), name='news_comment_list'),
@@ -59,26 +59,26 @@ urlpatterns = [
     
 
      # event
-     path('admin-event-list/', EventListView.as_view(), name='event_list'),
-     path('admin-event-create/', EventCreateView.as_view(), name='event_create'),
-     path('admin-event-/<int:pk>/-update/', EventUpdateView.as_view(), name='event_update'),
-     path('admin-event/<int:pk>/-delete/', EventDeleteView.as_view(), name='event_delete'),
-     path('admin-event-/<int:pk>/-detail/', EventDetailView.as_view(), name='event_detail'),
+     path('event/list/', EventListView.as_view(), name='event_list'),
+     path('event/create/', EventCreateView.as_view(), name='event_create'),
+     path('event/<int:pk>/update/', EventUpdateView.as_view(), name='event_update'),
+     path('event/<int:pk>/delete/', EventDeleteView.as_view(), name='event_delete'),
+     path('event/<int:pk>/detail/', EventDetailView.as_view(), name='event_detail'),
 
      #event_comments
-     path('admin-eventcomment-list/', EventCommentTemplateView.as_view(), name='eventcomment_list'),
-     path('admin-eventcomment-create/', EventCommentCreateView.as_view(), name='eventcomment_create'),
-     path('admin-eventcomment-/<int:pk>/-update/', EventCommentUpdateView.as_view(), name='eventcomment_update'),
-     path('admin-eventcomment/<int:pk>/-delete/', EventCommentDeleteView.as_view(), name='eventcomment_delete'),
-     path('admin-eventcomment-/<int:pk>/-detail/', EventCommentDetailView.as_view(), name='eventcomment_detail'),
+     path('event/comment/list/', EventCommentTemplateView.as_view(), name='eventcomment_list'),
+     path('event/commentcreate/', EventCommentCreateView.as_view(), name='eventcomment_create'),
+     path('event/comment/<int:pk>/update/', EventCommentUpdateView.as_view(), name='eventcomment_update'),
+     path('event/comment/<int:pk>/delete/', EventCommentDeleteView.as_view(), name='eventcomment_delete'),
+     path('event/comment/<int:pk>/detail/', EventCommentDetailView.as_view(), name='eventcomment_detail'),
      
 
      #testimonials
-     path('admin-testimonial-list/', TestimonialListView.as_view(), name='testimonial_list'),
-     path('admin-testimonial-create/', TestimonialCreateView.as_view(), name='testimonial_create'),
-     path('admin-testimonial/<int:pk>/-update/', TestimonialUpdateView.as_view(), name='testimonial_update'),
-     path('admin-testimonial/<int:pk>/-delete/', TestimonialDeleteView.as_view(), name='testimonial_delete'),
-     path('admin-testimonial-/<int:pk>/-detail/', TestimonialDetailView.as_view(), name='testimonial_detail'),
+     path('testimonial/list/', TestimonialListView.as_view(), name='testimonial_list'),
+     path('testimonial/create/', TestimonialCreateView.as_view(), name='testimonial_create'),
+     path('testimonial/<int:pk>/update/', TestimonialUpdateView.as_view(), name='testimonial_update'),
+     path('testimonial/<int:pk>/delete/', TestimonialDeleteView.as_view(), name='testimonial_delete'),
+     path('testimonial/<int:pk>/detail/', TestimonialDetailView.as_view(), name='testimonial_detail'),
     
 
      #message
