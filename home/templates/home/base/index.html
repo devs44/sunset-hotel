@@ -200,7 +200,7 @@
     	<div class="container">
     		<div class="best-rooms__content">
 		    	<div class="row">
-            {% for room in room %}
+            {% for room in room|slice:4 %}
 		    	  <div class="col-sm-6">
 		    	  	<figure class="best-rooms__item">
 	    	  			<img src="{{ room.image.url }}" class="img-responsive" alt="...">
@@ -209,8 +209,8 @@
 									<div class="item__price">
 										{{ room.price }} <small>/ night</small>
 									</div>
-									<p class="item__desc">{{room.description.truncatewords:20|safe </p>
-									<a href="reservation.html" class="btn-book">Book now <i class="icon ion-chevron-right"></i><i class="icon ion-chevron-right"></i></a>
+									<p class="item__desc">{{room.description|truncatewords:20|safe }}</p>
+									<a href="{% url 'reservation' %}" class="btn-book">Book now <i class="icon ion-chevron-right"></i><i class="icon ion-chevron-right"></i></a>
 								</figcaption>
 							</figure> <!-- / .best-rooms__item -->
 		    	  </div>
@@ -219,7 +219,7 @@
 		    	<div class="row">
 			    	<div class="col-xs-12">
 			    		<div class="rooms__button">
-			    			<a href="rooms-1.html" class="btn">See all rooms</a>
+			    			<a href="{% url 'rooms' %}" class="btn">See all rooms</a>
 			    		</div> <!-- / .rooms__button -->
 			    	</div>
 		    	</div> <!-- / .row -->
@@ -485,10 +485,6 @@
       {%endfor%}
     </div>
     <!-- / .row -->
- 
-
-
-  
       <div class="row">
         <div class="col-xs-12 hidden-xs col-sm-6 col-md-6 col-lg-3">
           <div class="events__title">
