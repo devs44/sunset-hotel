@@ -79,7 +79,7 @@
             <div class="comments">
               <p class="subheading">Comments</p>
               <ul class="comments__list">
-              {%for n in news%}
+              {% comment %} {%for n in news%}
                 <li class="comment">
                   <div class="comment__user">
                     {{n.full_name}}
@@ -110,7 +110,7 @@
                     </li>
                   </ul>
                 </li> <!-- .comment -->
-              {%endfor%}
+              {%endfor%} {% endcomment %}
                 {% comment %} <li class="comment">
                   <div class="comment__user">
                     Maria Atkinson
@@ -155,9 +155,10 @@
                 </li> <!-- .comment --> {% endcomment %}
               </ul> <!-- .comments__list -->
               <p class="subheading">Leave a comment</p>
-              <form class="comments__form" data-animate-in="animateUp">
-                
-                <div class="form-group">
+              <form class="comments__form" data-animate-in="animateUp" method="POST">
+                {% csrf_token %}
+                {{form.as_p}}
+                {% comment %} <div class="form-group">
                   <label for="name">Name (Required)</label>
                   <input type="text" name="name" class="form-control" id="name" placeholder="Enter Your Full Name">
                 </div>
@@ -177,7 +178,7 @@
                   <textarea name="message" class="form-control" rows="6" id="message" placeholder="Enter Your Message"></textarea>
                   <span class="help-block"></span>
                 </div>
-                
+                 {% endcomment %}
                 <button type="submit" class="btn">
                     Post comment
                 </button>
