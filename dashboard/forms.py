@@ -1,5 +1,5 @@
 from django import forms
-from .models import Room, News, Comment, Event, Testomonial, Message, Reservation, Room_Category, Feature, Image, About, Services_description, Services_type
+from .models import Room, News, Comment, Event, Testomonial, Message, Reservation, Room_Category, Feature, Image, Services_description, Services_type, Contact, About
 
 
 class FormControlMixin:
@@ -206,7 +206,7 @@ class EventForm(forms.ModelForm):
 class EventCommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = '__all__'
+        exclude = ['deleted_at','news']
         widgets = {
             'events': forms.Select(attrs={
                 'class': 'form-control select2'
@@ -275,8 +275,7 @@ class MessageForm(forms.ModelForm):
                 'placeholder': 'Enter your message'
             })
         }
-
-
+        
 class ReservationForm(forms.ModelForm):
     class Meta:
         model = Reservation
@@ -391,5 +390,30 @@ class ServiceVideoForm(forms.ModelForm):
             'service_video': forms.ClearableFileInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Choose Video'
+            })
+        }
+
+    
+class ContactForm(forms.ModelForm):
+    class Meta:
+        model = Contact
+        fields = '__all__'
+        widgets = {
+              'email': forms.EmailInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Choose Video'
+            
+            }),
+             'address': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'address'
+            }),
+            'phone': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Phone number'
+            }),
+          'fax': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Phone number'
             })
         }
