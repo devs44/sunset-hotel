@@ -44,6 +44,9 @@ class ServiceListView(ListView):
         context = super().get_context_data(**kwargs)
         context['services'] = Services_type.objects.all()
         context['test'] = Testomonial.objects.all()
+        context['serve'] = Services_description.objects.all()
+        context['ser'] = Services_type.objects.all()
+        context['about'] = About.objects.all()
         return context
 
 
@@ -72,3 +75,9 @@ class EventDetailView(DetailView):
         context['events'] = Event.objects.exclude(id=self.get_object().id)
         print(context['events'])
         return context
+
+class ContactTemplateView(TemplateView):
+    model = Contact
+    template_name = 'home/contact/contact.html'
+
+    

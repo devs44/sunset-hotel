@@ -10,7 +10,7 @@ urlpatterns = [
     path('reservation/', ReservationView.as_view(), name="reservation"),
     path("news/<int:pk>/", NewsDetailView.as_view(), name="news_detail"),
     path('event/<int:pk>/', EventDetailView.as_view(), name="event_detail"),
-    
+    path('contacts/', ContactTemplateView.as_view(), name="contact"),
 ]
 
 

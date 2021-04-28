@@ -256,19 +256,15 @@ class EventDeleteView(DeleteView):
 # event comment
 
 
-class EventCommentTemplateView(TemplateView):
+class EventCommentTemplateView(ListView):
     template_name = 'dashboard/event_comment/eventcommentlist.html'
     model = Comment
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['events'] = Comment.objects.filter(Q(news__isnull=True) &
-                                                   Q(deleted_at__isnull=True))
-        return context
-
+    
     def get_queryset(self):
-        queryset = super().get_queryset()
+        queryset = super().get_queryset().filter(Q(news__isnull=True) &
+            Q(deleted_at__isnull=True))
         if "full_name" in self.request.GET:
+            print(queryset,1111111111111)
             if self.request.GET.get('full_name') != '':
                 queryset = queryset.filter(
                     full_name=self.request.GET.get("full_name"))
