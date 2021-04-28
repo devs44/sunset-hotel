@@ -3,12 +3,13 @@ from django.urls import reverse
 from django.views.generic import ListView, TemplateView, DetailView
 from dashboard.models import *
 
+from .mixin import *
 from django.views.generic.edit import FormMixin
 from dashboard.forms import *
 # Create your views here.
 
 
-class HomeTemplateView(TemplateView):
+class HomeTemplateView(BaseMixin, TemplateView):
     model = Room
     template_name = 'home/base/index.html'
     # context_object_name = 'room'
@@ -20,7 +21,6 @@ class HomeTemplateView(TemplateView):
         context['news'] = News.objects.all().order_by("-id")
         context['event'] = Event.objects.all()
         context['test'] = Testomonial.objects.all()
-        context['contact'] = Contact.objects.filter(deleted_at__isnull=True).order_by('-id')
         return context
 
 
@@ -31,7 +31,7 @@ class RoomListView(ListView):
     paginate_by = 4
 
 
-class RoomDetailView(DetailView):
+class RoomDetailView(BaseMixin, DetailView):
     template_name = 'home/room/room_detail.html'
     model = Room
 
@@ -129,7 +129,7 @@ class EventDetailView(FormMixin, DetailView):
     def get_success_url(self):
         return reverse("event_detail", kwargs={"id": self.object.id})
 
-class ContactTemplateView(TemplateView):
+class ContactTemplateView(BaseMixin, TemplateView):
     model = Contact
     template_name = 'home/contact/contact.html'
 
