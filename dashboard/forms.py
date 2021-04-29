@@ -147,11 +147,8 @@ class NewsCommentForm(forms.ModelForm):
 
     class Meta:
         model = Comment
-        exclude = ['deleted_at','events']
+        exclude = ['deleted_at','events','news']
         widgets = {
-            'news': forms.Select(attrs={
-                'class': 'form-control select2'
-            }),
             'full_name': forms.TextInput(attrs={
                 'class': 'form-control select2',
                 'placeholder': 'Enter name'

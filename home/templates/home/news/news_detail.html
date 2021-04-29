@@ -157,8 +157,8 @@
               <p class="subheading">Leave a comment</p>
               <form class="comments__form" data-animate-in="animateUp" method="POST">
                 {% csrf_token %}
-                {{form.as_p}}
-                {% comment %} <div class="form-group">
+                
+                <div class="form-group">
                   <label for="name">Name (Required)</label>
                   <input type="text" name="name" class="form-control" id="name" placeholder="Enter Your Full Name">
                 </div>
@@ -178,7 +178,6 @@
                   <textarea name="message" class="form-control" rows="6" id="message" placeholder="Enter Your Message"></textarea>
                   <span class="help-block"></span>
                 </div>
-                 {% endcomment %}
                 <button type="submit" class="btn">
                     Post comment
                 </button>

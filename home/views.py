@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from django.views.generic import ListView, TemplateView, DetailView
+from django.views.generic import ListView, TemplateView, DetailView, CreateView
 from dashboard.models import *
 
 from .mixin import *
@@ -69,14 +69,15 @@ class NewsListView(ListView):
         
     
 
-class NewsDetailView(FormMixin,DetailView):
+class NewsDetailView(DetailView):
     template_name = 'home/news/news_detail.html'
     model = News
     form_class = NewsCommentForm
     context_object_name = "newsdetail"
 
     def get_success_url(self):
-        return redirect('news_detail', kwargs={'id': self.object.id})
+         return reverse_lazy('news_detail', kwargs={'pk': self.object.pk})
+
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -86,18 +87,33 @@ class NewsDetailView(FormMixin,DetailView):
         context['form'] = NewsCommentForm(initial={'news': self.object})
         return context
     
+    # def post(self, request, *args, **kwargs):
+    #     comment_name = request.POST.get('name')
+    #     comment_email = request.POST.get('email')
+    #     comment_website =   request.POST.get('website')
+    #     comment_message = request.POST.get('message')
     def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        form = self.get_form()
+        form = NewsCommentForm(request.POST)
+
         if form.is_valid():
-            return self.form_valid(form)
+            comment = form.save(commit=False)
+            comment.creator = request.user
+            comment.question = self.get_object()
+            comment.save()
+            self.object = self.get_object()
+            context = context = super().get_context_data(**kwargs)
+            context['form'] = NewsCommentForm
+
+            return self.render_to_response(context=context)
+
         else:
-            return self.form_invalid(form)
+            self.object = self.get_object()
+            context = super().get_context_data(**kwargs)
+            context['form'] = form
+
+            return self.render_to_response(context=context)
         
-        
-    def form_valid(self, form):
-        form.save()
-        return super(NewsDetailView, self).form_valid(form)
+
     
 
 class EventDetailView(FormMixin, DetailView):
