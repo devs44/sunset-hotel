@@ -22,7 +22,7 @@
           </p>
 
           <!-- button -->
-          <a href="#section__about" class="btn btn-reservation">Explore it</a>
+          <a href="{% 'home:about' %}" class="btn btn-reservation">Explore it</a>
         </div>
         <!-- .welcome__content -->
       </div>
@@ -42,12 +42,13 @@
     <div class="row">
       <div class="col-sm-12">
         <!-- Reservation form -->
-        <form class="reservation__form">
+        <form class="reservation__form" action="{% 'home:rooms' %}" method="GET">
           <div class="form-group">
             <div class="form-group__inner">
               <label for="reservation__check-in">Arrival date</label>
               <input
                 type="text"
+                name="arrival_date"
                 class="form-control date"
                 id="reservation__check-in"
                 value="24 December 2017"
@@ -61,6 +62,7 @@
               <label for="reservation__check-out">Departure date</label>
               <input
                 type="text"
+                name="departure_date"
                 class="form-control date"
                 id="reservation__check-out"
                 value="12 January 2018"

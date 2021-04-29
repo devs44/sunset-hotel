@@ -16,5 +16,3 @@ urlpatterns = [
     path('gallerys/', GalleryListView.as_view(), name="gallerys"),
 
 ]
-
-
