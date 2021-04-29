@@ -309,6 +309,7 @@ class RoomSearchView(View):
 class NewsListView(QuerysetMixin, DashboardMixin, ListView):
     model = News
     template_name = 'dashboard/news/list.html'
+    paginate_by = 5
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -350,12 +351,12 @@ class NewsDeleteView(DeleteMixin, DashboardMixin, DeleteView):
 class NewsCommentTemplateView(DashboardMixin, TemplateView):
     model = Comment
     template_name = 'dashboard/news_comment/list.html'
-    form_class = 'NewsForm'
+    context_object_name = 'news'
+    paginate_by = 5
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['news'] = Comment.objects.filter(events__isnull=True)
-        return context
+    def get_queryset(self):
+        return super().get_queryset().filter(events__isnull=True)
+
 
 
 class NewsCommentCreateView(DashboardMixin, CreateView):

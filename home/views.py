@@ -1,14 +1,15 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse
-
-from django.views.generic.edit import FormMixin
 from django.views.generic import ListView, TemplateView, DetailView
 from dashboard.models import *
+
+from .mixin import *
+from django.views.generic.edit import FormMixin
 from dashboard.forms import *
 # Create your views here.
 
 
-class HomeTemplateView(TemplateView):
+class HomeTemplateView(BaseMixin, TemplateView):
     model = Room
     template_name = 'home/base/index.html'
     # context_object_name = 'room'
@@ -37,7 +38,7 @@ class RoomListView(ListView):
     #     return queryset
 
 
-class RoomDetailView(DetailView):
+class RoomDetailView(BaseMixin, DetailView):
     template_name = 'home/room/room_detail.html'
     model = Room
 
@@ -82,17 +83,40 @@ class ReservationView(TemplateView):
     template_name = 'home/reservation/reservation.html'
 
 
-class NewsDetailView(DetailView):
+class NewsListView(ListView):
+    template_name = 'home/news/list.html'
+    model = News
+    context_object_name = "news"
+
+
+class NewsDetailView(FormMixin, DetailView):
     template_name = 'home/news/news_detail.html'
     model = News
+    form_class = NewsCommentForm
     context_object_name = "newsdetail"
+
+    def get_success_url(self):
+        return redirect('news_detail', kwargs={'id': self.object.id})
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['news'] = News.objects.exclude(
             id=self.get_object().id).order_by("-id")
         print(context['news'])
+        context['form'] = NewsCommentForm(initial={'news': self.object})
         return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        form.save()
+        return super(NewsDetailView, self).form_valid(form)
 
 
 class EventDetailView(FormMixin, DetailView):
@@ -122,6 +146,14 @@ class EventDetailView(FormMixin, DetailView):
         return reverse("event_detail", kwargs={"id": self.object.id})
 
 
-class ContactTemplateView(TemplateView):
+class ContactTemplateView(BaseMixin, TemplateView):
     model = Contact
     template_name = 'home/contact/contact.html'
+
+
+class EventListView(ListView):
+    model = Event
+    template_name = 'home/events/event.html'
+    context_object_name = 'event'
+    paginate_by = 3
+    context_object_name = 'event'
