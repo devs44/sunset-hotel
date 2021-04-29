@@ -13,6 +13,8 @@ urlpatterns = [
     path('event/', EventListView.as_view(), name="event"),
     path('event/<int:pk>/', EventDetailView.as_view(), name="event_detail"),
     path('contacts/', ContactTemplateView.as_view(), name="contact"),
+    path('gallerys/', GalleryListView.as_view(), name="gallerys"),
+
 ]
 
 
