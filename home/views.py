@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic import ListView, TemplateView, DetailView
 from dashboard.models import *
-
+from django.db.models import Q
 from .mixin import *
 from django.views.generic.edit import FormMixin
 from dashboard.forms import *
@@ -156,4 +156,20 @@ class EventListView(ListView):
     template_name = 'home/events/event.html'
     context_object_name = 'event'
     paginate_by = 3
-    context_object_name = 'event'
+  
+
+class GalleryListView(ListView):
+    model = RoomImage
+    template_name = 'home/gallery/gallery.html'
+    context_object_name = 'photo'
+    paginate_by = 6
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['single'] = Image.objects.filter(image_type__title="Single Room")
+        context['double'] = Image.objects.filter(image_type__title="Double Room")
+        context['deluxe'] = Image.objects.filter(image_type__title="Deluxe Room")
+        context['royal'] = Image.objects.filter(image_type__title="Royal Room")
+
+        return context
+
