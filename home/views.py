@@ -99,33 +99,6 @@ class NewsDetailView(FormMixin, DetailView):
          return reverse_lazy('news_detail', kwargs={'pk': self.object.pk})
 
     
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['news'] = News.objects.exclude(
-            id=self.get_object().id).order_by("-id")
-        print(context['news'])
-        context['form'] = NewsCommentForm(initial={'news': self.object})
-        return context
-    def post(self, request, *args, **kwargs):
-        form = NewsCommentForm(request.POST)
-
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.creator = request.user
-            comment.question = self.get_object()
-            comment.save()
-            self.object = self.get_object()
-            context = context = super().get_context_data(**kwargs)
-            context['form'] = NewsCommentForm
-
-            return self.render_to_response(context=context)
-
-        else:
-            return self.form_invalid(form)
-
-    def form_valid(self, form):
-        form.save()
-        return super(NewsDetailView, self).form_valid(form)
 
 
 class EventDetailView(FormMixin, DetailView):
