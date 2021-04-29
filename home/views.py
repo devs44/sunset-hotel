@@ -29,6 +29,13 @@ class RoomListView(ListView):
     context_object_name = 'room'
     paginate_by = 4
 
+    # def get_queryset(self):
+    #     queryset = super().get_queryset()
+    #     if "arrival_date" in self.request.GET:
+    #         if self.request.GET.get('arrival_date') != '':
+    #             pass
+    #     return queryset
+
 
 class RoomDetailView(DetailView):
     template_name = 'home/room/room_detail.html'
@@ -36,11 +43,25 @@ class RoomDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['rooms'] = Room.objects.exclude(room_no=self.get_object().room_no)
+        context['rooms'] = Room.objects.exclude(
+            room_no=self.get_object().room_no)
         print(context['rooms'])
         context['feature'] = Feature.objects.all()
 
         return context
+
+    # for posting review in selected room
+
+    def post(self, request, *args, **kwargs):
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+        room_no = self.kwargs.get('pk')
+        room = Room.objects.get(room_no=room_no)
+        obj = Comment.objects.create(
+            full_name=name, email=email, room=room, comment=message)
+        obj.save()
+        return render(request, self.template_name)
 
 
 class ServiceListView(ListView):
@@ -73,12 +94,11 @@ class NewsDetailView(DetailView):
         print(context['news'])
         return context
 
+
 class EventDetailView(FormMixin, DetailView):
     template_name = 'home/events/event_detail.html'
     model = Event
     form_class = EventCommentForm
-
-
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -98,12 +118,10 @@ class EventDetailView(FormMixin, DetailView):
         form.save()
         return super().form_valid(form)
 
-
     def get_success_url(self):
         return reverse("event_detail", kwargs={"id": self.object.id})
+
 
 class ContactTemplateView(TemplateView):
     model = Contact
     template_name = 'home/contact/contact.html'
-
-    

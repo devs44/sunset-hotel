@@ -86,8 +86,8 @@
                 </li> <!-- .review -->
               </ul> <!-- .reviews__list -->
               <p class="subheading">Leave a review</p>
-              <form class="comments__form" data-animate-in="animateUp">
-                
+              <form class="comments__form" data-animate-in="animateUp" method="POST">
+                {% csrf_token %}
                 <div class="form-group">
                   <label for="name">Name (Required)</label>
                   <input type="text" name="name" class="form-control" id="name" placeholder="Enter Your Full Name">
