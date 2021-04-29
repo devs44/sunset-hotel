@@ -203,7 +203,7 @@ class EventForm(forms.ModelForm):
 class EventCommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        exclude = ['deleted_at','news']
+        exclude = ['deleted_at', 'news']
         widgets = {
             'events': forms.Select(attrs={
                 'class': 'form-control select2'
@@ -272,7 +272,8 @@ class MessageForm(forms.ModelForm):
                 'placeholder': 'Enter your message'
             })
         }
-        
+
+
 class ReservationForm(forms.ModelForm):
     class Meta:
         model = Reservation
@@ -390,18 +391,18 @@ class ServiceVideoForm(forms.ModelForm):
             })
         }
 
-    
+
 class ContactForm(forms.ModelForm):
     class Meta:
         model = Contact
         fields = '__all__'
         widgets = {
-              'email': forms.EmailInput(attrs={
+            'email': forms.EmailInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Choose Video'
-            
+
             }),
-             'address': forms.TextInput(attrs={
+            'address': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'address'
             }),
@@ -409,8 +410,14 @@ class ContactForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': 'Phone number'
             }),
-          'fax': forms.NumberInput(attrs={
+            'fax': forms.NumberInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Phone number'
             })
         }
+
+
+class RoomCommentForm(FormControlMixin):
+    class Meta:
+        model = Comment
+        exclude = ['deleted_at', 'news', 'events']
