@@ -77,33 +77,53 @@
                 eaque magni aliquam dolore cum aliquid ipsa, asperiores modi
                 voluptates.
               </div>
-            </li>
-            <!-- .review -->
-            <li class="review">
-              <div class="review__user">Brad pitt</div>
-              <div class="review__date">March 20, 2017 at 3:40 pm</div>
-              <div class="review__message">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                Deleniti provident adipisci eos reiciendis. Ab dolore natus nam
-                temporibus quidem esse soluta. Accusamus sapiente, officia
-                architecto accusantium sunt amet harum quis!
-              </div>
-            </li>
-            <!-- .review -->
-          </ul>
-          <!-- .reviews__list -->
-          <p class="subheading">Leave a review</p>
-          <form class="comments__form" data-animate-in="animateUp">
-            <div class="form-group">
-              <label for="name">Name (Required)</label>
-              <input
-                type="text"
-                name="name"
-                class="form-control"
-                id="name"
-                placeholder="Enter Your Full Name"
-              />
-            </div>
+              
+              <a href="reservation.html" class="btn">Book this room now</a>
+            </div> <!-- .room-detail__body -->
+            <div class="room__reviews">
+              <p class="subheading">Room reviews</p>
+              <ul class="reviews__list">
+                <li class="review">
+                  <div class="review__user">
+                    Robert Jones
+                  </div>
+                  <div class="review__date">
+                    April 8, 2017 at 1:15 pm
+                  </div>
+                  <div class="review__message">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni dicta alias enim quasi sapiente saepe, repellat soluta commodi delectus doloribus, veniam odit hic ratione quae modi earum dolor dignissimos quas?
+                  </div>
+                </li> <!-- .review -->
+                <li class="review">
+                  <div class="review__user">
+                    Maria Atkinson
+                  </div>
+                  <div class="review__date">
+                    March 24, 2017 at 1:38 am
+                  </div>
+                  <div class="review__message">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit eaque magni aliquam dolore cum aliquid ipsa, asperiores modi voluptates.
+                  </div>
+                </li> <!-- .review -->
+                <li class="review">
+                  <div class="review__user">
+                    Brad pitt
+                  </div>
+                  <div class="review__date">
+                    March 20, 2017 at 3:40 pm
+                  </div>
+                  <div class="review__message">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti provident adipisci eos reiciendis. Ab dolore natus nam temporibus quidem esse soluta. Accusamus sapiente, officia architecto accusantium sunt amet harum quis!
+                  </div>
+                </li> <!-- .review -->
+              </ul> <!-- .reviews__list -->
+              <p class="subheading">Leave a review</p>
+              <form class="comments__form" data-animate-in="animateUp" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                  <label for="name">Name (Required)</label>
+                  <input type="text" name="name" class="form-control" id="name" placeholder="Enter Your Full Name">
+                </div>
 
             <div class="form-group">
               <label for="email">Email address</label>

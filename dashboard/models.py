@@ -151,6 +151,8 @@ class Comment(TimeStamp):
     full_name = models.CharField(max_length=30)
     email = models.EmailField()
     website = models.URLField(null=True, blank=True)
+    room = models.ForeignKey(
+        Room, related_name='room_comment', on_delete=models.CASCADE, null=True, blank=True)
     news = models.ForeignKey(
         News, related_name="news_comment", on_delete=models.CASCADE, null=True, blank=True)
     events = models.ForeignKey(
