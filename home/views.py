@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from django.views.generic import ListView, TemplateView, DetailView
+from django.views.generic import ListView, TemplateView, DetailView, CreateView
 from dashboard.models import *
 from django.db.models import Q
 from .mixin import *
@@ -172,4 +172,5 @@ class GalleryListView(ListView):
         context['royal'] = Image.objects.filter(image_type__title="Royal Room")
 
         return context
+
 

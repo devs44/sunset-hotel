@@ -1,7 +1,5 @@
 from django import forms
-from .models import Room, News, Comment, Event, Testomonial, Message, Reservation, Room_Category, Feature, Image, Services_description, Services_type, Contact, About
-
-
+from .models import *
 class FormControlMixin:
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -424,3 +422,5 @@ class RoomCommentForm(FormControlMixin):
     class Meta:
         model = Comment
         exclude = ['deleted_at', 'news', 'events']
+
+

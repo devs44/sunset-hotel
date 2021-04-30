@@ -8,3 +8,4 @@ class BaseMixin(object):
         context = super(). get_context_data()
         context['contact'] = Contact.objects.filter(deleted_at__isnull = True).order_by('-id')
         return context
+

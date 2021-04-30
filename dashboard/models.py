@@ -222,3 +222,5 @@ class Services_type(models.Model):
     service_type_name = models.CharField(max_length=100)
     service_png = models.ImageField(upload_to="service_type")
     service_type_description = models.CharField(max_length=200)
+
+
