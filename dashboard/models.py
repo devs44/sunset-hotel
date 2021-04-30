@@ -213,14 +213,20 @@ class Reservation(TimeStamp):
         return self.first_name + self.last_name
 
 
-class Services_description(models.Model):
+class Services_description(TimeStamp):
     description = models.CharField(max_length=200)
     service_video = models.FileField(upload_to="service_description")
+    
+    def __str__(self):
+        return self.description
 
 
-class Services_type(models.Model):
+
+class Services_type(TimeStamp):
     service_type_name = models.CharField(max_length=100)
     service_png = models.ImageField(upload_to="service_type")
     service_type_description = models.CharField(max_length=200)
-
+    
+    def __str__(self):
+        return self.service_type_name
 
