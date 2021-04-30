@@ -441,7 +441,7 @@
           <div>News</div>
         </div>
       </div>
-      {% for n in news %}
+      {% for n in news|slice:3%}
       <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-lg-pull-3">
         <div class="events__item">
           <div class="events-item__img">
@@ -499,7 +499,7 @@
         </div>
       </div>
 
-      {% for event in event %}
+      {% for event in event|slice:3 %}
       <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
         <div class="events__item">
           <div class="events-item__img">

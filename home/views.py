@@ -141,7 +141,6 @@ class NewsDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['news'] = News.objects.exclude(
             id=self.get_object().id).order_by("-id")
-        print(context['news'])
         context['form'] = NewsCommentForm(initial={'news': self.object})
         return context
     
