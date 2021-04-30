@@ -4,7 +4,7 @@ from django.db.models import Q
 
 from django.views.generic import ListView, TemplateView, DetailView
 from dashboard.models import *
-from django.db.models import Q
+
 from .mixin import *
 from dashboard.mixin import DeleteMixin, QuerysetMixin
 from django.views.generic.edit import FormMixin
@@ -24,6 +24,7 @@ class HomeTemplateView(BaseMixin, TemplateView):
         context['news'] = News.objects.all().order_by("-id")
         context['event'] = Event.objects.all()
         context['test'] = Testomonial.objects.all()
+        context['service'] = Services_type.objects.all()
         return context
 
 
@@ -129,37 +130,34 @@ class NewsListView(ListView):
     context_object_name = "news"
 
 
-class NewsDetailView(FormMixin, DetailView):
+class NewsDetailView(DetailView):
     template_name = 'home/news/news_detail.html'
     model = News
     form_class = NewsCommentForm
     context_object_name = "newsdetail"
 
-    def get_success_url(self):
-        return redirect('news_detail', kwargs={'id': self.object.id})
-
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['news'] = News.objects.exclude(
             id=self.get_object().id).order_by("-id")
-        print(context['news'])
         context['form'] = NewsCommentForm(initial={'news': self.object})
         return context
-
+    
     def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        form = self.get_form()
-        if form.is_valid():
-            return self.form_valid(form)
-        else:
-            return self.form_invalid(form)
+        name = request.POST.get('full_name')
+        email = request.POST.get('email')
+        website = request.POST.get('website')
+        message = request.POST.get('comment')
+        news = self.kwargs.get('pk')
+        form= News.objects.get(pk = news)
+        obj = Comment.objects.create(
+            full_name=name, email=email,website=website, comment=message, news = form)
+        obj.save()
+        return render(request, self.template_name)
 
-    def form_valid(self, form):
-        form.save()
-        return super(NewsDetailView, self).form_valid(form)
 
-
-class EventDetailView(FormMixin, DetailView):
+class EventDetailView(DetailView):
     template_name = 'home/events/event_detail.html'
     model = Event
     form_class = EventCommentForm
@@ -167,28 +165,41 @@ class EventDetailView(FormMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['events'] = Event.objects.exclude(id=self.get_object().id)
-        print(context['events'])
+        context['form'] = EventCommentForm(initial={'events': self.object})
         return context
 
     def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        form = self.get_form()
-        if form.is_valid():
-            return self.form_valid(form)
-        else:
-            return self.form_invalid(form)
-
-    def form_valid(self, form):
-        form.save()
-        return super().form_valid(form)
-
-    def get_success_url(self):
-        return reverse("event_detail", kwargs={"id": self.object.id})
+        name = request.POST.get('full_name')
+        email = request.POST.get('email')
+        website = request.POST.get('website')
+        message = request.POST.get('comment')
+        events = self.kwargs.get('pk')
+        form= Event.objects.get(pk = events)
+        obj = Comment.objects.create(
+            full_name=name, email=email,website=website, comment=message, events = form)
+        obj.save()
+        return render(request, self.template_name)
 
 
 class ContactTemplateView(BaseMixin, TemplateView):
     model = Contact
     template_name = 'home/contact/contact.html'
+    form_class = MessageForm
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = MessageForm()
+        return context
+    
+    def post(self, request, *args, **kwargs):
+        name = request.POST.get('full_name')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+        form= Message.objects.get(pk = message)
+        obj = Message.objects.create(
+            full_name=name, email=email, message=message)
+        obj.save()
+        return render(request, self.template_name)
 
 
 class EventListView(ListView):

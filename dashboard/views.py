@@ -213,6 +213,7 @@ class ImageDeleteView(DeleteMixin, DashboardMixin, DeleteView):
 class EventListView(DashboardMixin, ListView):
     template_name = 'dashboard/event/eventlist.html'
     model = Event
+    paginate_by = 5
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -256,15 +257,15 @@ class EventDeleteView(DashboardMixin, DeleteView):
 # event comment
 
 
-class EventCommentTemplateView(DashboardMixin, TemplateView):
+class EventCommentTemplateView(DashboardMixin, ListView):
     template_name = 'dashboard/event_comment/eventcommentlist.html'
     model = Comment
+    paginate_by = 5
 
     def get_queryset(self):
         queryset = super().get_queryset().filter(Q(news__isnull=True) &
                                                  Q(deleted_at__isnull=True))
         if "full_name" in self.request.GET:
-            print(queryset, 1111111111111)
             if self.request.GET.get('full_name') != '':
                 queryset = queryset.filter(
                     full_name=self.request.GET.get("full_name"))
@@ -348,14 +349,22 @@ class NewsDeleteView(DeleteMixin, DashboardMixin, DeleteView):
 
 # newscomments
 
-class NewsCommentTemplateView(DashboardMixin, TemplateView):
+class NewsCommentTemplateView(DashboardMixin, ListView):
     model = Comment
     template_name = 'dashboard/news_comment/list.html'
     context_object_name = 'news'
     paginate_by = 5
 
+
     def get_queryset(self):
-        return super().get_queryset().filter(events__isnull=True)
+        queryset = super().get_queryset()
+        if 'full_name' in self.request.GET:
+            if self.request.GET.get('full_name') != '':
+                queryset = queryset.filter(
+                    full_name__icontains=self.request.GET.get('full_name')
+                )
+        return queryset
+
 
 
 
@@ -388,6 +397,7 @@ class NewsCommentDeleteView(DeleteView):
 class TestimonialListView(QuerysetMixin, ListView):
     model = Testomonial
     template_name = 'dashboard/testimonial/list.html'
+    paginate_by = 5
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -600,7 +610,7 @@ class ServiceDeleteView(DeleteMixin, DashboardMixin, DeleteView):
 
 # service video
 
-class ServiceVideoListView (DashboardMixin, ListView):
+class ServiceVideoListView (QuerysetMixin, DashboardMixin, ListView):
     template_name = 'dashboard/service-video/list.html'
     model = Services_description
     context_object_name = 'servicevideo'

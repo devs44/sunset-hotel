@@ -81,7 +81,7 @@
             </div> <!-- .blog__item -->
             <div class="comments">
               <p class="subheading">Comments</p>
-              <ul class="comments__list">
+              {% comment %} <ul class="comments__list">
                 <li class="comment">
                   <div class="comment__user">
                     Robert Jones
@@ -154,11 +154,30 @@
                     <a href="#">Reply</a>
                   </div>
                 </li> <!-- .comment -->
-              </ul> <!-- .comments__list -->
+              </ul> <!-- .comments__list --> {% endcomment %}
               <p class="subheading">Leave a comment</p>
-              <form class="comments__form" data-animate-in="animateUp" method="post">
+              <form class="comments__form" data-animate-in="animateUp" method="POST">
                 {% csrf_token %}
-                  {{form.as_p}}
+                
+                <div class="form-group">
+                  <label for="name">Name (Required)</label>
+                  {{form.full_name}}
+                </div>
+
+                <div class="form-group">
+                  <label for="email">Email address (Required)</label>
+                 {{form.email}}
+                </div>
+
+                <div class="form-group">
+                  <label for="website">Website</label>
+                 {{form.website}}
+                </div>
+
+                <div class="form-group">
+                  <label for="message">Message (Required)</label>
+                  {{form.comment}}
+                </div>
                 <button type="submit" class="btn">
                     Post comment
                 </button>
