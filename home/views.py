@@ -88,13 +88,18 @@ class ServiceListView(ListView):
 
 class ReservationView(TemplateView):
     template_name = 'home/reservation/reservation.html'
+    form_class = ReservationForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if "room_id" in self.request.GET:
             context['selected_room'] = Room.objects.filter(
                 room_no=self.request.GET.get('room_id')).first()
+        context['rooms'] = Room.objects.filter(deleted_at__isnull=True)
         return context
+
+    # def form_valid(self,form):
+    #     check_in = form.cleaned_data['check-in']
 
     def post(self, request, *args, **kwargs):
         check_in = request.POST.get('check-in')
@@ -112,14 +117,19 @@ class ReservationView(TemplateView):
         country = request.POST.get('country')
         zip_code = request.POST.get('zip-code')
         special_req = request.POST.get('requirements')
+        obj = Reservation.objects.create(
+            first_name=first_name, last_name=last_name,
+            check_in_date=check_in, check_out_date=check_out, adult=adults, children=children,
+            email=email, phone=phone, address_1=address1, address_2=address2, city=city,
+            country=country, state=state, zip_code=zip_code, special_req=special_req)
         if "room_id" in self.request.GET:
             room_no = Room.objects.get(room_no=self.request.GET.get('room_id'))
-            obj = Reservation.objects.create(
-                first_name=first_name, last_name=last_name, selected_room=room_no,
-                check_in_date=check_in, check_out_date=check_out, adult=adults, children=children,
-                email=email, phone=phone, address_1=address1, address_2=address2, city=city,
-                country=country, state=state, zip_code=zip_code, special_req=special_req)
-            obj.save()
+            obj.selected_room = room_no
+            obj.save(update_fields=['selected_room'])
+        if request.POST.get('room-no'):
+            room_no = Room.objects.get(room_no=request.POST.get('room-no'))
+            obj.selected_room = room_no
+            obj.save(update_fields=['selected_room'])
         return render(request, self.template_name)
 
 
@@ -196,20 +206,22 @@ class EventListView(ListView):
     template_name = 'home/events/event.html'
     context_object_name = 'event'
     paginate_by = 3
-  
+
 
 class GalleryListView(ListView):
     model = RoomImage
     template_name = 'home/gallery/gallery.html'
     context_object_name = 'photo'
     paginate_by = 6
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['single'] = Image.objects.filter(image_type__title="Single Room")
-        context['double'] = Image.objects.filter(image_type__title="Double Room")
-        context['deluxe'] = Image.objects.filter(image_type__title="Deluxe Room")
+        context['single'] = Image.objects.filter(
+            image_type__title="Single Room")
+        context['double'] = Image.objects.filter(
+            image_type__title="Double Room")
+        context['deluxe'] = Image.objects.filter(
+            image_type__title="Deluxe Room")
         context['royal'] = Image.objects.filter(image_type__title="Royal Room")
 
         return context
-

@@ -48,14 +48,7 @@
 								</figcaption>
 							</figure> <!-- / .room__details -->
 					<ul class="details-info">
-						<!-- <li>
-						<label>Nights</label>
-						<p>9 Nights</p>
-						</li>
-						<li>
-						<label>Services</label>
-						<p>$ 65</p>
-						</li> -->
+
 						<li class="total-price">
 						<label>Room price</label>
 						<p>{{ selected_room.price }}/Nights</p>
@@ -108,6 +101,7 @@
 
               <form id="reservation-form_sendemail" class="reservation__form" data-animate-in="animateUp" method="POST">
 				{% csrf_token %}
+				
 				<div class="col-sm-12 col-md-6">
               		<div class="form-group">
 	                  <label for="check-in" class="sr-only">Arrival date</label>
@@ -126,10 +120,10 @@
 	              	<div class="form-group">
 	                  <label for="form-adults" class="sr-only">Adults</label>
 	                  <select class="form-control" name="form-adults" id="form-adults">
-                      <option value="1" selected="">Adults</option>
-                      <option value="2">1 Adult</option>
-                      <option value="3">2 Adults</option>
-                      <option value="4">3 Adults</option>
+                      <option value="0" selected="">Adults</option>
+                      <option value="1">1 Adult</option>
+                      <option value="2">2 Adults</option>
+                      <option value="3">3 Adults</option>
                   	</select>
 	                  <span class="help-block"></span>
 	                </div>
@@ -138,10 +132,10 @@
 	              	<div class="form-group">
 	                  <label for="form-children" class="sr-only">Children</label>
 	                  <select class="form-control" name="form-children" id="form-children">
-                      <option value="1" selected="">Children</option>
-                      <option value="2">1 Child</option>
-                      <option value="3">2 Children</option>
-                      <option value="4">3 Children</option>
+                      <option value="0" selected="">Children</option>
+                      <option value="1">1 Child</option>
+                      <option value="2">2 Children</option>
+                      <option value="3">3 Children</option>
                   	</select>
 	                  <span class="help-block"></span>
 	                </div>
@@ -216,6 +210,20 @@
 	                  <span class="help-block"></span>
 	                </div>
               	</div>
+				{% if not selected_room %}
+				<div class="col-sm-12 col-md-6">
+					<div class="form-group">
+						<label for="form-children" class="sr-only">Select Room</label>
+						<select class="form-control" name="room-no" id="room-no">
+						<option value="0" selected="">Select Room</option>
+						{% for room in rooms %}
+						<option value="{{ room.room_no }}">{{ room.room_type}} |Room No: {{ room.room_no }}</option>
+						{% endfor %}
+						</select>
+						<span class="help-block"></span>
+				  	</div>
+				</div>
+				{% endif %}
               	<div class="col-sm-12">
 	                <div class="form-group">
 	                  <label for="requirements" class="sr-only">Special requirements</label>
