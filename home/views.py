@@ -1,12 +1,8 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
-<<<<<<< HEAD
-from django.views.generic import ListView, TemplateView, DetailView, CreateView
-=======
 from django.db.models import Q
 
 from django.views.generic import ListView, TemplateView, DetailView
->>>>>>> fa1208cda982e91aebbc0d4efe0034c8d35f8b82
 from dashboard.models import *
 
 from .mixin import *
