@@ -245,7 +245,7 @@ class TestimonialForm(forms.ModelForm):
             }),
             'voice': forms.Textarea(attrs={
                 'class': 'form-control',
-                'placeholder': 'voice'
+                'placeholder': 'feedback'
             }),
             'image': forms.FileInput(attrs={
                 'class': 'form-control',
@@ -363,7 +363,7 @@ class ServiceTypeForm(forms.ModelForm):
         widgets = {
             'service_type_name': forms.TextInput(attrs={
                 'class': 'form-control select2',
-                'placeholder': 'service type name'
+                'placeholder': 'Service type'
             }),
             'service_type_description': forms.Textarea(attrs={
                 'class': 'form-control',
@@ -399,12 +399,12 @@ class ContactForm(forms.ModelForm):
         widgets = {
             'email': forms.EmailInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Choose Video'
+                'placeholder': 'Email Address'
 
             }),
             'address': forms.TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'address'
+                'placeholder': 'Address'
             }),
             'phone': forms.NumberInput(attrs={
                 'class': 'form-control',
@@ -412,7 +412,7 @@ class ContactForm(forms.ModelForm):
             }),
             'fax': forms.NumberInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Phone number'
+                'placeholder': 'Fax'
             })
         }
 

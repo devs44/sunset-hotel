@@ -79,7 +79,7 @@
                         <span
                           ><a
                             class="btn btn-warning mr-2"
-                            href="{% url 'dashboard:news_delete' news.id %}"
+                            href="{% url 'dashboard:news_update' news.id %}"
                             ><i class="fa fa-edit m-1" aria-hidden="true"></i
                             >Edit</a
                           ></span
@@ -87,7 +87,7 @@
                         <span
                           ><a
                             class="btn btn-danger"
-                            href="{% url 'dashboard:news_update' news.id %}"
+                            href="{% url 'dashboard:news_delete' news.id %}"
                             ><i class="fa fa-trash m-1"></i></a
                         ></span>
                       </td>

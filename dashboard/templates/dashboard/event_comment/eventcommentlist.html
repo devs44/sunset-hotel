@@ -53,6 +53,7 @@
                   <thead>
                     <tr>
                       <th>SN</th>
+                      <th>Event Title</th>
                       <th>Name</th>
                       <th>Email Address</th>
                       <th>Website</th>
@@ -63,16 +64,33 @@
                     {% for event in object_list %}
                     <tr>
                       <td>{{forloop.counter}}</td>
+                        <td>
+                        <a href="{% url 'dashboard:eventcomment_detail' event.id %}">
+                          {{event.events}}</a
+                        >
+                      </td>
                       <td>
-                        <a href="{% url 'dashboard:eventcomment_detail' event.id %}">{{event.full_name}}</a>
+                        {{event.full_name}}</a>
                       </td>
                       <td>{{event.email}}</td>
                       <td>{{event.website}}</td>
                       <td>{{event.comment}}</td>
         
                       <td>
-                        <span><a href="{% url 'dashboard:eventcomment_delete' event.id %}"><i class="fa fa-trash m-1"></i></a></span>|
-                        <span><a href="{% url 'dashboard:eventcomment_update' event.id %}"><i class="fa fa-edit m-1" aria-hidden="true"></i></a></span>
+                        <span
+                          ><a
+                            class="btn btn-warning mr-2"
+                            href="{% url 'dashboard:eventcomment_update' event.id %}"
+                            ><i class="fa fa-edit m-1" aria-hidden="true"></i
+                            >Edit</a
+                          ></span
+                        >
+                        <span
+                          ><a
+                            class="btn btn-danger"
+                            href="{% url 'dashboard:eventcomment_delete' event.id %}"
+                            ><i class="fa fa-trash m-1"></i></a
+                        ></span>
                       </td>
                     </tr>
                     {% endfor %}
@@ -82,6 +100,31 @@
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
+            <div class="pagination">
+                <span>
+                  {% if page_obj.has_previous %}
+                    {% if page_obj.previous_page_number != 1 %}
+                        <a class="btn btn-primary" href="?page1">1</a>
+                    {% endif %}
+                    <a class="btn btn-primary" href="?page={{page_obj.previous_page_number}}">
+                        {{ page_obj.previous_page_number }}
+                    </a>
+                  {% endif %}
+                  <span>
+                      {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                  </span>
+                  {% if page_obj.has_next %}
+                  <a class="btn btn-primary" href="?page={{page_obj.next_page_number}}">
+                      {{ page_obj.next_page_number }}
+                  </a>
+                  {% if page_obj.next_page_number != page_obj.paginator.num_pages %}
+                  <a class="btn btn-primary" href="?page={{ page_obj.paginator.num_pages }}">
+                      {{ page_obj.paginator.num_pages }}
+                  </a>
+                  {% endif %}
+                  {% endif %}
+                </span>
+            </div>
           </div>
         </div>
       </div>
