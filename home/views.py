@@ -1,9 +1,12 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from django.views.generic import ListView, TemplateView, DetailView, CreateView
+from django.db.models import Q
+
+from django.views.generic import ListView, TemplateView, DetailView
 from dashboard.models import *
 
 from .mixin import *
+from dashboard.mixin import DeleteMixin, QuerysetMixin
 from django.views.generic.edit import FormMixin
 from dashboard.forms import *
 # Create your views here.
@@ -17,7 +20,7 @@ class HomeTemplateView(BaseMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['photos'] = Image.objects.all()
-        context['room'] = Room.objects.all()
+        context['room'] = Room.objects.filter(deleted_at__isnull=True)
         context['news'] = News.objects.all().order_by("-id")
         context['event'] = Event.objects.all()
         context['test'] = Testomonial.objects.all()
@@ -25,7 +28,7 @@ class HomeTemplateView(BaseMixin, TemplateView):
         return context
 
 
-class RoomListView(ListView):
+class RoomListView(QuerysetMixin, ListView):
     model = Room
     template_name = 'home/room/room.html'
     context_object_name = 'room'
@@ -39,7 +42,7 @@ class RoomListView(ListView):
     #     return queryset
 
 
-class RoomDetailView(BaseMixin, DetailView):
+class RoomDetailView(BaseMixin, QuerysetMixin, DetailView):
     template_name = 'home/room/room_detail.html'
     model = Room
 
@@ -47,8 +50,12 @@ class RoomDetailView(BaseMixin, DetailView):
         context = super().get_context_data(**kwargs)
         context['rooms'] = Room.objects.exclude(
             room_no=self.get_object().room_no)
-        print(context['rooms'])
+        room_no = self.kwargs.get('pk')
         context['feature'] = Feature.objects.all()
+        context['reviews'] = Comment.objects.filter(Q(deleted_at__isnull=True) &
+                                                    Q(news__isnull=True) &
+                                                    Q(events__isnull=True) &
+                                                    Q(room=room_no)).order_by('-id')
 
         return context
 
@@ -82,6 +89,39 @@ class ServiceListView(ListView):
 
 class ReservationView(TemplateView):
     template_name = 'home/reservation/reservation.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if "room_id" in self.request.GET:
+            context['selected_room'] = Room.objects.filter(
+                room_no=self.request.GET.get('room_id')).first()
+        return context
+
+    def post(self, request, *args, **kwargs):
+        check_in = request.POST.get('check-in')
+        check_out = request.POST.get('check-out')
+        adults = request.POST.get('form-adults')
+        children = request.POST.get('form-children')
+        first_name = request.POST.get('first-name')
+        last_name = request.POST.get('last-name')
+        email = request.POST.get('email')
+        phone = request.POST.get('phone')
+        address1 = request.POST.get('address-line1')
+        address2 = request.POST.get('address-line2')
+        state = request.POST.get('state')
+        city = request.POST.get('city')
+        country = request.POST.get('country')
+        zip_code = request.POST.get('zip-code')
+        special_req = request.POST.get('requirements')
+        if "room_id" in self.request.GET:
+            room_no = Room.objects.get(room_no=self.request.GET.get('room_id'))
+            obj = Reservation.objects.create(
+                first_name=first_name, last_name=last_name, selected_room=room_no,
+                check_in_date=check_in, check_out_date=check_out, adult=adults, children=children,
+                email=email, phone=phone, address_1=address1, address_2=address2, city=city,
+                country=country, state=state, zip_code=zip_code, special_req=special_req)
+            obj.save()
+        return render(request, self.template_name)
 
 
 class NewsListView(ListView):
@@ -168,4 +208,20 @@ class EventListView(ListView):
     template_name = 'home/events/event.html'
     context_object_name = 'event'
     paginate_by = 3
-    context_object_name = 'event'
+  
+
+class GalleryListView(ListView):
+    model = RoomImage
+    template_name = 'home/gallery/gallery.html'
+    context_object_name = 'photo'
+    paginate_by = 6
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['single'] = Image.objects.filter(image_type__title="Single Room")
+        context['double'] = Image.objects.filter(image_type__title="Double Room")
+        context['deluxe'] = Image.objects.filter(image_type__title="Deluxe Room")
+        context['royal'] = Image.objects.filter(image_type__title="Royal Room")
+
+        return context
+
