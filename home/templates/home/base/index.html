@@ -42,7 +42,7 @@
     <div class="row">
       <div class="col-sm-12">
         <!-- Reservation form -->
-        <form class="reservation__form" action="{% url 'rooms' %}" method="GET">
+        <form class="reservation__form" action="" method="GET">
           <div class="form-group">
             <div class="form-group__inner">
               <label for="reservation__check-in">Arrival date</label>
@@ -247,7 +247,7 @@
               <p class="item__desc">
                 {{room.description|truncatewords:20|safe }}
               </p>
-              <a href="{% url 'reservation' %}" class="btn-book"
+              <a href="{% url 'reservation' %}?room_id={{ room.pk }}" class="btn-book"
                 >Book now <i class="icon ion-chevron-right"></i
                 ><i class="icon ion-chevron-right"></i
               ></a>

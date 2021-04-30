@@ -44,7 +44,7 @@
                     <h2 class="rooms_desc__title">{{ room.room_type }}</h2>
                     <p class="rooms_desc__price"><span>{{ room.price }}</span> / night</p>
                     </div> <!-- .rooms_desc__header -->
-                    <p class="rooms_desc__desc">{{ room.description|truncatewords:20|safe }}</p>
+                    <p class="rooms_desc__desc">{{ room.description|safe|truncatewords:30 }}</p>
                     <div class="col-sm-6">
                     <ul class="rooms_desc__services">
                         <li><i class="icon ion-android-person"></i> One king bed</li>
