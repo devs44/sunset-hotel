@@ -278,9 +278,10 @@
 <section class="section__services">
   <div class="container-fluid">
     <div class="row">
+    {%for service in service%}
       <div class="col-md-3 col-sm-6">
         <div class="services__item">
-          <h2 class="services_item__title">Parking</h2>
+          <h2 class="services_item__title">{{service.service_type_name}}</h2>
           <div class="services_item__divider">
             <i class="icon ion-android-star"></i>
             <i class="icon ion-android-star"></i>
@@ -288,68 +289,12 @@
           </div>
           <!-- .services_item__divider -->
           <p class="services_item__desc">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel
-            temporibus adipisci mollitia ducimus facilis nesciunt at minima
-            magni optio, dignissimos, neque dolore iste labore dolor enim, ipsam
-            quisquam, quae nihil!
+           {{service.service_type_description}}
           </p>
         </div>
         <!-- .services__item -->
       </div>
-      <div class="col-md-3 col-sm-6">
-        <div class="services__item">
-          <h2 class="services_item__title">Fitness hall</h2>
-          <div class="services_item__divider">
-            <i class="icon ion-android-star"></i>
-            <i class="icon ion-android-star"></i>
-            <i class="icon ion-android-star"></i>
-          </div>
-          <!-- .services_item__divider -->
-          <p class="services_item__desc">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi
-            eaque, eum. Voluptates corporis tenetur commodi nihil velit
-            perspiciatis natus fugit rerum nisi, at, voluptas autem quisquam
-            reprehenderit odit dolores quas!
-          </p>
-        </div>
-        <!-- .services__item -->
-      </div>
-      <div class="col-md-3 col-sm-6">
-        <div class="services__item">
-          <h2 class="services_item__title">Restaurant</h2>
-          <div class="services_item__divider">
-            <i class="icon ion-android-star"></i>
-            <i class="icon ion-android-star"></i>
-            <i class="icon ion-android-star"></i>
-          </div>
-          <!-- .services_item__divider -->
-          <p class="services_item__desc">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non
-            nesciunt ullam porro ipsa, architecto, doloribus illo veritatis
-            consequatur temporibus eveniet labore, vitae laudantium possimus
-            placeat libero magnam.
-          </p>
-        </div>
-        <!-- .services__item -->
-      </div>
-      <div class="col-md-3 col-sm-6">
-        <div class="services__item">
-          <h2 class="services_item__title">Spa center</h2>
-          <div class="services_item__divider">
-            <i class="icon ion-android-star"></i>
-            <i class="icon ion-android-star"></i>
-            <i class="icon ion-android-star"></i>
-          </div>
-          <!-- .services_item__divider -->
-          <p class="services_item__desc">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed animi
-            voluptates, laudantium aspernatur, libero nulla ut. Quibusdam
-            distinctio eaque cum officia expedita dolore, perspiciatis quisquam
-            vel et neque tempora cupiditate.
-          </p>
-        </div>
-        <!-- .services__item -->
-      </div>
+    {%endfor%}
     </div>
     <!-- / .row -->
   </div>
@@ -496,7 +441,7 @@
           <div>News</div>
         </div>
       </div>
-      {% for n in news %}
+      {% for n in news|slice:3%}
       <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-lg-pull-3">
         <div class="events__item">
           <div class="events-item__img">
@@ -554,7 +499,7 @@
         </div>
       </div>
 
-      {% for event in event %}
+      {% for event in event|slice:3 %}
       <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
         <div class="events__item">
           <div class="events-item__img">
