@@ -42,16 +42,19 @@
 			<div class="container">
 				<div class="section_info__body">
 					<div class="info__column-left">
+					{%for c in contact|slice:1 %}
 						<div class="section_info__contact hidden-xs">
+						
 							<p>
-								<i class="icon ion-android-pin"></i> 29 Land St, Lorem City, CA
+								<i class="icon ion-android-pin"></i> {{c.address}}
 							</p>	
 						</div> <!-- .section_info__contact -->
 						<div class="section_info__contact hidden-xs">
 							<p>
-								<i class="icon ion-android-call"></i> +96 885 1247
+								<i class="icon ion-android-call"></i> {{c.phone}}
 							</p>	
 						</div> <!-- .section_info__contact -->
+					{%endfor%}
 					</div> <!-- .info__column-left -->
 					<div class="info__column-right">
 						<ul class="social__icons">

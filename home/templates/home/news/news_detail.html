@@ -11,7 +11,7 @@
     	  <div class="row">
     	    <div class="col-sm-12">
     	    	<div class="welcome__content">
-							<h1 class="welcome_content__title">{{news.title}}</h1>
+							<h1 class="welcome_content__title">{{object.title}}</h1>
               <div class="divider blog-divider">
                 <hr class="line1">
                 <hr class="line2">
@@ -29,15 +29,17 @@
     	  <div class="row">
     	    <div class="col-sm-8">
     	    	<div class="blog__item">
+            
     	    		<div class="blog-item__img">
-                <img src="{{newsdetail.image.url}}" class="img-responsive" alt="...">
+                <img src="{{object.image.url}}" class="img-responsive" alt="...">
               </div>
               <div class="blog-item__content">
               	<div class="blog-item__category">
                   <p>/ <span>Events</span> /</p>
                 </div>
+               
             		<div class="blog-item__title">
-                  <h3>{{newsdetail.title}}</h3>
+                  <h3>{{object.title}}</h3>
                 </div>
                 <div class="divider blog-divider">
 		    					<hr class="line1">
@@ -45,11 +47,11 @@
 		    					<hr class="line1">
 		    				</div> <!-- / .divider -->
 		    				<div class="blog-item__date">
-                  <p>{{newsdetail.created_at| date:"D d M Y"}}</p>
+                  <p>{{object.created_at| date:"D d M Y"}}</p>
                 </div>
                 <div class="blog-item__text">
 
-                  {{newsdetail.description}}
+                  {{object.description}}
                 </div> <!-- .blog-item__text -->
                 
                 <div class="blog-item__tags">
@@ -61,8 +63,8 @@
                 <div class="blog-item__footer">
                 	<div class="footer__item">
                 		<ul class="item-info__list">
-	                    <li class="info-list__item"><i class="ion ion-android-person"></i> by {{newsdetail.created_by}}</li>
-	                    <li class="info-list__item"><i class="ion ion-android-chat" aria-hidden="true"></i> 5 Comments</li>
+	                    <li class="info-list__item"><i class="ion ion-android-person"></i> by {{object.created_by}}</li>
+	                    <li class="info-list__item"><i class="ion ion-android-chat" aria-hidden="true"></i> {{comments_count}} comments</li>
 	                  </ul> <!-- .item-info__list -->
                 	</div> <!-- .footer__item -->
                 	<div class="footer__item">
@@ -75,42 +77,25 @@
                 	</div> <!-- .footer__item -->
                 </div> <!-- .blog-item__footer -->
               </div> <!-- / .blog-item__content -->
+    
             </div> <!-- .blog__item -->
+
             <div class="comments">
               <p class="subheading">Comments</p>
               <ul class="comments__list">
-              {% comment %} {%for n in news%}
+              {%for n in comment|slice:4%}
                 <li class="comment">
                   <div class="comment__user">
                     {{n.full_name}}
                   </div>
                   <div class="comment__date">
-                    April 8, 2017 at 1:15 pm
+                    {{n.created_at}}
                   </div>
                   <div class="comment__message">
                     {{n.comment}}
                   </div>
-                  <div class="comment__reply">
-                    <a href="#">Reply</a>
-                  </div>
-                  <ul class="comments-list__cildren">
-                    <li class="comment">
-                      <div class="comment__user">
-                        John Doe
-                      </div>
-                      <div class="comment__date">
-                        April 8, 2017 at 4:15 pm
-                      </div>
-                      <div class="comment__message">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                      </div>
-                      <div class="comment__reply">
-                        <a href="#">Reply</a>
-                      </div>
-                    </li>
-                  </ul>
                 </li> <!-- .comment -->
-              {%endfor%} {% endcomment %}
+              {%endfor%} 
                 {% comment %} <li class="comment">
                   <div class="comment__user">
                     Maria Atkinson
@@ -241,14 +226,14 @@
     	    		<div class="sidebar__item">
     	    			<p class="subheading">Recent News</p>
     	    			<ul class="recent__posts">
-                {% for n in news %}
+                {% for n in news|slice:4 %}
     	    				<li>
     	    					<a href="#" class="post__title">
     	    						<h5 class="post__title">{{n.title}}</h5>
     	    						<p class="post__desc">
 	    	    					{{n.description | truncatewords:8}}
 	    	    					</p>
-	    	    					<p class="post__info"><i class="ion ion-android-calendar"></i> {{n.created_at| date:'d M Y'}}</p>
+	    	    					<p class="post__info"><i class="ion ion-android-calendar"></i> {{n.created_at|date:"d M Y"}}</p>
 	    	    					<p class="post__info"><i class="ion ion-android-person"></i> by {{n.created_by}}</p>
     	    					</a>
     	    				</li>

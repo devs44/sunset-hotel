@@ -72,10 +72,22 @@
                     
                       <td>{{message.email}}</td>
                       <td>{{message.message}}</td>
-                      <td>
-                        <span><a href="{% url 'dashboard:message_delete' message.id %}"><i class="fa fa-trash m-1"></i></a></span>|
-                        <span><a href="{% url 'dashboard:message_update' message.id %}"><i class="fa fa-edit m-1" aria-hidden="true"></i></a></span>
-                      </td> 
+                       <td>
+                        <span
+                          ><a
+                            class="btn btn-warning mr-2"
+                            href="{% url 'dashboard:message_update' message.id %}"
+                            ><i class="fa fa-edit m-1" aria-hidden="true"></i
+                            >Edit</a
+                          ></span
+                        >
+                        <span
+                          ><a
+                            class="btn btn-danger"
+                            href="{% url 'dashboard:message_delete' message.id %}"
+                            ><i class="fa fa-trash m-1"></i></a
+                        ></span>
+                      </td>
                     </tr>
                     {% endfor %}
                   </tbody>
@@ -84,6 +96,31 @@
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
+                  <div class="pagination">
+                <span>
+                  {% if page_obj.has_previous %}
+                    {% if page_obj.previous_page_number != 1 %}
+                        <a class="btn btn-primary" href="?page1">1</a>
+                    {% endif %}
+                    <a class="btn btn-primary" href="?page={{page_obj.previous_page_number}}">
+                        {{ page_obj.previous_page_number }}
+                    </a>
+                  {% endif %}
+                  <span>
+                      {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                  </span>
+                  {% if page_obj.has_next %}
+                  <a class="btn btn-primary" href="?page={{page_obj.next_page_number}}">
+                      {{ page_obj.next_page_number }}
+                  </a>
+                  {% if page_obj.next_page_number != page_obj.paginator.num_pages %}
+                  <a class="btn btn-primary" href="?page={{ page_obj.paginator.num_pages }}">
+                      {{ page_obj.paginator.num_pages }}
+                  </a>
+                  {% endif %}
+                  {% endif %}
+                </span>
+            </div>
           </div>
         </div>
       </div>
