@@ -123,5 +123,6 @@ urlpatterns = [
     path('about/<int:pk>/detail/', AboutDetailView.as_view(), name="about_detail"),
     path('about/<int:pk>/delete/', AboutDeleteView.as_view(), name="about_delete"),
      
-     
+ 
+
 ]

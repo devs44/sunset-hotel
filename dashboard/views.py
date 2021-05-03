@@ -209,8 +209,8 @@ class ImageDeleteView(DeleteMixin, DashboardMixin, DeleteView):
     model = Image
     success_url = reverse_lazy('dashboard:image_list')
 
-
-class EventListView(DashboardMixin, ListView):
+# event 
+class EventListView( DashboardMixin, ListView):
     template_name = 'dashboard/event/eventlist.html'
     model = Event
     paginate_by = 5
@@ -349,7 +349,7 @@ class NewsDeleteView(DeleteMixin, DashboardMixin, DeleteView):
 
 # newscomments
 
-class NewsCommentTemplateView(DashboardMixin, ListView):
+class NewsCommentTemplateView( DashboardMixin, ListView):
     model = Comment
     template_name = 'dashboard/news_comment/list.html'
     context_object_name = 'news'
@@ -683,3 +683,4 @@ class ContactDeleteView(DeleteView):
     template_name = 'dashboard/contact/delete.html'
     model = Contact
     success_url = reverse_lazy('dashboard:contact_list')
+

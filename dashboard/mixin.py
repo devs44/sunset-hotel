@@ -33,3 +33,5 @@ class AdminRequiredMixin(object):
             return redirect(reverse_lazy('dashboard:admin_login'))
 
         return super().dispatch(request, *args, *kwargs)
+
+

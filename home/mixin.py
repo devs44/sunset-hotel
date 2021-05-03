@@ -10,7 +10,13 @@ class BaseMixin(object):
         context['contact'] = Contact.objects.filter(deleted_at__isnull = True).order_by('-id')
         return context
 
-    
+
+
+   
+      
+
+       
+        
 
     
 
