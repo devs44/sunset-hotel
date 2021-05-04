@@ -350,11 +350,7 @@ class NewsDeleteView(DeleteMixin, DashboardMixin, DeleteView):
 
 # newscomments
 
-<<<<<<< HEAD
 class NewsCommentTemplateView(QuerysetMixin, DashboardMixin, ListView):
-=======
-class NewsCommentTemplateView( DashboardMixin, ListView):
->>>>>>> c18b40fa2654b9c69444769aea3820fd3ba2a829
     model = Comment
     template_name = 'dashboard/news_comment/list.html'
     context_object_name = 'news'
