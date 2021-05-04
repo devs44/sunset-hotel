@@ -50,7 +50,7 @@ class AdminDashboardView(DashboardMixin, TemplateView):
 
 
 # rooms
-class RoomListView(AdminRequiredMixin, DashboardMixin, QuerysetMixin, ListView):
+class RoomListView(DashboardMixin, QuerysetMixin, ListView):
     template_name = 'dashboard/room/roomlist.html'
     model = Room
     paginate_by = 10
@@ -257,13 +257,14 @@ class EventDeleteView(DashboardMixin, DeleteView):
 # event comment
 
 
-class EventCommentTemplateView(DashboardMixin, ListView):
+class EventCommentTemplateView(QuerysetMixin, DashboardMixin, ListView):
     template_name = 'dashboard/event_comment/eventcommentlist.html'
     model = Comment
     paginate_by = 5
 
     def get_queryset(self):
-        queryset = super().get_queryset().filter(Q(news__isnull=True) &
+        queryset = super().get_queryset().filter(Q(news__isnull=True),
+                                                 Q(room__isnull=True)&
                                                  Q(deleted_at__isnull=True))
         if "full_name" in self.request.GET:
             if self.request.GET.get('full_name') != '':
@@ -349,7 +350,7 @@ class NewsDeleteView(DeleteMixin, DashboardMixin, DeleteView):
 
 # newscomments
 
-class NewsCommentTemplateView( DashboardMixin, ListView):
+class NewsCommentTemplateView(QuerysetMixin, DashboardMixin, ListView):
     model = Comment
     template_name = 'dashboard/news_comment/list.html'
     context_object_name = 'news'
@@ -357,7 +358,9 @@ class NewsCommentTemplateView( DashboardMixin, ListView):
 
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        queryset = super().get_queryset().filter(Q(events__isnull=True),
+                                                 Q(room__isnull=True)&
+                                                 Q(deleted_at__isnull=True))
         if 'full_name' in self.request.GET:
             if self.request.GET.get('full_name') != '':
                 queryset = queryset.filter(
@@ -402,12 +405,13 @@ class TestimonialListView(QuerysetMixin, ListView):
     def get_queryset(self):
         queryset = super().get_queryset()
         if "name" in self.request.GET:
-            if self.request.GET.get('name') != None and self.request.GET.get('name') != '':
+           if self.request.GET.get('name') != '':
                 queryset = queryset.filter(
-                    room_no=self.request.GET.get("name"))
+                    name__icontains=self.request.GET.get('name')
+                )
         if "profession" in self.request.GET:
             queryset = queryset.filter(
-                room_type__title__contains=self.request.GET.get("profession")
+                profession__icontains=self.request.GET.get("profession")
             )
 
         return queryset
@@ -443,10 +447,10 @@ class TestimonialDeleteView(DashboardMixin, DeleteView):
 class MessageListView(QuerysetMixin, DashboardMixin, ListView):
     model = Message
     template_name = 'dashboard/message/list.html'
+    paginate_by = 5
 
     def get_queryset(self):
         queryset = super().get_queryset()
-
         if "email" in self.request.GET:
             queryset = queryset.filter(
                 email=self.request.GET.get("email")
@@ -684,3 +688,44 @@ class ContactDeleteView(DeleteView):
     model = Contact
     success_url = reverse_lazy('dashboard:contact_list')
 
+
+
+class RoomCommentListView(DashboardMixin, ListView):
+    template_name = 'dashboard/room_comment/list.html'
+    model = Comment
+    paginate_by = 5
+
+    def get_queryset(self):
+        queryset = super().get_queryset().filter(Q(news__isnull=True),
+                                                 Q(events__isnull=True)&
+                                                 Q(deleted_at__isnull=True))
+        if "room" in self.request.GET:
+            if self.request.GET.get('room') != '':
+                queryset = queryset.filter(
+                    room=self.request.GET.get("room"))
+        return queryset
+
+
+class RoomCommentCreateView(DashboardMixin, CreateView):
+    template_name = 'dashboard/room_comment/form.html'
+    form_class = RoomCommentForm
+    success_url = reverse_lazy('dashboard:room_comment_list')
+
+
+class RoomCommentUpdateView(DashboardMixin, UpdateView):
+    template_name = 'dashboard/room_comment/form.html'
+    model = Comment
+    form_class = RoomCommentForm
+    success_url = reverse_lazy('dashboard:room_comment_list')
+
+
+class RoomCommentDetailView(DashboardMixin, DetailView):
+    template_name = 'dashboard/room_comment/detail.html'
+    model = Comment
+    context_object_name = 'roomdetail'
+
+
+class RoomCommentDeleteView(DeleteMixin, DashboardMixin, DeleteView):
+    template_name = 'dashboard/room_comment/delete.html'
+    model = Comment
+    success_url = reverse_lazy('dashboard:room_comment_list')

@@ -57,7 +57,7 @@
                 	<div class="footer__item">
                 		<ul class="item-info__list">
 	                    <li class="info-list__item"><i class="ion ion-android-person"></i> by {{ event.created_by}}</li>
-	                    <li class="info-list__item"><i class="ion ion-android-chat" aria-hidden="true"></i> 5 Comments</li>
+	                    <li class="info-list__item"><i class="ion ion-android-chat" aria-hidden="true"></i> {{event.event_comment.count}}  Comments</li>
 	                  </ul> <!-- .item-info__list -->
                 	</div> <!-- .footer__item -->
                 	<div class="footer__item">
@@ -133,48 +133,20 @@
 				        </ul> <!-- .social__icons -->
     	    		</div> <!-- .sidebar__item -->
     	    		<div class="sidebar__item">
-    	    			<p class="subheading">Recent posts</p>
+    	    			<p class="subheading">Recent Events</p>
     	    			<ul class="recent__posts">
+    	    				{% for event in event|slice:4%}
     	    				<li>
     	    					<a href="#" class="post__title">
-    	    						<h5 class="post__title">Lorem ipsum dolor sit amet.</h5>
+    	    						<h5 class="post__title">{{ event.title }}</h5>
     	    						<p class="post__desc">
-	    	    						One morning, when Gregor Samsa woke from troubled dreams, he found...
+	    	    						{{event.description|truncatewords:20 }}
 	    	    					</p>
-	    	    					<p class="post__info"><i class="ion ion-android-calendar"></i> 15 March, 2017</p>
-	    	    					<p class="post__info"><i class="ion ion-android-person"></i> by John Doe</p>
+	    	    					<p class="post__info"><i class="ion ion-android-calendar"></i>{{event.created_at|date:"d M Y" }}</p>
+	    	    					<p class="post__info"><i class="ion ion-android-person"></i> by {{ event.created_by }}</p>
     	    					</a>
     	    				</li>
-    	    				<li>
-    	    					<a href="#">
-    	    						<h5 class="post__title">Lorem ipsum dolor sit amet.</h5>
-    	    						<p class="post__desc">
-	    	    						One morning, when Gregor Samsa woke from troubled dreams, he found...
-	    	    					</p>
-	    	    					<p class="post__info"><i class="ion ion-android-calendar"></i> 15 March, 2017</p>
-	    	    					<p class="post__info"><i class="ion ion-android-person"></i> by John Doe</p>
-    	    					</a>
-    	    				</li>
-    	    				<li>
-    	    					<a href="#" class="post__title">
-    	    						<h5 class="post__title">Lorem ipsum dolor sit amet.</h5>
-    	    						<p class="post__desc">
-	    	    						One morning, when Gregor Samsa woke from troubled dreams, he found...
-	    	    					</p>
-	    	    					<p class="post__info"><i class="ion ion-android-calendar"></i> 15 March, 2017</p>
-	    	    					<p class="post__info"><i class="ion ion-android-person"></i> by John Doe</p>
-    	    					</a>
-    	    				</li>
-    	    				<li>
-    	    					<a href="#" class="post__title">
-    	    						<h5 class="post__title">Lorem ipsum dolor sit amet.</h5>
-    	    						<p class="post__desc">
-	    	    						One morning, when Gregor Samsa woke from troubled dreams, he found...
-	    	    					</p>
-	    	    					<p class="post__info"><i class="ion ion-android-calendar"></i> 15 March, 2017</p>
-	    	    					<p class="post__info"><i class="ion ion-android-person"></i> by John Doe</p>
-    	    					</a>
-    	    				</li>
+    	    	    {% endfor %}
     	    			</ul>
     	    		</div> <!-- .sidebar__item -->
     	    		<div class="sidebar__item">

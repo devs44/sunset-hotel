@@ -137,27 +137,29 @@
                   <li>
                     <p class="info-text">For more information about rooms please contact us.</p>
                   </li>
+                  {%for c in contact|slice:1 %}
                   <li>
                     <i class="icon ion-android-pin"></i>
                     <div class="info-content">
                       <div class="title">Address</div>
-                      <div class="description">10987 1st Avenue, Lorem City, CA</div>
+                      <div class="description">{{c.address}}</div>
                     </div>
                   </li>
                   <li>
                     <i class="icon ion-android-call"></i>
                     <div class="info-content">
                       <div class="title">Phone / Fax</div>
-                      <div class="description">+45 789 123 4544 / +45 789 123 4848</div>
+                      <div class="description">{{c.phone}} / {{c.fax}}</div>
                     </div>
                   </li>
                   <li>
                     <i class="icon ion-android-mail"></i>
                     <div class="info-content">
                       <div class="title">E-mail</div>
-                      <div class="description">admin@sunsethotel.com</div>
+                      <div class="description">{{c.email}}</div>
                     </div>
                   </li>
+                  {%endfor%}
                 </ul> <!-- .info__content -->
               </div> <!-- / .info__body -->
   	    		</div> <!-- .room-detail__sidebar -->

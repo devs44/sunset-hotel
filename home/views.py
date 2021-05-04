@@ -16,6 +16,7 @@ from email.mime.text import MIMEText
 class HomeTemplateView(BaseMixin, TemplateView):
     model = Room
     template_name = 'home/base/index.html'
+    form_class = MessageForm
     # context_object_name = 'room'
 
     def get_context_data(self, **kwargs):
@@ -26,7 +27,17 @@ class HomeTemplateView(BaseMixin, TemplateView):
         context['event'] = Event.objects.all()
         context['test'] = Testomonial.objects.all()
         context['service'] = Services_type.objects.all()
+        context['form'] = MessageForm()
         return context
+    
+    def post(self, request, *args, **kwargs):
+        name = request.POST.get('full_name')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+        obj = Message.objects.create(
+            full_name=name, email=email, message=message)
+        return render(request, self.template_name, {'form': MessageForm(), 'contact':Contact.objects.filter(deleted_at__isnull = True).order_by('-id')})
+
 
 
 class RoomListView(QuerysetMixin, ListView):
@@ -37,13 +48,14 @@ class RoomListView(QuerysetMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['features'] = Feature.objects.all()
+        context['feature'] = Feature.objects.all()
         return context
 
 
 class RoomDetailView(BaseMixin, QuerysetMixin, DetailView):
     template_name = 'home/room/room_detail.html'
     model = Room
+    form_class = RoomCommentForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -69,7 +81,14 @@ class RoomDetailView(BaseMixin, QuerysetMixin, DetailView):
         obj = Comment.objects.create(
             full_name=name, email=email, room=room, comment=message)
         obj.save()
-        return render(request, self.template_name)
+        return render(request, self.template_name, {'rooms': Room.objects.exclude(room_no=self.get_object().room_no),
+                                                    'feature': Feature.objects.all(),
+                                                    'reviews': Comment.objects.filter(Q(deleted_at__isnull=True) &
+                                                    Q(news__isnull=True) &
+                                                    Q(events__isnull=True) &
+                                                    Q(room=room_no)).order_by('-id'),
+                                                    'room': self.get_object(),
+                                                    'contact':Contact.objects.filter(deleted_at__isnull = True).order_by('-id') })
 
 
 class ServiceListView(ListView):
@@ -86,7 +105,7 @@ class ServiceListView(ListView):
         return context
 
 
-class ReservationView(TemplateView):
+class ReservationView(BaseMixin, TemplateView):
     template_name = 'home/reservation/reservation.html'
     form_class = ReservationForm
 
@@ -137,21 +156,30 @@ class NewsListView(ListView):
     template_name = 'home/news/list.html'
     model = News
     context_object_name = "news"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        news = self.kwargs.get('pk')
+        context['comments_count'] = Comment.objects.filter(news = news).count()
+        return context
 
 
 class NewsDetailView(DetailView):
     template_name = 'home/news/news_detail.html'
     model = News
     form_class = NewsCommentForm
-    context_object_name = "newsdetail"
 
-    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['news'] = News.objects.exclude(
             id=self.get_object().id).order_by("-id")
         context['form'] = NewsCommentForm(initial={'news': self.object})
+        news = self.kwargs.get('pk')
+        context['comment'] = Comment.objects.filter(news = news).order_by('-id')
+        context['comments_count'] = Comment.objects.filter(news = news).count()
+
         return context
+    
     
     def post(self, request, *args, **kwargs):
         name = request.POST.get('full_name')
@@ -162,8 +190,12 @@ class NewsDetailView(DetailView):
         form= News.objects.get(pk = news)
         obj = Comment.objects.create(
             full_name=name, email=email,website=website, comment=message, news = form)
-        obj.save()
-        return render(request, self.template_name)
+    
+        return render(request, self.template_name, {'form': NewsCommentForm(), 
+                                                    'comment':Comment.objects.filter(news = news).order_by('-id'), 
+                                                    'comments_count':Comment.objects.filter(news = news).count(), 
+                                                    'news':News.objects.exclude(id=self.get_object().id).order_by("-id"),
+                                                    'object': self.get_object()})
 
 
 class EventDetailView(DetailView):
@@ -175,6 +207,9 @@ class EventDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['events'] = Event.objects.exclude(id=self.get_object().id)
         context['form'] = EventCommentForm(initial={'events': self.object})
+        events = self.kwargs.get('pk')
+        context['comment'] = Comment.objects.filter(events= events).order_by('-id')
+        context['comments_count'] = Comment.objects.filter(events= events).count()
         return context
 
     def post(self, request, *args, **kwargs):
@@ -186,12 +221,15 @@ class EventDetailView(DetailView):
         form= Event.objects.get(pk = events)
         obj = Comment.objects.create(
             full_name=name, email=email,website=website, comment=message, events = form)
-        obj.save()
-        return render(request, self.template_name)
+        return render(request, self.template_name, {'form': EventCommentForm(), 
+                                                    'comment':Comment.objects.filter(events= events).order_by('-id'),
+                                                    'comments_count':Comment.objects.filter(news = news).count(), 
+                                                    'events':Event.objects.exclude(id=self.get_object().id),
+                                                    'event': self.get_object()})
+
 
 
 class ContactTemplateView(BaseMixin, TemplateView):
-    model = Contact
     template_name = 'home/contact/contact.html'
     form_class = MessageForm
     
@@ -204,11 +242,9 @@ class ContactTemplateView(BaseMixin, TemplateView):
         name = request.POST.get('full_name')
         email = request.POST.get('email')
         message = request.POST.get('message')
-        form= Message.objects.get(pk = message)
         obj = Message.objects.create(
             full_name=name, email=email, message=message)
-        obj.save()
-        return render(request, self.template_name)
+        return render(request, self.template_name, {'form': MessageForm(), 'contact':Contact.objects.filter(deleted_at__isnull = True).order_by('-id')})
 
 
 class EventListView(ListView):
@@ -216,7 +252,14 @@ class EventListView(ListView):
     template_name = 'home/events/event.html'
     context_object_name = 'event'
     paginate_by = 3
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        events = self.kwargs.get('pk')
+        context['comments_count'] = Comment.objects.filter(events = events).count()
+        return context
 
+  
 
 class GalleryListView(ListView):
     model = RoomImage

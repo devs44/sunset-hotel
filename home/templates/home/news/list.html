@@ -63,8 +63,7 @@
                     <i class="ion ion-android-person"></i> by {{n.created_by}}
                   </li>
                   <li class="info-list__item">
-                    <i class="ion ion-android-chat" aria-hidden="true"></i> 5
-                    Comments
+                    <i class="ion ion-android-chat" aria-hidden="true"></i> {{n.news_comment.count}} Comments
                   </li>
                 </ul>
                 <!-- .item-info__list -->
@@ -222,17 +221,16 @@
           <div class="sidebar__item">
             <p class="subheading">Recent News</p>
             <ul class="recent__posts">
-              {% for n in news %}
+              {% for n in news|slice:4 %}
               <li>
                 <a href="#" class="post__title">
                   <h5 class="post__title">{{n.title}}.</h5>
                   <p class="post__desc">{{n.description| truncatewords:8}}</p>
                   <p class="post__info">
-                    <i class="ion ion-android-calendar"></i> {{n.created_at|
-                    date "d M Y"}}
+                    <i class="ion ion-android-calendar"></i> {{n.created_at|date:"d M Y" }}
                   </p>
                   <p class="post__info">
-                    <i class="ion ion-android-person"></i> by {{n.created_at}}
+                    <i class="ion ion-android-person"></i> by {{n.created_by}}
                   </p>
                 </a>
               </li>

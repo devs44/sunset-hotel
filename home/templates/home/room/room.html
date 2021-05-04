@@ -45,7 +45,7 @@
                     <p class="rooms_desc__price"><span>{{ room.price }}</span> / night</p>
                     </div> <!-- .rooms_desc__header -->
                     <p class="rooms_desc__desc">{{ room.description|safe|truncatewords:30 }}</p>
-                    {% for features in features %}
+                    {% for features in feature %}
                     <div class="col-sm-6">
                     
                     <ul class="rooms_desc__services">
