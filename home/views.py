@@ -1,14 +1,15 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.db.models import Q
-
-from django.views.generic import ListView, TemplateView, DetailView
+from django.core.mail import send_mail
+from django.views.generic import ListView, TemplateView, DetailView, CreateView
 from dashboard.models import *
 
 from .mixin import *
 from dashboard.mixin import DeleteMixin, QuerysetMixin
 from django.views.generic.edit import FormMixin
 from dashboard.forms import *
+from email.mime.text import MIMEText
 # Create your views here.
 
 
@@ -275,5 +276,25 @@ class GalleryListView(ListView):
         context['deluxe'] = Image.objects.filter(
             image_type__title="Deluxe Room")
         context['royal'] = Image.objects.filter(image_type__title="Royal Room")
-
+        
         return context
+
+
+
+class NewsletterView(CreateView):
+    template_name = 'home/base/footer.html'
+    success_url = reverse_lazy('home')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user_email'] = Subscription.objects.create(email=user_email)
+        return context
+
+    msg = MIMEText('body of your message')
+    def post(self, request, *args, **kwargs):
+        email = request.POST.get('email')
+        admin_info = User.objects.get(is_superuser=True)
+        admin_email = admin_info.email
+        send_mail("asdasdas", msg, conf_settings.EMAIL_HOST_USER, [email], fail_silently=True)
+        redirect('home:home')
+    
