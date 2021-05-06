@@ -1,7 +1,5 @@
 from django import forms
-from .models import Room, News, Comment, Event, Testomonial, Message, Reservation, Room_Category, Feature, Image, Services_description, Services_type, Contact, About
-
-
+from .models import *
 class FormControlMixin:
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -147,8 +145,11 @@ class NewsCommentForm(forms.ModelForm):
 
     class Meta:
         model = Comment
-        exclude = ['deleted_at','events','news']
+        exclude = ['deleted_at','events','room']
         widgets = {
+            'news': forms.Select(attrs={
+                'class': 'form-control select2'
+            }),
             'full_name': forms.TextInput(attrs={
                 'class': 'form-control select2',
                 'placeholder': 'Enter name'
@@ -203,7 +204,7 @@ class EventForm(forms.ModelForm):
 class EventCommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        exclude = ['deleted_at', 'news']
+        exclude = ['deleted_at', 'news','room']
         widgets = {
             'events': forms.Select(attrs={
                 'class': 'form-control select2'
@@ -417,7 +418,28 @@ class ContactForm(forms.ModelForm):
         }
 
 
-class RoomCommentForm(FormControlMixin):
+
+
+class RoomCommentForm(forms.ModelForm):
+
     class Meta:
         model = Comment
-        exclude = ['deleted_at', 'news', 'events']
+        exclude = ['deleted_at','events','news']
+        widgets = {
+            'full_name': forms.TextInput(attrs={
+                'class': 'form-control select2',
+                'placeholder': 'Enter name'
+            }),
+            'email': forms.EmailInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter your email'
+            }),
+            'created_by': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'created by'
+            }),
+            'comment': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'enter review'
+            })
+        }

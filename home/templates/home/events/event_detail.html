@@ -64,8 +64,8 @@
                 <div class="blog-item__footer">
                 	<div class="footer__item">
                 		<ul class="item-info__list">
-	                    <li class="info-list__item"><i class="ion ion-android-person"></i> by John Doe</li>
-	                    <li class="info-list__item"><i class="ion ion-android-chat" aria-hidden="true"></i> 5 Comments</li>
+	                    <li class="info-list__item"><i class="ion ion-android-person"></i> by {{event.created_by}}</li>
+	                    <li class="info-list__item"><i class="ion ion-android-chat" aria-hidden="true"></i> {{comments_count}} Comments</li>
 	                  </ul> <!-- .item-info__list -->
                 	</div> <!-- .footer__item -->
                 	<div class="footer__item">
@@ -81,80 +81,21 @@
             </div> <!-- .blog__item -->
             <div class="comments">
               <p class="subheading">Comments</p>
-              {% comment %} <ul class="comments__list">
+             <ul class="comments__list">
+              {%for n in comment|slice:4%}
                 <li class="comment">
                   <div class="comment__user">
-                    Robert Jones
+                    {{n.full_name}}
                   </div>
                   <div class="comment__date">
-                    April 8, 2017 at 1:15 pm
+                    {{n.created_at}}
                   </div>
                   <div class="comment__message">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni dicta alias enim quasi sapiente saepe, repellat soluta commodi delectus doloribus, veniam odit hic ratione quae modi earum dolor dignissimos quas?
-                  </div>
-                  <div class="comment__reply">
-                    <a href="#">Reply</a>
-                  </div>
-                  <ul class="comments-list__cildren">
-                    <li class="comment">
-                      <div class="comment__user">
-                        John Doe
-                      </div>
-                      <div class="comment__date">
-                        April 8, 2017 at 4:15 pm
-                      </div>
-                      <div class="comment__message">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                      </div>
-                      <div class="comment__reply">
-                        <a href="#">Reply</a>
-                      </div>
-                    </li>
-                  </ul>
-                </li> <!-- .comment -->
-                <li class="comment">
-                  <div class="comment__user">
-                    Maria Atkinson
-                  </div>
-                  <div class="comment__date">
-                    March 24, 2017 at 1:38 am
-                  </div>
-                  <div class="comment__message">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit eaque magni aliquam dolore cum aliquid ipsa, asperiores modi voluptates.
-                  </div>
-                  <div class="comment__reply">
-                    <a href="#">Reply</a>
+                    {{n.comment}}
                   </div>
                 </li> <!-- .comment -->
-                <li class="comment">
-                  <div class="comment__user">
-                    Brad pitt
-                  </div>
-                  <div class="comment__date">
-                    March 20, 2017 at 3:40 pm
-                  </div>
-                  <div class="comment__message">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti provident adipisci eos reiciendis. Ab dolore natus nam temporibus quidem esse soluta. Accusamus sapiente, officia architecto accusantium sunt amet harum quis!
-                  </div>
-                  <div class="comment__reply">
-                    <a href="#">Reply</a>
-                  </div>
-                </li> <!-- .comment -->
-                <li class="comment">
-                  <div class="comment__user">
-                    Jessica Doe
-                  </div>
-                  <div class="comment__date">
-                    March 15, 2017 at 10:30 am
-                  </div>
-                  <div class="comment__message">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi quas iste et dolor harum accusamus.
-                  </div>
-                  <div class="comment__reply">
-                    <a href="#">Reply</a>
-                  </div>
-                </li> <!-- .comment -->
-              </ul> <!-- .comments__list --> {% endcomment %}
+              {%endfor%} 
+              </ul> <!-- .comments__list -->
               <p class="subheading">Leave a comment</p>
               <form class="comments__form" data-animate-in="animateUp" method="POST">
                 {% csrf_token %}
@@ -239,16 +180,16 @@
 				        </ul> <!-- .social__icons -->
     	    		</div> <!-- .sidebar__item -->
     	    		<div class="sidebar__item">
-    	    			<p class="subheading">Recent posts</p>
+    	    			<p class="subheading">Recent Events</p>
     	    			<ul class="recent__posts">
-                {% for event in events %}
+                {% for event in events|slice:4%}
     	    				<li>
     	    					<a href="#" class="post__title">
     	    						<h5 class="post__title">{{ event.title }}</h5>
     	    						<p class="post__desc">
 	    	    						{{event.description|truncatewords:20 }}
 	    	    					</p>
-	    	    					<p class="post__info"><i class="ion ion-android-calendar"></i>{{ event.created_at }}</p>
+	    	    					<p class="post__info"><i class="ion ion-android-calendar"></i>{{event.created_at|date:"d M Y" }}</p>
 	    	    					<p class="post__info"><i class="ion ion-android-person"></i> by {{ event.created_by }}</p>
     	    					</a>
     	    				</li>

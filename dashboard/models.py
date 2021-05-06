@@ -231,3 +231,10 @@ class Services_type(TimeStamp):
 
     def __str__(self):
         return self.service_type_name
+
+
+class Subscription(TimeStamp):
+    email = models.EmailField()
+
+    def __str__(self):
+        return self.email
