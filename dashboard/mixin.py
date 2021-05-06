@@ -1,3 +1,4 @@
+from django.core.exceptions import PermissionDenied
 from django.urls import reverse_lazy
 from django.shortcuts import render, redirect
 
@@ -12,6 +13,9 @@ class QuerysetMixin(object):
 
 
 class DeleteMixin(object):
+    def get(self, *args, **kwargs):
+        return self.delete(*args, **kwargs)
+
     def delete(self, request, *args, **kwargs):
         return super().delete(request, *args, **kwargs)
 
@@ -28,9 +32,10 @@ class AdminRequiredMixin(object):
     def dispatch(self, request, *args, **kwargs):
         user = request.user
         if user.is_authenticated and user.groups.filter(name="Admin").exists():
+
             pass
         else:
-            return redirect(reverse_lazy('dashboard:admin_login'))
+            raise PermissionDenied
 
         return super().dispatch(request, *args, *kwargs)
 

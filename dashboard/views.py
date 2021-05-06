@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User, Group
 from django.db.models import Q
+# from django.contrib import messages
 
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, DetailView, FormView, View, ListView, CreateView, UpdateView, DeleteView
@@ -110,7 +111,6 @@ class RoomDetailView(DashboardMixin, DetailView):
 
 
 class RoomDeleteView(DeleteMixin, DashboardMixin, DeleteView):
-    template_name = 'dashboard/room/roomdelete.html'
     model = Room
     success_url = reverse_lazy('dashboard:room_list')
 
@@ -356,7 +356,6 @@ class NewsCommentTemplateView(QuerysetMixin, DashboardMixin, ListView):
     context_object_name = 'news'
     paginate_by = 5
 
-
     def get_queryset(self):
         queryset = super().get_queryset().filter(Q(events__isnull=True),
                                                  Q(room__isnull=True)&
@@ -367,8 +366,6 @@ class NewsCommentTemplateView(QuerysetMixin, DashboardMixin, ListView):
                     full_name__icontains=self.request.GET.get('full_name')
                 )
         return queryset
-
-
 
 
 class NewsCommentCreateView(DashboardMixin, CreateView):
