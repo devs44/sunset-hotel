@@ -1,6 +1,11 @@
+import datetime
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.db.models import Q
+from django.urls import reverse_lazy
+from dateutil.parser import parse as parse_date
+from django.contrib import messages
+
 
 from django.views.generic import ListView, TemplateView, DetailView
 from dashboard.models import *
@@ -34,17 +39,29 @@ class RoomListView(QuerysetMixin, ListView):
     context_object_name = 'room'
     paginate_by = 4
 
-    # def get_queryset(self):
-    #     queryset = super().get_queryset()
-    #     if "arrival_date" in self.request.GET:
-    #         if self.request.GET.get('arrival_date') != '':
-    #             pass
-    #     return queryset
+    def get_queryset(self):
+        queryset = super().get_queryset()
+
+        children = self.request.GET.get('children')
+        adults = self.request.GET.get('adults')
+
+        if 'departure_date' in self.request.GET and 'arrival_date' in self.request.GET:
+            departure_date = parse_date(
+                self.request.GET.get('departure_date')).date()
+            arrival_date = parse_date(
+                self.request.GET.get('arrival_date')).date()
+            if arrival_date != '' and departure_date != '' and arrival_date >= datetime.date.today():
+                queryset = queryset.filter(
+                    Q(checked_in_date__isnull=True, checked_out_date__isnull=True) |
+                    Q(checked_out_date__lte=arrival_date, checked_in_date__gte=arrival_date))
+
+        return queryset
 
 
 class RoomDetailView(BaseMixin, QuerysetMixin, DetailView):
     template_name = 'home/room/room_detail.html'
     model = Room
+    form_class = RoomCommentForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -56,7 +73,6 @@ class RoomDetailView(BaseMixin, QuerysetMixin, DetailView):
                                                     Q(news__isnull=True) &
                                                     Q(events__isnull=True) &
                                                     Q(room=room_no)).order_by('-id')
-
         return context
 
     # for posting review in selected room
@@ -69,8 +85,8 @@ class RoomDetailView(BaseMixin, QuerysetMixin, DetailView):
         room = Room.objects.get(room_no=room_no)
         obj = Comment.objects.create(
             full_name=name, email=email, room=room, comment=message)
-        obj.save()
-        return render(request, self.template_name)
+        messages.success(request, "Comment added!")
+        return redirect('room_detail', pk=room_no)
 
 
 class ServiceListView(ListView):
@@ -126,11 +142,21 @@ class ReservationView(TemplateView):
         if "room_id" in self.request.GET:
             room_no = Room.objects.get(room_no=self.request.GET.get('room_id'))
             obj.selected_room = room_no
+
             obj.save(update_fields=['selected_room'])
+            room_no.checked_in_date = check_in
+            room_no.checked_out_date = check_out
+            room_no.availability = False
+            room_no.save()
+
         if request.POST.get('room-no'):
             room_no = Room.objects.get(room_no=request.POST.get('room-no'))
             obj.selected_room = room_no
             obj.save(update_fields=['selected_room'])
+            room_no.checked_in_date = check_in
+            room_no.checked_out_date = check_out
+            room_no.availability = False
+            room_no.save()
         return render(request, self.template_name)
 
 
@@ -146,23 +172,22 @@ class NewsDetailView(DetailView):
     form_class = NewsCommentForm
     context_object_name = "newsdetail"
 
-    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['news'] = News.objects.exclude(
             id=self.get_object().id).order_by("-id")
         context['form'] = NewsCommentForm(initial={'news': self.object})
         return context
-    
+
     def post(self, request, *args, **kwargs):
         name = request.POST.get('full_name')
         email = request.POST.get('email')
         website = request.POST.get('website')
         message = request.POST.get('comment')
         news = self.kwargs.get('pk')
-        form= News.objects.get(pk = news)
+        form = News.objects.get(pk=news)
         obj = Comment.objects.create(
-            full_name=name, email=email,website=website, comment=message, news = form)
+            full_name=name, email=email, website=website, comment=message, news=form)
         obj.save()
         return render(request, self.template_name)
 
@@ -184,9 +209,9 @@ class EventDetailView(DetailView):
         website = request.POST.get('website')
         message = request.POST.get('comment')
         events = self.kwargs.get('pk')
-        form= Event.objects.get(pk = events)
+        form = Event.objects.get(pk=events)
         obj = Comment.objects.create(
-            full_name=name, email=email,website=website, comment=message, events = form)
+            full_name=name, email=email, website=website, comment=message, events=form)
         obj.save()
         return render(request, self.template_name)
 
@@ -195,17 +220,17 @@ class ContactTemplateView(BaseMixin, TemplateView):
     model = Contact
     template_name = 'home/contact/contact.html'
     form_class = MessageForm
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = MessageForm()
         return context
-    
+
     def post(self, request, *args, **kwargs):
         name = request.POST.get('full_name')
         email = request.POST.get('email')
         message = request.POST.get('message')
-        form= Message.objects.get(pk = message)
+        form = Message.objects.get(pk=message)
         obj = Message.objects.create(
             full_name=name, email=email, message=message)
         obj.save()

@@ -74,6 +74,8 @@
                       <th>Room Type</th>
                       <th>Room No</th>
                       <th>Availability</th>
+                      <th>Check In Date</th>
+                      <th>Check Out Date</th>
                       <th>Price</th>
                       <th>Deleted at</th>
                       <th>Action</th>
@@ -94,7 +96,8 @@
                       {% else %}
                       <td>No</td>
                       {% endif %}
-                      <!-- <td>{{room.availability}}</td> -->
+                      <td>{{room.checked_in_date}}</td>
+                      <td>{{room.checked_out_date}}</td>
                       <td>{{room.price}}</td>
                       <td>{{room.deleted_at}}</td>
                       <td>

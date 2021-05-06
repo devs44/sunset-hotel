@@ -68,6 +68,8 @@ class Room(TimeStamp):
     room_no = models.CharField(
         max_length=250, primary_key=True)
     description = RichTextField()
+    checked_in_date = models.DateField(null=True, blank=True)
+    checked_out_date = models.DateField(null=True, blank=True)
     availability = models.BooleanField(default=False)
     price = models.PositiveIntegerField()
     image = models.ImageField(upload_to="rooms")
@@ -190,7 +192,8 @@ class Message(TimeStamp):
 class Reservation(TimeStamp):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
-    selected_room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    selected_room = models.ForeignKey(
+        Room, on_delete=models.CASCADE, null=True, blank=True)
     check_in_date = models.DateTimeField()
     check_out_date = models.DateTimeField()
     adult = models.CharField(max_length=250, choices=ADULT)
@@ -216,17 +219,15 @@ class Reservation(TimeStamp):
 class Services_description(TimeStamp):
     description = models.CharField(max_length=200)
     service_video = models.FileField(upload_to="service_description")
-    
+
     def __str__(self):
         return self.description
-
 
 
 class Services_type(TimeStamp):
     service_type_name = models.CharField(max_length=100)
     service_png = models.ImageField(upload_to="service_type")
     service_type_description = models.CharField(max_length=200)
-    
+
     def __str__(self):
         return self.service_type_name
-

@@ -30,6 +30,7 @@
     <section class="section__rooms-1">
     	<div class="container">
     	 <div class="row">
+            {% if room %}
             {% for room in room %}
             <div class="rooms__item">
 
@@ -41,7 +42,14 @@
                 <div class="col-md-6">
                 <div class="rooms__desc">
                     <div class="rooms_desc__header">
-                    <h2 class="rooms_desc__title">{{ room.room_type }}</h2>
+                    <h2 class="rooms_desc__title">{{ room.room_type }}
+                      {% if room.availability %}
+                      <small class="btn-sm btn-success"> available now</small>
+                      {% else %}
+                      <small class="btn-sm btn-warning">not available now</small>
+
+                      {% endif %}
+                    </h2>
                     <p class="rooms_desc__price"><span>{{ room.price }}</span> / night</p>
                     </div> <!-- .rooms_desc__header -->
                     <p class="rooms_desc__desc">{{ room.description|safe|truncatewords:30 }}</p>
@@ -64,7 +72,9 @@
                 </div>
             </div> <!-- .rooms__item -->
           {% endfor %}
-
+          {% else %}
+          <h3><strong>Sorry!</strong> Room not available</h3>
+          {% endif %}
 
           
         </div> <!-- .row -->
