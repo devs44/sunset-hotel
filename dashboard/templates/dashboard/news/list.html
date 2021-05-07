@@ -86,7 +86,7 @@
                         >
                         <span
                           ><a
-                            class="btn btn-danger"
+                            class="btn btn-danger delete"
                             href="{% url 'dashboard:news_delete' news.id %}"
                             ><i class="fa fa-trash m-1"></i></a
                         ></span>
@@ -130,4 +130,27 @@
     </section>
   </div>
 </div>
+{% endblock %}
+{% block script %}
+<script>
+$('.delete').click(function(e) {
+        e.preventDefault();
+        swal({
+                title: "Are you sure?",
+                text: "It will permanently deleted !",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    swal(" 'Your file has been deleted.'!", {
+                        icon: "success",
+                    });
+                    window.location.href = $(this).attr('href');
+
+                }
+            });
+    })
+</script>
 {% endblock %}

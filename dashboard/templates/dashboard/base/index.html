@@ -60,6 +60,14 @@
       href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
       rel="stylesheet"
     />
+    <!-- for toastr  -->
+    <link type="text/css" href="{% static 'dashboard/assets/toastr/toastr.min.css' %}" rel="stylesheet">
+
+    <!-- sweetalert -->
+    <link rel="stylesheet" href="{% static 'dashboard/assets/css/sweetalert2.min.css' %}">
+    <!-- sweetalert -->
+
+
 	{% block style %}{% endblock %}
   </head>
 
@@ -286,6 +294,11 @@
     <script src="{% static 'dashboard/assets/plugins/filterizr/jquery.filterizr.min.js' %}"></script>
     <!-- select2-->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <!-- Toastr -->
+    <script src="{% static 'dashboard/assets/toastr/toastr.min.js' %}"></script>
+    <!-- sweetalert -->
+    <script src="{% static 'dashboard/assets/js/sweetalert.min.js' %}"></script>
+
 	{% block script %}
 	{% endblock %}
   </body>
