@@ -62,10 +62,20 @@ class RoomListView(QuerysetMixin, ListView):
                 self.request.GET.get('departure_date')).date()
             arrival_date = parse_date(
                 self.request.GET.get('arrival_date')).date()
+            # timezon.now().date() instead of datetime
+
             if arrival_date != '' and departure_date != '' and arrival_date >= datetime.date.today():
                 queryset = queryset.filter(
                     Q(checked_in_date__isnull=True, checked_out_date__isnull=True) |
                     Q(checked_out_date__lte=arrival_date, checked_in_date__gte=arrival_date))
+            elif arrival_date <= datetime.date.today():
+                messages.error(
+                    self.request, "Sorry, please select valid date.")
+                queryset = ''
+            if arrival_date > departure_date:
+                messages.error(
+                    self.request, "Sorry, invalid arrival and departure date.")
+                queryset = ''
 
         return queryset
 
@@ -185,7 +195,7 @@ class ReservationView(BaseMixin, TemplateView):
             room_no.checked_out_date = check_out
             room_no.availability = False
             room_no.save()
-        return render(request, self.template_name)
+        return redirect(reverse_lazy('reservation'))
 
 
 class NewsListView(ListView):

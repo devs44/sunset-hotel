@@ -1,4 +1,7 @@
 {% extends 'dashboard/base/index.html' %} {% block content %}
+<script>
+  M.toast({html:" toasted!", classes: "blue rounded",displayLength:2000});
+</script>
 <div class="wrapper">
   <div class="content-wrapper">
     <section class="content-header">
@@ -108,7 +111,7 @@
                               ></i>Edit</a
                           ></span>
                         <span
-                          ><a class="btn btn-danger" href="{% url 'dashboard:room_delete' room.pk %}"
+                          ><a class="btn btn-danger delete" href="{% url 'dashboard:room_delete' room.pk %}"
                             ><i class="fa fa-trash m-1"></i></a></span
                         >
                       </td>
@@ -155,26 +158,23 @@
 {% endblock %}
 {% block script %}
 <script>
-function searchRooms() {
-  // Declare variables
-  var input, filter, table, tr, td, i, txtValue;
-  input = document.getElementById("SearchRoom");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("rooms");
-  tr = table.getElementsByTagName("tr");
-
-  // Loop through all table rows, and hide those who don't match the search query
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[2];
-    if (td) {
-      txtValue = td.textContent || td.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
-    }
-  }
-}
+$('.delete').click(function(e) {
+        e.preventDefault();
+        swal({
+                title: "Are you sure?",
+                text: "It will permanently deleted !",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    window.location.href = $(this).attr('href');
+                    swal(" 'Your file has been deleted.'!", {
+                        icon: "success",
+                    });
+                }
+            });
+    })
 </script>
 {% endblock %}

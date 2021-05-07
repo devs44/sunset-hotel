@@ -41,7 +41,7 @@
                           <img src="{{ img.image.url }}" class="img-fluid mb-2" alt="white sample"/>
                             <div>
                                 <a href="{% url 'dashboard:image_update' img.id %}">edit</a> |
-                                <a href="{% url 'dashboard:image_delete' img.id %}">delete</a>
+                                <a class="delete" href="{% url 'dashboard:image_delete' img.id %}">delete</a>
                             </div>
                         </a>
                       </div>
@@ -75,4 +75,24 @@
       });
     })
 </script>
+<script>
+  $('.delete').click(function(e) {
+          e.preventDefault();
+          swal({
+                  title: "Are you sure?",
+                  text: "It will permanently deleted !",
+                  icon: "warning",
+                  buttons: true,
+                  dangerMode: true,
+              })
+              .then((willDelete) => {
+                  if (willDelete) {
+                      window.location.href = $(this).attr('href');
+                      swal(" 'Your file has been deleted.'!", {
+                          icon: "success",
+                      });
+                  }
+              });
+      })
+  </script>
 {% endblock %}
