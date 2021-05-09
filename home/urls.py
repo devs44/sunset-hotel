@@ -15,5 +15,9 @@ urlpatterns = [
     path('event/<int:pk>/', EventDetailView.as_view(), name="event_detail"),
     path('contacts/', ContactTemplateView.as_view(), name="contact"),
     path('gallerys/', GalleryListView.as_view(), name="gallerys"),
+    path('gallerys/singleroom', SingleRoomListView.as_view(), name="single_room"),
+    path('gallerys/doubleroom', DoubleRoomListView.as_view(), name="double_room"),
+    path('gallerys/deluxeroom', DeluxeRoomListView.as_view(), name="deluxe_room"),
+    path('gallerys/royalroom', RoyalRoomListView.as_view(), name="royal_room"),
     path('subscripton/', NewsletterView.as_view(), name="subscription"),
 ]
