@@ -40,9 +40,9 @@
 <section class="section__availability">
   <div class="container">
     <div class="row">
-      <div class="col-sm-12">
+      <div class="col-sm-12 text-center">
         <!-- Reservation form -->
-        <form class="reservation__form" action="" method="GET">
+        <form class="reservation__form" action="{% url 'rooms' %}" method="GET">
           <div class="form-group">
             <div class="form-group__inner">
               <label for="reservation__check-in">Arrival date</label>
@@ -51,7 +51,7 @@
                 name="arrival_date"
                 class="form-control date"
                 id="reservation__check-in"
-                value="24 December 2017"
+                value="01 May 2021"
               />
             </div>
             <!-- / .form-group__inner -->
@@ -65,7 +65,7 @@
                 name="departure_date"
                 class="form-control date"
                 id="reservation__check-out"
-                value="12 January 2018"
+                value="02 May 2021"
               />
             </div>
             <!-- / .form-group__inner -->
@@ -74,7 +74,7 @@
           <div class="form-group">
             <div class="form-group__inner">
               <label for="reservation__adults">Adults</label>
-              <input type="text" id="reservation__adults" />
+              <input type="text" name = "adults" id="reservation__adults" />
               <div class="dropdown reservation-dropdown">
                 <button
                   class="dropdown-toggle"
@@ -87,11 +87,11 @@
                   <span>1 Adult</span>
                   <i class="icon ion-chevron-down"></i>
                 </button>
-                <ul class="dropdown-menu" aria-labelledby="adults-dropdown">
-                  <li><a href="#">1 Adult</a></li>
-                  <li><a href="#">2 Adults</a></li>
-                  <li><a href="#">3 Adults</a></li>
-                </ul>
+                  <ul class="dropdown-menu" aria-labelledby="adults-dropdown">
+                    <li><a href="#">1 Adult</a></li>
+                    <li><a href="#">2 Adults</a></li>
+                    <li><a href="#">3 Adults</a></li>
+                  </ul> 
               </div>
               <!-- . -->
             </div>
@@ -101,7 +101,7 @@
           <div class="form-group">
             <div class="form-group__inner">
               <label for="reservation__children">Children</label>
-              <input type="text" id="reservation__children" />
+              <input type="text" name="children" id="reservation__children" />
               <div class="dropdown reservation-dropdown">
                 <button
                   class="dropdown-toggle"
@@ -124,24 +124,25 @@
             </div>
             <!-- / .form-group__inner -->
           </div>
+              <!-- / .row -->
+          <!-- <div class="row mx-auto">
+            <div class="col-xs-12"> -->
+              <!-- Reservation button -->
+              <div class="reservation__button text-center ">
+                <button id="reserve" type="submit" class="btn btn-reservation">
+                  Check availability
+                </button>
+              </div>
+              <!-- / .reservation__button -->
+            <!-- </div>
+          </div> -->
+    <!-- / .row -->
           <!-- / .form-group -->
         </form>
         <!-- / .reservation__form -->
       </div>
     </div>
-    <!-- / .row -->
-    <div class="row">
-      <div class="col-xs-12">
-        <!-- Reservation button -->
-        <div class="reservation__button">
-          <button type="submit" class="btn btn-reservation">
-            Check availability
-          </button>
-        </div>
-        <!-- / .reservation__button -->
-      </div>
-    </div>
-    <!-- / .row -->
+
   </div>
   <!-- / .container -->
 </section>
@@ -662,6 +663,13 @@
   <!-- / .container -->
 </section>
 <!-- / .section__contacts -->
+<script>
+$(documet).ready(function() {
+  $('#reserve').click(function(){
+    alert($('#reservation__adults').val());
+  })
+})
+</script>
 
 {% endblock %}
 
