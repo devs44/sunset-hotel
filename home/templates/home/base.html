@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="{% static 'home/assets/plugins/owl-carousel/dist/assets/owl.theme.default.min.css' %}">
 
     <!-- CSS Global -->
+    <!-- Toastr -->
+    <link type="text/css" href="{% static 'home/assets/toastr/toastr.min.css' %}" rel="stylesheet">
     <!--build:css assets/css/theme.min.css-->
     <link rel="stylesheet" href="{% static 'home/assets/css/theme.css' %}">
     <!--endbuild-->
@@ -38,6 +40,28 @@
 
     <!-- CONTENT
       ================================================== -->
+  <script>
+     toastr.options = {
+            "debug": false,
+            "newestOnTop": false,
+            "positionClass": "toast-top-right",
+            "closeButton": true,
+            "timeOut": "5000",
+            "progressBar": false
+        }; 
+
+</script>
+        {% for message in messages %} 
+        {% if message.level == 20 %}
+            toastr.info("{{ message }}"); 
+        {% elif message.level == 25 %}
+            toastr.success("{{ message }}");
+        {% elif message.level == 30 %}
+            toastr.warning("{{ message }}"); 
+        {% elif message.level == 40 %}
+            toastr.error("{{ message }}"); 
+        {% endif %} 
+        {% endfor %}
 
   {% include 'home/base/topbar.html' %}
   {% include 'home/base/navbar.html' %}
@@ -62,6 +86,8 @@
     <script src="{% static 'home/assets/plugins/contact/contact.js' %}"></script>
 
     <!-- JS Custom -->
+    <!-- Toastr -->
+    <script src="{% static 'home/assets/toastr/toastr.min.js' %}"></script>
     <!--build:js home/assets/js/theme.min.js -->
     <script src="{% static 'home/assets/js/theme.js' %}"></script>
     <!-- endbuild -->

@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User, Group
 from django.db.models import Q
+# from django.contrib import messages
 
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, DetailView, FormView, View, ListView, CreateView, UpdateView, DeleteView
@@ -110,7 +111,6 @@ class RoomDetailView(DashboardMixin, DetailView):
 
 
 class RoomDeleteView(DeleteMixin, DashboardMixin, DeleteView):
-    template_name = 'dashboard/room/roomdelete.html'
     model = Room
     success_url = reverse_lazy('dashboard:room_list')
 
@@ -173,8 +173,7 @@ class FeatureUpdateView(DashboardMixin, UpdateView):
     success_url = reverse_lazy('dashboard:feature_list')
 
 
-class FeatureDeleteView(DashboardMixin, DeleteView):
-    template_name = 'dashboard/feature/featuredelete.html'
+class FeatureDeleteView(DashboardMixin, DeleteMixin, DeleteView):
     model = Feature
     success_url = reverse_lazy('dashboard:feature_list')
 
@@ -205,10 +204,10 @@ class ImageUpdateView(DashboardMixin, UpdateView):
 
 
 class ImageDeleteView(DeleteMixin, DashboardMixin, DeleteView):
-    template_name = 'dashboard/gallery/imagedelete.html'
     model = Image
     success_url = reverse_lazy('dashboard:image_list')
 
+<<<<<<< HEAD
 # class ImageDetailView(DashboardMixin, DetailView):
 #     template_name = 'dashboard/gallery/imagedetail.html'
 #     model = Image
@@ -217,6 +216,12 @@ class ImageDeleteView(DeleteMixin, DashboardMixin, DeleteView):
 
 # event 
 class EventListView( DashboardMixin, ListView):
+=======
+# event
+
+
+class EventListView(DashboardMixin, QuerysetMixin, ListView):
+>>>>>>> 4204a1fcc0293006d66f9fe46147a4d8219e5c6b
     template_name = 'dashboard/event/eventlist.html'
     model = Event
     paginate_by = 5
@@ -255,8 +260,7 @@ class EventDetailView(DashboardMixin, DetailView):
         return obj
 
 
-class EventDeleteView(DashboardMixin, DeleteView):
-    template_name = 'dashboard/event/eventdelete.html'
+class EventDeleteView(DeleteMixin, DashboardMixin, DeleteView):
     model = Event
     success_url = reverse_lazy('dashboard:event_list')
 
@@ -270,7 +274,7 @@ class EventCommentTemplateView(QuerysetMixin, DashboardMixin, ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset().filter(Q(news__isnull=True),
-                                                 Q(room__isnull=True)&
+                                                 Q(room__isnull=True) &
                                                  Q(deleted_at__isnull=True))
         if "full_name" in self.request.GET:
             if self.request.GET.get('full_name') != '':
@@ -298,8 +302,7 @@ class EventCommentDetailView(DashboardMixin, DetailView):
     context_object_name = 'eventdetail'
 
 
-class EventCommentDeleteView(DeleteMixin, DashboardMixin, DeleteView):
-    template_name = 'dashboard/event_comment/eventcommentdelete.html'
+class EventCommentDeleteView(DeleteMixin, DeleteView):
     model = Comment
     success_url = reverse_lazy('dashboard:eventcomment_list')
 
@@ -349,7 +352,6 @@ class NewsDetailView(DashboardMixin, DetailView):
 
 
 class NewsDeleteView(DeleteMixin, DashboardMixin, DeleteView):
-    template_name = 'dashboard/news/delete.html'
     model = News
     success_url = reverse_lazy('dashboard:news_list')
 
@@ -362,10 +364,9 @@ class NewsCommentTemplateView(QuerysetMixin, DashboardMixin, ListView):
     context_object_name = 'news'
     paginate_by = 5
 
-
     def get_queryset(self):
         queryset = super().get_queryset().filter(Q(events__isnull=True),
-                                                 Q(room__isnull=True)&
+                                                 Q(room__isnull=True) &
                                                  Q(deleted_at__isnull=True))
         if 'full_name' in self.request.GET:
             if self.request.GET.get('full_name') != '':
@@ -373,8 +374,6 @@ class NewsCommentTemplateView(QuerysetMixin, DashboardMixin, ListView):
                     full_name__icontains=self.request.GET.get('full_name')
                 )
         return queryset
-
-
 
 
 class NewsCommentCreateView(DashboardMixin, CreateView):
@@ -396,8 +395,7 @@ class NewsCommentDetailView(DetailView):
     context_object_name = 'commentdetail'
 
 
-class NewsCommentDeleteView(DeleteView):
-    template_name = 'dashboard/news_comment/delete.html'
+class NewsCommentDeleteView(DeleteMixin, DeleteView):
     model = Comment
     success_url = reverse_lazy('dashboard:news_comment_list')
 
@@ -411,7 +409,7 @@ class TestimonialListView(QuerysetMixin, ListView):
     def get_queryset(self):
         queryset = super().get_queryset()
         if "name" in self.request.GET:
-           if self.request.GET.get('name') != '':
+            if self.request.GET.get('name') != '':
                 queryset = queryset.filter(
                     name__icontains=self.request.GET.get('name')
                 )
@@ -442,8 +440,7 @@ class TestimonialDetailView(DashboardMixin, DetailView):
     context_object_name = 'testimonialdetail'
 
 
-class TestimonialDeleteView(DashboardMixin, DeleteView):
-    template_name = 'dashboard/testimonial/delete.html'
+class TestimonialDeleteView(DashboardMixin, DeleteMixin, DeleteView):
     model = Testomonial
     success_url = reverse_lazy('dashboard:testimonial_list')
 
@@ -484,8 +481,7 @@ class MessageDetailView(DashboardMixin, DetailView):
     context_object_name = 'messagedetail'
 
 
-class MessageDeleteView(DashboardMixin, DeleteView):
-    template_name = 'dashboard/message/delete.html'
+class MessageDeleteView(DeleteMixin, DeleteView):
     model = Message
     success_url = reverse_lazy('dashboard:message_list')
 
@@ -537,7 +533,6 @@ class ReservationDetailView(DashboardMixin, DetailView):
 
 
 class ReservationDeleteView(DeleteMixin, DashboardMixin, DeleteView):
-    template_name = 'dashboard/reservation/delete.html'
     model = Reservation
     success_url = reverse_lazy('dashboard:reservation_list')
 
@@ -570,7 +565,6 @@ class AboutDetailView(DashboardMixin, DetailView):
 
 
 class AboutDeleteView(DeleteMixin, DashboardMixin, DeleteView):
-    template_name = 'dashboard/about/aboutdelete.html'
     model = About
     success_url = reverse_lazy('dashboard:about_list')
 
@@ -613,7 +607,6 @@ class ServiceDetailView(DashboardMixin, DetailView):
 
 
 class ServiceDeleteView(DeleteMixin, DashboardMixin, DeleteView):
-    template_name = 'dashboard/services-type/delete.html'
     model = Services_type
     success_url = reverse_lazy('dashboard:service_type_list')
 
@@ -657,14 +650,13 @@ class ServiceVideoDetailView(DashboardMixin, DetailView):
 
 
 class ServiceVideoDeleteView(DeleteMixin, DashboardMixin, DeleteView):
-    template_name = 'dashboard/services-video/delete.html'
     model = Services_description
     success_url = reverse_lazy('dashboard:service_video_list')
 
 
 # contact
 
-class ContactListView(ListView):
+class ContactListView(QuerysetMixin, ListView):
     model = Contact
     template_name = 'dashboard/contact/list.html'
     context_object_name = 'contact'
@@ -689,11 +681,9 @@ class ContactDetailView(DetailView):
     context_object_name = 'contactdetail'
 
 
-class ContactDeleteView(DeleteView):
-    template_name = 'dashboard/contact/delete.html'
+class ContactDeleteView(DeleteMixin, DeleteView):
     model = Contact
     success_url = reverse_lazy('dashboard:contact_list')
-
 
 
 class RoomCommentListView(DashboardMixin, ListView):
@@ -703,7 +693,7 @@ class RoomCommentListView(DashboardMixin, ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset().filter(Q(news__isnull=True),
-                                                 Q(events__isnull=True)&
+                                                 Q(events__isnull=True) &
                                                  Q(deleted_at__isnull=True))
         if "room" in self.request.GET:
             if self.request.GET.get('room') != '':
@@ -732,6 +722,5 @@ class RoomCommentDetailView(DashboardMixin, DetailView):
 
 
 class RoomCommentDeleteView(DeleteMixin, DashboardMixin, DeleteView):
-    template_name = 'dashboard/room_comment/delete.html'
     model = Comment
     success_url = reverse_lazy('dashboard:room_comment_list')
