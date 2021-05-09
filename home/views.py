@@ -36,7 +36,7 @@ class HomeTemplateView(BaseMixin, TemplateView):
         message = request.POST.get('message')
         obj = Message.objects.create(
             full_name=name, email=email, message=message)
-        return render(request, self.template_name, {'form': MessageForm(), 'contact':Contact.objects.filter(deleted_at__isnull = True).order_by('-id')})
+        return redirect('home')
 
 
 
@@ -80,17 +80,8 @@ class RoomDetailView(BaseMixin, QuerysetMixin, DetailView):
         room = Room.objects.get(room_no=room_no)
         obj = Comment.objects.create(
             full_name=name, email=email, room=room, comment=message)
-        obj.save()
-        return render(request, self.template_name, {'rooms': Room.objects.exclude(room_no=self.get_object().room_no),
-                                                    'feature': Feature.objects.all(),
-                                                    'reviews': Comment.objects.filter(Q(deleted_at__isnull=True) &
-                                                    Q(news__isnull=True) &
-                                                    Q(events__isnull=True) &
-                                                    Q(room=room_no)).order_by('-id'),
-                                                    'room': self.get_object(),
-                                                    'contact':Contact.objects.filter(deleted_at__isnull = True).order_by('-id') })
-
-
+        return redirect('room_detail', pk=room_no)
+   
 class ServiceListView(ListView):
     model = Services_description
     template_name = 'home/about/about.html'
@@ -191,11 +182,7 @@ class NewsDetailView(DetailView):
         obj = Comment.objects.create(
             full_name=name, email=email,website=website, comment=message, news = form)
     
-        return render(request, self.template_name, {'form': NewsCommentForm(), 
-                                                    'comment':Comment.objects.filter(news = news).order_by('-id'), 
-                                                    'comments_count':Comment.objects.filter(news = news).count(), 
-                                                    'news':News.objects.exclude(id=self.get_object().id).order_by("-id"),
-                                                    'object': self.get_object()})
+        return redirect('news_detail', pk=news)
 
 
 class EventDetailView(DetailView):
@@ -221,11 +208,7 @@ class EventDetailView(DetailView):
         form= Event.objects.get(pk = events)
         obj = Comment.objects.create(
             full_name=name, email=email,website=website, comment=message, events = form)
-        return render(request, self.template_name, {'form': EventCommentForm(), 
-                                                    'comment':Comment.objects.filter(events= events).order_by('-id'),
-                                                    'comments_count':Comment.objects.filter(news = news).count(), 
-                                                    'events':Event.objects.exclude(id=self.get_object().id),
-                                                    'event': self.get_object()})
+        return redirect('event_detail', pk=events)
 
 
 
@@ -244,7 +227,7 @@ class ContactTemplateView(BaseMixin, TemplateView):
         message = request.POST.get('message')
         obj = Message.objects.create(
             full_name=name, email=email, message=message)
-        return render(request, self.template_name, {'form': MessageForm(), 'contact':Contact.objects.filter(deleted_at__isnull = True).order_by('-id')})
+        return redirect('contact')
 
 
 class EventListView(ListView):
