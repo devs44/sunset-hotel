@@ -1,6 +1,6 @@
 from .mixin import *
 from .forms import *
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User, Group
 from django.db.models import Q
@@ -506,6 +506,12 @@ class ReservationCreateView(DashboardMixin, CreateView):
     template_name = 'dashboard/reservation/form.html'
     form_class = ReservationForm
     success_url = reverse_lazy('dashboard:reservation_list')
+
+    def dispatch(self, request, *args, **kwargs):
+        if 'frontend' in self.request.GET:
+            self.success_url = reverse('reservation')
+
+        return super().dispatch(request, *args, **kwargs)
 
 
 class ReservationUpdateView(DashboardMixin, UpdateView):

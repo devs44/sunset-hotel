@@ -40,28 +40,8 @@
 
     <!-- CONTENT
       ================================================== -->
-  <script>
-     toastr.options = {
-            "debug": false,
-            "newestOnTop": false,
-            "positionClass": "toast-top-right",
-            "closeButton": true,
-            "timeOut": "5000",
-            "progressBar": false
-        }; 
 
-</script>
-        {% for message in messages %} 
-        {% if message.level == 20 %}
-            toastr.info("{{ message }}"); 
-        {% elif message.level == 25 %}
-            toastr.success("{{ message }}");
-        {% elif message.level == 30 %}
-            toastr.warning("{{ message }}"); 
-        {% elif message.level == 40 %}
-            toastr.error("{{ message }}"); 
-        {% endif %} 
-        {% endfor %}
+  
 
   {% include 'home/base/topbar.html' %}
   {% include 'home/base/navbar.html' %}
@@ -115,6 +95,28 @@
         // Events
 
       })();
+    </script>
+      <script>
+        toastr.options = {
+               "debug": false,
+               "newestOnTop": false,
+               "positionClass": "toast-top-right",
+               "closeButton": true,
+               "timeOut": "5000",
+               "progressBar": false
+           }; 
+   
+           {% for message in messages %} 
+           {% if message.level == 20 %}
+               toastr.info("{{ message }}"); 
+           {% elif message.level == 25 %}
+               toastr.success("{{ message }}");
+           {% elif message.level == 30 %}
+               toastr.warning("{{ message }}"); 
+           {% elif message.level == 40 %}
+               toastr.error("{{ message }}"); 
+           {% endif %} 
+           {% endfor %}
     </script>
   </body>
 

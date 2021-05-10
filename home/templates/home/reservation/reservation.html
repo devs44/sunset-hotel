@@ -101,27 +101,26 @@
 
               <!-- Please carefully read the README.pdf file in order to setup the PHP reservation form properly -->
 
-              <form id="reservation-form_sendemail" class="reservation__form" data-animate-in="animateUp" method="POST">
+              <form id="reservation-form_sendemail" action="{% url 'dashboard:reservation_create' %}?frontend" class="reservation__form" data-animate-in="animateUp" method="POST">
 				{% csrf_token %}
-				
 				<div class="col-sm-12 col-md-6">
               		<div class="form-group">
-	                  <label for="check-in" class="sr-only">Arrival date</label>
-	                  <input type="date" name="check-in" class="form-control" id="check-in" value="2021-04-01" required>
+	                  <label for="check-in" class="sr-only">Check In date</label>
+	                  {{ form.check_in_date }}
 	                  <span class="help-block"></span>
 	                </div>
 	              </div>
 	              <div class="col-sm-12 col-md-6">
 	              	<div class="form-group">
-	                  <label for="check-out" class="sr-only">Departure date</label>
-	                  <input type="date" name="check-out" class="form-control" id="check-out" value="2021-04-01" required>
+	                  <label for="check-out" class="sr-only">Check Out date</label>
+	                  <input type="date" name="check_out_date" class="form-control" id="check-out" value="2021-04-01" required>
 	                  <span class="help-block"></span>
 	                </div>
 	              </div>
 	              <div class="col-sm-12 col-md-6">
 	              	<div class="form-group">
 	                  <label for="form-adults" class="sr-only">Adults</label>
-	                  <select class="form-control" name="form-adults" id="form-adults">
+	                  <select class="form-control" name="adult" id="form-adults">
                       <option value="0" selected="">Adults</option>
                       <option value="1">1 Adult</option>
                       <option value="2">2 Adults</option>
@@ -133,7 +132,7 @@
 	              <div class="col-sm-12 col-md-6">
 	              	<div class="form-group">
 	                  <label for="form-children" class="sr-only">Children</label>
-	                  	<select class="form-control" name="form-children" id="form-children">
+	                  	<select class="form-control" name="children" id="form-children">
 							<option value="0" selected="">Children</option>
 							<option value="1">1 Child</option>
 							<option value="2">2 Children</option>
@@ -144,15 +143,15 @@
 	              </div>
               	<div class="col-sm-12 col-md-6">
               		<div class="form-group">
-	                  <label for="first-name" class="sr-only">First name</label>
-	                  <input type="text" name="first-name" class="form-control" id="first-name" placeholder="First Name" required>
+	                  <label for="first_name" class="sr-only">First name</label>
+	                  <input type="text" name="first_name" class="form-control" id="first-name" placeholder="First Name" required>
 	                  <span class="help-block"></span>
 	                </div>
 	              </div>
 	              <div class="col-sm-12 col-md-6">
               		<div class="form-group">
 	                  <label for="last-name" class="sr-only">Last name</label>
-	                  <input type="text" name="last-name" class="form-control" id="last-name" placeholder="Last Name" required>
+	                  <input type="text" name="last_name" class="form-control" id="last-name" placeholder="Last Name" required>
 	                  <span class="help-block"></span>
 	                </div>
 	              </div>
@@ -173,14 +172,14 @@
 	              <div class="col-sm-12 col-md-6">
 	                <div class="form-group">
 	                  <label for="address-line1" class="sr-only">Address line 1</label>
-	                  <input type="text" name="address-line1" class="form-control" id="address-line1" placeholder="Address line 1" required>
+	                  <input type="text" name="address_1" class="form-control" id="address-line1" placeholder="Address line 1" required>
 	                  <span class="help-block"></span>
 	                </div>
               	</div>
               	<div class="col-sm-12 col-md-6">
 	                <div class="form-group">
 	                  <label for="address-line2" class="sr-only">Address line 2</label>
-	                  <input type="text" name="address-line2" class="form-control" id="address-line2" placeholder="Address line 2">
+	                  <input type="text" name="address_2" class="form-control" id="address-line2" placeholder="Address line 2">
 	                  <span class="help-block"></span>
 	                </div>
               	</div>
@@ -208,7 +207,7 @@
               	<div class="col-sm-12 col-md-6">
 	                <div class="form-group">
 	                  <label for="zip-code" class="sr-only">Zip Code</label>
-	                  <input type="text" name="zip-code" class="form-control" id="zip-code" placeholder="Zip code">
+	                  <input type="text" name="zip_code" class="form-control" id="zip-code" placeholder="Zip code">
 	                  <span class="help-block"></span>
 	                </div>
               	</div>
@@ -216,7 +215,7 @@
 				<div class="col-sm-12 col-md-6">
 					<div class="form-group">
 						<label for="form-children" class="sr-only">Select Room</label>
-						<select class="form-control" name="room-no" id="room-no" required>
+						<select class="form-control" name="selected_room" id="room-no" required>
 						<option value="0" selected="">Select Room</option>
 						{% for room in rooms %}
 						<option value="{{ room.room_no }}">{{ room.room_type}} |Room No: {{ room.room_no }}</option>
@@ -229,7 +228,7 @@
               	<div class="col-sm-12">
 	                <div class="form-group">
 	                  <label for="requirements" class="sr-only">Special requirements</label>
-	                  <textarea name="requirements" class="form-control" rows="8" id="requirements" placeholder="Special requirements"></textarea>
+	                  <textarea name="special_req" class="form-control" rows="8" id="requirements" placeholder="Special requirements"></textarea>
 	                  <span class="help-block"></span>
 	                </div>
               	</div>

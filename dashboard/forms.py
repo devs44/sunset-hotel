@@ -1,5 +1,7 @@
 from django import forms
 from .models import *
+
+
 class FormControlMixin:
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -145,7 +147,7 @@ class NewsCommentForm(forms.ModelForm):
 
     class Meta:
         model = Comment
-        exclude = ['deleted_at','events','room']
+        exclude = ['deleted_at', 'events', 'room']
         widgets = {
             'news': forms.Select(attrs={
                 'class': 'form-control select2'
@@ -204,7 +206,7 @@ class EventForm(forms.ModelForm):
 class EventCommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        exclude = ['deleted_at', 'news','room']
+        exclude = ['deleted_at', 'news', 'room']
         widgets = {
             'events': forms.Select(attrs={
                 'class': 'form-control select2'
@@ -418,13 +420,11 @@ class ContactForm(forms.ModelForm):
         }
 
 
-
-
 class RoomCommentForm(forms.ModelForm):
 
     class Meta:
         model = Comment
-        exclude = ['deleted_at','events','news']
+        exclude = ['deleted_at', 'events', 'news']
         widgets = {
             'full_name': forms.TextInput(attrs={
                 'class': 'form-control select2',
