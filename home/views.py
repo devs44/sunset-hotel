@@ -271,7 +271,6 @@ class ContactTemplateView(BaseMixin, TemplateView):
         email = request.POST.get('email')
         message = request.POST.get('message')
 
-        form = Message.objects.get(pk=message)
         obj = Message.objects.create(
             full_name=name, email=email, message=message)
         return redirect('contact')

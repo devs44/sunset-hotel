@@ -1,5 +1,8 @@
 from django import forms
 from .models import *
+from django.contrib import messages
+from django.core.exceptions import ValidationError
+
 class FormControlMixin:
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -273,6 +276,16 @@ class MessageForm(forms.ModelForm):
                 'placeholder': 'Enter your message'
             })
         }
+        
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        print(email, 1111111111111111)
+        if '@' in email:
+            pass
+        else:
+            raise ValidationError('enter valid email')
+        return email
+  
 
 
 class ReservationForm(forms.ModelForm):
