@@ -15,19 +15,6 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.db.models import Q
 
-<<<<<<< HEAD
-from .mixin import *
-from dashboard.mixin import DeleteMixin, QuerysetMixin
-from django.views.generic.edit import FormMixin
-from dashboard.forms import *
-# from email.mime.multipart import MIMEMultipart
-
-# from email.mime.text import MIMEText
-
-# msg=MIMEMultipart()
-=======
-
->>>>>>> 4204a1fcc0293006d66f9fe46147a4d8219e5c6b
 # Create your views here.
 
 
@@ -64,9 +51,6 @@ class RoomListView(QuerysetMixin, ListView):
     context_object_name = 'room'
     paginate_by = 4
 
-<<<<<<< HEAD
-    
-=======
     def get_queryset(self):
         queryset = super().get_queryset()
 
@@ -99,7 +83,6 @@ class RoomListView(QuerysetMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['feature'] = Feature.objects.all()
         return context
->>>>>>> 4204a1fcc0293006d66f9fe46147a4d8219e5c6b
 
 
 class RoomDetailView(BaseMixin, QuerysetMixin, DetailView):
@@ -357,15 +340,8 @@ class DeluxeRoomListView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['deluxe'] = Image.objects.filter(
-<<<<<<< HEAD
-            image_type__title="Deluxe Rooom")
-        context['si'] = Room.objects.filter(
-            room_type__title="Deluxe Rooom")
-        return context
-=======
             image_type__title="Deluxe Room")
         context['royal'] = Image.objects.filter(image_type__title="Royal Room")
->>>>>>> 4204a1fcc0293006d66f9fe46147a4d8219e5c6b
 
         return context
 
@@ -396,14 +372,8 @@ class NewsletterView(CreateView):
         context['user_email'] = Subscription.objects.create(email=user_email)
         return context
 
-<<<<<<< HEAD
-=======
-    msg = MIMEText('body of your message')
-
->>>>>>> 4204a1fcc0293006d66f9fe46147a4d8219e5c6b
     def post(self, request, *args, **kwargs):
         email = request.POST.get('email')
-        admin_info = User.objects.get(is_superuser=True)
         admin_email = admin_info.email
         send_mail("asdasdas", msg, conf_settings.EMAIL_HOST_USER,
                   [email], fail_silently=True)

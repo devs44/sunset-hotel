@@ -207,21 +207,10 @@ class ImageDeleteView(DeleteMixin, DashboardMixin, DeleteView):
     model = Image
     success_url = reverse_lazy('dashboard:image_list')
 
-<<<<<<< HEAD
-# class ImageDetailView(DashboardMixin, DetailView):
-#     template_name = 'dashboard/gallery/imagedetail.html'
-#     model = Image
-#     context_object_name = 'image'
-
-
-# event 
-class EventListView( DashboardMixin, ListView):
-=======
 # event
 
 
 class EventListView(DashboardMixin, QuerysetMixin, ListView):
->>>>>>> 4204a1fcc0293006d66f9fe46147a4d8219e5c6b
     template_name = 'dashboard/event/eventlist.html'
     model = Event
     paginate_by = 5
