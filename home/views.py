@@ -16,7 +16,6 @@ from django.shortcuts import render, redirect, reverse
 from django.urls import reverse
 from django.db.models import Q
 
-
 # Create your views here.
 
 
@@ -43,7 +42,8 @@ class HomeTemplateView(BaseMixin, TemplateView):
         message = request.POST.get('message')
         obj = Message.objects.create(
             full_name=name, email=email, message=message)
-        return render(request, self.template_name, {'form': MessageForm(), 'contact': Contact.objects.filter(deleted_at__isnull=True).order_by('-id')})
+        return redirect('home')
+
 
 
 class RoomListView(QuerysetMixin, ListView):
@@ -116,21 +116,9 @@ class RoomDetailView(BaseMixin, QuerysetMixin, DetailView):
         room = Room.objects.get(room_no=room_no)
         obj = Comment.objects.create(
             full_name=name, email=email, room=room, comment=message)
-
         messages.success(request, "Comment added!")
         return redirect('room_detail', pk=room_no)
-
-        obj.save()
-        return render(request, self.template_name, {'rooms': Room.objects.exclude(room_no=self.get_object().room_no),
-                                                    'feature': Feature.objects.all(),
-                                                    'reviews': Comment.objects.filter(Q(deleted_at__isnull=True) &
-                                                                                      Q(news__isnull=True) &
-                                                                                      Q(events__isnull=True) &
-                                                                                      Q(room=room_no)).order_by('-id'),
-                                                    'room': self.get_object(),
-                                                    'contact': Contact.objects.filter(deleted_at__isnull=True).order_by('-id')})
-
-
+   
 class ServiceListView(ListView):
     model = Services_description
     template_name = 'home/about/about.html'
@@ -291,15 +279,9 @@ class NewsDetailView(DetailView):
         news = self.kwargs.get('pk')
         form = News.objects.get(pk=news)
         obj = Comment.objects.create(
-            full_name=name, email=email, website=website, comment=message, news=form)
-        obj.save()
-        return render(request, self.template_name)
-
-        return render(request, self.template_name, {'form': NewsCommentForm(),
-                                                    'comment': Comment.objects.filter(news=news).order_by('-id'),
-                                                    'comments_count': Comment.objects.filter(news=news).count(),
-                                                    'news': News.objects.exclude(id=self.get_object().id).order_by("-id"),
-                                                    'object': self.get_object()})
+            full_name=name, email=email,website=website, comment=message, news = form)
+    
+        return redirect('news_detail', pk=news)
 
 
 class EventDetailView(DetailView):
@@ -326,15 +308,10 @@ class EventDetailView(DetailView):
         events = self.kwargs.get('pk')
         form = Event.objects.get(pk=events)
         obj = Comment.objects.create(
-            full_name=name, email=email, website=website, comment=message, events=form)
-        obj.save()
-        return render(request, self.template_name)
+            full_name=name, email=email,website=website, comment=message, events = form)
+        return redirect('event_detail', pk=events)
 
-        return render(request, self.template_name, {'form': EventCommentForm(),
-                                                    'comment': Comment.objects.filter(events=events).order_by('-id'),
-                                                    'comments_count': Comment.objects.filter(news=news).count(),
-                                                    'events': Event.objects.exclude(id=self.get_object().id),
-                                                    'event': self.get_object()})
+        
 
 
 class ContactTemplateView(BaseMixin, TemplateView):
@@ -354,7 +331,7 @@ class ContactTemplateView(BaseMixin, TemplateView):
         form = Message.objects.get(pk=message)
         obj = Message.objects.create(
             full_name=name, email=email, message=message)
-        return render(request, self.template_name, {'form': MessageForm(), 'contact': Contact.objects.filter(deleted_at__isnull=True).order_by('-id')})
+        return redirect('contact')
 
 
 class EventListView(ListView):
@@ -375,23 +352,76 @@ class GalleryListView(ListView):
     model = RoomImage
     template_name = 'home/gallery/gallery.html'
     context_object_name = 'photo'
-    paginate_by = 6
+    
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+
+class SingleRoomListView(ListView):
+    model = RoomImage
+    template_name = 'home/gallery/single room.html'
+    context_object_name = 'photo'
+    
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['single'] = Image.objects.filter(
             image_type__title="Single Room")
+        context['si'] = Room.objects.filter(
+            room_type__title="Single Room")
+    
+        return context
+
+
+class DoubleRoomListView(ListView):
+    model = RoomImage
+    template_name = 'home/gallery/double room.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
         context['double'] = Image.objects.filter(
             image_type__title="Double Room")
+        context['si'] = Room.objects.filter(
+            room_type__title="Double Room")
+        return context
+
+
+
+class DeluxeRoomListView(ListView):
+    model = RoomImage
+    template_name = 'home/gallery/deluxe room.html'
+ 
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
         context['deluxe'] = Image.objects.filter(
             image_type__title="Deluxe Room")
         context['royal'] = Image.objects.filter(image_type__title="Royal Room")
 
         return context
 
+class RoyalRoomListView(ListView):
+    model = RoomImage
+    template_name = 'home/gallery/royal room.html'
+ 
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['royal'] = Image.objects.filter(
+            image_type__title="Royal Room")
+        context['si'] = Room.objects.filter(
+            room_type__title="Royal Room")
+        return context
+
+
+
+
+
 
 class NewsletterView(CreateView):
-    template_name = 'home/base/footer.html'
+    
     success_url = reverse_lazy('home')
 
     def get_context_data(self, **kwargs):
@@ -399,11 +429,8 @@ class NewsletterView(CreateView):
         context['user_email'] = Subscription.objects.create(email=user_email)
         return context
 
-    msg = MIMEText('body of your message')
-
     def post(self, request, *args, **kwargs):
         email = request.POST.get('email')
-        admin_info = User.objects.get(is_superuser=True)
         admin_email = admin_info.email
         send_mail("asdasdas", msg, conf_settings.EMAIL_HOST_USER,
                   [email], fail_silently=True)

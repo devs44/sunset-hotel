@@ -47,27 +47,27 @@
     		  	<!-- Nav tabs -->
             <ul class="nav nav-tabs gallery__nav" role="tablist">
               <li role="presentation" class="gallery-nav__link active">
-                <a href="#all" role="tab" data-filter=".all">
+                <a href="{% url 'gallerys' %}" role="tab" data-filter=".all">
                   <span>All</span>
                 </a>
               </li>
               <li role="presentation" class="gallery-nav__link">
-                <a href="#singleroom" role="tab" data-filter=".single-room">
+                <a href="{% url 'single_room' %}" role="tab" data-filter=".single-room">
                   <span>Single room</span>
                 </a>
               </li>
               <li role="presentation" class="gallery-nav__link">
-                <a href="#doubleroom" role="tab" data-filter=".double-room">
+                <a href="{% url 'double_room' %}" role="tab" data-filter=".double-room">
                   <span>Double Room</span>
                 </a>
               </li>
               <li role="presentation" class="gallery-nav__link">
-                <a href="#deluxeroom" role="tab" data-filter=".deluxe-room">
+                <a href="{% url 'deluxe_room' %}" role="tab" data-filter=".deluxe-room">
                   <span>Deluxe room</span>
                 </a>
               </li>
               <li role="presentation" class="gallery-nav__link">
-                <a href="#royalroom" role="tab" data-filter=".lobby">
+                <a href="{% url 'royal_room' %}" role="tab" data-filter=".lobby">
                   <span>Royal Room</span>
                 </a>
               </li>
@@ -85,37 +85,10 @@
           </div> <!-- .gallery__item -->
         {% endfor %}
 
-        {% for single in single %}
-		    	<div id="singleroom" class="col-xs-12 col-sm-6 col-md-4 gallery__item all double-room">
-            <a href="{{ single.image.url }}" data-lightbox="gallery">
-              <img src="{{ single.image.url }}" class="img-responsive" alt="...">
-            </a>
-          </div> <!-- .gallery__item -->
-        {% endfor %}
-
-        {% for double in double %}
-		    	<div id="doubleroom" class="col-xs-12 col-sm-6 col-md-4 gallery__item all double-room">
-            <a href="{{ double.image.url }}" data-lightbox="gallery">
-              <img src="{{ double.image.url }}" class="img-responsive" alt="...">
-            </a>
-          </div> <!-- .gallery__item -->
-        {% endfor %}
-
-        {% for deluxe in deluxe %}
-		    	<div id="deluxeroom" class="col-xs-12 col-sm-6 col-md-4 gallery__item all double-room">
-            <a href="{{ deluxe.image.url }}" data-lightbox="gallery">
-              <img src="{{ deluxe.image.url }}" class="img-responsive" alt="...">
-            </a>
-          </div> <!-- .gallery__item -->
-        {% endfor %}
         
-        {% for royal in royal %}
-		    	<div id="royalroom" class="col-xs-12 col-sm-6 col-md-4 gallery__item all double-room">
-            <a href="{{ royal.image.url }}" data-lightbox="gallery">
-              <img src="{{ royal.image.url }}" class="img-responsive" alt="...">
-            </a>
-          </div> <!-- .gallery__item -->
-        {% endfor %}
+       
+
+     
         </div> <!-- .row -->
 	            
 	    </div> <!-- / .container-fluid -->
