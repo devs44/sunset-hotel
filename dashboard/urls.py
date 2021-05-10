@@ -40,7 +40,7 @@ urlpatterns = [
     path('image/create/', ImageCreateView.as_view(), name='image_create'),
     path('image/<int:pk>/update/', ImageUpdateView.as_view(), name='image_update'),
     path('image/<int:pk>/delete/', ImageDeleteView.as_view(), name='image_delete'),
-
+#     path('image/<int:pk>/detail/', ImageDetailView.as_view(), name='image_detail'),
 
     # news
 

@@ -15,7 +15,6 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.db.models import Q
 
-
 # Create your views here.
 
 
@@ -296,23 +295,76 @@ class GalleryListView(ListView):
     model = RoomImage
     template_name = 'home/gallery/gallery.html'
     context_object_name = 'photo'
-    paginate_by = 6
+    
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+
+class SingleRoomListView(ListView):
+    model = RoomImage
+    template_name = 'home/gallery/single room.html'
+    context_object_name = 'photo'
+    
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['single'] = Image.objects.filter(
             image_type__title="Single Room")
+        context['si'] = Room.objects.filter(
+            room_type__title="Single Room")
+    
+        return context
+
+
+class DoubleRoomListView(ListView):
+    model = RoomImage
+    template_name = 'home/gallery/double room.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
         context['double'] = Image.objects.filter(
             image_type__title="Double Room")
+        context['si'] = Room.objects.filter(
+            room_type__title="Double Room")
+        return context
+
+
+
+class DeluxeRoomListView(ListView):
+    model = RoomImage
+    template_name = 'home/gallery/deluxe room.html'
+ 
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
         context['deluxe'] = Image.objects.filter(
             image_type__title="Deluxe Room")
         context['royal'] = Image.objects.filter(image_type__title="Royal Room")
 
         return context
 
+class RoyalRoomListView(ListView):
+    model = RoomImage
+    template_name = 'home/gallery/royal room.html'
+ 
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['royal'] = Image.objects.filter(
+            image_type__title="Royal Room")
+        context['si'] = Room.objects.filter(
+            room_type__title="Royal Room")
+        return context
+
+
+
+
+
 
 class NewsletterView(CreateView):
-    template_name = 'home/base/footer.html'
+    
     success_url = reverse_lazy('home')
 
     def get_context_data(self, **kwargs):
@@ -320,11 +372,8 @@ class NewsletterView(CreateView):
         context['user_email'] = Subscription.objects.create(email=user_email)
         return context
 
-    msg = MIMEText('body of your message')
-
     def post(self, request, *args, **kwargs):
         email = request.POST.get('email')
-        admin_info = User.objects.get(is_superuser=True)
         admin_email = admin_info.email
         send_mail("asdasdas", msg, conf_settings.EMAIL_HOST_USER,
                   [email], fail_silently=True)
