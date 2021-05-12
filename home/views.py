@@ -55,18 +55,19 @@ class RoomListView(QuerysetMixin, ListView):
     paginate_by = 4
     
     def dispatch(self,request,*args,**kwargs):
-        departure_date = parse_date(
-                self.request.GET.get('departure_date')).date()
-        arrival_date = parse_date(
-                self.request.GET.get('arrival_date')).date()
-        if arrival_date < datetime.date.today():
-            messages.error(
-                self.request, "Sorry, please select valid date.")
-            return HttpResponseRedirect(reverse('home'))
-        elif arrival_date > departure_date:
-            messages.error(
-                self.request, "Sorry, invalid arrival and departure date.")
-            return HttpResponseRedirect(reverse('home'))
+        if 'departure_date' and 'arrival_date' in self.request.GET:
+            departure_date = parse_date(
+                    self.request.GET.get('departure_date')).date()
+            arrival_date = parse_date(
+                    self.request.GET.get('arrival_date')).date()
+            if arrival_date < datetime.date.today():
+                messages.error(
+                    self.request, "Sorry, please select valid date.")
+                return HttpResponseRedirect(reverse('home'))
+            elif arrival_date > departure_date:
+                messages.error(
+                    self.request, "Sorry, invalid arrival and departure date.")
+                return HttpResponseRedirect(reverse('home'))
         return super().dispatch(request, *args, *kwargs)
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -178,7 +179,6 @@ class ReservationView(BaseMixin, CreateView):
                 self.request.POST.get('check_out_date')).date()
                 arrival_date = parse_date(
                 self.request.POST.get('check_in_date')).date()
-                print(departure_date,arrival_date)
                 obj.checked_in_date = arrival_date
                 obj.checked_out_date = departure_date
                 obj.availability = False
