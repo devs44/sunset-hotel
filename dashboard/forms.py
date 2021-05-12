@@ -309,11 +309,11 @@ class ReservationForm(forms.ModelForm):
                 'class': 'form-control',
             }),
             'check_in_date': forms.DateTimeInput(attrs={
-                'class': 'form-control',
+                'class': 'form-control check-date',
                 'placeholder': 'check in date'
             }),
             'check_out_date': forms.DateTimeInput(attrs={
-                'class': 'form-control',
+                'class': 'form-control check-date',
                 'placeholder': 'check out date'
             }),
             'children': forms.Select(attrs={

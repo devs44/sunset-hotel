@@ -171,8 +171,13 @@ class ReservationView(BaseMixin, CreateView):
             if 'room_id' in self.request.GET or 'selected_room' in self.request.POST:
                 obj = Room.objects.get(Q(room_no=self.request.GET.get('room_id')) |
                                         Q(room_no= self.request.POST.get('selected_room')))
-                obj.checked_in_date = self.request.POST.get('check_in_date')
-                obj.checked_out_date = self.request.POST.get('check_out_date')
+                departure_date = parse_date(
+                self.request.POST.get('check_out_date')).date()
+                arrival_date = parse_date(
+                self.request.POST.get('check_in_date')).date()
+                print(departure_date,arrival_date)
+                obj.checked_in_date = arrival_date
+                obj.checked_out_date = departure_date
                 obj.availability = False
                 obj.save()
         return super().form_valid(form)
