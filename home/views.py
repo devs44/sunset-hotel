@@ -328,10 +328,27 @@ class ContactTemplateView(BaseMixin, TemplateView):
         email = request.POST.get('email')
         message = request.POST.get('message')
 
-        form = Message.objects.get(pk=message)
         obj = Message.objects.create(
             full_name=name, email=email, message=message)
         return redirect('contact')
+    
+    
+    def form_valid(self, form):
+        email = form.cleaned_data['email']
+        print(email, 1111111)
+        if "@" in email:
+            pass
+
+        else:
+            return render(self.request, self.template_name,
+                          {
+                              'error': 'Invalid Username or password',
+                              'form': form
+                          })
+
+        return super().form_valid(form)
+    
+    
 
 
 class EventListView(ListView):

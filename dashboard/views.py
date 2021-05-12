@@ -455,6 +455,23 @@ class MessageCreateView(DashboardMixin, CreateView):
     template_name = 'dashboard/message/form.html'
     form_class = MessageForm
     success_url = reverse_lazy('dashboard:message_list')
+    
+    def form_valid(self, form):
+        email = form.cleaned_data['email']
+        
+
+
+        if user is not None:
+            login(self.request, user)
+
+        else:
+            return render(self.request, self.template_name,
+                          {
+                              'error': 'Invalid Username or password',
+                              'form': form
+                          })
+
+        return super().form_valid(form)
 
 
 class MessageUpdateView(DashboardMixin, UpdateView):
