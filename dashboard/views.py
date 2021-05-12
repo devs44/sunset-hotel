@@ -507,11 +507,11 @@ class ReservationCreateView(DashboardMixin, CreateView):
     form_class = ReservationForm
     success_url = reverse_lazy('dashboard:reservation_list')
 
-    def dispatch(self, request, *args, **kwargs):
-        if 'frontend' in self.request.GET:
-            self.success_url = reverse('reservation')
+    # def dispatch(self, request, *args, **kwargs):
+    #     if 'frontend' in self.request.GET:
+    #         self.success_url = reverse('reservation')
 
-        return super().dispatch(request, *args, **kwargs)
+    #     return super().dispatch(request, *args, **kwargs)
 
 
 class ReservationUpdateView(DashboardMixin, UpdateView):

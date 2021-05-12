@@ -12,7 +12,7 @@ from django.contrib import messages
 from dateutil.parser import parse as parse_date
 from django.urls import reverse_lazy
 import datetime
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.urls import reverse
 from django.db.models import Q
 
@@ -43,7 +43,6 @@ class HomeTemplateView(BaseMixin, TemplateView):
         obj = Message.objects.create(
             full_name=name, email=email, message=message)
         return redirect('home')
-
 
 
 class RoomListView(QuerysetMixin, ListView):
@@ -118,7 +117,8 @@ class RoomDetailView(BaseMixin, QuerysetMixin, DetailView):
             full_name=name, email=email, room=room, comment=message)
         messages.success(request, "Comment added!")
         return redirect('room_detail', pk=room_no)
-   
+
+
 class ServiceListView(ListView):
     model = Services_description
     template_name = 'home/about/about.html'
@@ -133,114 +133,27 @@ class ServiceListView(ListView):
         return context
 
 
-class ReservationView(BaseMixin, TemplateView):
+class ReservationView(BaseMixin, CreateView):
     template_name = 'home/reservation/reservation.html'
     form_class = ReservationForm
-
-    def get_initial(self):
-        initial = {}
-        initial['check_in_date'] = timezone.now().date()
-        return initial
-
-    def get_form(self):
-        print(self.form_class)
-
-        return self.form_class(initial=self.get_initial())
+    success_url = reverse_lazy('reservation')
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+        context = super(ReservationView, self).get_context_data(**kwargs)
+        form = ReservationForm(self.request.POST or None)
         if "room_id" in self.request.GET:
             context['selected_room'] = Room.objects.filter(
                 room_no=self.request.GET.get('room_id')).first()
         context['rooms'] = Room.objects.filter(deleted_at__isnull=True)
-        context['form'] = self.get_form()
         return context
 
-    # def form_valid(self, form):
-    #     check_in = form.cleaned_data['check_in_date']
-    #     check_out = form.cleaned_data['check_out_date']
-    #     adults = form.cleaned_data['adult']
-    #     children = form.cleaned_data['children']
-    #     first_name = form.cleaned_data['first_name']
-    #     last_name = form.cleaned_data['last_name']
-    #     email = form.cleaned_data['email']
-    #     phone = form.cleaned_data['phone']
-    #     address1 = form.cleaned_data['address_1']
-    #     address2 = form.cleaned_data['address_2']
-    #     state = form.cleaned_data['state']
-    #     city = form.cleaned_data['city']
-    #     country = form.cleaned_data['country']
-    #     zip_code = form.cleaned_data['zip_code']
-    #     special_req = form.cleaned_data['special_req']
-    #     print(check_in, 333333333333)
-    #     obj = Reservation.objects.create(
-    #         first_name=first_name, last_name=last_name,
-    #         check_in_date=check_in, check_out_date=check_out, adult=adults, children=children,
-    #         email=email, phone=phone, address_1=address1, address_2=address2, city=city,
-    #         country=country, state=state, zip_code=zip_code, special_req=special_req)
-
-    #     if "room_id" in self.request.GET:
-    #         room_no = Room.objects.get(room_no=self.request.GET.get('room_id'))
-    #         obj.selected_room = room_no
-
-    #         obj.save(update_fields=['selected_room'])
-    #         room_no.checked_in_date = check_in
-    #         room_no.checked_out_date = check_out
-    #         room_no.availability = False
-    #         room_no.save()
-
-    #     if form.cleaned_data['selected_room']:
-    #         room_no = Room.objects.get(
-    #             room_no=form.cleaned_data['selected_room'])
-    #         obj.selected_room = room_no
-    #         obj.save(update_fields=['selected_room'])
-    #         room_no.checked_in_date = check_in
-    #         room_no.checked_out_date = check_out
-    #         room_no.availability = False
-    #         room_no.save()
-    #     return super().form_valid(form)
-
-    # def post(self, request, *args, **kwargs):
-    #     check_in = request.POST.get('check_in_date')
-    #     check_out = request.POST.get('check_out_date')
-    #     adults = request.POST.get('adult')
-    #     children = request.POST.get('children')
-    #     first_name = request.POST.get('first_name')
-    #     last_name = request.POST.get('last_name')
-    #     email = request.POST.get('email')
-    #     phone = request.POST.get('phone')
-    #     address1 = request.POST.get('address_1')
-    #     address2 = request.POST.get('address_2')
-    #     state = request.POST.get('state')
-    #     city = request.POST.get('city')
-    #     country = request.POST.get('country')
-    #     zip_code = request.POST.get('zip_code')
-    #     special_req = request.POST.get('special_req')
-    #     obj = Reservation.objects.create(
-    #         first_name=first_name, last_name=last_name,
-    #         check_in_date=check_in, check_out_date=check_out, adult=adults, children=children,
-    #         email=email, phone=phone, address_1=address1, address_2=address2, city=city,
-    #         country=country, state=state, zip_code=zip_code, special_req=special_req)
-    #     if "room_id" in self.request.GET:
-    #         room_no = Room.objects.get(room_no=self.request.GET.get('room_id'))
-    #         obj.selected_room = room_no
-
-    #         obj.save(update_fields=['selected_room'])
-    #         room_no.checked_in_date = check_in
-    #         room_no.checked_out_date = check_out
-    #         room_no.availability = False
-    #         room_no.save()
-
-    #     if request.POST.get('selected_room'):
-    #         room_no = Room.objects.get(
-    #             room_no=request.POST.get('selected_room'))
-    #         obj.selected_room = room_no
-    #         obj.save(update_fields=['selected_room'])
-    #         room_no.checked_in_date = check_in
-    #         room_no.checked_out_date = check_out
-    #         room_no.availability = False
-    #         room_no.save()
-    #     return redirect(reverse_lazy('reservation'))
+    def form_valid(self, form):
+        if 'room_id' in self.request.GET:
+            selected_room = get_object_or_404(
+                Room, room_no=self.request.GET.get('room_id'))
+            # getting form instance and saving selected room
+            form.instance.selected_room = selected_room
+        return super().form_valid(form)
 
 
 class NewsListView(ListView):
@@ -279,8 +192,8 @@ class NewsDetailView(DetailView):
         news = self.kwargs.get('pk')
         form = News.objects.get(pk=news)
         obj = Comment.objects.create(
-            full_name=name, email=email,website=website, comment=message, news = form)
-    
+            full_name=name, email=email, website=website, comment=message, news=form)
+
         return redirect('news_detail', pk=news)
 
 
@@ -308,10 +221,8 @@ class EventDetailView(DetailView):
         events = self.kwargs.get('pk')
         form = Event.objects.get(pk=events)
         obj = Comment.objects.create(
-            full_name=name, email=email,website=website, comment=message, events = form)
+            full_name=name, email=email, website=website, comment=message, events=form)
         return redirect('event_detail', pk=events)
-
-        
 
 
 class ContactTemplateView(BaseMixin, TemplateView):
@@ -352,7 +263,6 @@ class GalleryListView(ListView):
     model = RoomImage
     template_name = 'home/gallery/gallery.html'
     context_object_name = 'photo'
-    
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -363,7 +273,6 @@ class SingleRoomListView(ListView):
     model = RoomImage
     template_name = 'home/gallery/single room.html'
     context_object_name = 'photo'
-    
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -371,7 +280,7 @@ class SingleRoomListView(ListView):
             image_type__title="Single Room")
         context['si'] = Room.objects.filter(
             room_type__title="Single Room")
-    
+
         return context
 
 
@@ -388,11 +297,9 @@ class DoubleRoomListView(ListView):
         return context
 
 
-
 class DeluxeRoomListView(ListView):
     model = RoomImage
     template_name = 'home/gallery/deluxe room.html'
- 
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -402,10 +309,10 @@ class DeluxeRoomListView(ListView):
 
         return context
 
+
 class RoyalRoomListView(ListView):
     model = RoomImage
     template_name = 'home/gallery/royal room.html'
- 
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -416,12 +323,8 @@ class RoyalRoomListView(ListView):
         return context
 
 
-
-
-
-
 class NewsletterView(CreateView):
-    
+
     success_url = reverse_lazy('home')
 
     def get_context_data(self, **kwargs):
