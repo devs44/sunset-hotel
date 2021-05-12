@@ -61,14 +61,32 @@
       rel="stylesheet"
     />
     <!-- for toastr  -->
-    <link type="text/css" href="{% static 'dashboard/assets/toastr/toastr.min.css' %}" rel="stylesheet">
+    <link
+      type="text/css"
+      href="{% static 'dashboard/assets/toastr/toastr.min.css' %}"
+      rel="stylesheet"
+    />
 
     <!-- sweetalert -->
-    <link rel="stylesheet" href="{% static 'dashboard/assets/css/sweetalert2.min.css' %}">
+    <link
+      rel="stylesheet"
+      href="{% static 'dashboard/assets/css/sweetalert2.min.css' %}"
+    />
     <!-- sweetalert -->
 
+    {% block style %}
+    <style> 
+      .form-error{
+        color : red;
+        padding: 0;
+      }
 
-	{% block style %}{% endblock %}
+      .form-error ul li{
+        list-style:none;
+        padding: 0;
+      }
+    </style>
+    {% endblock %}
   </head>
 
   <body class="hold-transition sidebar-mini layout-fixed">
@@ -96,7 +114,9 @@
             ></a>
           </li>
           <li class="nav-item d-none d-sm-inline-block">
-            <a href="{% url 'dashboard:admin_dashboard' %}" class="nav-link">Home</a>
+            <a href="{% url 'dashboard:admin_dashboard' %}" class="nav-link"
+              >Home</a
+            >
           </li>
           <li class="nav-item d-none d-sm-inline-block">
             <a href="#" class="nav-link">Contact</a>
@@ -140,8 +160,10 @@
               </form>
             </div>
           </li>
-          <li><a class="nav-link" href="{% url 'dashboard:admin_logout' %}">
-            <i class="fa fa-sign-out-alt" area-hidden="true">logout</i></a>
+          <li>
+            <a class="nav-link" href="{% url 'dashboard:admin_logout' %}">
+              <i class="fa fa-sign-out-alt" area-hidden="true">logout</i></a
+            >
           </li>
           <!-- Messages Dropdown Menu -->
           <li class="nav-item dropdown">
@@ -151,7 +173,10 @@
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
               {% for m in messages|slice:3 %}
-              <a href="{% url 'dashboard:message_detail' m.id %}" class="dropdown-item">
+              <a
+                href="{% url 'dashboard:message_detail' m.id %}"
+                class="dropdown-item"
+              >
                 <!-- Message Start -->
                 <div class="media">
                   <img
@@ -168,7 +193,8 @@
                     </h3>
                     <p class="text-sm">{{ m.message|truncatechars:20 }}</p>
                     <p class="text-sm text-muted">
-                      <i class="far fa-clock mr-1"></i>{{ m.created_at|timesince}} ago
+                      <i class="far fa-clock mr-1"></i>{{
+                      m.created_at|timesince}} ago
                     </p>
                   </div>
                 </div>
@@ -176,7 +202,9 @@
               </a>
               <div class="dropdown-divider"></div>
               {% endfor %}
-              <a href="{% url 'dashboard:message_list' %}" class="dropdown-item dropdown-footer"
+              <a
+                href="{% url 'dashboard:message_list' %}"
+                class="dropdown-item dropdown-footer"
                 >See All Messages</a
               >
             </div>
@@ -299,7 +327,29 @@
     <!-- sweetalert -->
     <script src="{% static 'dashboard/assets/js/sweetalert.min.js' %}"></script>
 
-	{% block script %}
-	{% endblock %}
+    <script>
+      toastr.options = {
+             "debug": false,
+             "newestOnTop": false,
+             "positionClass": "toast-top-right",
+             "closeButton": true,
+             "timeOut": "5000",
+             "progressBar": false
+         };
+
+         {% for message in messages %}
+         {% if message.level == 20 %}
+             toastr.info("{{ message }}");
+         {% elif message.level == 25 %}
+             toastr.success("{{ message }}");
+         {% elif message.level == 30 %}
+             toastr.warning("{{ message }}");
+         {% elif message.level == 40 %}
+             toastr.error("{{ message }}");
+         {% endif %}
+         {% endfor %}
+    </script>
+
+    {% block script %} {% endblock %}
   </body>
 </html>

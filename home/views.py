@@ -1,5 +1,6 @@
 from email.mime.text import MIMEText
 from dashboard.forms import *
+from django.http import HttpResponseRedirect
 from django.views.generic.edit import FormMixin
 from dashboard.mixin import DeleteMixin, QuerysetMixin
 from .mixin import *
@@ -11,7 +12,7 @@ from django.contrib import messages
 from dateutil.parser import parse as parse_date
 from django.urls import reverse_lazy
 import datetime
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.urls import reverse
 from django.db.models import Q
 
@@ -67,8 +68,12 @@ class RoomListView(QuerysetMixin, ListView):
             if arrival_date != '' and departure_date != '' and arrival_date >= datetime.date.today():
                 queryset = queryset.filter(
                     Q(checked_in_date__isnull=True, checked_out_date__isnull=True) |
-                    Q(checked_out_date__lte=arrival_date, checked_in_date__gte=arrival_date))
-            elif arrival_date <= datetime.date.today():
+                    Q(checked_out_date__lte=arrival_date) |
+                    Q(checked_in_date__gte=departure_date))
+                messages.success(
+                    self.request, "Welcome"
+                )
+            elif arrival_date < datetime.date.today():
                 messages.error(
                     self.request, "Sorry, please select valid date.")
                 queryset = ''
@@ -76,7 +81,6 @@ class RoomListView(QuerysetMixin, ListView):
                 messages.error(
                     self.request, "Sorry, invalid arrival and departure date.")
                 queryset = ''
-
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -133,57 +137,110 @@ class ReservationView(BaseMixin, TemplateView):
     template_name = 'home/reservation/reservation.html'
     form_class = ReservationForm
 
+    def get_initial(self):
+        initial = {}
+        initial['check_in_date'] = timezone.now().date()
+        return initial
+
+    def get_form(self):
+        print(self.form_class)
+
+        return self.form_class(initial=self.get_initial())
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if "room_id" in self.request.GET:
             context['selected_room'] = Room.objects.filter(
                 room_no=self.request.GET.get('room_id')).first()
         context['rooms'] = Room.objects.filter(deleted_at__isnull=True)
+        context['form'] = self.get_form()
         return context
 
-    # def form_valid(self,form):
-    #     check_in = form.cleaned_data['check-in']
+    # def form_valid(self, form):
+    #     check_in = form.cleaned_data['check_in_date']
+    #     check_out = form.cleaned_data['check_out_date']
+    #     adults = form.cleaned_data['adult']
+    #     children = form.cleaned_data['children']
+    #     first_name = form.cleaned_data['first_name']
+    #     last_name = form.cleaned_data['last_name']
+    #     email = form.cleaned_data['email']
+    #     phone = form.cleaned_data['phone']
+    #     address1 = form.cleaned_data['address_1']
+    #     address2 = form.cleaned_data['address_2']
+    #     state = form.cleaned_data['state']
+    #     city = form.cleaned_data['city']
+    #     country = form.cleaned_data['country']
+    #     zip_code = form.cleaned_data['zip_code']
+    #     special_req = form.cleaned_data['special_req']
+    #     print(check_in, 333333333333)
+    #     obj = Reservation.objects.create(
+    #         first_name=first_name, last_name=last_name,
+    #         check_in_date=check_in, check_out_date=check_out, adult=adults, children=children,
+    #         email=email, phone=phone, address_1=address1, address_2=address2, city=city,
+    #         country=country, state=state, zip_code=zip_code, special_req=special_req)
 
-    def post(self, request, *args, **kwargs):
-        check_in = request.POST.get('check-in')
-        check_out = request.POST.get('check-out')
-        adults = request.POST.get('form-adults')
-        children = request.POST.get('form-children')
-        first_name = request.POST.get('first-name')
-        last_name = request.POST.get('last-name')
-        email = request.POST.get('email')
-        phone = request.POST.get('phone')
-        address1 = request.POST.get('address-line1')
-        address2 = request.POST.get('address-line2')
-        state = request.POST.get('state')
-        city = request.POST.get('city')
-        country = request.POST.get('country')
-        zip_code = request.POST.get('zip-code')
-        special_req = request.POST.get('requirements')
-        obj = Reservation.objects.create(
-            first_name=first_name, last_name=last_name,
-            check_in_date=check_in, check_out_date=check_out, adult=adults, children=children,
-            email=email, phone=phone, address_1=address1, address_2=address2, city=city,
-            country=country, state=state, zip_code=zip_code, special_req=special_req)
-        if "room_id" in self.request.GET:
-            room_no = Room.objects.get(room_no=self.request.GET.get('room_id'))
-            obj.selected_room = room_no
+    #     if "room_id" in self.request.GET:
+    #         room_no = Room.objects.get(room_no=self.request.GET.get('room_id'))
+    #         obj.selected_room = room_no
 
-            obj.save(update_fields=['selected_room'])
-            room_no.checked_in_date = check_in
-            room_no.checked_out_date = check_out
-            room_no.availability = False
-            room_no.save()
+    #         obj.save(update_fields=['selected_room'])
+    #         room_no.checked_in_date = check_in
+    #         room_no.checked_out_date = check_out
+    #         room_no.availability = False
+    #         room_no.save()
 
-        if request.POST.get('room-no'):
-            room_no = Room.objects.get(room_no=request.POST.get('room-no'))
-            obj.selected_room = room_no
-            obj.save(update_fields=['selected_room'])
-            room_no.checked_in_date = check_in
-            room_no.checked_out_date = check_out
-            room_no.availability = False
-            room_no.save()
-        return redirect(reverse_lazy('reservation'))
+    #     if form.cleaned_data['selected_room']:
+    #         room_no = Room.objects.get(
+    #             room_no=form.cleaned_data['selected_room'])
+    #         obj.selected_room = room_no
+    #         obj.save(update_fields=['selected_room'])
+    #         room_no.checked_in_date = check_in
+    #         room_no.checked_out_date = check_out
+    #         room_no.availability = False
+    #         room_no.save()
+    #     return super().form_valid(form)
+
+    # def post(self, request, *args, **kwargs):
+    #     check_in = request.POST.get('check_in_date')
+    #     check_out = request.POST.get('check_out_date')
+    #     adults = request.POST.get('adult')
+    #     children = request.POST.get('children')
+    #     first_name = request.POST.get('first_name')
+    #     last_name = request.POST.get('last_name')
+    #     email = request.POST.get('email')
+    #     phone = request.POST.get('phone')
+    #     address1 = request.POST.get('address_1')
+    #     address2 = request.POST.get('address_2')
+    #     state = request.POST.get('state')
+    #     city = request.POST.get('city')
+    #     country = request.POST.get('country')
+    #     zip_code = request.POST.get('zip_code')
+    #     special_req = request.POST.get('special_req')
+    #     obj = Reservation.objects.create(
+    #         first_name=first_name, last_name=last_name,
+    #         check_in_date=check_in, check_out_date=check_out, adult=adults, children=children,
+    #         email=email, phone=phone, address_1=address1, address_2=address2, city=city,
+    #         country=country, state=state, zip_code=zip_code, special_req=special_req)
+    #     if "room_id" in self.request.GET:
+    #         room_no = Room.objects.get(room_no=self.request.GET.get('room_id'))
+    #         obj.selected_room = room_no
+
+    #         obj.save(update_fields=['selected_room'])
+    #         room_no.checked_in_date = check_in
+    #         room_no.checked_out_date = check_out
+    #         room_no.availability = False
+    #         room_no.save()
+
+    #     if request.POST.get('selected_room'):
+    #         room_no = Room.objects.get(
+    #             room_no=request.POST.get('selected_room'))
+    #         obj.selected_room = room_no
+    #         obj.save(update_fields=['selected_room'])
+    #         room_no.checked_in_date = check_in
+    #         room_no.checked_out_date = check_out
+    #         room_no.availability = False
+    #         room_no.save()
+    #     return redirect(reverse_lazy('reservation'))
 
 
 class NewsListView(ListView):
@@ -274,6 +331,24 @@ class ContactTemplateView(BaseMixin, TemplateView):
         obj = Message.objects.create(
             full_name=name, email=email, message=message)
         return redirect('contact')
+    
+    
+    def form_valid(self, form):
+        email = form.cleaned_data['email']
+        print(email, 1111111)
+        if "@" in email:
+            pass
+
+        else:
+            return render(self.request, self.template_name,
+                          {
+                              'error': 'Invalid Username or password',
+                              'form': form
+                          })
+
+        return super().form_valid(form)
+    
+    
 
 
 class EventListView(ListView):

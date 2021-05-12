@@ -38,5 +38,3 @@ class AdminRequiredMixin(object):
             raise PermissionDenied
 
         return super().dispatch(request, *args, *kwargs)
-
-
