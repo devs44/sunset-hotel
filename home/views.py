@@ -416,10 +416,6 @@ class RoyalRoomListView(ListView):
         return context
 
 
-
-
-
-
 class NewsletterView(CreateView):
     
     success_url = reverse_lazy('home')
@@ -435,3 +431,13 @@ class NewsletterView(CreateView):
         send_mail("asdasdas", msg, conf_settings.EMAIL_HOST_USER,
                   [email], fail_silently=True)
         redirect('home:home')
+
+
+# class SearchView(ListView):
+#     template_name = 'home/search/search.html'
+#     model = Room
+
+#     def get_queryset(self):
+#         query = self.request.GET.get('q')
+#         if 'keyword' in request.GET:
+#             keyword = request.GET['key']
