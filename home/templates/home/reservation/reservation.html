@@ -101,134 +101,119 @@
 
               <!-- Please carefully read the README.pdf file in order to setup the PHP reservation form properly -->
 
-              <form id="reservation-form_sendemail" action="{% url 'dashboard:reservation_create' %}?frontend" class="reservation__form" data-animate-in="animateUp" method="POST">
+              <form id="reservation-form_sendemail" action="" class="reservation__form" data-animate-in="animateUp" method="POST">
 				{% csrf_token %}
+				
 				<div class="col-sm-12 col-md-6">
               		<div class="form-group">
-	                  <label for="check-in" class="sr-only">Check In date</label>
+	                  <label for="check-in" >Check In date</label>
 	                  {{ form.check_in_date }}
 	                  <span class="help-block"></span>
 	                </div>
 	              </div>
 	              <div class="col-sm-12 col-md-6">
 	              	<div class="form-group">
-	                  <label for="check-out" class="sr-only">Check Out date</label>
-	                  <input type="date" name="check_out_date" class="form-control" id="check-out" value="2021-04-01" required>
+	                  <label for="check-out">Check Out date</label>
+	                  {{ form.check_out_date }}
 	                  <span class="help-block"></span>
 	                </div>
 	              </div>
 	              <div class="col-sm-12 col-md-6">
 	              	<div class="form-group">
-	                  <label for="form-adults" class="sr-only">Adults</label>
-	                  <select class="form-control" name="adult" id="form-adults">
-                      <option value="0" selected="">Adults</option>
-                      <option value="1">1 Adult</option>
-                      <option value="2">2 Adults</option>
-                      <option value="3">3 Adults</option>
-                  	</select>
+	                  <label for="form-adults" >Adults</label>
+	                  {{ form.adult }}
 	                  <span class="help-block"></span>
 	                </div>
 	              </div>
 	              <div class="col-sm-12 col-md-6">
 	              	<div class="form-group">
-	                  <label for="form-children" class="sr-only">Children</label>
-	                  	<select class="form-control" name="children" id="form-children">
-							<option value="0" selected="">Children</option>
-							<option value="1">1 Child</option>
-							<option value="2">2 Children</option>
-							<option value="3">3 Children</option>
-                  		</select>
+	                  <label for="form-children" >Children</label>
+	                  	{{ form.children}}
 	                  <span class="help-block"></span>
 	                </div>
 	              </div>
               	<div class="col-sm-12 col-md-6">
               		<div class="form-group">
-	                  <label for="first_name" class="sr-only">First name</label>
-	                  <input type="text" name="first_name" class="form-control" id="first-name" placeholder="First Name" required>
+	                  <label for="first_name" >First name</label>
+	                  {{ form.first_name }}
 	                  <span class="help-block"></span>
 	                </div>
 	              </div>
 	              <div class="col-sm-12 col-md-6">
               		<div class="form-group">
-	                  <label for="last-name" class="sr-only">Last name</label>
-	                  <input type="text" name="last_name" class="form-control" id="last-name" placeholder="Last Name" required>
+	                  <label for="last-name" >Last name</label>
+	                  {{ form.last_name }}
 	                  <span class="help-block"></span>
 	                </div>
 	              </div>
 	              <div class="col-sm-12 col-md-6">
 	                <div class="form-group">
-	                  <label for="email" class="sr-only">Email</label>
-	                  <input type="email" name="email" class="form-control" id="email" placeholder="Email" required>
+	                  <label for="email" >Email</label>
+	                 {{ form.email }}
 	                  <span class="help-block"></span>
 	                </div>
 	              </div>
 	              <div class="col-sm-12 col-md-6">
 	                <div class="form-group">
-	                  <label for="phone" class="sr-only">Phone</label>
-	                  <input type="tel" name="phone" class="form-control" id="phone" placeholder="Phone" required>
+	                  <label for="phone" >Phone</label>
+	                  {{ form.phone }}
 	                  <span class="help-block"></span>
 	                </div>
 	              </div>
 	              <div class="col-sm-12 col-md-6">
 	                <div class="form-group">
-	                  <label for="address-line1" class="sr-only">Address line 1</label>
-	                  <input type="text" name="address_1" class="form-control" id="address-line1" placeholder="Address line 1" required>
+	                  <label for="address-line1" >Address line 1</label>
+	                  {{ form.address_1 }}
+	                </div>
+              	</div>
+              	<div class="col-sm-12 col-md-6">
+	                <div class="form-group">
+	                  <label for="address-line2" >Address line 2</label>
+	                  {{ form.address_2 }}
 	                  <span class="help-block"></span>
 	                </div>
               	</div>
               	<div class="col-sm-12 col-md-6">
 	                <div class="form-group">
-	                  <label for="address-line2" class="sr-only">Address line 2</label>
-	                  <input type="text" name="address_2" class="form-control" id="address-line2" placeholder="Address line 2">
+	                  <label for="state" >State / Region</label>
+	                  {{ form.state }}
 	                  <span class="help-block"></span>
 	                </div>
               	</div>
               	<div class="col-sm-12 col-md-6">
 	                <div class="form-group">
-	                  <label for="state" class="sr-only">State / Region</label>
-	                  <input type="text" name="state" class="form-control" id="state" placeholder="State / Region" required>
+	                  <label for="city" >City</label>
+	                  {{ form.city }}
 	                  <span class="help-block"></span>
 	                </div>
               	</div>
               	<div class="col-sm-12 col-md-6">
 	                <div class="form-group">
-	                  <label for="city" class="sr-only">City</label>
-	                  <input type="text" name="city" class="form-control" id="city" placeholder="City" required>
+	                  <label for="country" >Country</label>
+	                  {{ form.country }}
 	                  <span class="help-block"></span>
 	                </div>
               	</div>
               	<div class="col-sm-12 col-md-6">
 	                <div class="form-group">
-	                  <label for="country" class="sr-only">Country</label>
-	                  <input type="text" name="country" class="form-control" id="country" placeholder="Country" required>
-	                  <span class="help-block"></span>
-	                </div>
-              	</div>
-              	<div class="col-sm-12 col-md-6">
-	                <div class="form-group">
-	                  <label for="zip-code" class="sr-only">Zip Code</label>
-	                  <input type="text" name="zip_code" class="form-control" id="zip-code" placeholder="Zip code">
+	                  <label for="zip-code" >Zip Code</label>
+	                  {{ form.zip_code }}
 	                  <span class="help-block"></span>
 	                </div>
               	</div>
 				{% if not selected_room %}
 				<div class="col-sm-12 col-md-6">
 					<div class="form-group">
-						<label for="form-children" class="sr-only">Select Room</label>
-						<select class="form-control" name="selected_room" id="room-no" required>
-						<option value="0" selected="">Select Room</option>
-						{% for room in rooms %}
-						<option value="{{ room.room_no }}">{{ room.room_type}} |Room No: {{ room.room_no }}</option>
-						{% endfor %}
-						</select>
+						<label for="form-children" >Select Room</label>
+						{{ form.selected_room }}
 						<span class="help-block"></span>
 				  	</div>
 				</div>
 				{% endif %}
               	<div class="col-sm-12">
 	                <div class="form-group">
-	                  <label for="requirements" class="sr-only">Special requirements</label>
-	                  <textarea name="special_req" class="form-control" rows="8" id="requirements" placeholder="Special requirements"></textarea>
+	                  <label for="requirements" >Special requirements</label>
+	                  {{ form.special_req }}
 	                  <span class="help-block"></span>
 	                </div>
               	</div>

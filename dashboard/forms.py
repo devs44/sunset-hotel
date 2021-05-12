@@ -360,7 +360,6 @@ class ReservationForm(forms.ModelForm):
 
     def clean_adult(self):
         adult = self.cleaned_data['adult']
-        print(adult, 111111111111111111111111)
         return adult
 
 
