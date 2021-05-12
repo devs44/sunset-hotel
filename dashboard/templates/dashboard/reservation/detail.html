@@ -52,18 +52,184 @@
         <div class="card-body">
           <div class="row">
             <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1">
-              <div class="row"></div>
               <div class="row">
-                <div class="col-12">
-                  <h4>Description</h4>
-                  <div class="post">
-                    <div class="user-block">
-                      <span class="description">{{reservationdetail.created_at}}</span>
+                <div class="col-12 col-sm-4">
+                  <div class="info-box bg-light">
+                    <div class="info-box-content">
+                      <span class="info-box-text text-center text-muted"
+                        >First Name</span
+                      >
+                      <span class="info-box-number text-center text-muted mb-0"
+                        >{{ reservationdetail.first_name }}</span
+                      >
                     </div>
-                    <!-- /.user-block -->
-                    <h3>first_name: </h3><p>{{reservationdetail.first_name}}</p>
-                    <h3>last_name: </h3><p>{{reservationdetail.last_name}}</p>
-                 
+                  </div>
+                </div>
+                <div class="col-12 col-sm-4">
+                  <div class="info-box bg-light">
+                    <div class="info-box-content">
+                      <span class="info-box-text text-center text-muted"
+                        >Last Name</span
+                      >
+                      <span class="info-box-number text-center text-muted mb-0"
+                        >{{reservationdetail.last_name}}</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-4">
+                  <div class="info-box bg-light">
+                    <div class="info-box-content">
+                      <span class="info-box-text text-center text-muted"
+                        >Selected Room</span
+                      >
+                      <span class="info-box-number text-center text-muted mb-0"
+                        >{{reservationdetail.selected_room}}</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-4">
+                  <div class="info-box bg-light">
+                    <div class="info-box-content">
+                      <span class="info-box-text text-center text-muted"
+                        >Check-in Date</span
+                      >
+                      <span class="info-box-number text-center text-muted mb-0"
+                        >{{reservationdetail.check_in_date}}</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-4">
+                  <div class="info-box bg-light">
+                    <div class="info-box-content">
+                      <span class="info-box-text text-center text-muted"
+                        >Check-out Date</span
+                      >
+                      <span class="info-box-number text-center text-muted mb-0"
+                        >{{reservationdetail.check_out_date}}</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-4">
+                  <div class="info-box bg-light">
+                    <div class="info-box-content">
+                      <span class="info-box-text text-center text-muted"
+                        >City</span
+                      >
+                      <span class="info-box-number text-center text-muted mb-0"
+                        >{{reservationdetail.city}}</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-4">
+                  <div class="info-box bg-light">
+                    <div class="info-box-content">
+                      <span class="info-box-text text-center text-muted"
+                        >No of adults</span
+                      >
+                      <span class="info-box-number text-center text-muted mb-0"
+                        >{{reservationdetail.adult}}</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-4">
+                  <div class="info-box bg-light">
+                    <div class="info-box-content">
+                      <span class="info-box-text text-center text-muted"
+                        >No of childrens</span
+                      >
+                      <span class="info-box-number text-center text-muted mb-0"
+                        >{{reservationdetail.children}}</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-4">
+                  <div class="info-box bg-light">
+                    <div class="info-box-content">
+                      <span class="info-box-text text-center text-muted"
+                        >Email</span
+                      >
+                      <span class="info-box-number text-center text-muted mb-0"
+                        >{{reservationdetail.email}}</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-4">
+                  <div class="info-box bg-light">
+                    <div class="info-box-content">
+                      <span class="info-box-text text-center text-muted"
+                        >Phone</span
+                      >
+                      <span class="info-box-number text-center text-muted mb-0"
+                        >{{reservationdetail.phone}}</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-4">
+                  <div class="info-box bg-light">
+                    <div class="info-box-content">
+                      <span class="info-box-text text-center text-muted"
+                        >Address 1</span
+                      >
+                      <span class="info-box-number text-center text-muted mb-0"
+                        >{{reservationdetail.address_1}}</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-4">
+                  <div class="info-box bg-light">
+                    <div class="info-box-content">
+                      <span class="info-box-text text-center text-muted"
+                        >Address 2</span
+                      >
+                      <span class="info-box-number text-center text-muted mb-0"
+                        >{{reservationdetail.address_2}}</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-4">
+                  <div class="info-box bg-light">
+                    <div class="info-box-content">
+                      <span class="info-box-text text-center text-muted"
+                        >State</span
+                      >
+                      <span class="info-box-number text-center text-muted mb-0"
+                        >{{reservationdetail.state}}</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-4">
+                  <div class="info-box bg-light">
+                    <div class="info-box-content">
+                      <span class="info-box-text text-center text-muted"
+                        >Country</span
+                      >
+                      <span class="info-box-number text-center text-muted mb-0"
+                        >{{reservationdetail.country}}</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-sm-4">
+                  <div class="info-box bg-light">
+                    <div class="info-box-content">
+                      <span class="info-box-text text-center text-muted"
+                        >Special Requirerments</span
+                      >
+                      <p>{{reservationdetail.special_req}}</p>
+                      
+                    </div>
                   </div>
                 </div>
               </div>

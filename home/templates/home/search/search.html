@@ -1,0 +1,33 @@
+{%  extends 'home/base.html' %}
+{% load static %}
+{% block content %}
+
+
+    <!-- CONTENT
+      ================================================== -->
+
+    <!-- section header -->
+    <section class="section__header" id="section__header">
+    	<div class="container">
+    		<div class="row">
+  	    	<div class="col-sm-12">
+  	    		<div class="welcome__content">
+							<h1 class="welcome_content__title">Our gallery</h1>
+
+              <!-- Breadcrumbs -->
+              <ol class="breadcrumb">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li class="active">Gallery</li>
+              </ol>
+
+	  					<p class="welcome_content__desc">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+		  			</div> <!-- .welcome__content -->
+    	    </div>
+	    	</div> <!-- / .row -->
+    	</div> <!-- / .container -->
+			<div class="home__bg gallery__bg"></div>
+    </section> <!-- / .section__header -->
+
+
+        
+{% endblock %}
