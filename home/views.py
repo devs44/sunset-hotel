@@ -1,4 +1,6 @@
 from email.mime.text import MIMEText
+
+from django.core.validators import validate_email
 from dashboard.forms import *
 from django.http import HttpResponseRedirect
 from django.views.generic.edit import FormMixin
@@ -15,6 +17,7 @@ import datetime
 from django.shortcuts import render, redirect, reverse
 from django.urls import reverse
 from django.db.models import Q
+
 
 # Create your views here.
 
@@ -335,17 +338,15 @@ class ContactTemplateView(BaseMixin, TemplateView):
     
     def form_valid(self, form):
         email = form.cleaned_data['email']
-        print(email, 1111111)
-        if "@" in email:
-            pass
-
-        else:
+        
+        if "@" not in email:
             return render(self.request, self.template_name,
                           {
                               'error': 'Invalid Username or password',
                               'form': form
                           })
-
+        else:
+            pass
         return super().form_valid(form)
     
     
