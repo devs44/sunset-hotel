@@ -2,6 +2,7 @@ from django import forms
 from .models import *
 from django.contrib import messages
 from django.core.exceptions import ValidationError
+from django_toggle_switch_widget.widgets import DjangoToggleSwitchWidget
 
 class FormControlMixin:
     def __init__(self, *args, **kwargs):
@@ -59,6 +60,8 @@ class RoomForm(FormControlMixin, forms.ModelForm):
             'image': forms.ClearableFileInput(attrs={
                 'placeholder': 'choose image'
             }),
+            
+            "availability": DjangoToggleSwitchWidget(klass="django-toggle-switch-success"),
 
 
         }

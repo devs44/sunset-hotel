@@ -120,7 +120,7 @@ class RoomDetailView(BaseMixin, QuerysetMixin, DetailView):
 
 
 class ServiceListView(ListView):
-    model = Services_description
+    model = Room
     template_name = 'home/about/about.html'
 
     def get_context_data(self, **kwargs):
@@ -130,6 +130,7 @@ class ServiceListView(ListView):
         context['serve'] = Services_description.objects.all()
         context['ser'] = Services_type.objects.all()
         context['about'] = About.objects.all()
+        context['room_count'] = Room.objects.count()
         return context
 
 
