@@ -1,4 +1,6 @@
 from email.mime.text import MIMEText
+
+from django.core.validators import validate_email
 from dashboard.forms import *
 from django.http import HttpResponseRedirect
 from django.views.generic.edit import FormMixin
@@ -15,6 +17,7 @@ import datetime
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.urls import reverse
 from django.db.models import Q
+
 
 # Create your views here.
 
@@ -50,10 +53,23 @@ class RoomListView(QuerysetMixin, ListView):
     template_name = 'home/room/room.html'
     context_object_name = 'room'
     paginate_by = 4
-
+    
+    def dispatch(self,request,*args,**kwargs):
+        departure_date = parse_date(
+                self.request.GET.get('departure_date')).date()
+        arrival_date = parse_date(
+                self.request.GET.get('arrival_date')).date()
+        if arrival_date < datetime.date.today():
+            messages.error(
+                self.request, "Sorry, please select valid date.")
+            return HttpResponseRedirect(reverse('home'))
+        elif arrival_date > departure_date:
+            messages.error(
+                self.request, "Sorry, invalid arrival and departure date.")
+            return HttpResponseRedirect(reverse('home'))
+        return super().dispatch(request, *args, *kwargs)
     def get_queryset(self):
         queryset = super().get_queryset()
-
         children = self.request.GET.get('children')
         adults = self.request.GET.get('adults')
 
@@ -72,14 +88,14 @@ class RoomListView(QuerysetMixin, ListView):
                 messages.success(
                     self.request, "Welcome"
                 )
-            elif arrival_date < datetime.date.today():
-                messages.error(
-                    self.request, "Sorry, please select valid date.")
-                queryset = ''
-            if arrival_date > departure_date:
-                messages.error(
-                    self.request, "Sorry, invalid arrival and departure date.")
-                queryset = ''
+            # elif arrival_date < datetime.date.today():
+            #     messages.error(
+            #         self.request, "Sorry, please select valid date.")
+            #     queryset = ''
+            # if arrival_date > departure_date:
+            #     messages.error(
+            #         self.request, "Sorry, invalid arrival and departure date.")
+            #     queryset = ''
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -137,7 +153,7 @@ class ServiceListView(ListView):
 class ReservationView(BaseMixin, CreateView):
     template_name = 'home/reservation/reservation.html'
     form_class = ReservationForm
-    success_url = reverse_lazy('reservation')
+    success_url = reverse_lazy('home')
 
     def get_context_data(self, **kwargs):
         context = super(ReservationView, self).get_context_data(**kwargs)
@@ -154,6 +170,15 @@ class ReservationView(BaseMixin, CreateView):
                 Room, room_no=self.request.GET.get('room_id'))
             # getting form instance and saving selected room
             form.instance.selected_room = selected_room
+        if form.is_valid():
+            messages.success(self.request,"your reservation is success!")
+            if 'room_id' in self.request.GET or 'selected_room' in self.request.POST:
+                obj = Room.objects.get(Q(room_no=self.request.GET.get('room_id')) |
+                                        Q(room_no= self.request.POST.get('selected_room')))
+                obj.checked_in_date = self.request.POST.get('check_in_date')
+                obj.checked_out_date = self.request.POST.get('check_out_date')
+                obj.availability = False
+                obj.save()
         return super().form_valid(form)
 
 
@@ -247,17 +272,15 @@ class ContactTemplateView(BaseMixin, TemplateView):
     
     def form_valid(self, form):
         email = form.cleaned_data['email']
-        print(email, 1111111)
-        if "@" in email:
-            pass
-
-        else:
+        
+        if "@" not in email:
             return render(self.request, self.template_name,
                           {
                               'error': 'Invalid Username or password',
                               'form': form
                           })
-
+        else:
+            pass
         return super().form_valid(form)
     
     
@@ -356,3 +379,13 @@ class NewsletterView(CreateView):
         send_mail("asdasdas", msg, conf_settings.EMAIL_HOST_USER,
                   [email], fail_silently=True)
         redirect('home:home')
+
+
+# class SearchView(ListView):
+#     template_name = 'home/search/search.html'
+#     model = Room
+
+#     def get_queryset(self):
+#         query = self.request.GET.get('q')
+#         if 'keyword' in request.GET:
+#             keyword = request.GET['key']

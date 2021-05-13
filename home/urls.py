@@ -21,4 +21,5 @@ urlpatterns = [
     path('gallerys/deluxeroom', DeluxeRoomListView.as_view(), name="deluxe_room"),
     path('gallerys/royalroom', RoyalRoomListView.as_view(), name="royal_room"),
     path('subscripton/', NewsletterView.as_view(), name="subscription"),
+    # path('search/', SearchView.as_view(), name="search"),
 ]
