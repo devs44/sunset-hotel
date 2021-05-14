@@ -187,7 +187,7 @@ class RoomCategoryDelete(DeleteMixin, DashboardMixin, DeleteView):
 # Image
 class ImageListView(QuerysetMixin, DashboardMixin, ListView):
     template_name = 'dashboard/gallery/imagelist.html'
-    model = Image
+    model = RoomImage
 
 
 class ImageCreateView(DashboardMixin, CreateView):
@@ -198,13 +198,13 @@ class ImageCreateView(DashboardMixin, CreateView):
 
 class ImageUpdateView(DashboardMixin, UpdateView):
     template_name = 'dashboard/gallery/imagecreate.html'
-    model = Image
+    model = RoomImage
     form_class = ImageForm
     success_url = reverse_lazy('dashboard:image_list')
 
 
 class ImageDeleteView(DeleteMixin, DashboardMixin, DeleteView):
-    model = Image
+    model = RoomImage
     success_url = reverse_lazy('dashboard:image_list')
 
 # event

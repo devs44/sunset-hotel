@@ -252,9 +252,10 @@ class EventDetailView(DetailView):
         return redirect('event_detail', pk=events)
 
 
-class ContactTemplateView(BaseMixin, TemplateView):
+class ContactTemplateView(BaseMixin, CreateView):
     template_name = 'home/contact/contact.html'
     form_class = MessageForm
+    success_url = reverse_lazy('contact')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -302,64 +303,6 @@ class GalleryListView(ListView):
     model = RoomImage
     template_name = 'home/gallery/gallery.html'
     context_object_name = 'photo'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
-
-
-class SingleRoomListView(ListView):
-    model = RoomImage
-    template_name = 'home/gallery/single room.html'
-    context_object_name = 'photo'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['single'] = Image.objects.filter(
-            image_type__title="Single Room")
-        context['si'] = Room.objects.filter(
-            room_type__title="Single Room")
-
-        return context
-
-
-class DoubleRoomListView(ListView):
-    model = RoomImage
-    template_name = 'home/gallery/double room.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['double'] = Image.objects.filter(
-            image_type__title="Double Room")
-        context['si'] = Room.objects.filter(
-            room_type__title="Double Room")
-        return context
-
-
-class DeluxeRoomListView(ListView):
-    model = RoomImage
-    template_name = 'home/gallery/deluxe room.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['deluxe'] = Image.objects.filter(
-            image_type__title="Deluxe Room")
-        context['royal'] = Image.objects.filter(image_type__title="Royal Room")
-
-        return context
-
-
-class RoyalRoomListView(ListView):
-    model = RoomImage
-    template_name = 'home/gallery/royal room.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['royal'] = Image.objects.filter(
-            image_type__title="Royal Room")
-        context['si'] = Room.objects.filter(
-            room_type__title="Royal Room")
-        return context
 
 
 class NewsletterView(CreateView):
