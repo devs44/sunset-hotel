@@ -73,6 +73,10 @@
       href="{% static 'dashboard/assets/css/sweetalert2.min.css' %}"
     />
     <!-- sweetalert -->
+    <!-- flatpickr   -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/themes/dark.css">
+
 
     {% block style %}
     <style> 
@@ -325,7 +329,8 @@
     <script src="{% static 'dashboard/assets/toastr/toastr.min.js' %}"></script>
     <!-- sweetalert -->
     <script src="{% static 'dashboard/assets/js/sweetalert.min.js' %}"></script>
-
+    <!-- flatpickr        -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
       toastr.options = {
              "debug": false,
