@@ -103,11 +103,12 @@
 
               <form id="reservation-form_sendemail" action="" class="reservation__form" data-animate-in="animateUp" method="POST">
 				{% csrf_token %}
-				
+				<span class="form-error">{{ form.errors }}</span>
 				<div class="col-sm-12 col-md-6">
               		<div class="form-group">
 	                  <label for="check-in" >Check In date</label>
 	                  <span class="check-date">{{ form.check_in_date }}</span>
+					  <span class="form-error">{{ form.errors.check_in_date }}</span>
 	                  <span class="help-block"></span>
 	                </div>
 	              </div>
@@ -115,6 +116,7 @@
 	              	<div class="form-group">
 	                  <label for="check-out">Check Out date</label>
 	                  <span class="check-date">{{ form.check_out_date }}</span>
+					  <span class="form-error">{{ form.errors.check_out_date }}</span>
 	                  <span class="help-block"></span>
 	                </div>
 	              </div>
@@ -206,6 +208,7 @@
 					<div class="form-group">
 						<label for="form-children" >Select Room</label>
 						{{ form.selected_room }}
+						<span class="form-error">{{ form.errors.selected_room }}</span>
 						<span class="help-block"></span>
 				  	</div>
 				</div>

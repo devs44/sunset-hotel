@@ -53,13 +53,13 @@ class RoomListView(QuerysetMixin, ListView):
     template_name = 'home/room/room.html'
     context_object_name = 'room'
     paginate_by = 4
-    
-    def dispatch(self,request,*args,**kwargs):
+
+    def dispatch(self, request, *args, **kwargs):
         if 'departure_date' and 'arrival_date' in self.request.GET:
             departure_date = parse_date(
-                    self.request.GET.get('departure_date')).date()
+                self.request.GET.get('departure_date')).date()
             arrival_date = parse_date(
-                    self.request.GET.get('arrival_date')).date()
+                self.request.GET.get('arrival_date')).date()
             if arrival_date < datetime.date.today():
                 messages.error(
                     self.request, "Sorry, please select valid date.")
@@ -69,6 +69,7 @@ class RoomListView(QuerysetMixin, ListView):
                     self.request, "Sorry, invalid arrival and departure date.")
                 return HttpResponseRedirect(reverse('home'))
         return super().dispatch(request, *args, *kwargs)
+
     def get_queryset(self):
         queryset = super().get_queryset()
         children = self.request.GET.get('children')
@@ -86,17 +87,13 @@ class RoomListView(QuerysetMixin, ListView):
                     Q(checked_in_date__isnull=True, checked_out_date__isnull=True) |
                     Q(checked_out_date__lte=arrival_date) |
                     Q(checked_in_date__gte=departure_date))
-                messages.success(
-                    self.request, "Welcome"
-                )
-            # elif arrival_date < datetime.date.today():
-            #     messages.error(
-            #         self.request, "Sorry, please select valid date.")
-            #     queryset = ''
-            # if arrival_date > departure_date:
-            #     messages.error(
-            #         self.request, "Sorry, invalid arrival and departure date.")
-            #     queryset = ''
+                if queryset.count() < 1:
+                    messages.success(self.request, "We are really sorry")
+                else:
+                    messages.success(
+                        self.request, "Welcome"
+                    )
+
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -171,14 +168,14 @@ class ReservationView(BaseMixin, CreateView):
             # getting form instance and saving selected room
             form.instance.selected_room = selected_room
         if form.is_valid():
-            messages.success(self.request,"your reservation is success!")
-            if 'room_id' in self.request.GET or 'selected_room' in self.request.POST:
+            messages.success(self.request, "your reservation is success!")
+            if 'room_id' in self.request.GET and self.request.GET.get('room_id') != '' or 'selected_room' in self.request.POST and self.request.POST.get('selected_room'):
                 obj = Room.objects.get(Q(room_no=self.request.GET.get('room_id')) |
-                                        Q(room_no= self.request.POST.get('selected_room')))
+                                       Q(room_no=self.request.POST.get('selected_room')))
                 departure_date = parse_date(
-                self.request.POST.get('check_out_date')).date()
+                    self.request.POST.get('check_out_date')).date()
                 arrival_date = parse_date(
-                self.request.POST.get('check_in_date')).date()
+                    self.request.POST.get('check_in_date')).date()
                 obj.checked_in_date = arrival_date
                 obj.checked_out_date = departure_date
                 obj.availability = False
@@ -272,11 +269,10 @@ class ContactTemplateView(BaseMixin, TemplateView):
         obj = Message.objects.create(
             full_name=name, email=email, message=message)
         return redirect('contact')
-    
-    
+
     def form_valid(self, form):
         email = form.cleaned_data['email']
-        
+
         if "@" not in email:
             return render(self.request, self.template_name,
                           {
@@ -286,8 +282,6 @@ class ContactTemplateView(BaseMixin, TemplateView):
         else:
             pass
         return super().form_valid(form)
-    
-    
 
 
 class EventListView(ListView):
