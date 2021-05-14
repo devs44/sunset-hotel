@@ -31,7 +31,7 @@
 
 				        <!-- Newsletter form -->
 		            <div>
-		              <form  action="{% url 'subscription' %}" method="POST">
+		              <form  action="" method="POST">
 						{% csrf_token %}
 		                <div>
                             <input type="email" name="email" class="form-control" placeholder="Email Address"  value="{{email}}">
