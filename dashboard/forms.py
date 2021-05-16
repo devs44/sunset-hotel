@@ -280,14 +280,12 @@ class MessageForm(forms.ModelForm):
                 'placeholder': 'Enter your message'
             })
         }
-
-    def clean_email(self):
-        email = self.cleaned_data['email']
+        
+    def clean_email(self, *args, **kwargs):
+        email = self.cleaned_data.get['email']
         print(email, 1111111111111111)
         if '@' not in email:
-            raise ValidationError('Enter valid email')
-        else:
-            pass
+           raise forms.ValidationError('Enter valid email')
         return email
 
 
