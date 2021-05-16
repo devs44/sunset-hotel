@@ -270,7 +270,7 @@ class MessageForm(forms.ModelForm):
                 'class': 'form-control select2',
                 'placeholder': 'Enter name'
             }),
-            'email': forms.TextInput(attrs={
+            'email': forms.EmailInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Enter your email'
             }),

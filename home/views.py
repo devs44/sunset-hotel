@@ -257,31 +257,17 @@ class ContactTemplateView(BaseMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form'] = MessageForm()
+        form = MessageForm(self.request.POST or None)
         return context
 
     def post(self, request, *args, **kwargs):
         name = request.POST.get('full_name')
         email = request.POST.get('email')
         message = request.POST.get('message')
-
         obj = Message.objects.create(
             full_name=name, email=email, message=message)
         return redirect('contact')
     
-    
-    def form_valid(self, form):
-        email = form.cleaned_data['email']
-        
-        if "@" not in email:
-            return render(self.request, self.template_name,
-                          {
-                              'error': 'Invalid Username or password',
-                              'form': form
-                          })
-        else:
-            pass
-        return super().form_valid(form)
     
     
 
