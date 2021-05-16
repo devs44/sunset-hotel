@@ -68,30 +68,30 @@
     <section class="section__data">
     	<div class="container">
 		    <div class="row">
-					<div class="col-xs-12 col-sm-3">
+					<div class="col-xs-12 col-sm-4">
 						<div class="section-data__item">
 							<p class="section-data__nbr" data-from="0" data-to="1024" data-speed="2000" data-refresh-interval="10">0</p>
 							<h3 class="section-data__title">Guests stay</h3>
 						</div> <!-- .section-data__item -->
 					</div>
-					<div class="col-xs-12 col-sm-3">
+					<div class="col-xs-12 col-sm-4">
 						<div class="section-data__item">
-							<p class="section-data__nbr" data-from="0" data-to="245" data-speed="1000" data-refresh-interval="5">0</p>
+							<p class="section-data__nbr" data-from="0" data-to="{{room_count}}" data-speed="1000" data-refresh-interval="5">{{room_count}}</p>
 							<h3 class="section-data__title">Rooms</h3>
 						</div> <!-- .section-data__item -->
 					</div>
-					<div class="col-xs-12 col-sm-3">
+					<div class="col-xs-12 col-sm-4">
 						<div class="section-data__item">
-							<p class="section-data__nbr" data-from="0" data-to="37" data-speed="1000" data-refresh-interval="2">0</p>
+							<p class="section-data__nbr" data-from="0" data-to="7" data-speed="1000" data-refresh-interval="2">7</p>
 							<h3 class="section-data__title">Awards</h3>
 						</div> <!-- .section-data__item -->
 					</div>
-					<div class="col-xs-12 col-sm-3">
+					{% comment %} <div class="col-xs-12 col-sm-3">
 						<div class="section-data__item">
 							<p class="section-data__nbr" data-from="0" data-to="3700" data-speed="2000" data-refresh-interval="10">0</p>
 							<h3 class="section-data__title">Meal served</h3>
 						</div> <!-- .section-data__item -->
-					</div>
+					</div> {% endcomment %}
 		    </div> <!-- / .row -->
 	    </div> <!-- / .container -->
     </section> <!-- / .section__data -->
