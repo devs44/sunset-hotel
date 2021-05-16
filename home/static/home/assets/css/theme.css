@@ -8211,7 +8211,7 @@ Last change:	04/30/2017
   display: -webkit-box;
   display: flex;
   -webkit-box-pack: justify;
-          justify-content: space-between;
+          justify-content: center;
   -webkit-box-align: center;
           align-items: center;
   flex-wrap: wrap;

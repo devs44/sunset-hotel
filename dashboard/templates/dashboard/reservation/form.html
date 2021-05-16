@@ -4,21 +4,22 @@
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
-          <div class="col-sm-6">
-            <button class="btn btn-primary">
-              <a class="text-white" href="{% url 'dashboard:reservation_list' %}"
-                >Cancel</a
-              >
-            </button>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
+        <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-left">
               <li class="breadcrumb-item">
                 <a href="{% url 'dashboard:admin_dashboard' %}">Home</a>
               </li>
               <li class="breadcrumb-item active">Reservation</li>
             </ol>
           </div>
+          <div class="col-sm-6">
+            <button class="btn btn-primary float-sm-right">
+              <a class="text-white" href="{% url 'dashboard:reservation_list' %}"
+                >Cancel</a
+              >
+            </button>
+          </div>
+          
         </div>
       </div>
       <!-- /.container-fluid -->
@@ -117,4 +118,16 @@
     </section>
   </div>
 </div>
+{% endblock %}
+{% block script %}
+<script>
+	$(".check-date").flatpickr({
+    enableTime: true,
+    dateFormat: "Y-m-d ",
+	minDate: "today"
+
+});
+
+</script>
+
 {% endblock %}

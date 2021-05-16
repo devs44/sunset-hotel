@@ -22,6 +22,11 @@
     <!--build:css assets/css/theme.min.css-->
     <link rel="stylesheet" href="{% static 'home/assets/css/theme.css' %}">
     <!--endbuild-->
+    <!-- flatpickr   -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/themes/dark.css">
+
+
 
   </head>
   <body>
@@ -76,8 +81,11 @@
         <script src="{% static 'home/assets/js/google_maps.js' %}"></script>
 
     <!-- Google Maps -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfwXIv2vgXzFDZRzzRH2VpbvgSzhqCCuU&amp;callback=initMap" async defer></script>        
-    
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfwXIv2vgXzFDZRzzRH2VpbvgSzhqCCuU&amp;callback=initMap" async defer></script>  
+    <!-- flatpickr        -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+
     <script>
       var preloader = (function() {
 
@@ -98,6 +106,9 @@
 
       })();
     </script>
+    {% block script %}
+
+    {% endblock %}
       <script>
         toastr.options = {
                "debug": false,
