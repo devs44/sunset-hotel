@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django_toggle_switch_widget.widgets import DjangoToggleSwitchWidget
 
+
 class FormControlMixin:
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -35,8 +36,8 @@ class StaffLoginForm(forms.Form):
 
 class RoomForm(FormControlMixin, forms.ModelForm):
     more_images = forms.FileField(required=False, widget=forms.FileInput(attrs={
-        'class': 'form-control select2',
-        'multiple': True
+        'class': 'select2 feature-select',
+        'multiple': 'multiple'
 
     }))
 
@@ -279,16 +280,15 @@ class MessageForm(forms.ModelForm):
                 'placeholder': 'Enter your message'
             })
         }
-        
+
     def clean_email(self):
         email = self.cleaned_data['email']
         print(email, 1111111111111111)
         if '@' not in email:
-           raise ValidationError('Enter valid email')
+            raise ValidationError('Enter valid email')
         else:
             pass
         return email
-  
 
 
 class ReservationForm(forms.ModelForm):
@@ -312,11 +312,11 @@ class ReservationForm(forms.ModelForm):
                 'class': 'form-control',
             }),
             'check_in_date': forms.DateTimeInput(attrs={
-                'class': 'form-control',
+                'class': 'form-control check-date',
                 'placeholder': 'check in date'
             }),
             'check_out_date': forms.DateTimeInput(attrs={
-                'class': 'form-control',
+                'class': 'form-control check-date',
                 'placeholder': 'check out date'
             }),
             'children': forms.Select(attrs={
@@ -361,9 +361,15 @@ class ReservationForm(forms.ModelForm):
             }),
         }
 
-    def clean_adult(self):
-        adult = self.cleaned_data['adult']
-        return adult
+    def clean(self):
+        cleaned_data = super().clean()
+        check_in_date = self.cleaned_data.get('check_in_date')
+        check_out_date = self.cleaned_data.get('check_out_date')
+        selected_room = self.cleaned_data.get('selected_room')
+        if check_in_date == '' or check_out_date == '' or selected_room == '':
+            raise ValidationError('This field is required')
+        if check_in_date > check_out_date:
+            raise ValidationError("Invalid check-in check-out date")
 
 
 class AboutForm(FormControlMixin, forms.ModelForm):

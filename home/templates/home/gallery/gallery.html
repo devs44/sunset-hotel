@@ -47,51 +47,59 @@
     		  	<!-- Nav tabs -->
             <ul class="nav nav-tabs gallery__nav" role="tablist">
               <li role="presentation" class="gallery-nav__link active">
-                <a href="{% url 'gallerys' %}" role="tab" data-filter=".all">
+                <a href="#" role="tab" data-filter=".all">
                   <span>All</span>
                 </a>
+                
               </li>
               <li role="presentation" class="gallery-nav__link">
-                <a href="{% url 'single_room' %}" role="tab" data-filter=".single-room">
+                <a href="#" role="tab" data-filter=".single-room">
                   <span>Single room</span>
                 </a>
+                 
               </li>
               <li role="presentation" class="gallery-nav__link">
-                <a href="{% url 'double_room' %}" role="tab" data-filter=".double-room">
+                <a href="#" role="tab" data-filter=".double-room">
                   <span>Double Room</span>
                 </a>
+                
               </li>
               <li role="presentation" class="gallery-nav__link">
-                <a href="{% url 'deluxe_room' %}" role="tab" data-filter=".deluxe-room">
+                <a href="#" role="tab" data-filter=".deluxe-room">
                   <span>Deluxe room</span>
                 </a>
+                 
               </li>
               <li role="presentation" class="gallery-nav__link">
-                <a href="{% url 'royal_room' %}" role="tab" data-filter=".lobby">
+                <a href="#" role="tab" data-filter=".royal-room">
                   <span>Royal Room</span>
                 </a>
+                
               </li>
             </ul> <!-- / .gallery__nav -->
     		  </div>
     		</div> <!-- / .row -->
     	</div> <!-- / .container -->
-    	<div class="container">
+    	<div class="container-fluid">
 		    <div id="gallery__items" class="row">
-        {% for photo in photo %}
-		    	<div id="all" class="col-xs-12 col-sm-6 col-md-4 gallery__item all double-room">
-            <a href="{{ photo.image.url }}" data-lightbox="gallery" data-title="{{ photo.caption }}">
-              <img src="{{ photo.image.url }}" class="img-responsive" alt="...">
-            </a>
-          </div> <!-- .gallery__item -->
-        {% endfor %}
-
-        
-       
-
-     
+          
+            
+            {% for room in photo %}
+            
+            <div class="{{room.room.room_type.title}} {% if room.room.room_type.title == 'Single Room' %} single-room {% elif room.room.room_type.title == 'Double Rooom' %} double-room {% elif room.room.room_type.title == 'Royal Room' %} royal-room {% elif room.room.room_type.title == 'Deluxe Rooom' %} deluxe-room  {% endif %} col-xs-12 col-sm-6 col-md-4 col-lg-3 gallery__item all">
+              
+              <a href="#" data-lightbox="gallery" data-title="Your caption">
+                <img src="{{room.image.url}}" class="img-responsive" alt="...">
+              </a>
+            </div>
+            
+            {% endfor %}
+         
+          </div>
         </div> <!-- .row -->
 	            
 	    </div> <!-- / .container-fluid -->
     </section> <!-- / .section__gallery-alt -->
+  
     
 {% endblock %}

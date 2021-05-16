@@ -119,3 +119,15 @@
   </div>
 </div>
 {% endblock %}
+{% block script %}
+<script>
+	$(".check-date").flatpickr({
+    enableTime: true,
+    dateFormat: "Y-m-d ",
+	minDate: "today"
+
+});
+
+</script>
+
+{% endblock %}
