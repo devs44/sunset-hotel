@@ -147,28 +147,15 @@
 
             <!-- Newsletter form -->
             <div id="mc_embed_signup">
-              <form
-                class="newsletter__form validate"
-                action="http://themeforest.us16.list-manage.com/subscribe/post-json?u=3c9679e26b601e1a87122b12f&amp;id=e4b9351526&amp;c=?"
-                method="get"
-                id="mc-embedded-subscribe-form"
-                name="mc-embedded-subscribe-form"
-                target="_blank"
-                novalidate=""
-              >
+              <form action="{% url 'subscription' %}" class="newsletter__form validate"  method="POST" >
+                {% csrf_token %}
                 <div id="mc_embed_signup_scroll">
                   <div class="mc-field-group form-group">
                     <label for="mce-EMAIL" class="sr-only"
                       >E-mail address</label
                     >
-                    <input
-                      type="email"
-                      value=""
-                      name="EMAIL"
-                      class="required email form-control newsletter_input"
-                      id="mce-EMAIL"
-                      placeholder="Email address"
-                    />
+                    <input type="email" name="email" required class="required email form-control newsletter_input" placeholder="Email address">
+
                   </div>
                   <div id="mce-responses" class="clear">
                     <div class="response"></div>

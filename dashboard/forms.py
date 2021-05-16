@@ -280,7 +280,6 @@ class MessageForm(forms.ModelForm):
 
     def clean_email(self):
         email = self.cleaned_data['email']
-        print(email, 1111111111111111)
         if '@' not in email:
             raise ValidationError('Enter valid email')
         else:

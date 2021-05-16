@@ -1,5 +1,16 @@
 from email.mime.text import MIMEText
 
+from django.conf import settings
+from django.http.response import StreamingHttpResponse
+
+from django.views.generic.base import View
+
+# to send email with template
+from django.core.mail import send_mail, EmailMultiAlternatives
+from django.template.loader import get_template
+
+from home.forms import SubscriptionForm
+
 from django.core.validators import validate_email
 from dashboard.forms import *
 from django.http import HttpResponseRedirect
@@ -305,23 +316,6 @@ class GalleryListView(ListView):
     context_object_name = 'photo'
 
 
-class NewsletterView(CreateView):
-
-    success_url = reverse_lazy('home')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['user_email'] = Subscription.objects.create(email=user_email)
-        return context
-
-    def post(self, request, *args, **kwargs):
-        email = request.POST.get('email')
-        admin_email = admin_info.email
-        send_mail("asdasdas", msg, conf_settings.EMAIL_HOST_USER,
-                  [email], fail_silently=True)
-        redirect('home:home')
-
-
 # class SearchView(ListView):
 #     template_name = 'home/search/search.html'
 #     model = Room
@@ -330,3 +324,39 @@ class NewsletterView(CreateView):
 #         query = self.request.GET.get('q')
 #         if 'keyword' in request.GET:
 #             keyword = request.GET['key']
+
+class SubscriptionView(View):
+    form_class = SubscriptionForm
+
+    def post(self, request, *args, **kwargs):
+        email = self.request.POST.get('email')
+        if Subscription.objects.filter(email=email).exists():
+            messages.warning(request, "Wow, Already Subscribed.")
+
+        else:
+            obj = Subscription.objects.create(email=email)
+            messages.success(
+                request, f'Thank you for Subscription {email}')
+            subject = "Thank you for joining Us"
+            from_email = settings.EMAIL_HOST_USER
+            to_email = [email]
+            with open(settings.BASE_DIR / "/home/dreamer26/django/hotel ms/hotelproject/hms/home/templates/home/newsletter/newsletter.txt") as f:
+                signup_message = f.read()
+            message = EmailMultiAlternatives(
+                subject=subject, body=signup_message, from_email=from_email, to=to_email)
+            html_template = get_template(
+                "home/newsletter/newsletter.html").render()
+            message.attach_alternative(html_template, "text/html")
+            message.send()
+        return redirect('home')
+
+
+class UnSubscriptionView(View):
+    def post(self, request, *args, **kwargs):
+        email = self.request.GET.get('email')
+        if Subscription.objects.filter(email=email).exists():
+            Subscription.objects.filter(email=email).delete()
+            messages.success(request, "Sorry to let you go")
+        else:
+            messages.error(request, "Invalid email address")
+        return redirect('home')

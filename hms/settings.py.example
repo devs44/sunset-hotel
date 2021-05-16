@@ -149,3 +149,8 @@ MESSAGE_TAGS = {
         messages.ERROR: 'alert-danger',
  }
 
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'rupakaale27@gmail.com'
+EMAIL_HOST_PASSWORD = '9818124520'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
