@@ -145,7 +145,7 @@ class RoomDetailView(BaseMixin, QuerysetMixin, DetailView):
 
 
 class ServiceListView(ListView):
-    model = Services_description
+    model = Room
     template_name = 'home/about/about.html'
 
     def get_context_data(self, **kwargs):
@@ -155,6 +155,7 @@ class ServiceListView(ListView):
         context['serve'] = Services_description.objects.all()
         context['ser'] = Services_type.objects.all()
         context['about'] = About.objects.all()
+        context['room_count'] = Room.objects.count()
         return context
 
 
@@ -270,14 +271,13 @@ class ContactTemplateView(BaseMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form'] = MessageForm()
+        form = MessageForm(self.request.POST or None)
         return context
 
     def post(self, request, *args, **kwargs):
         name = request.POST.get('full_name')
         email = request.POST.get('email')
         message = request.POST.get('message')
-
         obj = Message.objects.create(
             full_name=name, email=email, message=message)
         return redirect('contact')
@@ -314,6 +314,12 @@ class GalleryListView(ListView):
     model = RoomImage
     template_name = 'home/gallery/gallery.html'
     context_object_name = 'photo'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['roomtitle'] = Room_Category.objects.all()
+        return context
+
 
 
 # class SearchView(ListView):

@@ -3,22 +3,23 @@
   <div class="content-wrapper">
     <section class="content-header">
       <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <button class="btn btn-primary">
-              <a class="text-white" href="{% url 'dashboard:about_create' %}"
-                >Add About</a
-              >
-            </button>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
+        <div class="row mb-2"> 
+        <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-left">
               <li class="breadcrumb-item">
                 <a href="{% url 'dashboard:admin_dashboard' %}">Home</a>
               </li>
               <li class="breadcrumb-item active">About</li>
             </ol>
           </div>
+          <div class="col-sm-6">
+            <button class="btn btn-primary float-sm-right">
+              <a class="text-white" href="{% url 'dashboard:about_create' %}"
+                >Add About</a
+              >
+            </button>
+          </div>
+      
         </div>
       </div>
       <!-- /.container-fluid -->
@@ -32,8 +33,8 @@
                 <h3 class="card-title">About</h3>
 
                 <div class="card-tools">
-                  <div class="input-group input-group-sm" style="width: 150px">
-                    <form action="{% url 'dashboard:about_list' %}" method="GET">
+                  <div class="input-group input-group-sm">
+                    <form action="{% url 'dashboard:about_list' %}" method="GET" class="form-inline">
                       <input
                         type="text"
                         name="room_feature"

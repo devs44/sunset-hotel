@@ -4,19 +4,21 @@
     <section class="content-header">
       <div class="container-fluid">
         <div class="row mb-2">
-          <div class="col-sm-6">
-            <button class="btn btn-primary">
-              <a class="text-white" href="{% url 'dashboard:room_cat_create' %}">Add Room Category</a>
-            </button>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
+         <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-left">
               <li class="breadcrumb-item">
                 <a href="{% url 'dashboard:admin_dashboard' %}">Home</a>
               </li>
               <li class="breadcrumb-item active">Room</li>
             </ol>
           </div>
+          <div class="col-sm-6">
+          
+            <button class="btn btn-primary float-sm-right">
+              <a class="text-white" href="{% url 'dashboard:room_cat_create' %}">Add Room Category</a>
+            </button>
+          </div>
+         
         </div>
       </div>
       <!-- /.container-fluid -->
@@ -30,8 +32,8 @@
                 <h3 class="card-title"> Room Categories</h3>
 
                 <div class="card-tools">
-                  <div class="input-group input-group-sm" style="width: 150px">
-                    <form action="{% url 'dashboard:room_category' %}" method="GET">
+                  <div class="input-group input-group-sm" >
+                    <form action="{% url 'dashboard:room_category' %}" method="GET" class="form-inline">
                       <input
                         type="text"
                         name="room_category"

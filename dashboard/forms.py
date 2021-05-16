@@ -2,6 +2,7 @@ from django import forms
 from .models import *
 from django.contrib import messages
 from django.core.exceptions import ValidationError
+from django_toggle_switch_widget.widgets import DjangoToggleSwitchWidget
 
 
 class FormControlMixin:
@@ -60,6 +61,8 @@ class RoomForm(FormControlMixin, forms.ModelForm):
             'image': forms.ClearableFileInput(attrs={
                 'placeholder': 'choose image'
             }),
+
+            "availability": DjangoToggleSwitchWidget(klass="django-toggle-switch-success"),
 
 
         }
@@ -268,7 +271,7 @@ class MessageForm(forms.ModelForm):
                 'class': 'form-control select2',
                 'placeholder': 'Enter name'
             }),
-            'email': forms.TextInput(attrs={
+            'email': forms.EmailInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Enter your email'
             }),
@@ -281,9 +284,7 @@ class MessageForm(forms.ModelForm):
     def clean_email(self):
         email = self.cleaned_data['email']
         if '@' not in email:
-            raise ValidationError('Enter valid email')
-        else:
-            pass
+            raise forms.ValidationError('Enter valid email')
         return email
 
 
