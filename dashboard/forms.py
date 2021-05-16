@@ -267,7 +267,7 @@ class MessageForm(forms.ModelForm):
                 'class': 'form-control select2',
                 'placeholder': 'Enter name'
             }),
-            'email': forms.TextInput(attrs={
+            'email': forms.EmailInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Enter your email'
             }),
@@ -277,13 +277,11 @@ class MessageForm(forms.ModelForm):
             })
         }
         
-    def clean_email(self):
-        email = self.cleaned_data['email']
+    def clean_email(self, *args, **kwargs):
+        email = self.cleaned_data.get['email']
         print(email, 1111111111111111)
         if '@' not in email:
-           raise ValidationError('Enter valid email')
-        else:
-            pass
+           raise forms.ValidationError('Enter valid email')
         return email
   
 
