@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'dashboard',
     'home',
     'ckeditor',
+    'django_toggle_switch_widget',
+    'active_link',
+
    
 ]
 
