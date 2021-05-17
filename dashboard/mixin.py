@@ -35,7 +35,8 @@ class AdminRequiredMixin(object):
 
             pass
         else:
-            raise PermissionDenied
+            return redirect('/login/')
+            # raise PermissionDenied
 
         return super().dispatch(request, *args, *kwargs)
 
