@@ -321,7 +321,6 @@ class GalleryListView(ListView):
         return context
 
 
-
 # class SearchView(ListView):
 #     template_name = 'home/search/search.html'
 #     model = Room
@@ -332,10 +331,16 @@ class GalleryListView(ListView):
 #             keyword = request.GET['key']
 
 class SubscriptionView(View):
+    template_name = 'home/base/footer.html'
     form_class = SubscriptionForm
+
+    # def get(self, request, *args, **kwargs):
+    #     pass
+    #     return HttpResponseRedirect(self.request.path_info)
 
     def post(self, request, *args, **kwargs):
         email = self.request.POST.get('email')
+        # print(email, 33333333333333333)
         if Subscription.objects.filter(email=email).exists():
             messages.warning(request, "Wow, Already Subscribed.")
 
@@ -355,6 +360,7 @@ class SubscriptionView(View):
             message.attach_alternative(html_template, "text/html")
             message.send()
         return redirect('home')
+        # return HttpResponseRedirect(self.request.path_info)
 
 
 class UnSubscriptionView(View):
@@ -365,4 +371,4 @@ class UnSubscriptionView(View):
             messages.success(request, "Sorry to let you go")
         else:
             messages.error(request, "Invalid email address")
-        return redirect('home')
+        return HttpResponseRedirect(self.request.path_info)
