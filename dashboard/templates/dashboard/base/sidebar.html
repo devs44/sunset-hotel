@@ -23,8 +23,10 @@
           alt="User Image"
         />
       </div>
-      <div class="info">
-        <a href="#" class="d-block"> Welcome! {{username}}</a>
+      <div class="info ">
+        <a href="#" class="d-block"> Welcome! {% if request.user.is_authenticated %}
+                                              {{request.user.username}}
+                                              {% endif %}</a>
       </div>
     </div>
 
