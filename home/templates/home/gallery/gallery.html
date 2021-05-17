@@ -50,32 +50,15 @@
                 <a href="#" role="tab" data-filter=".all">
                   <span>All</span>
                 </a>
-                
               </li>
+              {% for title in roomtitle %}
               <li role="presentation" class="gallery-nav__link">
-                <a href="#" role="tab" data-filter=".single-room">
-                  <span>Single room</span>
+                <a href="#" role="tab" data-filter=".{{title.title}}">
+                  <span>{{title.title}}</span>
                 </a>
-                 
               </li>
-              <li role="presentation" class="gallery-nav__link">
-                <a href="#" role="tab" data-filter=".double-room">
-                  <span>Double Room</span>
-                </a>
-                
-              </li>
-              <li role="presentation" class="gallery-nav__link">
-                <a href="#" role="tab" data-filter=".deluxe-room">
-                  <span>Deluxe room</span>
-                </a>
-                 
-              </li>
-              <li role="presentation" class="gallery-nav__link">
-                <a href="#" role="tab" data-filter=".royal-room">
-                  <span>Royal Room</span>
-                </a>
-                
-              </li>
+              {% endfor %}
+             
             </ul> <!-- / .gallery__nav -->
     		  </div>
     		</div> <!-- / .row -->
@@ -85,14 +68,13 @@
           
             
             {% for room in photo %}
-            
+
             <div class="{{room.room.room_type.title}} {% if room.room.room_type.title == 'Single Room' %} single-room {% elif room.room.room_type.title == 'Double Rooom' %} double-room {% elif room.room.room_type.title == 'Royal Room' %} royal-room {% elif room.room.room_type.title == 'Deluxe Rooom' %} deluxe-room  {% endif %} col-xs-12 col-sm-6 col-md-4 col-lg-3 gallery__item all">
               
               <a href="#" data-lightbox="gallery" data-title="Your caption">
                 <img src="{{room.image.url}}" class="img-responsive" alt="...">
               </a>
             </div>
-            
             {% endfor %}
          
           </div>
