@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from .mixin import *
 from .forms import *
 from django.shortcuts import render, redirect, reverse
@@ -14,7 +15,8 @@ from django.views.generic import TemplateView, DetailView, FormView, View, ListV
 from .models import Room, News, Comment, RoomImage, Event, Room_Category, Feature, Image, Testomonial, Message, Reservation, Services_type, Services_description, Contact,  About
 from django.shortcuts import render, redirect
 
-
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
@@ -47,8 +49,10 @@ class LogoutView(View):
         return redirect('/login/')
 
 
-class AdminDashboardView(AdminRequiredMixin, DashboardMixin, TemplateView):
+class AdminDashboardView(AdminRequiredMixin, TemplateView):
     template_name = 'dashboard/base/admindashboard.html'
+    login_url = '/login/'
+    redirect_field_name = 'admin_dashboard'
 
     
 
@@ -57,6 +61,8 @@ class RoomListView(AdminRequiredMixin, DashboardMixin, QuerysetMixin, ListView):
     template_name = 'dashboard/room/roomlist.html'
     model = Room
     paginate_by = 10
+    login_url = '/login/'
+    redirect_field_name = 'room_list'
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -83,6 +89,8 @@ class RoomCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
     template_name = 'dashboard/room/roomcreate.html'
     form_class = RoomForm
     success_url = reverse_lazy('dashboard:room_list')
+    login_url = '/login/'
+    redirect_field_name = 'room_create'
 
     def form_valid(self, form):
         room = form.save()
@@ -97,6 +105,8 @@ class RoomUpdateView(AdminRequiredMixin, DashboardMixin, UpdateView):
     model = Room
     form_class = RoomForm
     success_url = reverse_lazy('dashboard:room_list')
+    login_url = '/login/'
+    redirect_field_name = 'room_update'
 
     def form_valid(self, form):
         room = form.save()
@@ -110,17 +120,23 @@ class RoomDetailView(AdminRequiredMixin, DashboardMixin, DetailView):
     template_name = 'dashboard/room/roomdetail.html'
     model = Room
     context_object_name = 'roomdetail'
+    login_url = '/login/'
+    redirect_field_name = 'room_detail'
 
 
 class RoomDeleteView(AdminRequiredMixin, DeleteMixin, DashboardMixin, DeleteView):
     model = Room
     success_url = reverse_lazy('dashboard:room_list')
+    login_url = '/login/'
+    redirect_field_name = 'room_list'
 
 
 class RoomCategoryListView(AdminRequiredMixin, QuerysetMixin, DashboardMixin, ListView):
     template_name = 'dashboard/room_category/roomcategory.html'
     model = Room_Category
     paginate_by = 10
+    login_url = '/login/'
+    redirect_field_name = 'room_category'
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -151,6 +167,8 @@ class FeatureListView(AdminRequiredMixin, DashboardMixin, QuerysetMixin, ListVie
     template_name = 'dashboard/feature/feature.html'
     model = Feature
     paginate_by = 10
+    login_url = '/login/'
+    redirect_field_name = 'feature_list'
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -190,6 +208,8 @@ class RoomCategoryDelete(AdminRequiredMixin, DeleteMixin, DashboardMixin, Delete
 class ImageListView(AdminRequiredMixin, QuerysetMixin, DashboardMixin, ListView):
     template_name = 'dashboard/gallery/imagelist.html'
     model = RoomImage
+    login_url = '/login/'
+    redirect_field_name = 'image_list'
 
 
 class ImageCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
@@ -216,6 +236,8 @@ class EventListView(AdminRequiredMixin, DashboardMixin, QuerysetMixin, ListView)
     template_name = 'dashboard/event/eventlist.html'
     model = Event
     paginate_by = 5
+    login_url = '/login/'
+    redirect_field_name = 'event_list'
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -262,6 +284,8 @@ class EventCommentTemplateView(AdminRequiredMixin, QuerysetMixin, DashboardMixin
     template_name = 'dashboard/event_comment/eventcommentlist.html'
     model = Comment
     paginate_by = 5
+    login_url = '/login/'
+    redirect_field_name = 'eventcomment_list'
 
     def get_queryset(self):
         queryset = super().get_queryset().filter(Q(news__isnull=True),
@@ -312,6 +336,8 @@ class NewsListView(AdminRequiredMixin, QuerysetMixin, DashboardMixin, ListView):
     model = News
     template_name = 'dashboard/news/list.html'
     paginate_by = 5
+    login_url = '/login/'
+    redirect_field_name = 'news_list'
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -354,6 +380,8 @@ class NewsCommentTemplateView(AdminRequiredMixin, QuerysetMixin, DashboardMixin,
     template_name = 'dashboard/news_comment/list.html'
     context_object_name = 'news'
     paginate_by = 5
+    login_url = '/login/'
+    redirect_field_name = 'news_comment_list'
 
     def get_queryset(self):
         queryset = super().get_queryset().filter(Q(events__isnull=True),
@@ -396,6 +424,8 @@ class TestimonialListView(AdminRequiredMixin, QuerysetMixin, ListView):
     model = Testomonial
     template_name = 'dashboard/testimonial/list.html'
     paginate_by = 5
+    login_url = '/login/'
+    redirect_field_name = 'testimonial_list'
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -442,6 +472,8 @@ class MessageListView(AdminRequiredMixin, QuerysetMixin, DashboardMixin, ListVie
     model = Message
     template_name = 'dashboard/message/list.html'
     paginate_by = 5
+    login_url = '/login/'
+    redirect_field_name = 'message_list'
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -497,6 +529,8 @@ class MessageDeleteView(AdminRequiredMixin, DeleteMixin, DeleteView):
 class ReservationListView(AdminRequiredMixin, QuerysetMixin, DashboardMixin, ListView):
     model = Reservation
     template_name = 'dashboard/reservation/list.html'
+    login_url = '/login/'
+    redirect_field_name = 'reservation_list'
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -561,6 +595,8 @@ class AboutCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
     template_name = 'dashboard/about/aboutcreate.html'
     form_class = AboutForm
     success_url = reverse_lazy('dashboard:about_list')
+    login_url = '/login/'
+    redirect_field_name = 'about_list'
 
 
 class AboutUpdateView(AdminRequiredMixin, DashboardMixin, UpdateView):
@@ -586,6 +622,9 @@ class AboutDeleteView(AdminRequiredMixin, DeleteMixin, DashboardMixin, DeleteVie
 class ServiceListView (AdminRequiredMixin, QuerysetMixin, DashboardMixin, ListView):
     template_name = 'dashboard/services-type/list.html'
     model = Services_type
+    login_url = '/login/'
+    redirect_field_name = 'service_type_list'
+
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -629,6 +668,8 @@ class ServiceVideoListView (AdminRequiredMixin, QuerysetMixin, DashboardMixin, L
     template_name = 'dashboard/service-video/list.html'
     model = Services_description
     context_object_name = 'servicevideo'
+    login_url = '/login/'
+    redirect_field_name = 'service_video_list'
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -672,6 +713,8 @@ class ContactListView(AdminRequiredMixin, QuerysetMixin, ListView):
     model = Contact
     template_name = 'dashboard/contact/list.html'
     context_object_name = 'contact'
+    login_url = '/login/'
+    redirect_field_name = 'contact_list'
 
 
 class ContactCreateView(AdminRequiredMixin, CreateView):
@@ -702,6 +745,8 @@ class RoomCommentListView(AdminRequiredMixin, DashboardMixin, ListView):
     template_name = 'dashboard/room_comment/list.html'
     model = Comment
     paginate_by = 5
+    login_url = '/login/'
+    redirect_field_name = 'room_comment_lists'
 
     def get_queryset(self):
         queryset = super().get_queryset().filter(Q(news__isnull=True),

@@ -1,12 +1,14 @@
 from django.urls import path
 from .views import *
-
+from django.contrib.auth.decorators import login_required
+from . import views
 app_name = 'dashboard'
 urlpatterns = [
     path('login/', LoginView.as_view(), name="admin_login"),
     path('logout/', LogoutView.as_view(), name="admin_logout"),
-    path('dashboard/', AdminDashboardView.as_view(), name="admin_dashboard"),
-
+    path('dashboard/', login_required(AdminDashboardView.as_view()), name="admin_dashboard"),
+#     path('dashboard/', views.admindashboard, name='admin_dashboard'),
+   
     # room
     path('room/list/', RoomListView.as_view(), name='room_list'),
     path('room/create/', RoomCreateView.as_view(), name='room_create'),
