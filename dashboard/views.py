@@ -45,7 +45,7 @@ class LoginView(FormView):
 class LogoutView(View):
     def get(self, request):
         logout(request)
-        return redirect('/')
+        return redirect('/login/')
 
 
 class AdminDashboardView(TemplateView):
@@ -489,11 +489,9 @@ class MessageCreateView(DashboardMixin, CreateView):
     template_name = 'dashboard/message/form.html'
     form_class = MessageForm
     success_url = reverse_lazy('dashboard:message_list')
-    
+
     def form_valid(self, form):
         email = form.cleaned_data['email']
-        
-
 
         if user is not None:
             login(self.request, user)
