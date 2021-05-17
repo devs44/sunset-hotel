@@ -10,7 +10,7 @@
       class="brand-image img-circle elevation-3"
       style="opacity: 0.8"
     />
-    <span class="brand-text font-weight-light">AdminLTE 3</span>
+    <span class="brand-text font-weight-light">Sunset Hotel</span>
   </a>
   <!-- Sidebar -->
   <div class="sidebar">
@@ -24,12 +24,12 @@
         />
       </div>
       <div class="info">
-        <a href="#" class="d-block">Alexander Pierce</a>
+        <a href="#" class="d-block"> Welcome! {{username}}</a>
       </div>
     </div>
 
     <!-- SidebarSearch Form -->
-    <div class="form-inline">
+    {% comment %} <div class="form-inline">
       <div class="input-group" data-widget="sidebar-search">
         <input
           class="form-control form-control-sidebar"
@@ -43,7 +43,7 @@
           </button>
         </div>
       </div>
-    </div>
+    </div> {% endcomment %}
 
     <!-- Sidebar Menu -->
     <nav class="mt-2">
@@ -57,7 +57,7 @@
                with font-awesome or any other icon font library -->
         <li class="nav-item">
           <a href="{% url 'dashboard:admin_dashboard' %}" class="nav-link {% active_link 'dashboard:admin_dashboard' 'active' %}">
-            <i class="nav-icon fas fa-tachometer-alt"></i>
+            
             <p>
               Dashboard
               <i class="right fas fa-angle-left"></i>

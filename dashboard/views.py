@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect, reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User, Group
 from django.db.models import Q
+
 # from django.contrib import messages
 
 from django.urls import reverse_lazy
@@ -43,12 +44,16 @@ class LoginView(FormView):
 class LogoutView(View):
     def get(self, request):
         logout(request)
-        return redirect('/')
+        return redirect('dashboard:admin_login')
 
 
 class AdminDashboardView(DashboardMixin, TemplateView):
     template_name = 'dashboard/base/admindashboard.html'
-
+    form_class = StaffLoginForm
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+    
 
 # rooms
 class RoomListView(DashboardMixin, QuerysetMixin, ListView):
