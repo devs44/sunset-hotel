@@ -16,6 +16,8 @@ urlpatterns = [
     path('event/<int:pk>/', EventDetailView.as_view(), name="event_detail"),
     path('contacts/', ContactTemplateView.as_view(), name="contact"),
     path('gallerys/', GalleryListView.as_view(), name="gallerys"),
-    # path('subscripton/', NewsletterView.as_view(), name="subscription"),
-    # path('search/', SearchView.as_view(), name="search"),
+    path('subscription/', SubscriptionView.as_view(), name='subscription'),
+    path('unsubscribe/', UnSubscriptionView.as_view(), name='unsubscription'),
+
+
 ]

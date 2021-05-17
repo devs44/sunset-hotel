@@ -61,7 +61,7 @@ class RoomForm(FormControlMixin, forms.ModelForm):
             'image': forms.ClearableFileInput(attrs={
                 'placeholder': 'choose image'
             }),
-            
+
             "availability": DjangoToggleSwitchWidget(klass="django-toggle-switch-success"),
 
 
@@ -280,12 +280,11 @@ class MessageForm(forms.ModelForm):
                 'placeholder': 'Enter your message'
             })
         }
-        
-    def clean_email(self, *args, **kwargs):
-        email = self.cleaned_data.get['email']
-        print(email, 1111111111111111)
+
+    def clean_email(self):
+        email = self.cleaned_data['email']
         if '@' not in email:
-           raise forms.ValidationError('Enter valid email')
+            raise forms.ValidationError('Enter valid email')
         return email
 
 
