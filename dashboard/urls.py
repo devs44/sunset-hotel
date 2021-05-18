@@ -6,7 +6,7 @@ app_name = 'dashboard'
 urlpatterns = [
     path('login/', LoginView.as_view(), name="admin_login"),
     path('logout/', LogoutView.as_view(), name="admin_logout"),
-    path('dashboard/', login_required(AdminDashboardView.as_view()), name="admin_dashboard"),
+    path('dashboard/', AdminDashboardView.as_view(), name="admin_dashboard"),
 #     path('dashboard/', views.admindashboard, name='admin_dashboard'),
    
     # room

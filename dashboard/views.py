@@ -51,11 +51,9 @@ class LogoutView(View):
 class AdminDashboardView(AdminRequiredMixin,TemplateView):
     template_name = 'dashboard/base/admindashboard.html'
     login_url = '/login/'
-    redirect_field_name = 'admin_dashboard'
+    redirect_field_name = 'admin_dashboard' 
 
-# @login_required(login_url='login')
-# def admindashboard(request):
-#     return render(request, 'dashboard/base/admindashboard.html')
+
     
 
 # rooms
