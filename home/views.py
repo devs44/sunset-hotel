@@ -334,13 +334,8 @@ class SubscriptionView(View):
     template_name = 'home/base/footer.html'
     form_class = SubscriptionForm
 
-    # def get(self, request, *args, **kwargs):
-    #     pass
-    #     return HttpResponseRedirect(self.request.path_info)
-
     def post(self, request, *args, **kwargs):
         email = self.request.POST.get('email')
-        # print(email, 33333333333333333)
         if Subscription.objects.filter(email=email).exists():
             messages.warning(request, "Wow, Already Subscribed.")
 
