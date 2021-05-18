@@ -79,7 +79,11 @@ class RoomListView(AdminRequiredMixin, DashboardMixin, QuerysetMixin, ListView):
         return queryset
 
 
+<<<<<<< HEAD
+class RoomCreateView(AdminRequiredMixin,DashboardMixin, CreateView):
+=======
 class RoomCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/room/roomcreate.html'
     form_class = RoomForm
     success_url = reverse_lazy('dashboard:room_list')
@@ -94,7 +98,11 @@ class RoomCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
         return super().form_valid(form)
 
 
+<<<<<<< HEAD
+class RoomUpdateView(AdminRequiredMixin,DashboardMixin, UpdateView):
+=======
 class RoomUpdateView(AdminRequiredMixin, DashboardMixin, UpdateView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/room/roomcreate.html'
     model = Room
     form_class = RoomForm
@@ -110,22 +118,34 @@ class RoomUpdateView(AdminRequiredMixin, DashboardMixin, UpdateView):
         return super().form_valid(form)
 
 
+<<<<<<< HEAD
+class RoomDetailView(AdminRequiredMixin,DashboardMixin, DetailView):
+=======
 class RoomDetailView(AdminRequiredMixin, DashboardMixin, DetailView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/room/roomdetail.html'
     model = Room
     context_object_name = 'roomdetail'
     login_url = '/login/'
     redirect_field_name = 'room_detail'
 
+<<<<<<< HEAD
+class RoomDeleteView(AdminRequiredMixin,DeleteMixin, DashboardMixin, DeleteView):
+=======
 
 class RoomDeleteView(AdminRequiredMixin, DeleteMixin, DashboardMixin, DeleteView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     model = Room
     success_url = reverse_lazy('dashboard:room_list')
     login_url = '/login/'
     redirect_field_name = 'room_list'
 
+<<<<<<< HEAD
+class RoomCategoryListView(AdminRequiredMixin,QuerysetMixin, DashboardMixin, ListView):
+=======
 
 class RoomCategoryListView(AdminRequiredMixin, QuerysetMixin, DashboardMixin, ListView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/room_category/roomcategory.html'
     model = Room_Category
     paginate_by = 10
@@ -142,13 +162,21 @@ class RoomCategoryListView(AdminRequiredMixin, QuerysetMixin, DashboardMixin, Li
         return queryset
 
 
+<<<<<<< HEAD
+class RoomCategoryCreateView(AdminRequiredMixin,DashboardMixin, CreateView):
+=======
 class RoomCategoryCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/room_category/roomcategorycreate.html'
     form_class = RoomCategoryForm
     success_url = reverse_lazy('dashboard:room_category')
 
 
+<<<<<<< HEAD
+class RoomCategoryUpdateView(AdminRequiredMixin,DashboardMixin, UpdateView):
+=======
 class RoomCategoryUpdateView(AdminRequiredMixin, DashboardMixin, UpdateView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/room_category/roomcategorycreate.html'
     model = Room_Category
     form_class = RoomCategoryForm
@@ -157,7 +185,11 @@ class RoomCategoryUpdateView(AdminRequiredMixin, DashboardMixin, UpdateView):
 # Feature
 
 
+<<<<<<< HEAD
+class FeatureListView(AdminRequiredMixin,DashboardMixin, QuerysetMixin, ListView):
+=======
 class FeatureListView(AdminRequiredMixin, DashboardMixin, QuerysetMixin, ListView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/feature/feature.html'
     model = Feature
     paginate_by = 10
@@ -174,59 +206,95 @@ class FeatureListView(AdminRequiredMixin, DashboardMixin, QuerysetMixin, ListVie
         return queryset
 
 
+<<<<<<< HEAD
+class FeatureCreateView(AdminRequiredMixin,DashboardMixin, CreateView):
+=======
 class FeatureCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/feature/featurecreate.html'
     form_class = FeatureForm
     success_url = reverse_lazy('dashboard:feature_list')
 
 
+<<<<<<< HEAD
+class FeatureUpdateView(AdminRequiredMixin,DashboardMixin, UpdateView):
+=======
 class FeatureUpdateView(AdminRequiredMixin, DashboardMixin, UpdateView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/feature/featurecreate.html'
     model = Feature
     form_class = FeatureForm
     success_url = reverse_lazy('dashboard:feature_list')
 
 
+<<<<<<< HEAD
+class FeatureDeleteView(AdminRequiredMixin,DashboardMixin, DeleteMixin, DeleteView):
+=======
 class FeatureDeleteView(AdminRequiredMixin, DashboardMixin, DeleteMixin, DeleteView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     model = Feature
     success_url = reverse_lazy('dashboard:feature_list')
 
 
+<<<<<<< HEAD
+class RoomCategoryDelete(AdminRequiredMixin,DeleteMixin, DashboardMixin, DeleteView):
+=======
 class RoomCategoryDelete(AdminRequiredMixin, DeleteMixin, DashboardMixin, DeleteView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/room_category/roomcategorydelete.html'
     model = Room_Category
     success_url = reverse_lazy('dashboard:room_category')
 
 
 # Image
+<<<<<<< HEAD
+class ImageListView(AdminRequiredMixin,LoginRequiredMixin,QuerysetMixin, DashboardMixin, ListView):
+=======
 class ImageListView(AdminRequiredMixin, QuerysetMixin, DashboardMixin, ListView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/gallery/imagelist.html'
     model = RoomImage
     login_url = '/login/'
     redirect_field_name = 'image_list'
 
 
+<<<<<<< HEAD
+class ImageCreateView(AdminRequiredMixin,DashboardMixin, CreateView):
+=======
 class ImageCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/gallery/imagecreate.html'
     form_class = ImageForm
     success_url = reverse_lazy('dashboard:image_list')
 
 
+<<<<<<< HEAD
+class ImageUpdateView(AdminRequiredMixin,DashboardMixin, UpdateView):
+=======
 class ImageUpdateView(AdminRequiredMixin, DashboardMixin, UpdateView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/gallery/imagecreate.html'
     model = RoomImage
     form_class = ImageForm
     success_url = reverse_lazy('dashboard:image_list')
 
 
+<<<<<<< HEAD
+class ImageDeleteView(AdminRequiredMixin,DeleteMixin, DashboardMixin, DeleteView):
+=======
 class ImageDeleteView(AdminRequiredMixin, DeleteMixin, DashboardMixin, DeleteView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     model = RoomImage
     success_url = reverse_lazy('dashboard:image_list')
 
 # event
 
 
+<<<<<<< HEAD
+class EventListView(AdminRequiredMixin,DashboardMixin, QuerysetMixin, ListView):
+=======
 class EventListView(AdminRequiredMixin, DashboardMixin, QuerysetMixin, ListView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/event/eventlist.html'
     model = Event
     paginate_by = 5
@@ -242,20 +310,32 @@ class EventListView(AdminRequiredMixin, DashboardMixin, QuerysetMixin, ListView)
         return queryset
 
 
+<<<<<<< HEAD
+class EventCreateView(AdminRequiredMixin,DashboardMixin, CreateView):
+=======
 class EventCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/event/eventcreate.html'
     form_class = EventForm
     success_url = reverse_lazy('dashboard:event_list')
 
 
+<<<<<<< HEAD
+class EventUpdateView(AdminRequiredMixin,DashboardMixin, UpdateView):
+=======
 class EventUpdateView(AdminRequiredMixin, DashboardMixin, UpdateView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/event/eventcreate.html'
     model = Event
     form_class = EventForm
     success_url = reverse_lazy('dashboard:event_list')
 
 
+<<<<<<< HEAD
+class EventDetailView(AdminRequiredMixin,DashboardMixin, DetailView):
+=======
 class EventDetailView(AdminRequiredMixin, DashboardMixin, DetailView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/event/eventdetail.html'
     model = Event
     context_object_name = 'eventdetail'
@@ -267,14 +347,22 @@ class EventDetailView(AdminRequiredMixin, DashboardMixin, DetailView):
         return obj
 
 
+<<<<<<< HEAD
+class EventDeleteView(AdminRequiredMixin,DeleteMixin, DashboardMixin, DeleteView):
+=======
 class EventDeleteView(AdminRequiredMixin, DeleteMixin, DashboardMixin, DeleteView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     model = Event
     success_url = reverse_lazy('dashboard:event_list')
 
 # event comment
 
 
+<<<<<<< HEAD
+class EventCommentTemplateView(AdminRequiredMixin,QuerysetMixin, DashboardMixin, ListView):
+=======
 class EventCommentTemplateView(AdminRequiredMixin, QuerysetMixin, DashboardMixin, ListView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/event_comment/eventcommentlist.html'
     model = Comment
     paginate_by = 5
@@ -292,26 +380,42 @@ class EventCommentTemplateView(AdminRequiredMixin, QuerysetMixin, DashboardMixin
         return queryset
 
 
+<<<<<<< HEAD
+class EventCommentCreateView(AdminRequiredMixin,DashboardMixin, CreateView):
+=======
 class EventCommentCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/event_comment/eventcommentcreate.html'
     form_class = EventCommentForm
     success_url = reverse_lazy('dashboard:eventcomment_list')
 
 
+<<<<<<< HEAD
+class EventCommentUpdateView(AdminRequiredMixin,DashboardMixin, UpdateView):
+=======
 class EventCommentUpdateView(AdminRequiredMixin, DashboardMixin, UpdateView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/event_comment/eventcommentcreate.html'
     model = Comment
     form_class = EventCommentForm
     success_url = reverse_lazy('dashboard:eventcomment_list')
 
 
+<<<<<<< HEAD
+class EventCommentDetailView(AdminRequiredMixin,DashboardMixin, DetailView):
+=======
 class EventCommentDetailView(AdminRequiredMixin, DashboardMixin, DetailView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/event_comment/eventcommentdetail.html'
     model = Comment
     context_object_name = 'eventdetail'
 
 
+<<<<<<< HEAD
+class EventCommentDeleteView(AdminRequiredMixin,DeleteMixin, DeleteView):
+=======
 class EventCommentDeleteView(AdminRequiredMixin, DeleteMixin, DeleteView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     model = Comment
     success_url = reverse_lazy('dashboard:eventcomment_list')
 
@@ -326,7 +430,11 @@ class RoomSearchView(View):
 
 
 # news
+<<<<<<< HEAD
+class NewsListView(AdminRequiredMixin,QuerysetMixin, DashboardMixin, ListView):
+=======
 class NewsListView(AdminRequiredMixin, QuerysetMixin, DashboardMixin, ListView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     model = News
     template_name = 'dashboard/news/list.html'
     paginate_by = 5
@@ -343,33 +451,53 @@ class NewsListView(AdminRequiredMixin, QuerysetMixin, DashboardMixin, ListView):
         return queryset
 
 
+<<<<<<< HEAD
+class NewsCreateView(AdminRequiredMixin,DashboardMixin, CreateView):
+=======
 class NewsCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/news/form.html'
     form_class = NewsForm
     success_url = reverse_lazy('dashboard:news_list')
 
 
+<<<<<<< HEAD
+class NewsUpdateView(AdminRequiredMixin,DashboardMixin, UpdateView):
+=======
 class NewsUpdateView(AdminRequiredMixin, DashboardMixin, UpdateView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/news/form.html'
     model = News
     form_class = NewsForm
     success_url = reverse_lazy('dashboard:news_list')
 
 
+<<<<<<< HEAD
+class NewsDetailView(AdminRequiredMixin,DashboardMixin, DetailView):
+=======
 class NewsDetailView(AdminRequiredMixin, DashboardMixin, DetailView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/news/detail.html'
     model = News
     context_object_name = 'newsdetail'
 
 
+<<<<<<< HEAD
+class NewsDeleteView(AdminRequiredMixin,DeleteMixin, DashboardMixin, DeleteView):
+=======
 class NewsDeleteView(AdminRequiredMixin, DeleteMixin, DashboardMixin, DeleteView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     model = News
     success_url = reverse_lazy('dashboard:news_list')
 
 
 # newscomments
 
+<<<<<<< HEAD
+class NewsCommentTemplateView(AdminRequiredMixin,QuerysetMixin, DashboardMixin, ListView):
+=======
 class NewsCommentTemplateView(AdminRequiredMixin, QuerysetMixin, DashboardMixin, ListView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     model = Comment
     template_name = 'dashboard/news_comment/list.html'
     context_object_name = 'news'
@@ -389,32 +517,52 @@ class NewsCommentTemplateView(AdminRequiredMixin, QuerysetMixin, DashboardMixin,
         return queryset
 
 
+<<<<<<< HEAD
+class NewsCommentCreateView(AdminRequiredMixin,DashboardMixin, CreateView):
+=======
 class NewsCommentCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/news_comment/form.html'
     form_class = NewsCommentForm
     success_url = reverse_lazy('dashboard:news_comment_list')
 
 
+<<<<<<< HEAD
+class NewsCommentUpdateView(AdminRequiredMixin,DashboardMixin, UpdateView):
+=======
 class NewsCommentUpdateView(AdminRequiredMixin, DashboardMixin, UpdateView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/news_comment/form.html'
     model = Comment
     form_class = NewsCommentForm
     success_url = reverse_lazy('dashboard:news_comment_list')
 
 
+<<<<<<< HEAD
+class NewsCommentDetailView(AdminRequiredMixin,DetailView):
+=======
 class NewsCommentDetailView(AdminRequiredMixin, DetailView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/news_comment/detail.html'
     model = Comment
     context_object_name = 'commentdetail'
 
 
+<<<<<<< HEAD
+class NewsCommentDeleteView(AdminRequiredMixin,DeleteMixin, DeleteView):
+=======
 class NewsCommentDeleteView(AdminRequiredMixin, DeleteMixin, DeleteView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     model = Comment
     success_url = reverse_lazy('dashboard:news_comment_list')
 
 
 # testimonial
+<<<<<<< HEAD
+class TestimonialListView(AdminRequiredMixin,QuerysetMixin, ListView):
+=======
 class TestimonialListView(AdminRequiredMixin, QuerysetMixin, ListView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     model = Testomonial
     template_name = 'dashboard/testimonial/list.html'
     paginate_by = 5
@@ -436,33 +584,53 @@ class TestimonialListView(AdminRequiredMixin, QuerysetMixin, ListView):
         return queryset
 
 
+<<<<<<< HEAD
+class TestimonialCreateView(AdminRequiredMixin,DashboardMixin, CreateView):
+=======
 class TestimonialCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/testimonial/form.html'
     form_class = TestimonialForm
     success_url = reverse_lazy('dashboard:testimonial_list')
 
 
+<<<<<<< HEAD
+class TestimonialUpdateView(AdminRequiredMixin,DashboardMixin, UpdateView):
+=======
 class TestimonialUpdateView(AdminRequiredMixin, DashboardMixin, UpdateView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/testimonial/form.html'
     model = Testomonial
     form_class = TestimonialForm
     success_url = reverse_lazy('dashboard:testimonial_list')
 
 
+<<<<<<< HEAD
+class TestimonialDetailView(AdminRequiredMixin,DashboardMixin, DetailView):
+=======
 class TestimonialDetailView(AdminRequiredMixin, DashboardMixin, DetailView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/testimonial/detail.html'
     model = Testomonial
     context_object_name = 'testimonialdetail'
 
 
+<<<<<<< HEAD
+class TestimonialDeleteView(AdminRequiredMixin,DashboardMixin, DeleteMixin, DeleteView):
+=======
 class TestimonialDeleteView(AdminRequiredMixin, DashboardMixin, DeleteMixin, DeleteView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     model = Testomonial
     success_url = reverse_lazy('dashboard:testimonial_list')
 
 # message
 
 
+<<<<<<< HEAD
+class MessageListView(AdminRequiredMixin,QuerysetMixin, DashboardMixin, ListView):
+=======
 class MessageListView(AdminRequiredMixin, QuerysetMixin, DashboardMixin, ListView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     model = Message
     template_name = 'dashboard/message/list.html'
     paginate_by = 5
@@ -479,7 +647,11 @@ class MessageListView(AdminRequiredMixin, QuerysetMixin, DashboardMixin, ListVie
         return queryset
 
 
+<<<<<<< HEAD
+class MessageCreateView(AdminRequiredMixin,DashboardMixin, CreateView):
+=======
 class MessageCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/message/form.html'
     form_class = MessageForm
     success_url = reverse_lazy('dashboard:message_list')
@@ -500,27 +672,43 @@ class MessageCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
         return super().form_valid(form)
 
 
+<<<<<<< HEAD
+class MessageUpdateView(AdminRequiredMixin,DashboardMixin, UpdateView):
+=======
 class MessageUpdateView(AdminRequiredMixin, DashboardMixin, UpdateView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/message/form.html'
     model = Message
     form_class = MessageForm
     success_url = reverse_lazy('dashboard:message_list')
 
 
+<<<<<<< HEAD
+class MessageDetailView(AdminRequiredMixin,DashboardMixin, DetailView):
+=======
 class MessageDetailView(AdminRequiredMixin, DashboardMixin, DetailView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/message/detail.html'
     model = Message
     context_object_name = 'messagedetail'
 
 
+<<<<<<< HEAD
+class MessageDeleteView(AdminRequiredMixin,DeleteMixin, DeleteView):
+=======
 class MessageDeleteView(AdminRequiredMixin, DeleteMixin, DeleteView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     model = Message
     success_url = reverse_lazy('dashboard:message_list')
 
 # reservation
 
 
+<<<<<<< HEAD
+class ReservationListView(AdminRequiredMixin,QuerysetMixin, DashboardMixin, ListView):
+=======
 class ReservationListView(AdminRequiredMixin, QuerysetMixin, DashboardMixin, ListView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     model = Reservation
     template_name = 'dashboard/reservation/list.html'
     login_url = '/login/'
@@ -547,7 +735,11 @@ class ReservationListView(AdminRequiredMixin, QuerysetMixin, DashboardMixin, Lis
         return queryset
 
 
+<<<<<<< HEAD
+class ReservationCreateView(AdminRequiredMixin,DashboardMixin, CreateView):
+=======
 class ReservationCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/reservation/form.html'
     form_class = ReservationForm
     success_url = reverse_lazy('dashboard:reservation_list')
@@ -559,20 +751,32 @@ class ReservationCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
     #     return super().dispatch(request, *args, **kwargs)
 
 
+<<<<<<< HEAD
+class ReservationUpdateView(AdminRequiredMixin,DashboardMixin, UpdateView):
+=======
 class ReservationUpdateView(AdminRequiredMixin, DashboardMixin, UpdateView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/reservation/form.html'
     model = Reservation
     form_class = ReservationForm
     success_url = reverse_lazy('dashboard:reservation_list')
 
 
+<<<<<<< HEAD
+class ReservationDetailView(AdminRequiredMixin,DashboardMixin, DetailView):
+=======
 class ReservationDetailView(AdminRequiredMixin, DashboardMixin, DetailView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/reservation/detail.html'
     model = Reservation
     context_object_name = 'reservationdetail'
 
 
+<<<<<<< HEAD
+class ReservationDeleteView(AdminRequiredMixin,DeleteMixin, DashboardMixin, DeleteView):
+=======
 class ReservationDeleteView(AdminRequiredMixin, DeleteMixin, DashboardMixin, DeleteView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     model = Reservation
     success_url = reverse_lazy('dashboard:reservation_list')
 
@@ -585,7 +789,11 @@ class AboutView(AdminRequiredMixin, QuerysetMixin, DashboardMixin, ListView):
 # About
 
 
+<<<<<<< HEAD
+class AboutCreateView(AdminRequiredMixin,DashboardMixin, CreateView):
+=======
 class AboutCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/about/aboutcreate.html'
     form_class = AboutForm
     success_url = reverse_lazy('dashboard:about_list')
@@ -593,27 +801,43 @@ class AboutCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
     redirect_field_name = 'about_list'
 
 
+<<<<<<< HEAD
+class AboutUpdateView(AdminRequiredMixin,DashboardMixin, UpdateView):
+=======
 class AboutUpdateView(AdminRequiredMixin, DashboardMixin, UpdateView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/about/aboutcreate.html'
     form_class = AboutForm
     model = About
     success_url = reverse_lazy('dashboard:about_list')
 
 
+<<<<<<< HEAD
+class AboutDetailView(AdminRequiredMixin,DashboardMixin, DetailView):
+=======
 class AboutDetailView(AdminRequiredMixin, DashboardMixin, DetailView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/about/aboutdetail.html'
     model = About
     context_object_name = 'aboutdetail'
 
 
+<<<<<<< HEAD
+class AboutDeleteView(AdminRequiredMixin,DeleteMixin, DashboardMixin, DeleteView):
+=======
 class AboutDeleteView(AdminRequiredMixin, DeleteMixin, DashboardMixin, DeleteView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     model = About
     success_url = reverse_lazy('dashboard:about_list')
 
 
 # Service Type
 
+<<<<<<< HEAD
+class ServiceListView (AdminRequiredMixin,QuerysetMixin, DashboardMixin, ListView):
+=======
 class ServiceListView (AdminRequiredMixin, QuerysetMixin, DashboardMixin, ListView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/services-type/list.html'
     model = Services_type
     login_url = '/login/'
@@ -631,33 +855,53 @@ class ServiceListView (AdminRequiredMixin, QuerysetMixin, DashboardMixin, ListVi
         return queryset
 
 
+<<<<<<< HEAD
+class ServiceCreateView(AdminRequiredMixin,DashboardMixin, CreateView):
+=======
 class ServiceCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/services-type/form.html'
     form_class = ServiceTypeForm
     success_url = reverse_lazy('dashboard:service_type_list')
 
 
+<<<<<<< HEAD
+class ServiceUpdateView(AdminRequiredMixin,DashboardMixin, UpdateView):
+=======
 class ServiceUpdateView(AdminRequiredMixin, DashboardMixin, UpdateView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/services-type/form.html'
     model = Services_type
     form_class = ServiceTypeForm
     success_url = reverse_lazy('dashboard:service_type_list')
 
 
+<<<<<<< HEAD
+class ServiceDetailView(AdminRequiredMixin,DashboardMixin, DetailView):
+=======
 class ServiceDetailView(AdminRequiredMixin, DashboardMixin, DetailView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/services-type/detail.html'
     model = Services_type
     context_object_name = 'servicedetail'
 
 
+<<<<<<< HEAD
+class ServiceDeleteView(AdminRequiredMixin,DeleteMixin, DashboardMixin, DeleteView):
+=======
 class ServiceDeleteView(AdminRequiredMixin, DeleteMixin, DashboardMixin, DeleteView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     model = Services_type
     success_url = reverse_lazy('dashboard:service_type_list')
 
 
 # service video
 
+<<<<<<< HEAD
+class ServiceVideoListView (AdminRequiredMixin,QuerysetMixin, DashboardMixin, ListView):
+=======
 class ServiceVideoListView (AdminRequiredMixin, QuerysetMixin, DashboardMixin, ListView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/service-video/list.html'
     model = Services_description
     context_object_name = 'servicevideo'
@@ -676,33 +920,53 @@ class ServiceVideoListView (AdminRequiredMixin, QuerysetMixin, DashboardMixin, L
         return queryset
 
 
+<<<<<<< HEAD
+class ServiceVideoCreateView(AdminRequiredMixin,DashboardMixin, CreateView):
+=======
 class ServiceVideoCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/service-video/form.html'
     form_class = ServiceVideoForm
     success_url = reverse_lazy('dashboard:service_video_list')
 
 
+<<<<<<< HEAD
+class ServiceVideoUpdateView(AdminRequiredMixin,DashboardMixin, UpdateView):
+=======
 class ServiceVideoUpdateView(AdminRequiredMixin, DashboardMixin, UpdateView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/service-video/form.html'
     model = Services_description
     form_class = ServiceVideoForm
     success_url = reverse_lazy('dashboard:service_video_list')
 
 
+<<<<<<< HEAD
+class ServiceVideoDetailView(AdminRequiredMixin,DashboardMixin, DetailView):
+=======
 class ServiceVideoDetailView(AdminRequiredMixin, DashboardMixin, DetailView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/service-video/detail.html'
     model = Services_description
     context_object_name = 'servicevideodetail'
 
 
+<<<<<<< HEAD
+class ServiceVideoDeleteView(AdminRequiredMixin,DeleteMixin, DashboardMixin, DeleteView):
+=======
 class ServiceVideoDeleteView(AdminRequiredMixin, DeleteMixin, DashboardMixin, DeleteView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     model = Services_description
     success_url = reverse_lazy('dashboard:service_video_list')
 
 
 # contact
 
+<<<<<<< HEAD
+class ContactListView(AdminRequiredMixin,QuerysetMixin, ListView):
+=======
 class ContactListView(AdminRequiredMixin, QuerysetMixin, ListView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     model = Contact
     template_name = 'dashboard/contact/list.html'
     context_object_name = 'contact'
@@ -710,31 +974,52 @@ class ContactListView(AdminRequiredMixin, QuerysetMixin, ListView):
     redirect_field_name = 'contact_list'
 
 
+<<<<<<< HEAD
+class ContactCreateView(AdminRequiredMixin,CreateView):
+=======
 class ContactCreateView(AdminRequiredMixin, CreateView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/contact/form.html'
     form_class = ContactForm
     success_url = reverse_lazy('dashboard:contact_list')
 
 
+<<<<<<< HEAD
+class ContactUpdateView(AdminRequiredMixin,UpdateView):
+=======
 class ContactUpdateView(AdminRequiredMixin, UpdateView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/contact/form.html'
     model = Contact
     form_class = ContactForm
     success_url = reverse_lazy('dashboard:contact_list')
 
 
+<<<<<<< HEAD
+class ContactDetailView(AdminRequiredMixin,DetailView):
+=======
 class ContactDetailView(AdminRequiredMixin, DetailView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/contact/detail.html'
     model = Contact
     context_object_name = 'contactdetail'
 
 
+<<<<<<< HEAD
+class ContactDeleteView(AdminRequiredMixin,DeleteMixin, DeleteView):
+    model = Contact
+    success_url = reverse_lazy('dashboard:contact_list')
+
+# room comment
+class RoomCommentListView(AdminRequiredMixin,DashboardMixin, ListView):
+=======
 class ContactDeleteView(AdminRequiredMixin, DeleteMixin, DeleteView):
     model = Contact
     success_url = reverse_lazy('dashboard:contact_list')
 
 
 class RoomCommentListView(AdminRequiredMixin, DashboardMixin, ListView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/room_comment/list.html'
     model = Comment
     paginate_by = 5
@@ -752,25 +1037,41 @@ class RoomCommentListView(AdminRequiredMixin, DashboardMixin, ListView):
         return queryset
 
 
+<<<<<<< HEAD
+class RoomCommentCreateView(AdminRequiredMixin,DashboardMixin, CreateView):
+=======
 class RoomCommentCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/room_comment/form.html'
     form_class = RoomCommentForm
     success_url = reverse_lazy('dashboard:room_comment_list')
 
 
+<<<<<<< HEAD
+class RoomCommentUpdateView(AdminRequiredMixin,DashboardMixin, UpdateView):
+=======
 class RoomCommentUpdateView(AdminRequiredMixin, DashboardMixin, UpdateView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/room_comment/form.html'
     model = Comment
     form_class = RoomCommentForm
     success_url = reverse_lazy('dashboard:room_comment_list')
 
 
+<<<<<<< HEAD
+class RoomCommentDetailView(AdminRequiredMixin,DashboardMixin, DetailView):
+=======
 class RoomCommentDetailView(AdminRequiredMixin, DashboardMixin, DetailView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     template_name = 'dashboard/room_comment/detail.html'
     model = Comment
     context_object_name = 'roomdetail'
 
 
+<<<<<<< HEAD
+class RoomCommentDeleteView(AdminRequiredMixin,DeleteMixin, DashboardMixin, DeleteView):
+=======
 class RoomCommentDeleteView(AdminRequiredMixin, DeleteMixin, DashboardMixin, DeleteView):
+>>>>>>> 1ee5982f31d8bd5a48cbe903bcc963c61084d3f7
     model = Comment
     success_url = reverse_lazy('dashboard:room_comment_list')
