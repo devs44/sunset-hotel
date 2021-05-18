@@ -1,4 +1,3 @@
-from django.contrib.auth.decorators import login_required
 from .mixin import *
 from .forms import *
 from django.shortcuts import render, redirect, reverse
@@ -15,8 +14,6 @@ from django.views.generic import TemplateView, DetailView, FormView, View, ListV
 from .models import Room, News, Comment, RoomImage, Event, Room_Category, Feature, Image, Testomonial, Message, Reservation, Services_type, Services_description, Contact,  About
 from django.shortcuts import render, redirect
 
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
@@ -52,8 +49,6 @@ class LogoutView(View):
 class AdminDashboardView(AdminRequiredMixin, TemplateView):
     template_name = 'dashboard/base/admindashboard.html'
 
-
-    
 
 # rooms
 class RoomListView(AdminRequiredMixin, DashboardMixin, QuerysetMixin, ListView):
@@ -447,7 +442,7 @@ class TestimonialCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
     success_url = reverse_lazy('dashboard:testimonial_list')
 
 
-class TestimonialUpdateView(AdminRequiredMixin,DashboardMixin, UpdateView):
+class TestimonialUpdateView(AdminRequiredMixin, DashboardMixin, UpdateView):
     template_name = 'dashboard/testimonial/form.html'
     model = Testomonial
     form_class = TestimonialForm
@@ -623,7 +618,6 @@ class ServiceListView (AdminRequiredMixin, QuerysetMixin, DashboardMixin, ListVi
     model = Services_type
     login_url = '/login/'
     redirect_field_name = 'service_type_list'
-
 
     def get_queryset(self):
         queryset = super().get_queryset()

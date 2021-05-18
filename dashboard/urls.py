@@ -6,9 +6,10 @@ app_name = 'dashboard'
 urlpatterns = [
     path('login/', LoginView.as_view(), name="admin_login"),
     path('logout/', LogoutView.as_view(), name="admin_logout"),
-    path('dashboard/', login_required(AdminDashboardView.as_view()), name="admin_dashboard"),
-#     path('dashboard/', views.admindashboard, name='admin_dashboard'),
-   
+    path('dashboard/', AdminDashboardView.as_view(),
+         name="admin_dashboard"),
+    #     path('dashboard/', views.admindashboard, name='admin_dashboard'),
+
     # room
     path('room/list/', RoomListView.as_view(), name='room_list'),
     path('room/create/', RoomCreateView.as_view(), name='room_create'),
@@ -42,7 +43,7 @@ urlpatterns = [
     path('image/create/', ImageCreateView.as_view(), name='image_create'),
     path('image/<int:pk>/update/', ImageUpdateView.as_view(), name='image_update'),
     path('image/<int:pk>/delete/', ImageDeleteView.as_view(), name='image_delete'),
-#     path('image/<int:pk>/detail/', ImageDetailView.as_view(), name='image_detail'),
+    #     path('image/<int:pk>/detail/', ImageDetailView.as_view(), name='image_detail'),
 
     # news
 
