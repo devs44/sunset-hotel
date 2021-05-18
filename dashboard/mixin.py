@@ -40,3 +40,4 @@ class AdminRequiredMixin(object):
 
         return super().dispatch(request, *args, *kwargs)
 
+    
