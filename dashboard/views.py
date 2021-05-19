@@ -732,6 +732,11 @@ class ContactDetailView(AdminRequiredMixin, DetailView):
 class ContactDeleteView(AdminRequiredMixin, DeleteMixin, DeleteView):
     model = Contact
     success_url = reverse_lazy('dashboard:contact_list')
+<<<<<<< HEAD
+=======
+
+# room comment
+>>>>>>> 1623e9eb6469836d365ba0df25294d12b44b8007
 
 
 class RoomCommentListView(AdminRequiredMixin, DashboardMixin, ListView):

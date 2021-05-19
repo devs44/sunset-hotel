@@ -331,11 +331,8 @@ class GalleryListView(ListView):
 #             keyword = request.GET['key']
 
 class SubscriptionView(View):
-    template_name = 'home/base/footer.html'
-    form_class = SubscriptionForm
-
     def post(self, request, *args, **kwargs):
-        email = self.request.POST.get('email')
+        email = self.request.POST.get('s_email')
         if Subscription.objects.filter(email=email).exists():
             messages.warning(request, "Wow, Already Subscribed.")
 
@@ -346,17 +343,18 @@ class SubscriptionView(View):
             subject = "Thank you for joining Us"
             from_email = settings.EMAIL_HOST_USER
             to_email = [email]
-            with open(settings.BASE_DIR / "/home/dreamer26/django/hotel ms/hotelproject/hms/home/templates/home/newsletter/newsletter.txt") as f:
-                signup_message = f.read()
-            message = EmailMultiAlternatives(
-                subject=subject, body=signup_message, from_email=from_email, to=to_email)
+            # with open(settings.BASE_DIR / "/home/dreamer26/django/hotel ms/hotelproject/hms/home/templates/home/newsletter/newsletter.txt") as f:
+            #     signup_message = f.read()
             html_template = get_template(
                 "home/newsletter/newsletter.html").render()
+            plain_text = get_template(
+                "home/newsletter/newsletter.txt").render()
+            message = EmailMultiAlternatives(
+                subject, plain_text, from_email, to_email)
+
             message.attach_alternative(html_template, "text/html")
             message.send()
-        return redirect('home')
-        # return HttpResponseRedirect(self.request.path_info)
-
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 class UnSubscriptionView(View):
     def post(self, request, *args, **kwargs):
