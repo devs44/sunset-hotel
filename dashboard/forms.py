@@ -37,7 +37,7 @@ class StaffLoginForm(forms.Form):
 class RoomForm(FormControlMixin, forms.ModelForm):
     more_images = forms.FileField(required=False, widget=forms.FileInput(attrs={
         'class': 'select2 feature-select',
-        'multiple': 'multiple'
+        'multiple': 'multiple',
 
     }))
 
