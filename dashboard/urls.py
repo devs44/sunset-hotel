@@ -9,6 +9,8 @@ urlpatterns = [
     path('dashboard/', AdminDashboardView.as_view(),
          name="admin_dashboard"),
     #     path('dashboard/', views.admindashboard, name='admin_dashboard'),
+    path('updatepassword/', PasswordsChangeView.as_view(), name="update_password"),
+  
 
     # room
     path('room/list/', RoomListView.as_view(), name='room_list'),
@@ -174,5 +176,12 @@ urlpatterns = [
          RoomCommentDeleteView.as_view(), name='room_comment_delete'),
     path('room/comment/<int:pk>/detail/',
          RoomCommentDetailView.as_view(), name='room_comment_detail'),
+
+     # newsletter
+
+     path('newsletter/list/', NewsletterListView.as_view(), name='newsletter_list'),
+     path('newsletter/<int:pk>/delete/', NewsletterDeleteView.as_view(), name='newsletter_delete'),
+     
+     
 
 ]

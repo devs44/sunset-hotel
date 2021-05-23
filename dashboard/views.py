@@ -1,19 +1,23 @@
+from django.views import generic
 from .mixin import *
 from .forms import *
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User, Group
 from django.db.models import Q
+from django.contrib.auth.hashers import check_password
 
 # from django.contrib import messages
 
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, DetailView, FormView, View, ListView, CreateView, UpdateView, DeleteView
+from django.contrib.auth.views import PasswordChangeView
 
 
 from .models import Room, News, Comment, RoomImage, Event, Room_Category, Feature, Image, Testomonial, Message, Reservation, Services_type, Services_description, Contact,  About
 from django.shortcuts import render, redirect
 
+from django.contrib.auth.forms import  PasswordChangeForm
 # Create your views here.
 
 
@@ -44,6 +48,20 @@ class LogoutView(View):
     def get(self, request):
         logout(request)
         return redirect('/login/')
+
+class PasswordsChangeView(FormView):
+    template_name = 'dashboard/password/password_change.html'
+    form_class = ChangePasswordForm
+    success_url = reverse_lazy('dashboard:admin_login')
+
+    def get_form(self):
+        form = super().get_form()
+        form.set_user(self.request.user)
+        return form
+
+    
+    
+
 
 
 class AdminDashboardView(AdminRequiredMixin, TemplateView):
@@ -732,11 +750,8 @@ class ContactDetailView(AdminRequiredMixin, DetailView):
 class ContactDeleteView(AdminRequiredMixin, DeleteMixin, DeleteView):
     model = Contact
     success_url = reverse_lazy('dashboard:contact_list')
-<<<<<<< HEAD
-=======
 
 # room comment
->>>>>>> 1623e9eb6469836d365ba0df25294d12b44b8007
 
 
 class RoomCommentListView(AdminRequiredMixin, DashboardMixin, ListView):
@@ -779,3 +794,15 @@ class RoomCommentDetailView(AdminRequiredMixin, DashboardMixin, DetailView):
 class RoomCommentDeleteView(AdminRequiredMixin, DeleteMixin, DashboardMixin, DeleteView):
     model = Comment
     success_url = reverse_lazy('dashboard:room_comment_list')
+
+
+#newsletter
+
+class NewsletterListView(AdminRequiredMixin, DashboardMixin, ListView):
+    template_name = 'dashboard/newsletter/list.html'
+    model = Subscription
+    context_object_name = 'email'
+
+class NewsletterDeleteView(AdminRequiredMixin, DeleteMixin, DashboardMixin, DeleteView):
+    model = Subscription
+    success_url = reverse_lazy('dashboard:newsletter_list')

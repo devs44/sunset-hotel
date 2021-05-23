@@ -4,6 +4,8 @@ from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django_toggle_switch_widget.widgets import DjangoToggleSwitchWidget
 
+from django.utils.translation import gettext as _
+
 
 class FormControlMixin:
     def __init__(self, *args, **kwargs):
@@ -26,13 +28,40 @@ class StaffLoginForm(forms.Form):
         'placeholder': 'Password'
     }))
 
-    # def clean_username(self):
-    #     username = self.cleaned_data.get('username')
-    #     if username in Account.objects.all():
-    #         return username
-    #     else:
-    #         raise ValidationError('')
+class ChangePasswordForm(forms.Form):
+    old_password = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={'class': 'form-control', 'placeholder':  'Password'}))
 
+    new_password1 = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={'class': 'form-control', 'placeholder':  'Password'}))
+
+    new_password2 = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={'class': 'form-control', 'placeholder':  'Password'}))      
+    
+    def set_user(self, user):
+        self.user = user
+        
+    def clean(self):     
+        old_password = self.cleaned_data.get('old_password')
+        valpwd = self.cleaned_data.get('new_password1')
+        valrpwd = self.cleaned_data.get('new_password2')
+        
+        if valpwd != valrpwd:
+            raise forms.ValidationError({
+                'new_password1': 'Password Not Matched'})
+        
+        else:
+            pass
+        return self.cleaned_data
+
+
+
+
+    
+       
 
 class RoomForm(FormControlMixin, forms.ModelForm):
     more_images = forms.FileField(required=False, widget=forms.FileInput(attrs={
