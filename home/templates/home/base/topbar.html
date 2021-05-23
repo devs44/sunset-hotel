@@ -83,7 +83,7 @@
 						    <li><a href="#">Ru</a></li>
 						  </ul>
 						</div> <!-- .lang-menu -->
-						<form class="search-form hidden-xs" role="search" action="">
+						<form action="{% url 'search-result' %}" class="search-form hidden-xs" method="GET" role="search" action="">
 						  <div class="form-group">
 						    <input type="text" class="form-control" placeholder="Search" name="keyword"/>
 						  </div>

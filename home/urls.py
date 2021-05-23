@@ -18,6 +18,7 @@ urlpatterns = [
     path('gallerys/', GalleryListView.as_view(), name="gallerys"),
     path('subscription/', SubscriptionView.as_view(), name='subscription'),
     path('unsubscribe/', UnSubscriptionView.as_view(), name='unsubscription'),
+    path('seach-result/', SearchView.as_view(), name='search-result'),
 
 
 ]

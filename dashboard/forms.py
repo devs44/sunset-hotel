@@ -1,6 +1,7 @@
 from django import forms
 from .models import *
 from django.contrib import messages
+import datetime
 from django.core.exceptions import ValidationError
 from django_toggle_switch_widget.widgets import DjangoToggleSwitchWidget
 
@@ -310,11 +311,11 @@ class ReservationForm(forms.ModelForm):
             }),
             'check_in_date': forms.DateTimeInput(attrs={
                 'class': 'form-control check-date',
-                'placeholder': 'check in date'
+                'placeholder': datetime.date.today()
             }),
             'check_out_date': forms.DateTimeInput(attrs={
                 'class': 'form-control check-date',
-                'placeholder': 'check out date'
+                'placeholder': datetime.date.today()
             }),
             'children': forms.Select(attrs={
                 'class': 'form-control select2',
@@ -358,6 +359,11 @@ class ReservationForm(forms.ModelForm):
             }),
         }
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['children'].choices = self.fields['children'].choices[1:]
+        self.fields['adult'].choices = self.fields['adult'].choices[1:]
+
     def clean(self):
         cleaned_data = super().clean()
         check_in_date = self.cleaned_data.get('check_in_date')
@@ -365,8 +371,12 @@ class ReservationForm(forms.ModelForm):
         selected_room = self.cleaned_data.get('selected_room')
         if check_in_date == '' or check_out_date == '' or selected_room == '':
             raise ValidationError('This field is required')
-        if check_in_date > check_out_date:
-            raise ValidationError("Invalid check-in check-out date")
+        print(check_out_date, check_in_date, 55888888)
+        if check_in_date != None or check_out_date != None:
+            if check_in_date > check_out_date:
+                raise ValidationError("Invalid check-in check-out date")
+        else:
+            pass
 
 
 class AboutForm(FormControlMixin, forms.ModelForm):

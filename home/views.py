@@ -83,8 +83,6 @@ class RoomListView(QuerysetMixin, ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        children = self.request.GET.get('children')
-        adults = self.request.GET.get('adults')
 
         if 'departure_date' in self.request.GET and 'arrival_date' in self.request.GET:
             departure_date = parse_date(
@@ -104,6 +102,14 @@ class RoomListView(QuerysetMixin, ListView):
                     messages.success(
                         self.request, "Welcome"
                     )
+        if 'adults' in self.request.GET or 'children' in self.request.GET:
+            children = int(self.request.GET.get('children'))
+            adults = int(self.request.GET.get('adults'))
+            if children == 1 and adults <= 2:
+                queryset = queryset.filter(Q(room_type__title="Single Room") |
+                                           Q(room_type__title='Double Room'))
+            else:
+                queryset = queryset.all().exclude(room_type__title='Single Room')
 
         return queryset
 
@@ -156,6 +162,7 @@ class ServiceListView(ListView):
         context['ser'] = Services_type.objects.all()
         context['about'] = About.objects.all()
         context['room_count'] = Room.objects.count()
+
         return context
 
 
@@ -356,6 +363,7 @@ class SubscriptionView(View):
             message.send()
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
+
 class UnSubscriptionView(View):
     def post(self, request, *args, **kwargs):
         email = self.request.GET.get('email')
@@ -365,3 +373,7 @@ class UnSubscriptionView(View):
         else:
             messages.error(request, "Invalid email address")
         return HttpResponseRedirect(self.request.path_info)
+
+
+class SearchView(TemplateView):
+    template_name = 'home/search/search-result.html'
