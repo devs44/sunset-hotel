@@ -3,7 +3,7 @@ from .models import *
 from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django_toggle_switch_widget.widgets import DjangoToggleSwitchWidget
-
+from django.contrib.auth.forms import PasswordChangeForm
 from django.utils.translation import gettext as _
 
 
@@ -28,7 +28,7 @@ class StaffLoginForm(forms.Form):
         'placeholder': 'Password'
     }))
 
-class ChangePasswordForm(forms.Form):
+class ChangePasswordForm(PasswordChangeForm):
     old_password = forms.CharField(
         widget=forms.PasswordInput(
             attrs={'class': 'form-control', 'placeholder':  'Password'}))

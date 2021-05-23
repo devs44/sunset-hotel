@@ -57,7 +57,7 @@ class LogoutView(View):
         logout(request)
         return redirect('/login/')
 
-class PasswordsChangeView(View):
+class PasswordsChangeView(PasswordChangeView):
     template_name = 'dashboard/password/password_change.html'
     form_class = ChangePasswordForm
     success_url = reverse_lazy('dashboard:admin_login')
@@ -108,7 +108,7 @@ class PasswordsChangeView(View):
 
 class PasswordResetView(FormView):
     template_name = 'dashboard/auth/reset-password.html'
-    form_class = PasswordResetForm
+    # form_class = PasswordResetForm
     success_url = reverse_lazy('dashboard:user_list')
 
     # def dispatch(self, request, *args, **kwargs):
