@@ -190,6 +190,6 @@ urlpatterns = [
      path('newsletter/list/', NewsletterListView.as_view(), name='newsletter_list'),
      path('newsletter/<int:pk>/delete/', NewsletterDeleteView.as_view(), name='newsletter_delete'),
      
-     
+
 
 ]

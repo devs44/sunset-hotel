@@ -168,12 +168,20 @@
             <p>Contact</p>
           </a>
         </li>
+       
         <li class="nav-item">
           <a href="{% url 'dashboard:newsletter_list' %}" class="nav-link {% active_link 'dashboard:newsletter_list' 'active' %}">
-            <i class="nav-icon fa fa-address-book"></i>
+            <i class="nav-icon fa fa-envelope"></i>
             <p>Newsletter</p>
           </a>
-        {% if request.user.is_superuser %}
+        </li>
+        <li class="nav-item">
+          <a href="" class="nav-link">
+            <i class="nav-icon fas fa-user"></i>
+            <p>Users</p>
+          </a>
+        </li>
+       {% if request.user.is_superuser %}
                                                                                  
           <li class="nav-item">
             <a href="#" class="nav-link {% active_link 'dashboard:user_list' 'active' %}">
@@ -193,7 +201,7 @@
       
             {% endif %}
             </ul>
-        </li>
+          </li> 
 
         </ul>
         </li>

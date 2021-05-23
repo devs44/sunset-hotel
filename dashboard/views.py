@@ -73,8 +73,7 @@ class PasswordsChangeView(PasswordChangeView):
         if check_password(old_password, request.user.password):
             messages.add_message(request, messages.ERROR, "invalid pass")
 
-    
-    
+
 
 
     
