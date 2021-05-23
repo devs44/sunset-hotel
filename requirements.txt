@@ -13,3 +13,4 @@ sqlparse==0.4.1
 toml==0.10.2
 django-active-link==0.1.8
 django-toggle-switch-widget==0.1.1
+django-crispy-forms==1.11.2
