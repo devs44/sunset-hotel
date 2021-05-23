@@ -26,6 +26,12 @@
       rel="stylesheet"
       href="{% static 'dashboard/assets/dist/css/adminlte.min.css' %}"
     />
+     <!-- for toastr  -->
+    <link
+      type="text/css"
+      href="{% static 'dashboard/assets/toastr/toastr.min.css' %}"
+      rel="stylesheet"
+    />
   </head>
   <body class="hold-transition login-page">
 
@@ -37,9 +43,10 @@
         </div>
         <div class="card-body">
           <p class="login-box-msg">Sign in to start your session</p>
-          {% comment %} {% if  %} {% endcomment %}
-            {% comment %} <p class="login-box-msg">Password Reset Code has been sent to your Email. Use it to login to your account.</p>
-          {%endif%} {% endcomment %}
+          {%  if 'reset' in self.request.GET %}
+
+          <p>Reset code sent to your email</p>
+          {%endif%}
           <form action="" method="post">
             {% csrf_token %}
             <p class="form-error">{{error}}</p>
@@ -80,13 +87,9 @@
 
 
           <p class="mb-1">
-            <a href="{% url 'dashboard:passwordreset'  %}">I forgot my password</a>
+            <a href="{% url 'dashboard:passwordreset'  %}?reset=sent">I forgot my password</a>
           </p>
-          <p class="mb-0">
-            <a href="register.html" class="text-center"
-              >Register a new membership</a
-            >
-          </p>
+
         </div>
         <!-- /.card-body -->
       </div>
@@ -100,5 +103,31 @@
     <script src="{% static 'dashboard/assets/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
     <!-- AdminLTE App -->
     <script src="{% static 'dashboard/assets/dist/js/adminlte.min.js' %}"></script>
+     <!-- Toastr -->
+    <script src="{% static 'dashboard/assets/toastr/toastr.min.js' %}"></script>
+
+     <script>
+      toastr.options = {
+             "debug": false,
+             "newestOnTop": false,
+             "positionClass": "toast-top-right",
+             "closeButton": true,
+             "timeOut": "5000",
+             "progressBar": false
+         };
+
+         {% for message in messages %}
+         {% if message.level == 20 %}
+             toastr.info("{{ message }}");
+         {% elif message.level == 25 %}
+             toastr.success("{{ message }}");
+         {% elif message.level == 30 %}
+             toastr.warning("{{ message }}");
+         {% elif message.level == 40 %}
+             toastr.error("{{ message }}");
+         {% endif %}
+         {% endfor %}
+    </script>
+
   </body>
 </html>
