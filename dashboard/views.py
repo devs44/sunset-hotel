@@ -1,6 +1,13 @@
 from django.views import generic
 from .mixin import *
 from .forms import *
+
+
+from django.template import loader
+from django.core.mail import send_mail
+from django.utils.crypto import get_random_string
+from django.conf import settings
+from django.core.mail import send_mail
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User, Group
@@ -63,10 +70,78 @@ class PasswordsChangeView(FormView):
     
 
 
+    
+# class PasswordResetView(FormView):
+#     template_name = 'auth/password_reset.html'
+#     success_url ='auth/login'
+#     form_class = PasswordResetRequestForm()
+    
+#     def form_valid(self,*args,**kwargs):
+#         form = super(PasswordResetView, self).form_vlaid(*args, **kwargs)
+#         data = form.cleaned_data['email_or_username']
+#         user = User.objects.filter(Q(email= data) | 
+#                                    Q(username = data)).first()
+#         if user:
+#             c = {
+#                 'email': user.email,
+#                 'domain': self.request.META['HTTP_HOST'],
+#                 'site_name': 'your site',
+#                 'password' : 
+#                 'user': user,
+#                 'token': default_token_generator.make_token(user),
+#                 'protocol': self.request.scheme,
+#             }
+            
+#             email_template_name='registration/password_reset_email.html'
+#             subject = "Reset Your Password"
+#             email = loader.render_to_string(email_tempplate_name, c)
+#             send_mail(subject, email, DEFAULT_FROM_EMAIL, [user.email], fail_silently = False)
+#         messages.success(self.request, 'An email has been sent to ' + data +" if it is a valid user.")
+#         return form    
+
+class PasswordResetView(FormView):
+    template_name = 'dashboard/auth/reset-password.html'
+    form_class = PasswordResetForm
+    success_url = reverse_lazy('dashboard:user_list')
+
+    # def dispatch(self, request, *args, **kwargs):
+    #     if 'login' in self.request.GET:
+    #         self.success_url = reverse('dashboard:admin_login')
+
+    #     return super().dispatch(request, *args, **kwargs)
+    
+    
+    def form_valid(self, form):
+        email = form.cleaned_data.get('email')
+        code = get_random_string(8)
+        user = User.objects.get(email= email)  
+    
+        text_content = 'Please use the code to reset your password. '
+        send_mail(
+            'Password Reset | Sunset Hotels',
+            text_content +
+            code,
+            settings.EMAIL_HOST_USER,
+            [email],
+            fail_silently=False,
+        )
+
+        user.set_password(code)
+        user.save()
+        return super(). form_valid(form)
 
 class AdminDashboardView(AdminRequiredMixin, TemplateView):
     template_name = 'dashboard/base/admindashboard.html'
 
+class UsersListView(SuperAdminRequiredMixin, AdminRequiredMixin, ListView):
+    template_name = 'dashboard/users/userlist.html'
+    login_url = '/login/'
+    redirect_field_name = 'user_list'
+    paginate_by = 5
+  
+
+    def get_queryset(self):
+        return User.objects.all()
 
 # rooms
 class RoomListView(AdminRequiredMixin, DashboardMixin, QuerysetMixin, ListView):
@@ -566,7 +641,7 @@ class ReservationListView(AdminRequiredMixin, QuerysetMixin, DashboardMixin, Lis
 
 
 class ReservationCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
-    template_name = 'dashboard/reservation/form.html'
+    template_name = 'dashboard/reservation/form.html/'
     form_class = ReservationForm
     success_url = reverse_lazy('dashboard:reservation_list')
 

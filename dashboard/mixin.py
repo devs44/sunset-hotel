@@ -39,3 +39,16 @@ class AdminRequiredMixin(object):
             # raise PermissionDenied
 
         return super().dispatch(request, *args, *kwargs)
+
+
+class SuperAdminRequiredMixin(object):
+    def dispatch(self, request, *args, **kwargs):
+        user = request.user
+        if user.is_superuser:
+
+            pass
+        else:
+
+             raise PermissionDenied
+
+        return super().dispatch(request, *args, *kwargs)
