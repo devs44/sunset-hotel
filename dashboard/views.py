@@ -1,3 +1,4 @@
+from django.views import generic
 from .mixin import *
 from .forms import *
 
@@ -11,16 +12,20 @@ from django.shortcuts import render, redirect, reverse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User, Group
 from django.db.models import Q
-
+from django.contrib.auth.hashers import check_password
+from django.contrib.auth import update_session_auth_hash
+from django.contrib import messages
 # from django.contrib import messages
 
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, DetailView, FormView, View, ListView, CreateView, UpdateView, DeleteView
+from django.contrib.auth.views import PasswordChangeView
 
 
 from .models import Room, News, Comment, RoomImage, Event, Room_Category, Feature, Image, Testomonial, Message, Reservation, Services_type, Services_description, Contact,  About
 from django.shortcuts import render, redirect
 
+from django.contrib.auth.forms import  PasswordChangeForm
 # Create your views here.
 
 
@@ -51,6 +56,26 @@ class LogoutView(View):
     def get(self, request):
         logout(request)
         return redirect('/login/')
+
+class PasswordsChangeView(PasswordChangeView):
+    template_name = 'dashboard/password/password_change.html'
+    form_class = ChangePasswordForm
+    success_url = reverse_lazy('dashboard:admin_login')
+
+    def get_form(self):
+        form = super().get_form()
+        form.set_user(self.request.user)
+        return form
+
+    def form(self, form):
+        old_password = form.cleaned_data['old_password']
+
+        if check_password(old_password, request.user.password):
+            messages.add_message(request, messages.ERROR, "invalid pass")
+
+    
+    
+
 
     
 # class PasswordResetView(FormView):
@@ -83,7 +108,7 @@ class LogoutView(View):
 
 class PasswordResetView(FormView):
     template_name = 'dashboard/auth/reset-password.html'
-    form_class = PasswordResetForm
+    # form_class = PasswordResetForm
     success_url = reverse_lazy('dashboard:user_list')
 
     def dispatch(self, request, *args, **kwargs):
@@ -853,3 +878,15 @@ class RoomCommentDetailView(AdminRequiredMixin, DashboardMixin, DetailView):
 class RoomCommentDeleteView(AdminRequiredMixin, DeleteMixin, DashboardMixin, DeleteView):
     model = Comment
     success_url = reverse_lazy('dashboard:room_comment_list')
+
+
+#newsletter
+
+class NewsletterListView(AdminRequiredMixin, DashboardMixin, ListView):
+    template_name = 'dashboard/newsletter/list.html'
+    model = Subscription
+    context_object_name = 'email'
+
+class NewsletterDeleteView(AdminRequiredMixin, DeleteMixin, DashboardMixin, DeleteView):
+    model = Subscription
+    success_url = reverse_lazy('dashboard:newsletter_list')

@@ -3,7 +3,8 @@ from .models import *
 from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django_toggle_switch_widget.widgets import DjangoToggleSwitchWidget
-from django.contrib.auth.models import User
+from django.contrib.auth.forms import PasswordChangeForm
+from django.utils.translation import gettext as _
 
 
 class FormControlMixin:
@@ -17,7 +18,6 @@ class FormControlMixin:
             })
 
 
-    
 class StaffLoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'form-control',
@@ -28,13 +28,40 @@ class StaffLoginForm(forms.Form):
         'placeholder': 'Password'
     }))
 
-    # def clean_username(self):
-    #     username = self.cleaned_data.get('username')
-    #     if username in Account.objects.all():
-    #         return username
-    #     else:
-    #         raise ValidationError('')
+class ChangePasswordForm(PasswordChangeForm):
+    old_password = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={'class': 'form-control', 'placeholder':  'Password'}))
 
+    new_password1 = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={'class': 'form-control', 'placeholder':  'Password'}))
+
+    new_password2 = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={'class': 'form-control', 'placeholder':  'Password'}))      
+    
+    def set_user(self, user):
+        self.user = user
+        
+    def clean(self):     
+        old_password = self.cleaned_data.get('old_password')
+        valpwd = self.cleaned_data.get('new_password1')
+        valrpwd = self.cleaned_data.get('new_password2')
+        
+        if valpwd != valrpwd:
+            raise forms.ValidationError({
+                'new_password1': 'Password Not Matched'})
+        
+        else:
+            pass
+        return self.cleaned_data
+
+
+
+
+    
+       
 
 class RoomForm(FormControlMixin, forms.ModelForm):
     more_images = forms.FileField(required=False, widget=forms.FileInput(attrs={
@@ -461,21 +488,3 @@ class RoomCommentForm(forms.ModelForm):
                 'placeholder': 'enter review'
             })
         }
-
-
-class PasswordResetForm(forms.Form) :
-    
-    email = forms.CharField(widget = forms.EmailInput(attrs = {
-        'class' :'form-control',
-        'placeholder' :'Enter email address'
-    }))
-    
-    def clean_email(self):
-        e = self.cleaned_data.get('email')
-        if  User.objects.filter(email=e).exists():
-            pass
-        else:
-            raise forms.ValidationError("User with this email doesn't exist")
-        
-        return e
-            
