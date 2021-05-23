@@ -13,7 +13,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User, Group
 from django.db.models import Q
 from django.contrib.auth.hashers import check_password
-
+from django.contrib.auth import update_session_auth_hash
+from django.contrib import messages
 # from django.contrib import messages
 
 from django.urls import reverse_lazy
@@ -56,7 +57,7 @@ class LogoutView(View):
         logout(request)
         return redirect('/login/')
 
-class PasswordsChangeView(FormView):
+class PasswordsChangeView(PasswordChangeView):
     template_name = 'dashboard/password/password_change.html'
     form_class = ChangePasswordForm
     success_url = reverse_lazy('dashboard:admin_login')
@@ -65,6 +66,12 @@ class PasswordsChangeView(FormView):
         form = super().get_form()
         form.set_user(self.request.user)
         return form
+
+    def form(self, form):
+        old_password = form.cleaned_data['old_password']
+
+        if check_password(old_password, request.user.password):
+            messages.add_message(request, messages.ERROR, "invalid pass")
 
     
     
@@ -101,7 +108,7 @@ class PasswordsChangeView(FormView):
 
 class PasswordResetView(FormView):
     template_name = 'dashboard/auth/reset-password.html'
-    form_class = PasswordResetForm
+    # form_class = PasswordResetForm
     success_url = reverse_lazy('dashboard:user_list')
 
     # def dispatch(self, request, *args, **kwargs):
