@@ -111,11 +111,12 @@ class PasswordResetView(FormView):
     # form_class = PasswordResetForm
     success_url = reverse_lazy('dashboard:user_list')
 
-    # def dispatch(self, request, *args, **kwargs):
-    #     if 'login' in self.request.GET:
-    #         self.success_url = reverse('dashboard:admin_login')
+    def dispatch(self, request, *args, **kwargs):
+        
+        if 'reset' in self.request.GET:
+            self.success_url = reverse('dashboard:admin_login')
 
-    #     return super().dispatch(request, *args, **kwargs)
+        return super().dispatch(request, *args, **kwargs)
     
     
     def form_valid(self, form):
@@ -132,10 +133,11 @@ class PasswordResetView(FormView):
             [email],
             fail_silently=False,
         )
-
+        messages.success(self.request, "Password reset code is sent to "+  email +".")
         user.set_password(code)
         user.save()
         return super(). form_valid(form)
+    
 
 class AdminDashboardView(AdminRequiredMixin, TemplateView):
     template_name = 'dashboard/base/admindashboard.html'
