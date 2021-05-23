@@ -28,6 +28,7 @@ import datetime
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.urls import reverse
 from django.db.models import Q
+from django.db.models import Count, Sum
 
 
 # Create your views here.
@@ -155,6 +156,10 @@ class ServiceListView(ListView):
     template_name = 'home/about/about.html'
 
     def get_context_data(self, **kwargs):
+        adult = Reservation.objects.all().aggregate(total_adult=Sum('adult'))['total_adult']
+        print(adult)
+        children = Reservation.objects.all().aggregate(total_children=Sum('children'))['total_children']
+        print(children)
         context = super().get_context_data(**kwargs)
         context['services'] = Services_type.objects.all()
         context['test'] = Testomonial.objects.all()
@@ -163,7 +168,8 @@ class ServiceListView(ListView):
         context['about'] = About.objects.all()
         context['room_count'] = Room.objects.count()
 
-        return context
+        context['guests']= adult + children
+
 
 
 class ReservationView(BaseMixin, CreateView):
@@ -354,7 +360,7 @@ class SubscriptionView(View):
             #     signup_message = f.read()
             html_template = get_template(
                 "home/newsletter/newsletter.html").render()
-            plain_text = get_template(
+            plain_text = get_tabemplate(
                 "home/newsletter/newsletter.txt").render()
             message = EmailMultiAlternatives(
                 subject, plain_text, from_email, to_email)

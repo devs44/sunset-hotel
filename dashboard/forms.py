@@ -4,6 +4,7 @@ from django.contrib import messages
 import datetime
 from django.core.exceptions import ValidationError
 from django_toggle_switch_widget.widgets import DjangoToggleSwitchWidget
+from django.contrib.auth.models import User
 
 
 class FormControlMixin:
@@ -17,6 +18,7 @@ class FormControlMixin:
             })
 
 
+    
 class StaffLoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'form-control',
@@ -469,3 +471,21 @@ class RoomCommentForm(forms.ModelForm):
                 'placeholder': 'enter review'
             })
         }
+
+
+class PasswordResetForm(forms.Form) :
+    
+    email = forms.CharField(widget = forms.EmailInput(attrs = {
+        'class' :'form-control',
+        'placeholder' :'Enter email address'
+    }))
+    
+    def clean_email(self):
+        e = self.cleaned_data.get('email')
+        if  User.objects.filter(email=e).exists():
+            pass
+        else:
+            raise forms.ValidationError("User with this email doesn't exist")
+        
+        return e
+            
