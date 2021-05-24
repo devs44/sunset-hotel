@@ -7,6 +7,15 @@ urlpatterns = [
 
     path('login/', LoginView.as_view(), name="admin_login"),
     path('logout/', LogoutView.as_view(), name="admin_logout"),
+    path('dashboard/', AdminDashboardView.as_view(),
+         name="admin_dashboard"),
+    #     path('dashboard/', views.admindashboard, name='admin_dashboard'),
+    path('updatepassword/', PasswordsChangeView.as_view(), name="update_password"),
+
+
+    path('password-reset/', PasswordResetView.as_view(), name='passwordreset'),
+    path('dashboard/', AdminDashboardView.as_view(), name="admin_dashboard"),
+
 
     path('password-reset/', PasswordResetView.as_view(), name='passwordreset'),
     path('dashboard/', AdminDashboardView.as_view(), name="admin_dashboard"),
@@ -179,5 +188,13 @@ urlpatterns = [
          RoomCommentDeleteView.as_view(), name='room_comment_delete'),
     path('room/comment/<int:pk>/detail/',
          RoomCommentDetailView.as_view(), name='room_comment_detail'),
+
+    # newsletter
+
+    path('newsletter/list/', NewsletterListView.as_view(), name='newsletter_list'),
+    path('newsletter/<int:pk>/delete/',
+         NewsletterDeleteView.as_view(), name='newsletter_delete'),
+
+
 
 ]

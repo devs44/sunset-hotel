@@ -1,28 +1,29 @@
-from django.http.response import HttpResponseRedirect
-from .mixin import *
-from .forms import *
-
-from django.http import JsonResponse
-
-
-from django.template import loader
-from django.core.mail import send_mail
-from django.utils.crypto import get_random_string
-from django.conf import settings
-from django.core.mail import send_mail
-from django.shortcuts import render, redirect, reverse
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.forms import PasswordChangeForm
+from django.shortcuts import render, redirect
+from .models import Room, News, Comment, RoomImage, Event, Room_Category, Feature, Image, Testomonial, Message, Reservation, Services_type, Services_description, Contact,  About
+from django.contrib.auth.views import PasswordChangeView
+from django.views.generic import TemplateView, DetailView, FormView, View, ListView, CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
+from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.hashers import check_password
 from django.db.models import Q
+from django.contrib.auth.models import User, Group
+from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import render, redirect, reverse
+from django.conf import settings
+from django.utils.crypto import get_random_string
+from django.core.mail import send_mail
+from django.template import loader
+from django.http import JsonResponse
+from .forms import *
+from .mixin import *
+from django.views import generic
+from django.http.response import HttpResponseRedirect
+
 
 # from django.contrib import messages
 
-from django.urls import reverse_lazy
-from django.views.generic import TemplateView, DetailView, FormView, View, ListView, CreateView, UpdateView, DeleteView
-
-
-from .models import Room, News, Comment, RoomImage, Event, Room_Category, Feature, Image, Testomonial, Message, Reservation, Services_type, Services_description, Contact,  About
-from django.shortcuts import render, redirect
 
 # Create your views here.
 
@@ -56,6 +57,23 @@ class LogoutView(View):
         return redirect('/login/')
 
 
+class PasswordsChangeView(PasswordChangeView):
+    template_name = 'dashboard/password/password_change.html'
+    form_class = ChangePasswordForm
+    success_url = reverse_lazy('dashboard:admin_login')
+
+    def get_form(self):
+        form = super().get_form()
+        form.set_user(self.request.user)
+        return form
+
+    def form(self, form):
+        old_password = form.cleaned_data['old_password']
+
+        if check_password(old_password, request.user.password):
+            messages.add_message(request, messages.ERROR, "invalid pass")
+
+
 # class PasswordResetView(FormView):
 #     template_name = 'auth/password_reset.html'
 #     success_url ='auth/login'
@@ -84,14 +102,16 @@ class LogoutView(View):
 #         messages.success(self.request, 'An email has been sent to ' + data +" if it is a valid user.")
 #         return form
 
+
 class PasswordResetView(FormView):
     template_name = 'dashboard/auth/reset-password.html'
-    form_class = PasswordResetForm
+    # form_class = PasswordResetForm
     success_url = reverse_lazy('dashboard:user_list')
 
-    # def dispatch(self, request, *args, **kwargs):
-    #     if 'login' in self.request.GET:
-    #         self.success_url = reverse('dashboard:admin_login')
+    def dispatch(self, request, *args, **kwargs):
+
+        if 'reset' in self.request.GET:
+            self.success_url = reverse('dashboard:admin_login')
 
     #     return super().dispatch(request, *args, **kwargs)
 
@@ -109,7 +129,8 @@ class PasswordResetView(FormView):
             [email],
             fail_silently=False,
         )
-
+        messages.success(
+            self.request, "Password reset code is sent to " + email + ".")
         user.set_password(code)
         user.save()
         return super(). form_valid(form)
@@ -912,3 +933,16 @@ class RoomCommentDetailView(AdminRequiredMixin, DashboardMixin, DetailView):
 class RoomCommentDeleteView(AdminRequiredMixin, DeleteMixin, DashboardMixin, DeleteView):
     model = Comment
     success_url = reverse_lazy('dashboard:room_comment_list')
+
+
+# newsletter
+
+class NewsletterListView(AdminRequiredMixin, DashboardMixin, ListView):
+    template_name = 'dashboard/newsletter/list.html'
+    model = Subscription
+    context_object_name = 'email'
+
+
+class NewsletterDeleteView(AdminRequiredMixin, DeleteMixin, DashboardMixin, DeleteView):
+    model = Subscription
+    success_url = reverse_lazy('dashboard:newsletter_list')
