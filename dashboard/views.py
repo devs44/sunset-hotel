@@ -1,31 +1,30 @@
-from django.views import generic
-from .mixin import *
-from .forms import *
-
-
-from django.template import loader
-from django.core.mail import send_mail
-from django.utils.crypto import get_random_string
-from django.conf import settings
-from django.core.mail import send_mail
-from django.shortcuts import render, redirect, reverse
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User, Group
-from django.db.models import Q
-from django.contrib.auth.hashers import check_password
-from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
+from django.shortcuts import render, redirect
+from .models import Room, News, Comment, RoomImage, Event, Room_Category, Feature, Image, Testomonial, Message, Reservation, Services_type, Services_description, Contact,  About
+from django.contrib.auth.views import PasswordChangeView
+from django.views.generic import TemplateView, DetailView, FormView, View, ListView, CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
 from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.hashers import check_password
+from django.db.models import Q
+from django.contrib.auth.models import User, Group
+from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import render, redirect, reverse
+from django.conf import settings
+from django.utils.crypto import get_random_string
+from django.core.mail import send_mail
+from django.template import loader
+from django.http import JsonResponse
+from .forms import *
+from .mixin import *
+from django.views import generic
+from django.http.response import HttpResponseRedirect
+
+
 # from django.contrib import messages
 
-from django.urls import reverse_lazy
-from django.views.generic import TemplateView, DetailView, FormView, View, ListView, CreateView, UpdateView, DeleteView
-from django.contrib.auth.views import PasswordChangeView
 
-
-from .models import Room, News, Comment, RoomImage, Event, Room_Category, Feature, Image, Testomonial, Message, Reservation, Services_type, Services_description, Contact,  About
-from django.shortcuts import render, redirect
-
-from django.contrib.auth.forms import  PasswordChangeForm
 # Create your views here.
 
 
@@ -57,6 +56,7 @@ class LogoutView(View):
         logout(request)
         return redirect('/login/')
 
+
 class PasswordsChangeView(PasswordChangeView):
     template_name = 'dashboard/password/password_change.html'
     form_class = ChangePasswordForm
@@ -73,38 +73,35 @@ class PasswordsChangeView(PasswordChangeView):
         if check_password(old_password, request.user.password):
             messages.add_message(request, messages.ERROR, "invalid pass")
 
-    
-    
 
-
-    
 # class PasswordResetView(FormView):
 #     template_name = 'auth/password_reset.html'
 #     success_url ='auth/login'
 #     form_class = PasswordResetRequestForm()
-    
+
 #     def form_valid(self,*args,**kwargs):
 #         form = super(PasswordResetView, self).form_vlaid(*args, **kwargs)
 #         data = form.cleaned_data['email_or_username']
-#         user = User.objects.filter(Q(email= data) | 
+#         user = User.objects.filter(Q(email= data) |
 #                                    Q(username = data)).first()
 #         if user:
 #             c = {
 #                 'email': user.email,
 #                 'domain': self.request.META['HTTP_HOST'],
 #                 'site_name': 'your site',
-#                 'password' : 
+#                 'password' :
 #                 'user': user,
 #                 'token': default_token_generator.make_token(user),
 #                 'protocol': self.request.scheme,
 #             }
-            
+
 #             email_template_name='registration/password_reset_email.html'
 #             subject = "Reset Your Password"
 #             email = loader.render_to_string(email_tempplate_name, c)
 #             send_mail(subject, email, DEFAULT_FROM_EMAIL, [user.email], fail_silently = False)
 #         messages.success(self.request, 'An email has been sent to ' + data +" if it is a valid user.")
-#         return form    
+#         return form
+
 
 class PasswordResetView(FormView):
     template_name = 'dashboard/auth/reset-password.html'
@@ -112,18 +109,17 @@ class PasswordResetView(FormView):
     success_url = reverse_lazy('dashboard:user_list')
 
     def dispatch(self, request, *args, **kwargs):
-        
+
         if 'reset' in self.request.GET:
             self.success_url = reverse('dashboard:admin_login')
 
-        return super().dispatch(request, *args, **kwargs)
-    
-    
+    #     return super().dispatch(request, *args, **kwargs)
+
     def form_valid(self, form):
         email = form.cleaned_data.get('email')
         code = get_random_string(8)
-        user = User.objects.get(email= email)  
-    
+        user = User.objects.get(email=email)
+
         text_content = 'Please use the code to reset your password. '
         send_mail(
             'Password Reset | Sunset Hotels',
@@ -133,26 +129,61 @@ class PasswordResetView(FormView):
             [email],
             fail_silently=False,
         )
-        messages.success(self.request, "Password reset code is sent to "+  email +".")
+        messages.success(
+            self.request, "Password reset code is sent to " + email + ".")
         user.set_password(code)
         user.save()
         return super(). form_valid(form)
-    
+
 
 class AdminDashboardView(AdminRequiredMixin, TemplateView):
     template_name = 'dashboard/base/admindashboard.html'
 
+
+class UserCreateView(SuperAdminRequiredMixin, AdminRequiredMixin, CreateView):
+    template_name = 'dashboard/users/usercreate.html'
+    form_class = UserForm
+    password = get_random_string(8)
+    success_url = reverse_lazy('dashboard:user_list')
+
+    def form_valid(self, form):
+        print('form valid method called')
+        return super().form_valid(form)
+
+    # def form_valid(self, form):
+    #     print('form valid method called')
+    #     password = get_random_string(8)
+    #     email = form.cleaned_data['email']
+    #     username = form.cleaned_data['username']
+    #     first_name = form.cleaned_data['first_name']
+    #     last_name = form.cleaned_data['last_name']
+    #     joined_date = form.cleaned_data['date_joined']
+    #     print(email, username, password, first_name, last_name, joined_date)
+    #     text = f'''username : {email}
+    #     password : {password}
+    #     '''
+    #     send_mail(
+    #         "Your login credentials: ",
+    #         text +
+    #         settings.EMAIL_HOST_USER,
+    #         [email],
+    #         fail_silently=False
+    #     )
+    #     return super(UserCreateView, self).form_valid(form)
+
+
 class UsersListView(SuperAdminRequiredMixin, AdminRequiredMixin, ListView):
     template_name = 'dashboard/users/userlist.html'
     login_url = '/login/'
-    redirect_field_name = 'user_list'
+    redirect_field_name = reverse_lazy('dashboard:user_list')
     paginate_by = 5
-  
 
     def get_queryset(self):
         return User.objects.all()
 
 # rooms
+
+
 class RoomListView(AdminRequiredMixin, DashboardMixin, QuerysetMixin, ListView):
     template_name = 'dashboard/room/roomlist.html'
     model = Room
@@ -194,6 +225,30 @@ class RoomCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
         for img in images:
             RoomImage.objects.create(room=room, image=img)
         return super().form_valid(form)
+
+
+class RoomImageCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
+    model = RoomImage
+    form_class = RoomImageForm
+    template_name = "dashboard/layouts/form.html"
+
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.is_ajax():
+            return super().dispatch(request, *args, **kwargs)
+        return JsonResponse({"error": "Cannot access this page"}, status=404)
+
+    def form_valid(self, form):
+        instance = form.save()
+        return JsonResponse(
+            {
+                "status": "ok",
+                "pk": instance.pk,
+                "url": instance.photo.url,
+            }
+        )
+
+    def form_invalid(self, form):
+        return JsonResponse({"errors": form.errors}, status=400)
 
 
 class RoomUpdateView(AdminRequiredMixin, DashboardMixin, UpdateView):
@@ -880,12 +935,13 @@ class RoomCommentDeleteView(AdminRequiredMixin, DeleteMixin, DashboardMixin, Del
     success_url = reverse_lazy('dashboard:room_comment_list')
 
 
-#newsletter
+# newsletter
 
 class NewsletterListView(AdminRequiredMixin, DashboardMixin, ListView):
     template_name = 'dashboard/newsletter/list.html'
     model = Subscription
     context_object_name = 'email'
+
 
 class NewsletterDeleteView(AdminRequiredMixin, DeleteMixin, DashboardMixin, DeleteView):
     model = Subscription
