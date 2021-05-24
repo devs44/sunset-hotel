@@ -236,17 +236,10 @@ class Subscription(TimeStamp):
 
 
 class Account(User):
+
     mobile = models.CharField(max_length=250)
     address = models.CharField(max_length=250)
     image = models.ImageField(upload_to='user')
 
     def __str__(self):
-        return self.user.username
-
-    def save(self, *args, **kwargs):
-        # creates group in case of no group name 'Admin'
-        group, created = Group.objects.get_or_create(name='Admin')
-        self.user.groups.add(group)  # add user to group
-        # group=variable, created=boolean variable
-
-        super().save(*args, **kwargs)  # called super class
+        return self.username

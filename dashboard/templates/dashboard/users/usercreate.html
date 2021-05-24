@@ -49,7 +49,7 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form method="POST">
+              <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="card-body">
                     <div  class="row">
@@ -64,26 +64,33 @@
 
                     </div>
                     <div  class="row">
-                        <div class="form-group col-md-6  col-sm-12">
-                            <label for="username">First name</label>
-                            {{ form.first_name }}
+                        <div class="form-group col-md-6 col-sm-12" >
+                            <label for="join_date">Address </label>
+                            {{ form.address }}
                         </div>
-                        <div class="form-group col-md-6 col-sm-12">
-                            <label for="password">Last Name</label>
-                            {{ form.last_name }}
+                        <div class="form-group col-md-6 col-sm-12" >
+                            <label for="password">Contact No.</label>
+                            {{ form.mobile }}
                         </div>
-
                     </div>
-                    <div  class="row">
-                        <div class="form-group col-md-6 col-sm-12" >
-                            <label for="join_date">Joined Date</label>
-                            {{ form.date_joined }}
-                        </div>
-                        <div class="form-group col-md-6 col-sm-12" >
-                            <label for="password">Password</label>
-                            {{ form.password }}
-                        </div>
-
+                    <div class="row">
+                      <div class="form-group col-md-6 col-sm-12">
+                          <label for="image">Image</label>
+                          {{ form.image }}
+                      </div>
+                      <div class="form-group col-md-6 col-sm-12">
+                          <img src="" id="frame" alt="" width="100px" height="100px">
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="form-group col-md-6 col-sm-12">
+                        <label for="">Password</label>
+                        {{ form.password }}
+                      </div>
+                      <div class="form-group col-md-6 col-sm-12">
+                        <label for="">Joined Date</label>
+                        {{ form.date_joined }}
+                      </div>
                     </div>
                 </div>
                 <!-- /.card-body -->
@@ -101,4 +108,11 @@
   </div>
 </div>
 {% endblock %} 
+{% block script %}
+<script>
+function preview() {
+  frame.src=URL.createObjectURL(event.target.files[0]);
+}
+</script>
+{% endblock %}
 

@@ -1,5 +1,6 @@
 from django import forms
 from django.db.models import fields
+from django.forms import widgets
 from .models import *
 from django.contrib import messages
 import datetime
@@ -403,7 +404,6 @@ class ReservationForm(forms.ModelForm):
         selected_room = self.cleaned_data.get('selected_room')
         if check_in_date == '' or check_out_date == '' or selected_room == '':
             raise ValidationError('This field is required')
-        print(check_out_date, check_in_date, 55888888)
         if check_in_date != None or check_out_date != None:
             if check_in_date > check_out_date:
                 raise ValidationError("Invalid check-in check-out date")
@@ -522,5 +522,10 @@ class PasswordResetForm(forms.Form):
 
 class UserForm(FormControlMixin, forms.ModelForm):
     class Meta:
-        model = User
+        model = Account
         fields = '__all__'
+        widgets = {
+            'image': forms.ClearableFileInput(attrs={
+                'onchange': 'preview()'
+            })
+        }

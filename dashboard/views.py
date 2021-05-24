@@ -143,7 +143,6 @@ class AdminDashboardView(AdminRequiredMixin, TemplateView):
 class UserCreateView(SuperAdminRequiredMixin, AdminRequiredMixin, CreateView):
     template_name = 'dashboard/users/usercreate.html'
     form_class = UserForm
-    password = get_random_string(8)
     success_url = reverse_lazy('dashboard:user_list')
 
     def form_valid(self, form):
