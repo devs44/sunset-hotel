@@ -157,9 +157,7 @@ class ServiceListView(ListView):
 
     def get_context_data(self, **kwargs):
         adult = Reservation.objects.all().aggregate(total_adult=Sum('adult'))['total_adult']
-        print(adult)
         children = Reservation.objects.all().aggregate(total_children=Sum('children'))['total_children']
-        print(children)
         context = super().get_context_data(**kwargs)
         context['services'] = Services_type.objects.all()
         context['test'] = Testomonial.objects.all()

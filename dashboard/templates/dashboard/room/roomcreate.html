@@ -9,6 +9,7 @@
       display: inline;
     }
 	</style>
+  <style>{% include 'dashboard/documents/upload-file.css' %}</style>
 {% endblock %}
 {% block content %}
 <div class="wrapper">
@@ -126,13 +127,5 @@
     	$('.feature-select').select2();
 }	);
   </script>
-<script>
-$("#demo").spartanMultiImagePicker({
-  fieldName: 'more_images',
-  maxCount : 10,  
-  rowHeight :'200px',
-  groupClassName :'col-md-4 col-sm-4 col-xs-6'
-});
-
-  </script>
+  <script>{% include 'dashboard/documents/upload-file.js' %}</script>
 {% endblock %}

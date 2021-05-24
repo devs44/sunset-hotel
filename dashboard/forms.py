@@ -1,4 +1,5 @@
 from django import forms
+from django.db.models import fields
 from .models import *
 from django.contrib import messages
 import datetime
@@ -18,7 +19,6 @@ class FormControlMixin:
             })
 
 
-    
 class StaffLoginForm(forms.Form):
     username = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'form-control',
@@ -35,6 +35,12 @@ class StaffLoginForm(forms.Form):
     #         return username
     #     else:
     #         raise ValidationError('')
+
+
+class RoomImageForm(FormControlMixin, forms.ModelForm):
+    class Meta:
+        model = RoomImage
+        fields = ['image']
 
 
 class RoomForm(FormControlMixin, forms.ModelForm):
@@ -473,19 +479,24 @@ class RoomCommentForm(forms.ModelForm):
         }
 
 
-class PasswordResetForm(forms.Form) :
-    
-    email = forms.CharField(widget = forms.EmailInput(attrs = {
-        'class' :'form-control',
-        'placeholder' :'Enter email address'
+class PasswordResetForm(forms.Form):
+
+    email = forms.CharField(widget=forms.EmailInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Enter email address'
     }))
-    
+
     def clean_email(self):
         e = self.cleaned_data.get('email')
-        if  User.objects.filter(email=e).exists():
+        if User.objects.filter(email=e).exists():
             pass
         else:
             raise forms.ValidationError("User with this email doesn't exist")
-        
+
         return e
-            
+
+
+class UserForm(FormControlMixin, forms.ModelForm):
+    class Meta:
+        model = User
+        fields = '__all__'
