@@ -106,7 +106,7 @@ class PasswordsChangeView(PasswordChangeView):
 #         messages.success(self.request, 'An email has been sent to ' + data +" if it is a valid user.")
 #         return form    
 
-class PasswordResetView(FormView):
+class PasswordResetView(View):
     template_name = 'dashboard/auth/reset-password.html'
     # form_class = PasswordResetForm
     success_url = reverse_lazy('dashboard:user_list')

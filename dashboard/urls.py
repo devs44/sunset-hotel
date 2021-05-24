@@ -13,7 +13,7 @@ urlpatterns = [
     path('updatepassword/', PasswordsChangeView.as_view(), name="update_password"),
   
     
-    path('password-reset/', PasswordResetView.as_view(), name= 'passwordreset'),
+    path('password-reset/<int:pk>', PasswordResetView.as_view(), name= 'passwordreset'),
     path('dashboard/', AdminDashboardView.as_view(),name="admin_dashboard"),
     
 
