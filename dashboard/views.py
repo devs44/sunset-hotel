@@ -38,9 +38,13 @@ class LoginView(FormView):
         username = form.cleaned_data['username']
         pword = form.cleaned_data['password']
         user = authenticate(username=username, password=pword)
+        print(user.is_active)
 
         if user is not None:
+            
             login(self.request, user)
+           
+            
 
         else:
             return render(self.request, self.template_name,
@@ -141,12 +145,12 @@ class PasswordResetView(FormView):
 class AdminDashboardView(AdminRequiredMixin, TemplateView):
     template_name = 'dashboard/base/admindashboard.html'
 
-class UsersListView(SuperAdminRequiredMixin, AdminRequiredMixin, ListView):
+class UsersListView(SuperAdminRequiredMixin, LoginView, AdminRequiredMixin,ListView):
     template_name = 'dashboard/users/userlist.html'
     login_url = '/login/'
     redirect_field_name = 'user_list'
     paginate_by = 5
-  
+    
 
     def get_queryset(self):
         return User.objects.all()
