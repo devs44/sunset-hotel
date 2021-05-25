@@ -40,8 +40,8 @@ class LoginView(FormView):
         print(user.is_active)
 
         if user is not None:
-            
             login(self.request, user)
+            user.is_active = True
            
             
 
@@ -77,10 +77,6 @@ class PasswordsChangeView(PasswordChangeView):
         if check_password(old_password, request.user.password):
             messages.add_message(request, messages.ERROR, "invalid pass")
 
-<<<<<<< HEAD
-
-=======
->>>>>>> fedba38aab541d868ce9d219299e5c902b05de58
 
 # class PasswordResetView(FormView):
 #     template_name = 'auth/password_reset.html'
