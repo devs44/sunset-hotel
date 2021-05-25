@@ -1,6 +1,8 @@
 from django import forms
+from django.db.models import fields
 from .models import *
 from django.contrib import messages
+import datetime
 from django.core.exceptions import ValidationError
 from django_toggle_switch_widget.widgets import DjangoToggleSwitchWidget
 from django.contrib.auth.forms import PasswordChangeForm
@@ -28,6 +30,7 @@ class StaffLoginForm(forms.Form):
         'placeholder': 'Password'
     }))
 
+
 class ChangePasswordForm(PasswordChangeForm):
     old_password = forms.CharField(
         widget=forms.PasswordInput(
@@ -39,29 +42,30 @@ class ChangePasswordForm(PasswordChangeForm):
 
     new_password2 = forms.CharField(
         widget=forms.PasswordInput(
-            attrs={'class': 'form-control', 'placeholder':  'Password'}))      
-    
+            attrs={'class': 'form-control', 'placeholder':  'Password'}))
+
     def set_user(self, user):
         self.user = user
-        
-    def clean(self):     
+
+    def clean(self):
         old_password = self.cleaned_data.get('old_password')
         valpwd = self.cleaned_data.get('new_password1')
         valrpwd = self.cleaned_data.get('new_password2')
-        
+
         if valpwd != valrpwd:
             raise forms.ValidationError({
                 'new_password1': 'Password Not Matched'})
-        
+
         else:
             pass
         return self.cleaned_data
 
 
+class RoomImageForm(FormControlMixin, forms.ModelForm):
+    class Meta:
+        model = RoomImage
+        fields = ['image']
 
-
-    
-       
 
 class RoomForm(FormControlMixin, forms.ModelForm):
     more_images = forms.FileField(required=False, widget=forms.FileInput(attrs={
@@ -339,11 +343,11 @@ class ReservationForm(forms.ModelForm):
             }),
             'check_in_date': forms.DateTimeInput(attrs={
                 'class': 'form-control check-date',
-                'placeholder': 'check in date'
+                'placeholder': datetime.date.today()
             }),
             'check_out_date': forms.DateTimeInput(attrs={
                 'class': 'form-control check-date',
-                'placeholder': 'check out date'
+                'placeholder': datetime.date.today()
             }),
             'children': forms.Select(attrs={
                 'class': 'form-control select2',
@@ -387,6 +391,11 @@ class ReservationForm(forms.ModelForm):
             }),
         }
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['children'].choices = self.fields['children'].choices[1:]
+        self.fields['adult'].choices = self.fields['adult'].choices[1:]
+
     def clean(self):
         cleaned_data = super().clean()
         check_in_date = self.cleaned_data.get('check_in_date')
@@ -394,8 +403,12 @@ class ReservationForm(forms.ModelForm):
         selected_room = self.cleaned_data.get('selected_room')
         if check_in_date == '' or check_out_date == '' or selected_room == '':
             raise ValidationError('This field is required')
-        if check_in_date > check_out_date:
-            raise ValidationError("Invalid check-in check-out date")
+        print(check_out_date, check_in_date, 55888888)
+        if check_in_date != None or check_out_date != None:
+            if check_in_date > check_out_date:
+                raise ValidationError("Invalid check-in check-out date")
+        else:
+            pass
 
 
 class AboutForm(FormControlMixin, forms.ModelForm):
@@ -488,3 +501,26 @@ class RoomCommentForm(forms.ModelForm):
                 'placeholder': 'enter review'
             })
         }
+
+
+class PasswordResetForm(forms.Form):
+
+    email = forms.CharField(widget=forms.EmailInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Enter email address'
+    }))
+
+    def clean_email(self):
+        e = self.cleaned_data.get('email')
+        if User.objects.filter(email=e).exists():
+            pass
+        else:
+            raise forms.ValidationError("User with this email doesn't exist")
+
+        return e
+
+
+class UserForm(FormControlMixin, forms.ModelForm):
+    class Meta:
+        model = User
+        fields = '__all__'
