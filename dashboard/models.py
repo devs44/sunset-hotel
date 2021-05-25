@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from ckeditor.fields import RichTextField
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 import datetime
 from django.utils import timezone
 
@@ -63,6 +63,10 @@ class Feature(TimeStamp):
         return self.title
 
 
+class RoomImage(TimeStamp):
+    image = models.ImageField(upload_to="room")
+
+
 class Room(TimeStamp):
     room_type = models.ForeignKey(Room_Category, on_delete=models.CASCADE)
     room_no = models.CharField(
@@ -72,7 +76,7 @@ class Room(TimeStamp):
     checked_out_date = models.DateField(null=True, blank=True)
     availability = models.BooleanField(default=False)
     price = models.PositiveIntegerField()
-    image = models.ImageField(upload_to="rooms")
+    image = models.ManyToManyField(RoomImage)
     features = models.ManyToManyField(Feature)
 
     class Meta:
@@ -81,15 +85,6 @@ class Room(TimeStamp):
 
     def __str__(self):
         return self.room_no
-
-
-class RoomImage(TimeStamp):
-    room = models.ForeignKey(
-        Room, related_name="r_image", on_delete=models.CASCADE)
-    image = models.ImageField(upload_to="room")
-
-    def __str__(self):
-        return self.room.room_no
 
 
 class Image(TimeStamp):
@@ -238,3 +233,20 @@ class Subscription(TimeStamp):
 
     def __str__(self):
         return self.email
+
+
+class Account(User):
+    mobile = models.CharField(max_length=250)
+    address = models.CharField(max_length=250)
+    image = models.ImageField(upload_to='user')
+
+    # def __str__(self):
+    #     return self.username
+
+    # def save(self, *args, **kwargs):
+    #     # creates group in case of no group name 'Admin'
+    #     group, created = Group.objects.get_or_create(name='Admin')
+    #     self.user.groups.add(group)  # add user to group
+    #     # group=variable, created=boolean variable
+
+    #     super().save(*args, **kwargs)  # called super class

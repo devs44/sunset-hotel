@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from . import views
 app_name = 'dashboard'
 urlpatterns = [
-     
+
     path('login/', LoginView.as_view(), name="admin_login"),
     path('logout/', LogoutView.as_view(), name="admin_logout"),
     path('dashboard/', AdminDashboardView.as_view(),
@@ -12,14 +12,15 @@ urlpatterns = [
     #     path('dashboard/', views.admindashboard, name='admin_dashboard'),
     path('updatepassword/', PasswordsChangeView.as_view(), name="update_password"),
   
-    
+    path('password-forgot/', ForgotPasswordView.as_view(), name= 'forgotpassword'),
     path('password-reset/<int:pk>', PasswordResetView.as_view(), name= 'passwordreset'),
-    path('dashboard/', AdminDashboardView.as_view(),name="admin_dashboard"),
+  
     
 
-
+    # users
+    path('user/create', UserCreateView.as_view(), name='user-create'),
     path('user/list', UsersListView.as_view(), name="user_list"),
-    
+
     # room
     path('room/list/', RoomListView.as_view(), name='room_list'),
     path('room/create/', RoomCreateView.as_view(), name='room_create'),
@@ -185,11 +186,12 @@ urlpatterns = [
     path('room/comment/<int:pk>/detail/',
          RoomCommentDetailView.as_view(), name='room_comment_detail'),
 
-     # newsletter
+    # newsletter
 
-     path('newsletter/list/', NewsletterListView.as_view(), name='newsletter_list'),
-     path('newsletter/<int:pk>/delete/', NewsletterDeleteView.as_view(), name='newsletter_delete'),
-     
-     
+    path('newsletter/list/', NewsletterListView.as_view(), name='newsletter_list'),
+    path('newsletter/<int:pk>/delete/',
+         NewsletterDeleteView.as_view(), name='newsletter_delete'),
+
+
 
 ]
