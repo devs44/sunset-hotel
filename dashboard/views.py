@@ -218,18 +218,18 @@ class RoomCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
     login_url = '/login/'
     redirect_field_name = 'room_create'
 
-    def form_valid(self, form):
-        room = form.save()
-        images = self.request.FILES.getlist('more_images')
-        for img in images:
-            RoomImage.objects.create(room=room, image=img)
-        return super().form_valid(form)
+    # def form_valid(self, form):
+    #     room = form.save()
+    #     images = self.request.FILES.getlist('more_images')
+    #     for img in images:
+    #         RoomImage.objects.create(room=room, image=img)
+    #     return super().form_valid(form)
 
 
 class RoomImageCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
     model = RoomImage
     form_class = RoomImageForm
-    template_name = "dashboard/layouts/form.html"
+    template_name = "dashboard/room/roomcreate.html"
 
     def dispatch(self, request, *args, **kwargs):
         if self.request.is_ajax():
@@ -258,12 +258,12 @@ class RoomUpdateView(AdminRequiredMixin, DashboardMixin, UpdateView):
     login_url = '/login/'
     redirect_field_name = 'room_update'
 
-    def form_valid(self, form):
-        room = form.save()
-        images = self.request.FILES.getlist('more_images')
-        for img in images:
-            RoomImage.objects.create(room=room, image=img)
-        return super().form_valid(form)
+    # def form_valid(self, form):
+    #     room = form.save()
+    #     images = self.request.FILES.getlist('more_images')
+    #     for img in images:
+    #         RoomImage.objects.create(room=room, image=img)
+    #     return super().form_valid(form)
 
 
 class RoomDetailView(AdminRequiredMixin, DashboardMixin, DetailView):

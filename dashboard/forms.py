@@ -69,11 +69,11 @@ class RoomImageForm(FormControlMixin, forms.ModelForm):
 
 
 class RoomForm(FormControlMixin, forms.ModelForm):
-    more_images = forms.FileField(required=False, widget=forms.FileInput(attrs={
-        'class': 'select2 feature-select',
-        'multiple': 'multiple',
+    # more_images = forms.FileField(required=False, widget=forms.FileInput(attrs={
+    #     'class': 'select2 feature-select',
+    #     'multiple': 'multiple',
 
-    }))
+    # }))
 
     class Meta:
         model = Room
