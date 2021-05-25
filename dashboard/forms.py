@@ -522,5 +522,5 @@ class PasswordResetForm(forms.Form):
 
 class UserForm(FormControlMixin, forms.ModelForm):
     class Meta:
-        model = User
+        model = Account
         fields = '__all__'

@@ -118,8 +118,10 @@
                       {% endif %}
                        
                       </td>
+                      <td>{% if user.is_active%}<span class="badge badge-success p-2">Active</span>{%else%}
+                      <span class="badge badge-secondary p-2">Inactive</span>{%endif%}</td>
                       <td>
-                          <span ><a class="btn btn-info mr-2" href="{% url 'dashboard:passwordreset'  %}"
+                          <span ><a class="btn btn-info mr-2 reset" href="{% url 'dashboard:passwordreset' user.pk %}"
                               ><i
                                 class="fa fa-edit m-1"
                                 aria-hidden="true"
@@ -168,3 +170,25 @@
 </div>
 {% endblock %}
 
+{% block script %}
+<script>
+$('.reset').click(function(e) {
+        e.preventDefault();
+        swal({
+                title: "Are you sure?",
+                text: "It will send a tempoprary password !",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willSend) => {
+                if (willSend) {
+                    window.location.href = $(this).attr('href');
+                    swal(" 'Reset Password has been sent.'!", {
+                        icon: "success",
+                    });
+                }
+            });
+    })
+</script>
+{% endblock %}
