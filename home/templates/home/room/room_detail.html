@@ -31,10 +31,7 @@
     	    <div class="col-sm-7 col-md-8">
     	    	<div class="room_detail__body">
               <div id="room-detail__carousel" class="owl-carousel owl-theme room-detail__gallery">
-                <div class="room_gallery__item">
-                  <img src="{{ room.image.url }}" class="img-responsive" alt="...">
-                </div>
-                {% for img in room.r_image.all %}
+                {% for img in room.image.all %}
                 <div class="room_gallery__item">
                   <img src="{{ img.image.url }}" class="img-responsive" alt="...">
                 </div> <!-- .room_gallery__item -->
@@ -118,7 +115,9 @@
                   <li class="list__item">
                     <a href="{% url 'room_detail' room.pk %}">
                       <figure class="list_item__body">
-                        <img src="{{ room.image.url }}" class="img-responsive" alt="...">
+                        {% for img in room.image.all|slice:1 %}
+                        <img src="{{ img.image.url }}" class="img-responsive" alt="...">
+                        {% endfor %}
                         <figcaption>
                           <h3>{{ room.room_type}} </h3>
                           <div class="item__price">

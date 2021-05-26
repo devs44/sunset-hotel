@@ -11,14 +11,11 @@ urlpatterns = [
          name="admin_dashboard"),
     #     path('dashboard/', views.admindashboard, name='admin_dashboard'),
     path('updatepassword/', PasswordsChangeView.as_view(), name="update_password"),
-
-
-    path('password-reset/', PasswordResetView.as_view(), name='passwordreset'),
-    path('dashboard/', AdminDashboardView.as_view(), name="admin_dashboard"),
-
-
-    path('password-reset/', PasswordResetView.as_view(), name='passwordreset'),
-    path('dashboard/', AdminDashboardView.as_view(), name="admin_dashboard"),
+  
+    path('password-forgot/', ForgotPasswordView.as_view(), name= 'forgotpassword'),
+    path('password-reset/<int:pk>', PasswordResetView.as_view(), name= 'passwordreset'),
+  
+    
 
     # users
     path('user/create', UserCreateView.as_view(), name='user-create'),

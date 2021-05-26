@@ -56,10 +56,12 @@
                         <div class="form-group col-md-6  col-sm-12">
                             <label for="username">Username</label>
                             {{ form.username }}
+                            <span class="form-error">{{ form.errors.username }}</span>
                         </div>
                         <div class="form-group col-md-6 col-sm-12">
                             <label for="password">Email</label>
                             {{ form.email }}
+                            <span class="form-error">{{ form.errors.email }}</span>
                         </div>
 
                     </div>
@@ -71,6 +73,7 @@
                         <div class="form-group col-md-6 col-sm-12" >
                             <label for="password">Contact No.</label>
                             {{ form.mobile }}
+                            <span class="form-error">{{ form.errors.mobile }}</span>
                         </div>
                     </div>
                     <div class="row">
@@ -84,13 +87,10 @@
                     </div>
                     <div class="row">
                       <div class="form-group col-md-6 col-sm-12">
-                        <label for="">Password</label>
-                        {{ form.password }}
+                        <label for="">Group</label>
+                        {{ form.groups }}
                       </div>
-                      <div class="form-group col-md-6 col-sm-12">
-                        <label for="">Joined Date</label>
-                        {{ form.date_joined }}
-                      </div>
+
                     </div>
                 </div>
                 <!-- /.card-body -->
@@ -114,5 +114,10 @@ function preview() {
   frame.src=URL.createObjectURL(event.target.files[0]);
 }
 </script>
+<script>
+	$(document).ready(function() {
+    	$('.feature-select').select2();
+}	);
+  </script>
 {% endblock %}
 

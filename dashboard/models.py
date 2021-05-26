@@ -188,7 +188,7 @@ class Reservation(TimeStamp):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     selected_room = models.ForeignKey(
-        Room, on_delete=models.CASCADE, null=True, blank=True)
+        Room, on_delete=models.CASCADE)
     check_in_date = models.DateTimeField()
     check_out_date = models.DateTimeField()
     adult = models.CharField(max_length=250, choices=ADULT)
@@ -236,7 +236,6 @@ class Subscription(TimeStamp):
 
 
 class Account(User):
-
     mobile = models.CharField(max_length=250)
     address = models.CharField(max_length=250)
     image = models.ImageField(upload_to='user')

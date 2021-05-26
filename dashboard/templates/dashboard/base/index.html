@@ -5,6 +5,8 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="csrf-token" content="{{ csrf_token }}">
+
     <title>Sunset Hotel | Dashboard</title>
 
     <!-- Google Font: Source Sans Pro -->
@@ -80,6 +82,8 @@
 
 
     {% block style %}
+    {% endblock %}
+
     <style> 
       .form-error{
         color : red;
@@ -105,7 +109,6 @@
         margin: 0px 10px 0 10px;
       }
       </style>
-    {% endblock %}
   </head>
 
   <body class="hold-transition sidebar-mini layout-fixed">
@@ -255,8 +258,7 @@
     <script src="{% static 'dashboard/assets/dist/js/pages/dashboard.js' %}"></script>
     <!-- filterizr -->
     <script src="{% static 'dashboard/assets/plugins/filterizr/jquery.filterizr.min.js' %}"></script>
-    <!-- select2-->
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    
     <!-- Toastr -->
     <script src="{% static 'dashboard/assets/toastr/toastr.min.js' %}"></script>
     <!-- sweetalert -->
@@ -269,7 +271,8 @@
     <!-- spartan  -->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="{% static 'dashboard/assets/js/spartan-multi-image-picker-min.js' %}"></script>
-
+    <!-- select2-->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
       toastr.options = {
              "debug": false,
@@ -291,6 +294,12 @@
              toastr.error("{{ message }}");
          {% endif %}
          {% endfor %}
+    </script>
+    <script>
+      $(".select2").select2({ 
+            width: '100%',
+        });
+
     </script>
 
     {% block script %} {% endblock %}

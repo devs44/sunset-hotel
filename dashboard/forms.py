@@ -69,15 +69,11 @@ class RoomImageForm(FormControlMixin, forms.ModelForm):
 
 
 class RoomForm(FormControlMixin, forms.ModelForm):
-    # more_images = forms.FileField(required=False, widget=forms.FileInput(attrs={
-    #     'class': 'select2 feature-select',
-    #     'multiple': 'multiple',
-
-    # }))
 
     class Meta:
         model = Room
-        fields = '__all__'
+        fields = ['room_type', 'room_no', 'description',
+                  'checked_in_date', 'checked_out_date', 'availability', 'price', 'image', 'features']
         widgets = {
             'room_type': forms.Select(attrs={
                 'class': 'select2',
@@ -91,9 +87,6 @@ class RoomForm(FormControlMixin, forms.ModelForm):
             }),
             'price': forms.TextInput(attrs={
                 'placeholder': 'price'
-            }),
-            'image': forms.ClearableFileInput(attrs={
-                'placeholder': 'choose image'
             }),
 
             "availability": DjangoToggleSwitchWidget(klass="django-toggle-switch-success"),
@@ -406,7 +399,8 @@ class ReservationForm(forms.ModelForm):
             raise ValidationError('This field is required')
         if check_in_date != None or check_out_date != None:
             if check_in_date > check_out_date:
-                raise ValidationError("Invalid check-in check-out date")
+                raise ValidationError({
+                    "check_in_date": "Invalid check-in check-out date"})
         else:
             pass
 
@@ -523,9 +517,36 @@ class PasswordResetForm(forms.Form):
 class UserForm(FormControlMixin, forms.ModelForm):
     class Meta:
         model = Account
-        fields = '__all__'
+        fields = ['username', 'email', 'address', 'image', 'mobile', 'groups']
         widgets = {
             'image': forms.ClearableFileInput(attrs={
                 'onchange': 'preview()'
             })
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['groups'].widget.attrs.update(
+            {'class': 'form-control select2 feature-select'})
+
+    def clean(self):
+        cleaned_data = super().clean()
+        username = self.cleaned_data['username']
+        email = self.cleaned_data['email']
+        mobile = self.cleaned_data['mobile']
+        if Account.objects.filter(username=username).exists():
+            raise ValidationError({
+                'username': 'this username is not available'
+            })
+        if Account.objects.filter(email=email).exists():
+            raise ValidationError({
+                'email': 'user with this email already exists'
+            })
+        if Account.objects.filter(mobile=mobile):
+            raise ValidationError({
+                'mobile': 'user with this mobile no. already exists'
+            })
+        if len(mobile) < 10:
+            raise ValidationError({
+                'mobile': 'Invalid mobile no.'
+            })
