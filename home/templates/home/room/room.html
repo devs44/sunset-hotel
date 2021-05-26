@@ -35,9 +35,12 @@
             <div class="rooms__item">
 
                 <div class="col-md-6">
+                  {% for img in room.image.all|slice:1 %}
                 <div class="rooms__pic">
-                    <img src="{{ room.image.url }}" class="img-responsive" alt="...">
-                </div> <!-- / .about__pic -->
+                    <img style="width: 400px; height: 400px;" src="{{ img.image.url }}" class="img-responsive" alt="...">
+                </div>
+                {% endfor %}
+                 <!-- / .about__pic -->
                 </div>
                 <div class="col-md-6">
                 <div class="rooms__desc">
@@ -55,7 +58,7 @@
                     <p class="rooms_desc__desc">{{ room.description|safe|truncatewords:30 }}</p>
                     {% for features in room.features.all %}
                     <div class="col-sm-6">
-                    
+    
                     <ul class="rooms_desc__services">
                         <li>{{features.title}}</li>
                         <img src="{{features.image.url }}" height="15px" width="15px">

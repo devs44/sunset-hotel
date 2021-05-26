@@ -111,6 +111,13 @@ class RoomListView(QuerysetMixin, ListView):
                                            Q(room_type__title='Double Room'))
             else:
                 queryset = queryset.all().exclude(room_type__title='Single Room')
+        if 'keyword' in self.request.GET:
+            if self.request.GET.get('keyword') != '':
+                search_item = self.request.GET.get('keyword')
+                queryset = queryset.filter(Q(room_type__title__contains=search_item) |
+                                           Q(room_no__contains=search_item) |
+                                           Q(price__contains=search_item) |
+                                           Q(description__contains=search_item))
 
         return queryset
 
@@ -156,8 +163,10 @@ class ServiceListView(ListView):
     template_name = 'home/about/about.html'
 
     def get_context_data(self, **kwargs):
-        adult = Reservation.objects.all().aggregate(total_adult=Sum('adult'))['total_adult']
-        children = Reservation.objects.all().aggregate(total_children=Sum('children'))['total_children']
+        adult = Reservation.objects.all().aggregate(
+            total_adult=Sum('adult'))['total_adult']
+        children = Reservation.objects.all().aggregate(
+            total_children=Sum('children'))['total_children']
         context = super().get_context_data(**kwargs)
         context['services'] = Services_type.objects.all()
         context['test'] = Testomonial.objects.all()
@@ -166,8 +175,7 @@ class ServiceListView(ListView):
         context['about'] = About.objects.all()
         context['room_count'] = Room.objects.count()
 
-        context['guests']= adult + children
-
+        context['guests'] = adult + children
 
 
 class ReservationView(BaseMixin, CreateView):
@@ -183,6 +191,15 @@ class ReservationView(BaseMixin, CreateView):
                 room_no=self.request.GET.get('room_id')).first()
         context['rooms'] = Room.objects.filter(deleted_at__isnull=True)
         return context
+
+    def get_initial(self):
+        initial = super().get_initial()
+        if "room_id" in self.request.GET:
+            room = Room.objects.filter(
+                room_no=self.request.GET.get('room_id')).first()
+            initial['selected_room'] = room.pk
+
+            return initial
 
     def form_valid(self, form):
         if 'room_id' in self.request.GET:

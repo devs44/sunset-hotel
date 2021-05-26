@@ -240,7 +240,9 @@
         {% for room in room|slice:4 %}
         <div class="col-sm-6">
           <figure class="best-rooms__item">
-            <img src="{{ room.image.url }}" class="img-responsive" alt="..." />
+            {% for img in room.image.all|slice:1 %}
+            <img src="{{ img.image.url }}" class="img-responsive" alt="..." />
+            {% endfor %}
             <figcaption>
               <h3>{{ room.title }}</h3>
               <div class="item__price">

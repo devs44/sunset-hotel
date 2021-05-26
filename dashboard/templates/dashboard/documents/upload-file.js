@@ -194,9 +194,9 @@
 
     uploadFile = function(file, timeid){
         var formData = new FormData();
-        formData.append('photo', file);
+        formData.append('image', file);
         $.ajax({
-            url: '{% url "dashboard:photo-create" %}',
+            url: '{% url "dashboard:room-image-create" %}',
             type: 'POST',
             headers: {
                 'X-CSRFToken': $('meta[name="csrf-token"]').attr('content'),

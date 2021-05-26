@@ -38,7 +38,9 @@
     	    		<p class="subheading">Booking details</p>
     	    		<h2 class="section__heading">Selected room</h2>
     	    		<figure class="room__details">
-								<img src="{{ selected_room.image.url }}" class="img-responsive" alt="...">
+							{% for img in selected_room.image.all|slice:1 %}
+								<img src="{{ img.image.url }}" class="img-responsive" alt="...">
+							{% endfor %}
 								<figcaption>
 									<h3>{{ selected_room.room_type }}</h3>
 									<div class="room__price">
@@ -106,7 +108,7 @@
 				<div class="col-sm-12 col-md-6">
               		<div class="form-group">
 	                  <label for="check-in" >Check In date</label>
-	                  <span class="check-date">{{ form.check_in_date }}</span>
+	                  <span>{{ form.check_in_date }}</span>
 					  <span class="form-error">{{ form.errors.check_in_date }}</span>
 	                  <span class="help-block"></span>
 	                </div>
@@ -114,7 +116,7 @@
 	              <div class="col-sm-12 col-md-6">
 	              	<div class="form-group">
 	                  <label for="check-out">Check Out date</label>
-	                  <span class="check-date">{{ form.check_out_date }}</span>
+	                  <span>{{ form.check_out_date }}</span>
 					  <span class="form-error">{{ form.errors.check_out_date }}</span>
 	                  <span class="help-block"></span>
 	                </div>
@@ -202,7 +204,16 @@
 	                  <span class="help-block"></span>
 	                </div>
               	</div>
-				{% if not selected_room %}
+				{% if selected_room %}
+				<div class="col-sm-12 col-md-6" hidden>
+					<div class="form-group">
+						<label for="form-children" >Select Room</label>
+						{{ form.selected_room }}
+						<span class="form-error">{{ form.errors.selected_room }}</span>
+						<span class="help-block"></span>
+				  	</div>
+				</div>
+				{% else %}
 				<div class="col-sm-12 col-md-6">
 					<div class="form-group">
 						<label for="form-children" >Select Room</label>
@@ -235,14 +246,5 @@
 {% endblock  %}
 
 {% block script %}
-<script>
-	$(".check-date").flatpickr({
-    enableTime: true,
-    dateFormat: "Y-m-d ",
-	minDate: "today"
-
-});
-
-</script>
 
 {% endblock %}
