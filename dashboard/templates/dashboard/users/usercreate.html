@@ -49,40 +49,47 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form method="POST">
+              <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="card-body">
                     <div  class="row">
                         <div class="form-group col-md-6  col-sm-12">
                             <label for="username">Username</label>
                             {{ form.username }}
+                            <span class="form-error">{{ form.errors.username }}</span>
                         </div>
                         <div class="form-group col-md-6 col-sm-12">
                             <label for="password">Email</label>
                             {{ form.email }}
-                        </div>
-
-                    </div>
-                    <div  class="row">
-                        <div class="form-group col-md-6  col-sm-12">
-                            <label for="username">First name</label>
-                            {{ form.first_name }}
-                        </div>
-                        <div class="form-group col-md-6 col-sm-12">
-                            <label for="password">Last Name</label>
-                            {{ form.last_name }}
+                            <span class="form-error">{{ form.errors.email }}</span>
                         </div>
 
                     </div>
                     <div  class="row">
                         <div class="form-group col-md-6 col-sm-12" >
-                            <label for="join_date">Joined Date</label>
-                            {{ form.date_joined }}
+                            <label for="join_date">Address </label>
+                            {{ form.address }}
                         </div>
                         <div class="form-group col-md-6 col-sm-12" >
-                            <label for="password">Password</label>
-                            {{ form.password }}
+                            <label for="password">Contact No.</label>
+                            {{ form.mobile }}
+                            <span class="form-error">{{ form.errors.mobile }}</span>
                         </div>
+                    </div>
+                    <div class="row">
+                      <div class="form-group col-md-6 col-sm-12">
+                          <label for="image">Image</label>
+                          {{ form.image }}
+                      </div>
+                      <div class="form-group col-md-6 col-sm-12">
+                          <img src="" id="frame" alt="" width="100px" height="100px">
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="form-group col-md-6 col-sm-12">
+                        <label for="">Group</label>
+                        {{ form.groups }}
+                      </div>
 
                     </div>
                 </div>
@@ -101,4 +108,16 @@
   </div>
 </div>
 {% endblock %} 
+{% block script %}
+<script>
+function preview() {
+  frame.src=URL.createObjectURL(event.target.files[0]);
+}
+</script>
+<script>
+	$(document).ready(function() {
+    	$('.feature-select').select2();
+}	);
+  </script>
+{% endblock %}
 

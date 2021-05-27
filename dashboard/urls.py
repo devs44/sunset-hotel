@@ -31,6 +31,10 @@ urlpatterns = [
     path('room/<int:pk>/detail/',
          RoomDetailView.as_view(), name="room_detail"),
 
+    # room image
+    path('room/image/crete/', RoomImageCreateView.as_view(),
+         name='room-image-create'),
+
     # room category
     path('room/category/', RoomCategoryListView.as_view(), name='room_category'),
     path('room/category/create/',
