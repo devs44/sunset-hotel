@@ -240,6 +240,7 @@ class Account(User):
     address = models.CharField(max_length=250)
     image = models.ImageField(upload_to='user')
 
+
     # def __str__(self):
     #     return self.username
 

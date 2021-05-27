@@ -198,7 +198,17 @@ class UsersListView(SuperAdminRequiredMixin, AdminRequiredMixin, ListView):
     success_url = reverse_lazy('dashboard:user_list')
     paginate_by = 5
 
+class UserToggleStatusView(View):
+    success_url = reverse_lazy('dashboard:user_list')
+    def get(self, request, *args, **kwargs):    
+        account = User.objects.filter(pk = self.kwargs.get("pk")).first() 
+        if account.is_active == True:
+            account.is_active = False
+        else:
+            account.is_active = True
+        account.save(update_fields = ['is_active'])
 
+        return redirect(self.success_url)
 # rooms
 
 
