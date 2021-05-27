@@ -24,7 +24,6 @@
     <!--endbuild-->
     <!-- flatpickr   -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.2.3/themes/dark.css">
 
 
 
@@ -105,6 +104,15 @@
         // Events
 
       })();
+    </script>
+    <script>
+      $(".check-date").flatpickr({
+        enableTime: false,
+        dateFormat: "Y-m-d",
+      minDate: "today"
+    
+    });
+    
     </script>
     {% block script %}
 

@@ -188,7 +188,7 @@ class Reservation(TimeStamp):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     selected_room = models.ForeignKey(
-        Room, on_delete=models.CASCADE, null=True, blank=True)
+        Room, on_delete=models.CASCADE)
     check_in_date = models.DateTimeField()
     check_out_date = models.DateTimeField()
     adult = models.CharField(max_length=250, choices=ADULT)
@@ -240,14 +240,5 @@ class Account(User):
     address = models.CharField(max_length=250)
     image = models.ImageField(upload_to='user')
 
-
-    # def __str__(self):
-    #     return self.username
-
-    # def save(self, *args, **kwargs):
-    #     # creates group in case of no group name 'Admin'
-    #     group, created = Group.objects.get_or_create(name='Admin')
-    #     self.user.groups.add(group)  # add user to group
-    #     # group=variable, created=boolean variable
-
-    #     super().save(*args, **kwargs)  # called super class
+    def __str__(self):
+        return self.username
