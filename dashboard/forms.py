@@ -392,8 +392,8 @@ class ReservationForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
-        check_in_date = self.cleaned_data.get('check_in_date')
-        check_out_date = self.cleaned_data.get('check_out_date')
+        check_in_date = self.cleaned_data.get('check_in_date').date()
+        check_out_date = self.cleaned_data.get('check_out_date').date()
         selected_room = self.cleaned_data.get('selected_room')
         if check_in_date == '' or check_out_date == '' or selected_room == '':
             raise ValidationError('This field is required')
@@ -401,8 +401,22 @@ class ReservationForm(forms.ModelForm):
             if check_in_date > check_out_date:
                 raise ValidationError({
                     "check_in_date": "Invalid check-in check-out date"})
-        else:
-            pass
+
+        room = Room.objects.filter(room_no=selected_room).first()
+        check_in = room.checked_in_date
+        check_out = room.checked_out_date
+        if check_in_date >= check_in and check_in_date < check_out:
+            raise ValidationError({
+                'check_in_date': 'This room is not available at this date'
+            })
+        if check_out_date > check_in and check_out_date < check_out:
+            raise ValidationError({
+                'check_out_date': 'This room is not available at this time.'
+            })
+        if check_in_date < check_in and check_out_date <= check_out:
+            raise ValidationError({
+                'check_out_date': 'This room is not available at this time.'
+            })
 
 
 class AboutForm(FormControlMixin, forms.ModelForm):
