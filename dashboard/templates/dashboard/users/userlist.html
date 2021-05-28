@@ -2,27 +2,7 @@
 <script>
   M.toast({html:" toasted!", classes: "blue rounded",displayLength:2000});
 </script>
-<style>
-.bttn {
-  background-color: red; /* Blue background */
-  border: none; /* Remove borders */
-  color: white; /* White text */
-  padding: 9px 9px; /* Some padding */
-  font-size: 14px; /* Set a font size */
-  cursor: pointer; /* Mouse pointer on hover */
-  border-radius: 5%;
-}
-.btttn {
-  background-color: green; /* Blue background */
-  border: none; /* Remove borders */
-  color: white; /* White text */
-  padding: 10px 10px; /* Some padding */
-  font-size: 14px; /* Set a font size */
-  cursor: pointer; /* Mouse pointer on hover */
-  border-radius: 5%;
-}
 
-</style>
 <div class="wrapper">
   <div class="content-wrapper">
     <section class="content-header">
@@ -86,10 +66,13 @@
                       <td>{{forloop.counter}}</td>
                       <td>{{user.username }}</td>
                       <td>{{user.email}}</td>
-                      
-                      {% if user.is_active %}
                       <td>
+                      {% if user.is_active %}
+                      
                       <span class="badge badge-success p-2">Active</span>
+                      {%else%}
+                      <span class="badge badge-danger p-2">Inactive</span>
+                       {%endif%}
                       </td>
                       <td>
                           <span ><a class="btn btn-info mr-2 reset" href="{% url 'dashboard:passwordreset' user.pk %}"
@@ -98,23 +81,13 @@
                                 aria-hidden="true"
                               ></i>Reset Password</a
                           ></span>
-                      <button class="bttn"><i class="fas fa-ban" ></i></button>
-                      </td> 
+                      {% if user.is_active %}
+                      <a href="{% url 'dashboard:user_disable' user.pk %}" class="toggle-inactive"><button class="btn btn-danger"><i class="fas fa-ban"></i></button></a>
                       {%else%}
-                      <td>
-                      <span class="badge badge-danger p-2">Inactive</span>
-                      </td>
-                      <td>
-                      <span ><a class="btn btn-info mr-2 reset" href="{% url 'dashboard:passwordreset' user.pk %}"
-                              ><i
-                                class="fa fa-edit m-1"
-                                aria-hidden="true"
-                              ></i>Reset Password</a
-                          ></span>
-                      <button class="btttn"><a href="{% url 'dashboard:user_disable' user.pk %}" class="toggle"><i class="fas fa-check-circle"></i></a></button>
-                      
-                      </td>
+                      <a href="{% url 'dashboard:user_disable' user.pk %}" class="toggle-active"><button class="btn btn-success"><i class="fas fa-check-circle"></i></button></a>
                       {%endif%}
+                      </td>
+                      
                       
                     </tr>
                     {% endfor %}
@@ -179,11 +152,11 @@ $('.reset').click(function(e) {
             });
     })
 
-$('.toggle').click(function(e) {
+$('.toggle-active').click(function(e) {
         e.preventDefault();
         swal({
-                title: "Are you sure to active?",
-                text: "It will active the user !",
+                title: "Are you sure ?",
+                text: "It will activate the user !",
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,
@@ -191,7 +164,25 @@ $('.toggle').click(function(e) {
             .then((willChange) => {
                 if (willChange) {
                     window.location.href = $(this).attr('href');
-                    swal(" 'User has been active.'!", {
+                    swal(" 'User has been activated.'!", {
+                        icon: "success",
+                    });
+                }
+            });
+    })
+$('.toggle-inactive').click(function(e) {
+        e.preventDefault();
+        swal({
+                title: "Are you sure?",
+                text: "It will disable the user!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willChange) => {
+                if (willChange) {
+                    window.location.href = $(this).attr('href');
+                    swal(" 'User has been disabled.'!", {
                         icon: "success",
                     });
                 }
