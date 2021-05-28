@@ -48,6 +48,7 @@ class HomeTemplateView(BaseMixin, TemplateView):
         context['event'] = Event.objects.all()
         context['test'] = Testomonial.objects.all()
         context['service'] = Services_type.objects.all()
+        context['about'] = About.objects.all()
         context['form'] = MessageForm()
         return context
 
