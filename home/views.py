@@ -341,7 +341,7 @@ class EventListView(ListView):
 
 
 class GalleryListView(ListView):
-    model = RoomImage
+    model = Image
     template_name = 'home/gallery/gallery.html'
     context_object_name = 'photo'
 
