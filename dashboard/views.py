@@ -71,11 +71,7 @@ class PasswordsChangeView(PasswordChangeView):
         form.set_user(self.request.user)
         return form
 
-    def form(self, form):
-        old_password = form.cleaned_data['old_password']
-
-        if check_password(old_password, request.user.password):
-            messages.add_message(request, messages.ERROR, "invalid password")
+    
 
 
 class ForgotPasswordView(FormView):
@@ -332,9 +328,16 @@ class RoomCategoryDelete(AdminRequiredMixin, DeleteMixin, DashboardMixin, Delete
 # Image
 class ImageListView(AdminRequiredMixin, QuerysetMixin, DashboardMixin, ListView):
     template_name = 'dashboard/gallery/imagelist.html'
-    model = RoomImage
+    model = Image
     login_url = '/login/'
     redirect_field_name = 'image_list'
+ 
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['room_image'] = RoomImage.objects.all()
+        return context
+
 
 
 class ImageCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
@@ -345,13 +348,13 @@ class ImageCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
 
 class ImageUpdateView(AdminRequiredMixin, DashboardMixin, UpdateView):
     template_name = 'dashboard/gallery/imagecreate.html'
-    model = RoomImage
+    model = Image
     form_class = ImageForm
     success_url = reverse_lazy('dashboard:image_list')
 
 
 class ImageDeleteView(AdminRequiredMixin, DeleteMixin, DashboardMixin, DeleteView):
-    model = RoomImage
+    model = Image
     success_url = reverse_lazy('dashboard:image_list')
 
 # event

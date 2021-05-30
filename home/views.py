@@ -176,8 +176,9 @@ class ServiceListView(ListView):
         context['room_count'] = Room.objects.count()
 
         context['guests'] = adult + children
-
-
+     
+        return context
+        
 class ReservationView(BaseMixin, CreateView):
     template_name = 'home/reservation/reservation.html'
     form_class = ReservationForm
