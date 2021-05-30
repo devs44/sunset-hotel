@@ -15,7 +15,7 @@ from django.conf import settings as conf_settings
 from django.utils.crypto import get_random_string
 from django.core.mail import send_mail
 from django.template import loader
-from django.http import JsonResponse
+from django.http import JsonResponse, request
 from .forms import *
 from .mixin import *
 from django.views import generic

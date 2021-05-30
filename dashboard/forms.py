@@ -512,7 +512,7 @@ class RoomCommentForm(forms.ModelForm):
 
 
 class PasswordResetForm(forms.Form):
-
+ 
     email = forms.CharField(widget=forms.EmailInput(attrs={
         'class': 'form-control',
         'placeholder': 'Enter email address'
@@ -520,7 +520,7 @@ class PasswordResetForm(forms.Form):
 
     def clean_email(self):
         e = self.cleaned_data.get('email')
-        if User.objects.filter(email=e).exists():
+        if Account.objects.filter(email=e).exists():
             pass
         else:
             raise forms.ValidationError("User with this email doesn't exist")
