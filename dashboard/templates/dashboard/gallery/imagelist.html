@@ -49,6 +49,21 @@
                       {% endfor %}
                     </div>
                   </div>
+                  <div class="card-body">
+                    <div class="row">
+                        {% for roomimg in roomimg %}
+                      <div class="col-sm-2">
+                        <a href="{{ roomimg.image.url }}" data-toggle="lightbox" data-title="sample 2 - white" data-gallery="gallery">
+                          <img src="{{ roomimg.image.url }}" class="img-fluid mb-2" alt="white sample"/>
+                            <div>
+                                <a href="{% url 'dashboard:image_update' roomimg.id %}">edit</a> |
+                                <a class="delete" href="{% url 'dashboard:image_delete' roomimg.id %}">delete</a>
+                            </div>
+                        </a>
+                      </div>
+                      {% endfor %}
+                    </div>
+                  </div>
                 </div>
               </div>
         </div>

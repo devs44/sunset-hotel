@@ -69,7 +69,7 @@
             
             {% for room in photo %}
 
-            <div class="{{ room.room.room_type.title|cut:' ' }}  col-xs-12 col-sm-6 col-md-4 col-lg-3 gallery__item all">
+            <div class="{{ room.image_type|cut:' ' }}  col-xs-12 col-sm-6 col-md-4 col-lg-3 gallery__item all">
               
               <a href="#" data-lightbox="gallery" data-title="Your caption">
                 <img src="{{room.image.url}}" class="img-responsive" alt="...">
