@@ -36,6 +36,7 @@
                   <div class="card-body">
                     <div class="row">
                         {% for img in object_list %}
+                         
                       <div class="col-sm-2">
                           <span>{{img.caption}}</span>
                         <a href="{{ img.image.url }}" data-toggle="lightbox" data-title="sample 2 - white" data-gallery="gallery">
@@ -46,7 +47,30 @@
                             </div>
                         </a>
                       </div>
+                    
                       {% endfor %}
+
+                      
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="row">
+                        {% for room_image in room_image %}
+                         
+                      <div class="col-sm-2">
+                          <span>{{room_image.caption}}</span>
+                        <a href="{{ room_image.image.url }}" data-toggle="lightbox" data-title="sample 2 - white" data-gallery="gallery">
+                          <img src="{{ room_image.image.url }}" class="img-fluid mb-2" alt="white sample"/>
+                            <div>
+                                <a href="{% url 'dashboard:image_update' room_image.id %}">edit</a> |
+                                <a class="delete" href="{% url 'dashboard:image_delete' room_image.id %}">delete</a>
+                            </div>
+                        </a>
+                      </div>
+                    
+                      {% endfor %}
+
+                      
                     </div>
                   </div>
                 </div>
