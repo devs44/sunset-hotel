@@ -340,12 +340,12 @@ class EventListView(ListView):
 
 
 class GalleryListView(ListView):
-    model = Image
+    model=Image
     template_name = 'home/gallery/gallery.html'
-    context_object_name = 'photo'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['photo'] = Image.objects.filter(deleted_at__isnull=True)
         context['roomtitle'] = Room_Category.objects.all()
         return context
 

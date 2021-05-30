@@ -71,11 +71,7 @@ class PasswordsChangeView(PasswordChangeView):
         form.set_user(self.request.user)
         return form
 
-    def form(self, form):
-        old_password = form.cleaned_data['old_password']
-
-        if check_password(old_password, request.user.password):
-            messages.add_message(request, messages.ERROR, "invalid password")
+    
 
 
 class ForgotPasswordView(FormView):
@@ -335,11 +331,13 @@ class ImageListView(AdminRequiredMixin, QuerysetMixin, DashboardMixin, ListView)
     model = Image
     login_url = '/login/'
     redirect_field_name = 'image_list'
+ 
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['roomimg'] = RoomImage.objects.all()
+        context['room_image'] = RoomImage.objects.all()
         return context
+
 
 
 class ImageCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
