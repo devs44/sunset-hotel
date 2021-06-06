@@ -126,6 +126,17 @@
     height: 0;
   }
   
+  label.django-toggle-switch.django-toggle-switch-success {
+    margin-left:12px;
+    margin-bottom: -8px;
+    
+  }
+ .django-toggle-switch-slider{
+ border-radius: 30px;
+ }
+  .django-toggle-switch-slider:before {
+    border-radius: 50px;
+        left: 5px;}
   
       </style>
   </head>
@@ -207,12 +218,11 @@
           </li> {% endcomment %}
           <li>
             <a class="nav-link" href="{% url 'dashboard:update_password' %}">
-              <i class="fa fa-sign-out-alt" area-hidden="true">Update Password</i></a
-            >
+              <i class="fas fa-edit"> Update Password</i></a>
           </li>
          <li>
             <a class="nav-link" href="{% url 'dashboard:admin_logout' %}">
-              <i class="fa fa-sign-out-alt" area-hidden="true">logout</i></a
+              <i class="fa fa-sign-out-alt" area-hidden="true"> Logout</i></a
             >
           </li>
         </ul>

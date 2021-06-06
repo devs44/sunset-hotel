@@ -18,13 +18,13 @@
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
       <div class="image">
         <img
-          src="{% static 'dashboard/assets/dist/img/user2-160x160.jpg' %}"
+          src="{{request.user.account.image.url}}"
           class="img-circle elevation-2"
           alt="User Image"
         />
       </div>
       <div class="info ">
-        <a href="#" class="d-block"> Welcome! {% if request.user.is_authenticated %}
+        <a href="{% url 'dashboard:admin_dashboard' %}" class="d-block"> Welcome! {% if request.user.is_authenticated %}
                                               {{request.user.username}}
                                               {% endif %}</a>
       </div>
@@ -133,7 +133,7 @@
         </li>
         <li class="nav-item">
           <a href="{% url 'dashboard:message_list' %}" class="nav-link {% active_link 'dashboard:message_list' 'active' %}">
-            <i class="nav-icon fa fa-comments"></i>
+            <i class="nav-icon fas fa-envelope-open"></i>
             <p>Message</p>
           </a>
         </li>
@@ -145,7 +145,7 @@
         </li>
         <li class="nav-item">
           <a href="{% url 'dashboard:about_list' %}" class="nav-link {% active_link 'dashboard:about_list' 'active' %}">
-            <i class="nav-icon fas fa-hotel"></i>
+            <i class="nav-icon fas fa-info"></i>
             <p>About</p>
           </a>
         </li>

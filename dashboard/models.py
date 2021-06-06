@@ -65,7 +65,7 @@ class Feature(TimeStamp):
 
 class RoomImage(TimeStamp):
     image = models.ImageField(upload_to="room")
-
+    
 
 class Room(TimeStamp):
     room_type = models.ForeignKey(Room_Category, on_delete=models.CASCADE)

@@ -31,7 +31,7 @@ class DashboardMixin(object):
 class AdminRequiredMixin(object):
     def dispatch(self, request, *args, **kwargs):
         user = request.user
-        if user.is_authenticated and user.groups.filter(name="Admin").exists():
+        if user.is_active and user.groups.filter(name="Admin").exists():
 
             pass
         else:
