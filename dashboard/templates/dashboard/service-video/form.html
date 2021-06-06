@@ -13,15 +13,7 @@
               <li class="breadcrumb-item active">Service Video</li>
             </ol>
           </div>
-          <div class="col-sm-6">
-            <button class="btn btn-primary float-sm-right">
-              <a
-                class="text-white"
-                href="{% url 'dashboard:service_video_list' %}"
-                >Cancel</a
-              >
-            </button>
-          </div>
+      
           
         </div>
       </div>
@@ -56,8 +48,11 @@
 
                 <!-- /.card-body -->
 
-                <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                <div class="card-footer float-right">
+                  <button type="submit" class="btn btn-primary ">Submit</button>
+                   <button class="btn btn-secondary">
+                   <a class="text-white" href="{% url 'dashboard:service_video_list' %}">Cancel</a>
+                   </button>
                 </div>
               </form>
             </div>
