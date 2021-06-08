@@ -32,6 +32,17 @@
       href="{% static 'dashboard/assets/toastr/toastr.min.css' %}"
       rel="stylesheet"
     />
+    <style>
+      .form-error{
+        color : red;
+        padding: 0;
+      }
+
+      .form-error ul li{
+        list-style:none;
+        padding: 0;
+      }
+    </style>
   </head>
   <body class="hold-transition login-page">
 
@@ -49,11 +60,11 @@
           {%endif%}
           <form action="" method="post">
             {% csrf_token %}
-            <p class="form-error">{{error}}</p>
 
+            <span class="form-error">{{ form.errors.username }}</span>
             <!-- {{form.as_p}} -->
             <div class="input-group mb-3">
-              {{ form.username }} {{ form.errors.username }}
+              {{ form.username }} 
               <div class="input-group-append">
                 <div class="input-group-text">
                   <span class="fas fa-envelope"></span>

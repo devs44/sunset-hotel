@@ -1,3 +1,4 @@
+import datetime
 from email.mime.text import MIMEText
 
 from django.conf import settings
@@ -24,7 +25,6 @@ from django.views.generic import ListView, TemplateView, DetailView
 from django.contrib import messages
 from dateutil.parser import parse as parse_date
 from django.urls import reverse_lazy
-import datetime
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.urls import reverse
 from django.db.models import Q
@@ -129,7 +129,7 @@ class RoomListView(QuerysetMixin, ListView):
 
 
 class RoomDetailView(BaseMixin, QuerysetMixin, DetailView):
-    template_name = 'home/room/event-detail.html'
+    template_name = 'home/room/room_detail.html'
     model = Room
     form_class = RoomCommentForm
 
@@ -178,6 +178,7 @@ class ServiceListView(TemplateView):
 
         context['guests'] = adult + children
         return context
+
 
 class ReservationView(BaseMixin, CreateView):
     template_name = 'home/reservation/reservation.html'
@@ -340,7 +341,7 @@ class EventListView(ListView):
 
 
 class GalleryListView(ListView):
-    model=Image
+    model = Image
     template_name = 'home/gallery/gallery.html'
 
     def get_context_data(self, **kwargs):

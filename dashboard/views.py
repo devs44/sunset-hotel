@@ -42,13 +42,6 @@ class LoginView(FormView):
             login(self.request, user)
             user.is_active = True
 
-        else:
-            return render(self.request, self.template_name,
-                          {
-                              'error': 'Invalid Username or password',
-                              'form': form
-                          })
-
         return super().form_valid(form)
 
 
@@ -137,7 +130,7 @@ class UsersListView(SuperAdminRequiredMixin, AdminRequiredMixin, ListView):
 
 
 class UserToggleStatusView(View):
-    success_url = reverse_lazy('dashboard:user_list')
+    success_url = reverse_lazy('dashboard:user-list')
 
     def get(self, request, *args, **kwargs):
         account = User.objects.filter(pk=self.kwargs.get("pk")).first()
