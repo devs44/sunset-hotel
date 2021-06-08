@@ -2,6 +2,7 @@
 <script>
   M.toast({html:" toasted!", classes: "blue rounded",displayLength:2000});
 </script>
+
 <div class="wrapper">
   <div class="content-wrapper">
     <section class="content-header">
@@ -41,35 +42,7 @@
               <div class="col-8">
                 <div class="card-tools">
                   <div class="input-group input-group-sm">
-                    {% comment %} <form action="{% url 'dashboard:room-list' %}" method="GET" class="form-inline">
-                      <input
-                        type="text"
-                        name="room_type"
-                        class="form-control float-right searchInput"
-                        id="SearchRoom"
-                        placeholder="Room type"
-                      />
-                      <input
-                        type="text"
-                        name="room_no"
-                        class="form-control float-right searchInput"
-                        id="SearchRoom"
-                        placeholder="Room no"
-                      />
-                      <input
-                        type="text"
-                        name="price"
-                        class="form-control float-right searchInput"
-                        id="SearchRoom"
-                        placeholder="Price"
-                      />
-
-                      <div class="input-group-append">
-                        <button type="submit" class="btn btn-default">
-                          <i class="fas fa-search"></i>
-                        </button>
-                      </div>
-                    </form> {% endcomment %}
+                    
                   </div>
                 </div>
               </div>
@@ -93,8 +66,14 @@
                       <td>{{forloop.counter}}</td>
                       <td>{{user.username }}</td>
                       <td>{{user.email}}</td>
-                      <td>{% if user.is_active%}<span class="badge badge-success p-2">Active</span>{%else%}
-                      <span class="badge badge-secondary p-2">Inactive</span>{%endif%}</td>
+                      <td>
+                      {% if user.is_active %}
+                      
+                      <span class="badge badge-success p-2">Active</span>
+                      {%else%}
+                      <span class="badge badge-danger p-2">Inactive</span>
+                       {%endif%}
+                      </td>
                       <td>
                           <span ><a class="btn btn-info mr-2 reset" href="{% url 'dashboard:passwordreset' user.pk %}"
                               ><i
@@ -102,7 +81,14 @@
                                 aria-hidden="true"
                               ></i>Reset Password</a
                           ></span>
-                      </td> 
+                      {% if user.is_active %}
+                      <a href="{% url 'dashboard:user_disable' user.pk %}" class="toggle-inactive"><button class="btn btn-danger"><i class="fas fa-ban"></i></button></a>
+                      {%else%}
+                      <a href="{% url 'dashboard:user_disable' user.pk %}" class="toggle-active"><button class="btn btn-success"><i class="fas fa-check-circle"></i></button></a>
+                      {%endif%}
+                      </td>
+                      
+                      
                     </tr>
                     {% endfor %}
                   </tbody>
@@ -160,6 +146,43 @@ $('.reset').click(function(e) {
                 if (willSend) {
                     window.location.href = $(this).attr('href');
                     swal(" 'Reset Password has been sent.'!", {
+                        icon: "success",
+                    });
+                }
+            });
+    })
+
+$('.toggle-active').click(function(e) {
+        e.preventDefault();
+        swal({
+                title: "Are you sure ?",
+                text: "It will activate the user !",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willChange) => {
+                if (willChange) {
+                    window.location.href = $(this).attr('href');
+                    swal(" 'User has been activated.'!", {
+                        icon: "success",
+                    });
+                }
+            });
+    })
+$('.toggle-inactive').click(function(e) {
+        e.preventDefault();
+        swal({
+                title: "Are you sure?",
+                text: "It will disable the user!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+            .then((willChange) => {
+                if (willChange) {
+                    window.location.href = $(this).attr('href');
+                    swal(" 'User has been disabled.'!", {
                         icon: "success",
                     });
                 }

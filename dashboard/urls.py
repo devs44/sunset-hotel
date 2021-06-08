@@ -7,8 +7,7 @@ urlpatterns = [
 
     path('login/', LoginView.as_view(), name="admin-login"),
     path('logout/', LogoutView.as_view(), name="admin-logout"),
-    path('dashboard/', AdminDashboardView.as_view(),
-         name="admin-dashboard"),
+
     #     path('dashboard/', views.admindashboard, name='admin-dashboard'),
     path('updatepassword/', PasswordsChangeView.as_view(), name="update-password"),
 
@@ -16,6 +15,8 @@ urlpatterns = [
     path('password-reset/<int:pk>',
          PasswordResetView.as_view(), name='passwordreset'),
 
+    path('dashboard/', AdminDashboardView.as_view(),
+         name="admin-dashboard"),
 
 
     # users
@@ -196,7 +197,9 @@ urlpatterns = [
     path('newsletter/list/', NewsletterListView.as_view(), name='newsletter-list'),
     path('newsletter/<int:pk>/delete/',
          NewsletterDeleteView.as_view(), name='newsletter-delete'),
-
+    # user disable
+    path('userdisable/<int:pk>/',
+         UserToggleStatusView.as_view(), name='user_disable'),
 
 
 ]

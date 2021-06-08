@@ -48,6 +48,7 @@ class HomeTemplateView(BaseMixin, TemplateView):
         context['event'] = Event.objects.all()
         context['test'] = Testomonial.objects.all()
         context['service'] = Services_type.objects.all()
+        context['about'] = About.objects.all()
         context['form'] = MessageForm()
         return context
 
@@ -158,8 +159,8 @@ class RoomDetailView(BaseMixin, QuerysetMixin, DetailView):
         return redirect('room-detail', pk=room_no)
 
 
-class ServiceListView(ListView):
-    model = Room
+class ServiceListView(TemplateView):
+    model = About
     template_name = 'home/about/about.html'
 
     def get_context_data(self, **kwargs):
@@ -176,7 +177,7 @@ class ServiceListView(ListView):
         context['room_count'] = Room.objects.count()
 
         context['guests'] = adult + children
-
+        return context
 
 class ReservationView(BaseMixin, CreateView):
     template_name = 'home/reservation/reservation.html'
@@ -339,12 +340,12 @@ class EventListView(ListView):
 
 
 class GalleryListView(ListView):
-    model = RoomImage
+    model=Image
     template_name = 'home/gallery/gallery.html'
-    context_object_name = 'photo'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['photo'] = Image.objects.filter(deleted_at__isnull=True)
         context['roomtitle'] = Room_Category.objects.all()
         return context
 

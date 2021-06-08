@@ -15,7 +15,7 @@ from django.conf import settings as conf_settings
 from django.utils.crypto import get_random_string
 from django.core.mail import send_mail
 from django.template import loader
-from django.http import JsonResponse
+from django.http import JsonResponse, request
 from .forms import *
 from .mixin import *
 from django.views import generic
@@ -40,6 +40,7 @@ class LoginView(FormView):
 
         if user is not None:
             login(self.request, user)
+            user.is_active = True
 
         else:
             return render(self.request, self.template_name,
@@ -66,12 +67,6 @@ class PasswordsChangeView(PasswordChangeView):
         form = super().get_form()
         form.set_user(self.request.user)
         return form
-
-    def form(self, form):
-        old_password = form.cleaned_data['old_password']
-
-        if check_password(old_password, request.user.password):
-            messages.add_message(request, messages.ERROR, "invalid password")
 
 
 class ForgotPasswordView(FormView):
@@ -141,6 +136,18 @@ class UsersListView(SuperAdminRequiredMixin, AdminRequiredMixin, ListView):
     paginate_by = 5
 
 
+class UserToggleStatusView(View):
+    success_url = reverse_lazy('dashboard:user_list')
+
+    def get(self, request, *args, **kwargs):
+        account = User.objects.filter(pk=self.kwargs.get("pk")).first()
+        if account.is_active == True:
+            account.is_active = False
+        else:
+            account.is_active = True
+        account.save(update_fields=['is_active'])
+
+        return redirect(self.success_url)
 # rooms
 
 
@@ -320,9 +327,14 @@ class RoomCategoryDelete(AdminRequiredMixin, DeleteMixin, DashboardMixin, Delete
 # Image
 class ImageListView(AdminRequiredMixin, QuerysetMixin, DashboardMixin, ListView):
     template_name = 'dashboard/gallery/imagelist.html'
-    model = RoomImage
+    model = Image
     login_url = '/login/'
-    redirect_field_name = 'image-list'
+    redirect_field_name = 'image_list'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['room_image'] = RoomImage.objects.all()
+        return context
 
 
 class ImageCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
@@ -333,7 +345,7 @@ class ImageCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
 
 class ImageUpdateView(AdminRequiredMixin, DashboardMixin, UpdateView):
     template_name = 'dashboard/gallery/imagecreate.html'
-    model = RoomImage
+    model = Image
     form_class = ImageForm
     success_url = reverse_lazy('dashboard:image-list')
 
@@ -341,6 +353,8 @@ class ImageUpdateView(AdminRequiredMixin, DashboardMixin, UpdateView):
 class ImageDeleteView(AdminRequiredMixin, DeleteMixin, DashboardMixin, DeleteView):
     model = RoomImage
     success_url = reverse_lazy('dashboard:image-list')
+    model = Image
+    success_url = reverse_lazy('dashboard:image_list')
 
 # event
 
