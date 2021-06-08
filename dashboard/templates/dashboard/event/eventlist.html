@@ -7,7 +7,7 @@
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-left">
               <li class="breadcrumb-item">
-                <a href="{% url 'dashboard:admin_dashboard' %}">Home</a>
+                <a href="{% url 'dashboard:admin-dashboard' %}">Home</a>
               </li>
               <li class="breadcrumb-item active">Event</li>
             </ol>
@@ -34,7 +34,7 @@
                 <div class="card-tools">
                   <div class="input-group input-group-sm">
                     <form
-                      action="{% url 'dashboard:event_list' %}"
+                      action="{% url 'dashboard:event-list' %}"
                       method="GET"
                       class="form-inline"
                     >
@@ -71,7 +71,7 @@
                     <tr>
                       <td>{{forloop.counter}}</td>
                       <td>
-                        <a href="{%url 'dashboard:event_detail' event.id%}"
+                        <a href="{%url 'dashboard:event-detail' event.id%}"
                           >{{event.title}}</a
                         >
                       </td>
@@ -83,7 +83,7 @@
                         <span
                           ><a
                             class="btn btn-warning mr-2"
-                            href="{% url 'dashboard:event_update' event.id %}"
+                            href="{% url 'dashboard:event-update' event.id %}"
                             ><i class="fa fa-edit m-1" aria-hidden="true"></i
                             >Edit</a
                           ></span
@@ -91,7 +91,7 @@
                         <span
                           ><a
                             class="btn btn-danger delete"
-                            href="{% url 'dashboard:event_delete' event.id %}"
+                            href="{% url 'dashboard:event-delete' event.id %}"
                             ><i class="fa fa-trash m-1"></i></a
                         ></span>
                       </td>

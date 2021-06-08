@@ -3,7 +3,7 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <!-- Brand Logo -->
-  <a href="{% url 'dashboard:admin_dashboard' %}" class="brand-link">
+  <a href="{% url 'dashboard:admin-dashboard' %}" class="brand-link">
     <img
       src="{% static 'dashboard/assets/dist/img/AdminLTELogo.png' %}"
       alt="AdminLTE Logo"
@@ -58,7 +58,7 @@
         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
         <li class="nav-item">
-          <a href="{% url 'dashboard:admin_dashboard' %}" class="nav-link {% active_link 'dashboard:admin_dashboard' 'active' %}">
+          <a href="{% url 'dashboard:admin-dashboard' %}" class="nav-link {% active_link 'dashboard:admin-dashboard' 'active' %}">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
               Dashboard
@@ -69,7 +69,7 @@
         </li>
       
         <li class="nav-item">
-          <a href="{% url 'dashboard:room_list' %}" class="nav-link {% active_link 'dashboard:room_list' 'active' %}">
+          <a href="{% url 'dashboard:room-list' %}" class="nav-link {% active_link 'dashboard:room-list' 'active' %}">
             <i class="nav-icon fa fa-bed"></i>
             <p>Rooms</p>
           </a>
@@ -81,102 +81,102 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="{% url 'dashboard:feature_list' %}" class="nav-link {% active_link 'dashboard:feature_list' 'active' %}">
+          <a href="{% url 'dashboard:feature-list' %}" class="nav-link {% active_link 'dashboard:feature-list' 'active' %}">
             <i class="nav-icon fa fa-list"></i>
             <p>Room Feature</p>
           </a>
         </li>
         <li class="nav-item">
-          <a href="{% url 'dashboard:room_comment_list' %}" class="nav-link {% active_link 'dashboard:room_comment_list' 'active' %}">
+          <a href="{% url 'dashboard:room-comment-list' %}" class="nav-link {% active_link 'dashboard:room-comment-list' 'active' %}">
             <i class="nav-icon fa fa-comment"></i>
             <p>Room Reviews</p>
           </a>
         </li>
         <li class="nav-item">
-          <a href="{% url 'dashboard:image_list' %}" class="nav-link {% active_link 'dashboard:image_list' 'active' %}">
+          <a href="{% url 'dashboard:image-list' %}" class="nav-link {% active_link 'dashboard:image-list' 'active' %}">
             <i class="nav-icon far fa-image"></i>
             <p>Gallery</p>
           </a>
         </li>
         <li class="nav-item">
-          <a href="{% url 'dashboard:news_list' %}" class="nav-link {% active_link 'dashboard:news_list' 'active' %}">
+          <a href="{% url 'dashboard:news-list' %}" class="nav-link {% active_link 'dashboard:news-list' 'active' %}">
             <i class="nav-icon fa fa-newspaper"></i>
             <p>News</p>
           </a>
         </li>
         <li class="nav-item">
-          <a href="{% url 'dashboard:news_comment_list' %}" class="nav-link {% active_link 'dashboard:news_comment_list' 'active' %}">
+          <a href="{% url 'dashboard:news-comment-list' %}" class="nav-link {% active_link 'dashboard:news-comment-list' 'active' %}">
             <i class="nav-icon fa fa-comment"></i>
             <p>News Comments</p>
           </a>
         </li>
 
         <li class="nav-item">
-          <a href="{% url 'dashboard:event_list' %}" class="nav-link {% active_link 'dashboard:event_list' 'active' %}">
+          <a href="{% url 'dashboard:event-list' %}" class="nav-link {% active_link 'dashboard:event-list' 'active' %}">
             <i class="nav-icon fa fa-calendar"></i>
             <p>Events</p>
           </a>
         </li>
 
         <li class="nav-item">
-          <a href="{% url 'dashboard:eventcomment_list' %}" class="nav-link {% active_link 'dashboard:eventcomment_list' 'active' %}">
+          <a href="{% url 'dashboard:event-comment-list' %}" class="nav-link {% active_link 'dashboard:event-comment-list' 'active' %}">
             <i class="nav-icon fa fa-comment"></i>
             <p>Event Comments</p>
           </a>
         </li>
 
         <li class="nav-item">
-          <a href="{% url 'dashboard:testimonial_list' %}" class="nav-link {% active_link 'dashboard:testimonial_list' 'active' %}">
+          <a href="{% url 'dashboard:testimonial-list' %}" class="nav-link {% active_link 'dashboard:testimonial-list' 'active' %}">
             <i class="nav-icon fa fa-comments"></i>
             <p>Testimonial</p>
           </a>
         </li>
         <li class="nav-item">
-          <a href="{% url 'dashboard:message_list' %}" class="nav-link {% active_link 'dashboard:message_list' 'active' %}">
+          <a href="{% url 'dashboard:message-list' %}" class="nav-link {% active_link 'dashboard:message-list' 'active' %}">
             <i class="nav-icon fa fa-comments"></i>
             <p>Message</p>
           </a>
         </li>
         <li class="nav-item">
-          <a href="{% url 'dashboard:reservation_list' %}" class="nav-link {% active_link 'dashboard:reservation_list' 'active' %}">
+          <a href="{% url 'dashboard:reservation-list' %}" class="nav-link {% active_link 'dashboard:reservation-list' 'active' %}">
             <i class="nav-icon fa fa-bookmark"></i>
             <p>Reservation</p>
           </a>
         </li>
         <li class="nav-item">
-          <a href="{% url 'dashboard:about_list' %}" class="nav-link {% active_link 'dashboard:about_list' 'active' %}">
+          <a href="{% url 'dashboard:about-list' %}" class="nav-link {% active_link 'dashboard:about-list' 'active' %}">
             <i class="nav-icon fas fa-hotel"></i>
             <p>About</p>
           </a>
         </li>
 
         <li class="nav-item">
-          <a href="{% url 'dashboard:service_type_list' %}" class="nav-link {% active_link 'dashboard:service_type_list' 'active' %}">
+          <a href="{% url 'dashboard:service-type-list' %}" class="nav-link {% active_link 'dashboard:service-type-list' 'active' %}">
             <i class="nav-icon fa fa-filter"></i>
             <p>Service Type</p>
           </a>
         </li>
         <li class="nav-item">
-          <a href="{% url 'dashboard:service_video_list' %}" class="nav-link {% active_link 'dashboard:service_video_list' 'active' %}">
+          <a href="{% url 'dashboard:service-video-list' %}" class="nav-link {% active_link 'dashboard:service-video-list' 'active' %}">
             <i class="nav-icon fa fa-video"></i>
             <p>Service Video</p>
           </a>
         </li>
         <li class="nav-item">
-          <a href="{% url 'dashboard:contact_list' %}" class="nav-link {% active_link 'dashboard:contact_list' 'active' %}">
+          <a href="{% url 'dashboard:contact-list' %}" class="nav-link {% active_link 'dashboard:contact-list' 'active' %}">
             <i class="nav-icon fa fa-address-book"></i>
             <p>Contact</p>
           </a>
         </li>
         <li class="nav-item">
-          <a href="{% url 'dashboard:newsletter_list' %}" class="nav-link {% active_link 'dashboard:newsletter_list' 'active' %}">
+          <a href="{% url 'dashboard:newsletter-list' %}" class="nav-link {% active_link 'dashboard:newsletter-list' 'active' %}">
             <i class="nav-icon fa fa-address-book"></i>
             <p>Newsletter</p>
           </a>
         {% if request.user.is_superuser %}
                                                                                  
           <li class="nav-item">
-            <a href="#" class="nav-link {% active_link 'dashboard:user_list' 'active' %}">
+            <a href="#" class="nav-link {% active_link 'dashboard:user-list' 'active' %}">
               <i class="nav-icon fa fa-lock"></i>
               <p>
                 Admin
@@ -185,7 +185,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{% url 'dashboard:user_list' %}" class="nav-link {% active_link 'dashboard:user_list' 'active' %}">
+                <a href="{% url 'dashboard:user-list' %}" class="nav-link {% active_link 'dashboard:user-list' 'active' %}">
                   <i class="far fa-user nav-icon"></i>
                   <p>Users</p>
                 </a>

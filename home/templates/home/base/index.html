@@ -485,7 +485,7 @@
 
             <!-- .events-item__text -->
             <div class="events-item__link">
-              <a href="{% url 'news_detail' n.pk %}">Read More ➔</a>
+              <a href="{% url 'news-detail' n.pk %}">Read More ➔</a>
             </div>
             <!-- .events-item__link -->
           </div>
@@ -542,7 +542,7 @@
               {{event.description|truncatewords:20}}
             </div>
             <div class="events-item__link">
-              <a href="{% url 'event_detail' event.pk %}">Read More ➔</a>
+              <a href="{% url 'event-detail' event.pk %}">Read More ➔</a>
             </div>
             <!-- .events-item__link -->
           </div>

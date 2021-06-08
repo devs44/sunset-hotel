@@ -8,7 +8,7 @@
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-left">
               <li class="breadcrumb-item">
-                <a href="{% url 'dashboard:admin_dashboard' %}">Home</a>
+                <a href="{% url 'dashboard:admin-dashboard' %}">Home</a>
               </li>
               <li class="breadcrumb-item active">Service Video</li>
             </ol>
@@ -17,7 +17,7 @@
             <button class="btn btn-primary float-sm-right">
               <a
                 class="text-white"
-                href="{% url 'dashboard:service_video_create' %}"
+                href="{% url 'dashboard:service-video-create' %}"
                 >Add Services</a
               >
             </button>
@@ -37,7 +37,7 @@
                 <div class="card-tools">
                   <div class="input-group input-group-sm" >
                     <form
-                      action="{% url 'dashboard:service_video_list' %}"
+                      action="{% url 'dashboard:service-video-list' %}"
                       method="GET"
                       class="form-inline"
                     >
@@ -72,7 +72,7 @@
                       <td>{{forloop.counter}}</td>
                       <td>
                         <a
-                          href="{%url 'dashboard:service_video_detail' service.id%} "
+                          href="{%url 'dashboard:service-video-detail' service.id%} "
                           >{{service.description|truncatewords:10}}</a
                         >
                       </td>
@@ -88,7 +88,7 @@
                         <span
                           ><a
                             class="btn btn-warning mr-2"
-                            href="{% url 'dashboard:service_video_update' service.id %}"
+                            href="{% url 'dashboard:service-video-update' service.id %}"
                             ><i class="fa fa-edit m-1" aria-hidden="true"></i
                             >Edit</a
                           ></span
@@ -96,7 +96,7 @@
                         <span
                           ><a
                             class="btn btn-danger delete"
-                            href="{% url 'dashboard:service_video_delete' service.id %}"
+                            href="{% url 'dashboard:service-video-delete' service.id %}"
                             ><i class="fa fa-trash m-1"></i></a
                         ></span>
                       </td>
