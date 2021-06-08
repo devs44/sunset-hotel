@@ -129,7 +129,7 @@ class RoomListView(QuerysetMixin, ListView):
 
 
 class RoomDetailView(BaseMixin, QuerysetMixin, DetailView):
-    template_name = 'home/room/room_detail.html'
+    template_name = 'home/room/event-detail.html'
     model = Room
     form_class = RoomCommentForm
 
@@ -156,7 +156,7 @@ class RoomDetailView(BaseMixin, QuerysetMixin, DetailView):
         obj = Comment.objects.create(
             full_name=name, email=email, room=room, comment=message)
         messages.success(request, "Comment added!")
-        return redirect('room_detail', pk=room_no)
+        return redirect('room-detail', pk=room_no)
 
 
 class ServiceListView(TemplateView):
@@ -237,7 +237,7 @@ class NewsListView(ListView):
 
 
 class NewsDetailView(DetailView):
-    template_name = 'home/news/news_detail.html'
+    template_name = 'home/news/news-detail.html'
     model = News
     form_class = NewsCommentForm
 
@@ -262,11 +262,11 @@ class NewsDetailView(DetailView):
         obj = Comment.objects.create(
             full_name=name, email=email, website=website, comment=message, news=form)
 
-        return redirect('news_detail', pk=news)
+        return redirect('news-detail', pk=news)
 
 
 class EventDetailView(DetailView):
-    template_name = 'home/events/event_detail.html'
+    template_name = 'home/events/event-detail.html'
     model = Event
     form_class = EventCommentForm
 
@@ -290,7 +290,7 @@ class EventDetailView(DetailView):
         form = Event.objects.get(pk=events)
         obj = Comment.objects.create(
             full_name=name, email=email, website=website, comment=message, events=form)
-        return redirect('event_detail', pk=events)
+        return redirect('event-detail', pk=events)
 
 
 class ContactTemplateView(BaseMixin, CreateView):

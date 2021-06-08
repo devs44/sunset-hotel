@@ -7,7 +7,7 @@
          <div class="col-sm-6">
             <ol class="breadcrumb float-sm-left">
               <li class="breadcrumb-item">
-                <a href="{% url 'dashboard:admin_dashboard' %}">Home</a>
+                <a href="{% url 'dashboard:admin-dashboard' %}">Home</a>
               </li>
               <li class="breadcrumb-item active">Room</li>
             </ol>
@@ -15,7 +15,7 @@
           <div class="col-sm-6">
           
             <button class="btn btn-primary float-sm-right">
-              <a class="text-white" href="{% url 'dashboard:room_cat_create' %}">Add Room Category</a>
+              <a class="text-white" href="{% url 'dashboard:room-cat-create' %}">Add Room Category</a>
             </button>
           </div>
          
@@ -67,14 +67,14 @@
                       <td>
                         <a href="#">{{cat.title}}</a>
                       <td>
-                          <span ><a class="btn btn-warning mr-2" href="{% url 'dashboard:room_cat_update' cat.id %}"
+                          <span ><a class="btn btn-warning mr-2" href="{% url 'dashboard:room-cat-update' cat.id %}"
                               ><i
                                 class="fa fa-edit m-1"
                                 aria-hidden="true"
                               ></i>Edit</a
                           ></span>
                         <span
-                          ><a class="btn btn-danger delete" href="{% url 'dashboard:room_cat_delete' cat.id %}"
+                          ><a class="btn btn-danger delete" href="{% url 'dashboard:room-cat-delete' cat.id %}"
                             ><i class="fa fa-trash m-1"></i></a></span
                         >
                       </td>

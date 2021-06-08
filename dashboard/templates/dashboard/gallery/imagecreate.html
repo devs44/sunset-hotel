@@ -8,12 +8,18 @@
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-left">
               <li class="breadcrumb-item">
-                <a href="{% url 'dashboard:admin_dashboard' %}">Home</a>
+                <a href="{% url 'dashboard:admin-dashboard' %}">Home</a>
               </li>
               <li class="breadcrumb-item active">Image</li>
             </ol>
           </div>
-       
+          <div class="col-sm-6">
+            <button class="btn btn-primary float-sm-right">
+              <a class="text-white" href="{% url 'dashboard:image-list' %}"
+                >Cancel</a
+              >
+            </button>
+          </div>
          
         </div>
       </div>

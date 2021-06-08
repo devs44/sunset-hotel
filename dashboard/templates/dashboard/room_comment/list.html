@@ -7,7 +7,7 @@
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-left">
               <li class="breadcrumb-item">
-                <a href="{% url 'dashboard:admin_dashboard' %}">Home</a>
+                <a href="{% url 'dashboard:admin-dashboard' %}">Home</a>
               </li>
               <li class="breadcrumb-item active">Reviews</li>
             </ol>
@@ -16,7 +16,7 @@
             <button class="btn btn-primary float-sm-right">
               <a
                 class="text-white"
-                href="{% url 'dashboard:room_comment_create' %}"
+                href="{% url 'dashboard:room-comment-create' %}"
                 >Add review</a
               >
             </button>
@@ -35,7 +35,7 @@
                 <h3 class="card-title">Review List</h3>
                  <div class="card-tools">
                   <div class="input-group input-group-sm" >
-                    <form action="{% url 'dashboard:room_comment_list' %}" method="GET" class="form-inline">
+                    <form action="{% url 'dashboard:room-comment-list' %}" method="GET" class="form-inline">
                       <input
                         type="text"
                         name="room"
@@ -70,7 +70,7 @@
                       <td>{{forloop.counter}}</td>
                       <td>
                         <a
-                          href="{% url 'dashboard:news_comment_detail' review.id %}"
+                          href="{% url 'dashboard:news-comment-detail' review.id %}"
                           >{{review.room}}</a
                         >
                       </td>
@@ -81,7 +81,7 @@
                         <span
                           ><a
                             class="btn btn-warning mr-2"
-                            href="{% url 'dashboard:room_comment_update' review.id %}"
+                            href="{% url 'dashboard:room-comment-update' review.id %}"
                             ><i class="fa fa-edit m-1" aria-hidden="true"></i
                             >Edit</a
                           ></span
@@ -89,7 +89,7 @@
                         <span
                           ><a
                             class="btn btn-danger delete"
-                            href="{% url 'dashboard:room_comment_delete' review.id %}"
+                            href="{% url 'dashboard:room-comment-delete' review.id %}"
                             ><i class="fa fa-trash m-1"></i></a
                         ></span>
                       </td>

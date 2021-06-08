@@ -15,7 +15,7 @@
           </div>
           <div class="col-sm-6">
                 <button class="btn btn-primary float-sm-right">
-                    <a class="text-white" href="{% url 'dashboard:image_create' %}">Upload Image</a>
+                    <a class="text-white" href="{% url 'dashboard:image-create' %}">Upload Image</a>
                 </button>
           </div>
           
@@ -42,8 +42,8 @@
                         <a href="{{ img.image.url }}" data-toggle="lightbox" data-title="sample 2 - white" data-gallery="gallery">
                           <img src="{{ img.image.url }}" class="img-fluid mb-2" alt="white sample"/>
                             <div>
-                                <a href="{% url 'dashboard:image_update' img.id %}">edit</a> |
-                                <a class="delete" href="{% url 'dashboard:image_delete' img.id %}">delete</a>
+                                <a href="{% url 'dashboard:image-update' img.id %}">edit</a> |
+                                <a class="delete" href="{% url 'dashboard:image-delete' img.id %}">delete</a>
                             </div>
                         </a>
                       </div>

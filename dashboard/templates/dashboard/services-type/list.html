@@ -8,7 +8,7 @@
          <div class="col-sm-6">
             <ol class="breadcrumb float-sm-left">
               <li class="breadcrumb-item">
-                <a href="{% url 'dashboard:admin_dashboard' %}">Home</a>
+                <a href="{% url 'dashboard:admin-dashboard' %}">Home</a>
               </li>
               <li class="breadcrumb-item active">Service Type</li>
             </ol>
@@ -17,7 +17,7 @@
             <button class="btn btn-primary float-sm-right">
               <a
                 class="text-white"
-                href="{% url 'dashboard:service_type_create' %}"
+                href="{% url 'dashboard:service-type-create' %}"
                 >Add Services</a
               >
             </button>
@@ -38,7 +38,7 @@
                 <div class="card-tools">
                   <div class="input-group">
                     <form
-                      action="{% url 'dashboard:service_type_list' %}"
+                      action="{% url 'dashboard:service-type-list' %}"
                       method="GET"
                       class="form-inline"
                     >
@@ -75,7 +75,7 @@
                       <td>{{forloop.counter}}</td>
                       <td>
                         <a
-                          href="{%url 'dashboard:service_type_detail' service.id%}"
+                          href="{%url 'dashboard:service-type-detail' service.id%}"
                           >{{service.service_type_name}}</a
                         >
                       </td>
@@ -92,7 +92,7 @@
                         <span
                           ><a
                             class="btn btn-warning mr-2"
-                            href="{% url 'dashboard:service_type_update' service.id %}"
+                            href="{% url 'dashboard:service-type-update' service.id %}"
                             ><i class="fa fa-edit m-1" aria-hidden="true"></i
                             >Edit</a
                           ></span
@@ -100,7 +100,7 @@
                         <span
                           ><a
                             class="btn btn-danger delete"
-                            href="{% url 'dashboard:service_type_delete' service.id %}"
+                            href="{% url 'dashboard:service-type-delete' service.id %}"
                             ><i class="fa fa-trash m-1"></i></a
                         ></span>
                       </td>

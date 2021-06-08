@@ -7,14 +7,14 @@
          <div class="col-sm-6">
             <ol class="breadcrumb float-sm-left">
               <li class="breadcrumb-item">
-                <a href="{% url 'dashboard:admin_dashboard' %}">Home</a>
+                <a href="{% url 'dashboard:admin-dashboard' %}">Home</a>
               </li>
               <li class="breadcrumb-item active">Message</li>
             </ol>
           </div>
           <div class="col-sm-6">
             <button class="btn btn-primary float-sm-right">
-              <a class="text-white" href="{% url 'dashboard:message_create' %}"
+              <a class="text-white" href="{% url 'dashboard:message-create' %}"
                 >Add Message</a
               >
             </button>
@@ -33,7 +33,7 @@
                 <h3 class="card-title">Message List</h3>
                 <div class="card-tools">
                   <div class="input-group input-group-sm" >
-                    <form action="{% url 'dashboard:message_list' %}" method="GET" class="form-inline">
+                    <form action="{% url 'dashboard:message-list' %}" method="GET" class="form-inline">
                       
                       <input
                         type="text"
@@ -68,7 +68,7 @@
                     <tr>
                       <td>{{forloop.counter}}</td>
                       <td>
-                        <a href="{% url 'dashboard:message_detail' message.id %}">{{message.full_name}}</a>
+                        <a href="{% url 'dashboard:message-detail' message.id %}">{{message.full_name}}</a>
                       </td>
                     
                       <td>{{message.email}}</td>
@@ -77,7 +77,7 @@
                         <span
                           ><a
                             class="btn btn-warning mr-2"
-                            href="{% url 'dashboard:message_update' message.id %}"
+                            href="{% url 'dashboard:message-update' message.id %}"
                             ><i class="fa fa-edit m-1" aria-hidden="true"></i
                             >Edit</a
                           ></span
@@ -85,7 +85,7 @@
                         <span
                           ><a
                             class="btn btn-danger delete"
-                            href="{% url 'dashboard:message_delete' message.id %}"
+                            href="{% url 'dashboard:message-delete' message.id %}"
                             ><i class="fa fa-trash m-1"></i></a
                         ></span>
                       </td>

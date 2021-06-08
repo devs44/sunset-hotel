@@ -7,14 +7,14 @@
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-left">
               <li class="breadcrumb-item">
-                <a href="{% url 'dashboard:admin_dashboard' %}">Home</a>
+                <a href="{% url 'dashboard:admin-dashboard' %}">Home</a>
               </li>
               <li class="breadcrumb-item active">Features</li>
             </ol>
           </div>
           <div class="col-sm-6">
             <button class="btn btn-primary float-sm-right">
-              <a class="text-white" href="{% url 'dashboard:feature_create' %}"
+              <a class="text-white" href="{% url 'dashboard:feature-create' %}"
                 >Add Feature</a
               >
             </button>
@@ -34,7 +34,7 @@
 
                 <div class="card-tools">
                   <div class="input-group input-group-sm">
-                    <form action="{% url 'dashboard:feature_list' %}" method="GET" class="form-inline">
+                    <form action="{% url 'dashboard:feature-list' %}" method="GET" class="form-inline">
                       <input
                         type="text"
                         name="room_feature"
@@ -69,14 +69,14 @@
                       <td>{{feature.title}}</td>
                       <td><img width="20%" src="{{ feature.image.url }}" alt=""></td>
                       <td>
-                          <span ><a class="btn btn-warning mr-2" href="{% url 'dashboard:feature_update' feature.pk %}"
+                          <span ><a class="btn btn-warning mr-2" href="{% url 'dashboard:feature-update' feature.pk %}"
                               ><i
                                 class="fa fa-edit m-1"
                                 aria-hidden="true"
                               ></i>Edit</a
                           ></span>
                         <span
-                          ><a class="btn btn-danger delete" href="{% url 'dashboard:feature_delete' feature.pk %}"
+                          ><a class="btn btn-danger delete" href="{% url 'dashboard:feature-delete' feature.pk %}"
                             ><i class="fa fa-trash m-1"></i></a></span
                         >
                       </td>

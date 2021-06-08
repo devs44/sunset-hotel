@@ -7,14 +7,14 @@
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-left">
               <li class="breadcrumb-item">
-                <a href="{% url 'dashboard:admin_dashboard' %}">Home</a>
+                <a href="{% url 'dashboard:admin-dashboard' %}">Home</a>
               </li>
               <li class="breadcrumb-item active">Event Comments</li>
             </ol>
           </div>
           <div class="col-sm-6">
             <button class="btn btn-primary float-sm-right">
-              <a class="text-white" href="{% url 'dashboard:eventcomment_create' %}">Add Event Comments</a>
+              <a class="text-white" href="{% url 'dashboard:event-comment-create' %}">Add Event Comments</a>
             </button>
           </div>
          
@@ -30,8 +30,8 @@
               <div class="card-header">
                 <h3 class="card-title">Our Event Comment List</h3>
                 <div class="card-tools">
-                  <div class="input-group input-group-sm" >
-                    <form action="{% url 'dashboard:eventcomment_list' %}" method="GET" class="form-inline">
+                  <div class="input-group input-group-sm" style="width: 150px">
+                    <form action="{% url 'dashboard:event-comment-list' %}" method="GET" class="form-inline">
                       <input
                         type="text"
                         name="full_name"
@@ -65,7 +65,7 @@
                     <tr>
                       <td>{{forloop.counter}}</td>
                         <td>
-                        <a href="{% url 'dashboard:eventcomment_detail' event.id %}">
+                        <a href="{% url 'dashboard:event-comment-detail' event.id %}">
                           {{event.events}}</a
                         >
                       </td>
@@ -80,7 +80,7 @@
                         <span
                           ><a
                             class="btn btn-warning mr-2"
-                            href="{% url 'dashboard:eventcomment_update' event.id %}"
+                            href="{% url 'dashboard:event-comment-update' event.id %}"
                             ><i class="fa fa-edit m-1" aria-hidden="true"></i
                             >Edit</a
                           ></span
@@ -88,7 +88,7 @@
                         <span
                           ><a
                             class="btn btn-danger delete"
-                            href="{% url 'dashboard:eventcomment_delete' event.id %}"
+                            href="{% url 'dashboard:event-comment-delete' event.id %}"
                             ><i class="fa fa-trash m-1"></i></a
                         ></span>
                       </td>

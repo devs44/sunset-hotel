@@ -7,14 +7,14 @@
          <div class="col-sm-6">
             <ol class="breadcrumb float-sm-left">
               <li class="breadcrumb-item">
-                <a href="{% url 'dashboard:admin_dashboard' %}">Home</a>
+                <a href="{% url 'dashboard:admin-dashboard' %}">Home</a>
               </li>
               <li class="breadcrumb-item active">Reservation</li>
             </ol>
           </div>
           <div class="col-sm-6">
             <button class="btn btn-primary float-sm-right">
-              <a class="text-white" href="{% url 'dashboard:reservation_create' %}"
+              <a class="text-white" href="{% url 'dashboard:reservation-create' %}"
                 >Add Reservation</a
               >
             </button>
@@ -33,7 +33,7 @@
                 <h3 class="card-title">Reservation List</h3>
                <div class="card-tools">
                   <div class="input-group input-group-sm" >
-                    <form action="{% url 'dashboard:reservation_list' %}" method="GET" class="form-inline">
+                    <form action="{% url 'dashboard:reservation-list' %}" method="GET" class="form-inline">
                       <input
                         type="text"
                         name="first_name"
@@ -84,21 +84,21 @@
                     <tr>
                       <td>{{forloop.counter}}</td>
                       <td>
-                        <a href="{% url 'dashboard:reservation_detail' reserve.id %}">{{reserve.first_name}}</a>
+                        <a href="{% url 'dashboard:reservation-detail' reserve.id %}">{{reserve.first_name}}</a>
                       </td>
                       <td>{{reserve.last_name}}</td>
                       <td>{{reserve.selected_room}}</td>
                       <td>{{reserve.check_in_date}}</td>
                       <td>{{reserve.check_out_date}}</td>
                       <td>
-                        <span ><a class="btn btn-warning mr-2" href="{% url 'dashboard:reservation_update' reserve.id %}"
+                        <span ><a class="btn btn-warning mr-2" href="{% url 'dashboard:reservation-update' reserve.id %}"
                             ><i
                               class="fa fa-edit m-1"
                               aria-hidden="true"
                             ></i>Edit</a
                         ></span>
                         <span>
-                          <a class="btn btn-danger delete" href="{% url 'dashboard:reservation_delete' reserve.id %}">
+                          <a class="btn btn-danger delete" href="{% url 'dashboard:reservation-delate' reserve.id %}">
                             <i class="fa fa-trash m-1"></i></a></span>
                       </td>
                     </tr>

@@ -7,14 +7,14 @@
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-left">
               <li class="breadcrumb-item">
-                <a href="{% url 'dashboard:admin_dashboard' %}">Home</a>
+                <a href="{% url 'dashboard:admin-dashboard' %}">Home</a>
               </li>
               <li class="breadcrumb-item active">About</li>
             </ol>
           </div>
           <div class="col-sm-6">
             <button class="btn btn-primary float-sm-right">
-              <a class="text-white" href="{% url 'dashboard:about_create' %}"
+              <a class="text-white" href="{% url 'dashboard:about-create' %}"
                 >Add About</a
               >
             </button>
@@ -34,7 +34,7 @@
 
                 <div class="card-tools">
                   <div class="input-group input-group-sm">
-                    <form action="{% url 'dashboard:about_list' %}" method="GET" class="form-inline">
+                    <form action="{% url 'dashboard:about-list' %}" method="GET" class="form-inline">
                       <input
                         type="text"
                         name="room_feature"
@@ -66,17 +66,17 @@
                     {% for about in object_list %}
                     <tr>
                       <td>{{forloop.counter}}</td>
-                      <td><a href="{% url 'dashboard:about_detail' about.id %}">{{about.title}}</a></td>
+                      <td><a href="{% url 'dashboard:about-detail' about.id %}">{{about.title}}</a></td>
                       <td><img width="20%" src="{{ about.image.url }}" alt=""></td>
                       <td>
-                          <span ><a class="btn btn-warning mr-2" href="{% url 'dashboard:about_update' about.pk %}"
+                          <span ><a class="btn btn-warning mr-2" href="{% url 'dashboard:about-update' about.pk %}"
                               ><i
                                 class="fa fa-edit m-1"
                                 aria-hidden="true"
                               ></i>Edit</a
                           ></span>
                         <span
-                          ><a class="btn btn-danger delete" href="{% url 'dashboard:about_delete' about.pk %}"
+                          ><a class="btn btn-danger delete" href="{% url 'dashboard:about-delete' about.pk %}"
                             ><i class="fa fa-trash m-1"></i></a></span
                         >
                       </td>

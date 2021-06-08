@@ -37,7 +37,7 @@
                 <div class="col-md-6">
                   {% for img in room.image.all|slice:1 %}
                 <div class="rooms__pic">
-                    <img src="{{ img.image.url }}" class="img-responsive" alt="...">
+                    <img style="width: 400px; height: 400px;" src="{{ img.image.url }}" class="img-responsive" alt="...">
                 </div>
                 {% endfor %}
                  <!-- / .about__pic -->
