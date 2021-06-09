@@ -271,7 +271,7 @@ class TestimonialForm(forms.ModelForm):
         fields = '__all__'
         widgets = {
             'name': forms.TextInput(attrs={
-                'class': 'form-control select2',
+                'class': 'form-control',
                 'placeholder': 'Enter name'
             }),
             'profession': forms.TextInput(attrs={
@@ -512,7 +512,7 @@ class RoomCommentForm(forms.ModelForm):
 
 
 class PasswordResetForm(forms.Form):
- 
+
     email = forms.CharField(widget=forms.EmailInput(attrs={
         'class': 'form-control',
         'placeholder': 'Enter email address'

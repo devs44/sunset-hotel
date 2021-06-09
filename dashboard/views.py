@@ -335,7 +335,7 @@ class ImageListView(AdminRequiredMixin, QuerysetMixin, DashboardMixin, ListView)
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['room_image'] = RoomImage.objects.all()
+        context['room_image'] = RoomImage.objects.filter(deleted_at__isnull=True)
         return context
 
 
