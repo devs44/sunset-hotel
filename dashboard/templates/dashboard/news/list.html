@@ -7,14 +7,14 @@
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-left">
               <li class="breadcrumb-item">
-                <a href="{% url 'dashboard:admin_dashboard' %}">Home</a>
+                <a href="{% url 'dashboard:admin-dashboard' %}">Home</a>
               </li>
               <li class="breadcrumb-item active">News</li>
             </ol>
           </div>
           <div class="col-sm-6">
             <button class="btn btn-primary float-sm-right">
-              <a class="text-white" href="{% url 'dashboard:news_create' %}"
+              <a class="text-white" href="{% url 'dashboard:news-create' %}"
                 >Add News</a
               >
             </button>
@@ -33,7 +33,7 @@
                 <h3 class="card-title">News List</h3>
                 <div class="card-tools">
                   <div class="input-group input-group-sm" >
-                    <form action="{% url 'dashboard:news_list' %}" method="GET" class="form-inline">
+                    <form action="{% url 'dashboard:news-list' %}" method="GET" class="form-inline">
                       <input
                         type="text"
                         name="title"
@@ -68,7 +68,7 @@
                     <tr>
                       <td>{{forloop.counter}}</td>
                       <td>
-                        <a href="{%url 'dashboard:news_detail' news.id%}"
+                        <a href="{%url 'dashboard:news-detail' news.id%}"
                           >{{news.title}}</a
                         >
                       </td>
@@ -80,7 +80,7 @@
                         <span
                           ><a
                             class="btn btn-warning mr-2"
-                            href="{% url 'dashboard:news_update' news.id %}"
+                            href="{% url 'dashboard:news-update' news.id %}"
                             ><i class="fa fa-edit m-1" aria-hidden="true"></i
                             >Edit</a
                           ></span
@@ -88,7 +88,7 @@
                         <span
                           ><a
                             class="btn btn-danger delete"
-                            href="{% url 'dashboard:news_delete' news.id %}"
+                            href="{% url 'dashboard:news-delete' news.id %}"
                             ><i class="fa fa-trash m-1"></i></a
                         ></span>
                       </td>

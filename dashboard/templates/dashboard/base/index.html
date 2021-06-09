@@ -126,6 +126,17 @@
     height: 0;
   }
   
+  label.django-toggle-switch.django-toggle-switch-success {
+    margin-left:12px;
+    margin-bottom: -8px;
+    
+  }
+ .django-toggle-switch-slider{
+ border-radius: 30px;
+ }
+  .django-toggle-switch-slider:before {
+    border-radius: 50px;
+        left: 5px;}
   
       </style>
   </head>
@@ -153,7 +164,7 @@
             <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
           </li>
           <li class="nav-item d-none d-sm-inline-block">
-            <a href="{% url 'dashboard:admin_dashboard' %}" class="nav-link"
+            <a href="{% url 'dashboard:admin-dashboard' %}" class="nav-link"
               >Home</a
             >
           </li>
@@ -171,7 +182,7 @@
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
               {% for m in messages|slice:3 %}
               <a
-                href="{% url 'dashboard:message_detail' m.id %}"
+                href="{% url 'dashboard:message-detail' m.id %}"
                 class="dropdown-item"
               >
                 <!-- Message Start -->
@@ -199,19 +210,19 @@
               <div class="dropdown-divider"></div>
               {% endfor %}
               <a
-                href="{% url 'dashboard:message_list' %}"
+                href="{% url 'dashboard:message-list' %}"
                 class="dropdown-item dropdown-footer"
                 >See All Messages</a
               >
             </div>
           </li> {% endcomment %}
           <li>
-            <a class="nav-link" href="{% url 'dashboard:update_password' %}">
+            <a class="nav-link" href="{% url 'dashboard:update-password' %}">
               <i class="fa fa-sign-out-alt" area-hidden="true">Update Password</i></a
             >
           </li>
          <li>
-            <a class="nav-link" href="{% url 'dashboard:admin_logout' %}">
+            <a class="nav-link" href="{% url 'dashboard:admin-logout' %}">
               <i class="fa fa-sign-out-alt" area-hidden="true">logout</i></a
             >
           </li>

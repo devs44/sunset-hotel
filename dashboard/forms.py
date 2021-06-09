@@ -1,13 +1,17 @@
-from django import forms
-from django.db.models import fields
-from django.forms import widgets
-from .models import *
-from django.contrib import messages
 import datetime
+
+from django import forms
+from django.contrib import messages
+from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import PasswordChangeForm
 from django.core.exceptions import ValidationError
 from django_toggle_switch_widget.widgets import DjangoToggleSwitchWidget
-from django.contrib.auth.forms import PasswordChangeForm
+from django.db.models import fields
+from django.forms import widgets
 from django.utils.translation import gettext as _
+
+from .models import *
 
 
 class FormControlMixin:
@@ -30,6 +34,18 @@ class StaffLoginForm(forms.Form):
         'class': 'form-control',
         'placeholder': 'Password'
     }))
+
+    def clean(self):
+        cleaned_data = super().clean()
+        username = self.cleaned_data.get('username')
+        password = self.cleaned_data.get('password')
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            pass
+        else:
+            raise ValidationError({
+                'username': 'Invalid username or password'
+            })
 
 
 class ChangePasswordForm(PasswordChangeForm):

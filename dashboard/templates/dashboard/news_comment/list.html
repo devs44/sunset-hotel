@@ -7,7 +7,7 @@
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-left">
               <li class="breadcrumb-item">
-                <a href="{% url 'dashboard:admin_dashboard' %}">Home</a>
+                <a href="{% url 'dashboard:admin-dashboard' %}">Home</a>
               </li>
               <li class="breadcrumb-item active">Comments</li>
             </ol>
@@ -16,7 +16,7 @@
             <button class="btn btn-primary float-sm-right">
               <a
                 class="text-white"
-                href="{% url 'dashboard:news_comment_create' %}"
+                href="{% url 'dashboard:news-comment-create' %}"
                 >Add comment</a
               >
             </button>
@@ -35,7 +35,7 @@
                 <h3 class="card-title">Comment List</h3>
                  <div class="card-tools">
                   <div class="input-group input-group-sm" >
-                    <form action="{% url 'dashboard:news_comment_list' %}" method="GET" class="form-inline">
+                    <form action="{% url 'dashboard:news-comment-list' %}" method="GET" class="form-inline">
                       <input
                         type="text"
                         name="full_name"
@@ -71,7 +71,7 @@
                       <td>{{forloop.counter}}</td>
                       <td>
                         <a
-                          href="{% url 'dashboard:news_comment_detail' comment.id %}"
+                          href="{% url 'dashboard:news-comment-detail' comment.id %}"
                           >{{comment.news}}</a
                         >
                       </td>
@@ -82,7 +82,7 @@
                         <span
                           ><a
                             class="btn btn-warning mr-2"
-                            href="{% url 'dashboard:news_comment_update' comment.id %}"
+                            href="{% url 'dashboard:news-comment-update' comment.id %}"
                             ><i class="fa fa-edit m-1" aria-hidden="true"></i
                             >Edit</a
                           ></span
@@ -90,7 +90,7 @@
                         <span
                           ><a
                             class="btn btn-danger delete"
-                            href="{% url 'dashboard:news_comment_delete' comment.id %}"
+                            href="{% url 'dashboard:news-comment-delete' comment.id %}"
                             ><i class="fa fa-trash m-1"></i></a
                         ></span>
                       </td>

@@ -11,14 +11,14 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-left">
               <li class="breadcrumb-item">
-                <a href="{% url 'dashboard:admin_dashboard' %}">Home</a>
+                <a href="{% url 'dashboard:admin-dashboard' %}">Home</a>
               </li>
               <li class="breadcrumb-item active">Room</li>
             </ol>
           </div>
           <div class="col-sm-6">
             <button class="btn btn-primary float-sm-right">
-              <a class="text-white" href="{% url 'dashboard:room_create' %}"
+              <a class="text-white" href="{% url 'dashboard:room-create' %}"
                 >Add Room</a
               >
             </button>
@@ -41,7 +41,7 @@
               <div class="col-8">
                 <div class="card-tools">
                   <div class="input-group input-group-sm">
-                    <form action="{% url 'dashboard:room_list' %}" method="GET" class="form-inline">
+                    <form action="{% url 'dashboard:room-list' %}" method="GET" class="form-inline">
                       <input
                         type="text"
                         name="room_type"
@@ -55,15 +55,23 @@
                         class="form-control float-right searchInput"
                         id="SearchRoom"
                         placeholder="Room no"
+                        size="5"
                       />
                       <input
                         type="text"
-                        name="price"
+                        name="price_from"
                         class="form-control float-right searchInput"
-                        id="SearchRoom"
-                        placeholder="Price"
+                        placeholder="from"
+                        size="5"
                       />
-
+                      <span class="input-group-text">to</span>
+                      <input
+                        type="text"
+                        name="price_to"
+                        class="form-control float-right searchInput"
+                        placeholder="to"
+                        size="5"
+                      />
                       <div class="input-group-append">
                         <button type="submit" class="btn btn-default">
                           <i class="fas fa-search"></i>
@@ -94,9 +102,9 @@
                   <tbody>
                     {% for room in object_list %}
                     <tr>
-                      <td>{{forloop.counter}}</td>
+                      <td>{{forloop.counter}}</td>  
                       <td>
-                        <a href="{% url 'dashboard:room_detail' room.pk %}"
+                        <a href="{% url 'dashboard:room-detail' room.pk %}"
                           >{{room.room_type}}</a
                         >
                       <td>{{room.room_no}}</td>
@@ -111,14 +119,14 @@
                       <td>{{room.price}}</td>
                       <td>{{room.deleted_at}}</td>
                       <td>
-                          <span ><a class="btn btn-warning mr-2" href="{% url 'dashboard:room_update' room.pk %}"
+                          <span ><a class="btn btn-warning mr-2" href="{% url 'dashboard:room-update' room.pk %}"
                               ><i
                                 class="fa fa-edit m-1"
                                 aria-hidden="true"
                               ></i>Edit</a
                           ></span>
                         <span
-                          ><a class="btn btn-danger delete" href="{% url 'dashboard:room_delete' room.pk %}"
+                          ><a class="btn btn-danger delete" href="{% url 'dashboard:room-delete' room.pk %}"
                             ><i class="fa fa-trash m-1"></i></a></span
                         >
                       </td>

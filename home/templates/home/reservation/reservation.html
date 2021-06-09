@@ -68,21 +68,21 @@
 					</li>
 	            {% for c in contact|slice:1 %}
  	           		<li>
-              			<i class="icon ion-android-pin"></i>
-              			<div class="contact-info-content">
-                			<div class="title">Address</div>
-                			<div class="description"> {{c.address}}</div>
-              			</div>
+              			 <i class="icon ion-android-pin"></i>
+              <div class="contact-info-content">
+                <div class="title">Address</div>
+                <div class="description">{{c.address}}</div>
+              </div>
            			</li>
  	          		<li>
-              			<i class="icon ion-android-call"></i>
+              			<i class="icon ion-android-call mr-2"> </i>
              			<div class="contact-info-content">
                 			<div class="title">Phone / Fax</div>
                 			<div class="description"> {{c.phone}} / {{c.fax}}</div>
               			</div>
             		</li>
  	           		<li>
-              			<i class="icon ion-android-mail"></i>
+              			<i class="icon ion-android-mail"> </i>
               			<div class="contact-info-content">
                 			<div class="title">E-mail</div>
                 			<div class="description"> {{c.email}}</div>

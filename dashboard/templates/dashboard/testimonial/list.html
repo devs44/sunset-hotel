@@ -7,14 +7,14 @@
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-left">
               <li class="breadcrumb-item">
-                <a href="{% url 'dashboard:admin_dashboard' %}">Home</a>
+                <a href="{% url 'dashboard:admin-dashboard' %}">Home</a>
               </li>
               <li class="breadcrumb-item active">Testimonial</li>
             </ol>
           </div>
           <div class="col-sm-6">
             <button class="btn btn-primary float-sm-right">
-              <a class="text-white" href="{% url 'dashboard:testimonial_create' %}"
+              <a class="text-white" href="{% url 'dashboard:testimonial-create' %}"
                 >Add Testimonial</a
               >
             </button>
@@ -35,7 +35,7 @@
                 <div class="card-tools">
                   <div class="input-group input-group-sm">
                         <form
-                      action="{% url 'dashboard:testimonial_list' %}"
+                      action="{% url 'dashboard:testimonial-list' %}"
                       method="GET"
                       class="form-inline"
                     >
@@ -78,7 +78,7 @@
                     <tr>
                       <td>{{forloop.counter}}</td>
                       <td>
-                        <a href="{% url 'dashboard:testimonial_detail' test.id %}">{{test.name}}</a>
+                        <a href="{% url 'dashboard:testimonial-detail' test.id %}">{{test.name}}</a>
                       </td>
                       <td>{{test.profession}}</td>
                       <td>{{test.voice|truncatewords:8}}</td>
@@ -87,7 +87,7 @@
                         <span
                           ><a
                             class="btn btn-warning mr-2"
-                            href="{% url 'dashboard:testimonial_update' test.id %}"
+                            href="{% url 'dashboard:testimonial-update' test.id %}"
                             ><i class="fa fa-edit m-1" aria-hidden="true"></i
                             >Edit</a
                           ></span
@@ -95,7 +95,7 @@
                         <span
                           ><a
                             class="btn btn-danger delete"
-                            href="{% url 'dashboard:testimonial_delete' test.id %}"
+                            href="{% url 'dashboard:testimonial-delete' test.id %}"
                             ><i class="fa fa-trash m-1"></i></a
                         ></span>
                       </td>

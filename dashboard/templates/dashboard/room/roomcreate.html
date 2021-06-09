@@ -20,18 +20,12 @@
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-left">
               <li class="breadcrumb-item">
-                <a href="{% url 'dashboard:admin_dashboard' %}">Home</a>
+                <a href="{% url 'dashboard:admin-dashboard' %}">Home</a>
               </li>
               <li class="breadcrumb-item active">Room</li>
             </ol>
           </div>
-          <div class="col-sm-6">
-            <button class="btn btn-primary float-sm-right">
-              <a class="text-white" href="{% url 'dashboard:room_list' %}"
-                >Cancel</a
-              >
-            </button>
-          </div>
+          
          
         </div>
       </div>
@@ -128,17 +122,21 @@
                     <input type="checkbox" class="form-check-input" id="exampleCheck1">
                     <label class="form-check-label" for="exampleCheck1">Check me out</label>
                   </div> {% endcomment %}
-                  <div class="form-check">
-                      <label class="form-check-label" for="exampleCheck1">Room Availability</label>
-                       <span class ="switch-btn">{{form.availability}}</span>
+                  <div class="form-group">
+                       <label for="exampleInputFile">Room Availability</label>
+                       {{form.availability}}
                   
                   </div>
                 </div>
                 <!-- /.card-body -->
 
-                <div class="card-footer">
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                <div class="card-footer float-right">
+                  <button type="submit" class="btn btn-primary ">Submit</button>
+                   <button class="btn btn-secondary">
+                   <a class="text-white" href="{% url 'dashboard:room_list' %}">Cancel</a>
+                   </button>
                 </div>
+          
               </form>
             </div>
             <!-- /.card -->

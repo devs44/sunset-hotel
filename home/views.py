@@ -1,3 +1,4 @@
+import datetime
 from email.mime.text import MIMEText
 
 from django.conf import settings
@@ -24,7 +25,6 @@ from django.views.generic import ListView, TemplateView, DetailView
 from django.contrib import messages
 from dateutil.parser import parse as parse_date
 from django.urls import reverse_lazy
-import datetime
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.urls import reverse
 from django.db.models import Q
@@ -156,11 +156,11 @@ class RoomDetailView(BaseMixin, QuerysetMixin, DetailView):
         obj = Comment.objects.create(
             full_name=name, email=email, room=room, comment=message)
         messages.success(request, "Comment added!")
-        return redirect('room_detail', pk=room_no)
+        return redirect('room-detail', pk=room_no)
 
 
-class ServiceListView(ListView):
-    model = Room
+class ServiceListView(TemplateView):
+    model = About
     template_name = 'home/about/about.html'
 
     def get_context_data(self, **kwargs):
@@ -177,9 +177,9 @@ class ServiceListView(ListView):
         context['room_count'] = Room.objects.count()
 
         context['guests'] = adult + children
-     
         return context
-        
+
+
 class ReservationView(BaseMixin, CreateView):
     template_name = 'home/reservation/reservation.html'
     form_class = ReservationForm
@@ -238,7 +238,7 @@ class NewsListView(ListView):
 
 
 class NewsDetailView(DetailView):
-    template_name = 'home/news/news_detail.html'
+    template_name = 'home/news/news-detail.html'
     model = News
     form_class = NewsCommentForm
 
@@ -263,11 +263,11 @@ class NewsDetailView(DetailView):
         obj = Comment.objects.create(
             full_name=name, email=email, website=website, comment=message, news=form)
 
-        return redirect('news_detail', pk=news)
+        return redirect('news-detail', pk=news)
 
 
 class EventDetailView(DetailView):
-    template_name = 'home/events/event_detail.html'
+    template_name = 'home/events/event-detail.html'
     model = Event
     form_class = EventCommentForm
 
@@ -291,7 +291,7 @@ class EventDetailView(DetailView):
         form = Event.objects.get(pk=events)
         obj = Comment.objects.create(
             full_name=name, email=email, website=website, comment=message, events=form)
-        return redirect('event_detail', pk=events)
+        return redirect('event-detail', pk=events)
 
 
 class ContactTemplateView(BaseMixin, CreateView):
@@ -343,10 +343,10 @@ class EventListView(ListView):
 class GalleryListView(ListView):
     model = Image
     template_name = 'home/gallery/gallery.html'
-    context_object_name = 'photo'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['photo'] = Image.objects.filter(deleted_at__isnull=True)
         context['roomtitle'] = Room_Category.objects.all()
         return context
 

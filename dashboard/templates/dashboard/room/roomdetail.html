@@ -26,7 +26,7 @@
       <div class="card">
         <div class="card-header">
           <button class="btn btn-primary">
-            <a class="text-white" href="{% url 'dashboard:room_list' %}"
+            <a class="text-white" href="{% url 'dashboard:room-list' %}"
               >Cancel</a
             >
           </button>
@@ -136,11 +136,6 @@
               <h3 class="text-primary">
                 <i class="fas fa-paint-brush"></i> Images
               </h3>
-              <img
-                style="height: 20rem; width: 20rem"
-                src="{{roomdetail.image.url}}"
-                alt="room image"
-              />
               {% for img in  roomdetail.image.all %}
                 <img style="height: 20rem; width: 20rem;" src="{{ img.image.url}}" alt="">
                 <br>

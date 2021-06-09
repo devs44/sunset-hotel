@@ -7,7 +7,7 @@
          <div class="col-sm-6">
             <ol class="breadcrumb float-sm-left">
               <li class="breadcrumb-item">
-                <a href="{% url 'dashboard:admin_dashboard' %}">Home</a>
+                <a href="{% url 'dashboard:admin-dashboard' %}">Home</a>
               </li>
               <li class="breadcrumb-item active">Newsletter</li>
             </ol>
@@ -27,7 +27,7 @@
                 <h3 class="card-title">Newsletter List</h3>
                <div class="card-tools">
                   <div class="input-group input-group-sm" >
-                    <form action="{% url 'dashboard:newsletter_list' %}" method="GET" class="form-inline">
+                    <form action="{% url 'dashboard:newsletter-list' %}" method="GET" class="form-inline">
                       <input
                         type="text"
                         name="first_name"
@@ -67,7 +67,7 @@
                       <td>
                         
                         <span>
-                          <a class="btn btn-danger delete" href="{% url 'dashboard:newsletter_delete' email.id %}">
+                          <a class="btn btn-danger delete" href="{% url 'dashboard:newsletter-delete' email.id %}">
                             <i class="fa fa-trash m-1"></i></a></span>
                       </td>
                     </tr>

@@ -31,26 +31,16 @@ from django.http.response import HttpResponseRedirect
 class LoginView(FormView):
     template_name = 'dashboard/auth/login.html'
     form_class = StaffLoginForm
-    success_url = reverse_lazy('dashboard:admin_dashboard')
+    success_url = reverse_lazy('dashboard:admin-dashboard')
 
     def form_valid(self, form):
         username = form.cleaned_data['username']
         pword = form.cleaned_data['password']
         user = authenticate(username=username, password=pword)
-        print(user.is_active)
 
         if user is not None:
             login(self.request, user)
             user.is_active = True
-           
-            
-
-        else:
-            return render(self.request, self.template_name,
-                          {
-                              'error': 'Invalid Username or password',
-                              'form': form
-                          })
 
         return super().form_valid(form)
 
@@ -64,20 +54,18 @@ class LogoutView(View):
 class PasswordsChangeView(PasswordChangeView):
     template_name = 'dashboard/password/password_change.html'
     form_class = ChangePasswordForm
-    success_url = reverse_lazy('dashboard:admin_login')
+    success_url = reverse_lazy('dashboard:admin-login')
 
     def get_form(self):
         form = super().get_form()
         form.set_user(self.request.user)
         return form
 
-    
-
 
 class ForgotPasswordView(FormView):
     template_name = 'dashboard/auth/reset-password.html'
     form_class = PasswordResetForm
-    success_url = reverse_lazy('dashboard:admin_login')
+    success_url = reverse_lazy('dashboard:admin-login')
 
     def form_valid(self, form):
         email = form.cleaned_data['email']
@@ -118,7 +106,7 @@ class PasswordResetView(View):
         messages.success(
             self.request, "Password reset code is sent")
 
-        return redirect(reverse_lazy('dashboard:user_list'))
+        return redirect(reverse_lazy('dashboard:user-list'))
 
 
 class AdminDashboardView(AdminRequiredMixin, TemplateView):
@@ -128,7 +116,7 @@ class AdminDashboardView(AdminRequiredMixin, TemplateView):
 class UserCreateView(SuperAdminRequiredMixin, AdminRequiredMixin, CreateView):
     template_name = 'dashboard/users/usercreate.html'
     form_class = UserForm
-    success_url = reverse_lazy('dashboard:user_list')
+    success_url = reverse_lazy('dashboard:user-list')
 
     def get_success_url(self):
         return reverse('dashboard:passwordreset', kwargs={'pk': self.object.pk})
@@ -137,18 +125,20 @@ class UserCreateView(SuperAdminRequiredMixin, AdminRequiredMixin, CreateView):
 class UsersListView(SuperAdminRequiredMixin, AdminRequiredMixin, ListView):
     template_name = 'dashboard/users/userlist.html'
     model = Account
-    success_url = reverse_lazy('dashboard:user_list')
+    success_url = reverse_lazy('dashboard:user-list')
     paginate_by = 5
 
+
 class UserToggleStatusView(View):
-    success_url = reverse_lazy('dashboard:user_list')
-    def get(self, request, *args, **kwargs):    
-        account = User.objects.filter(pk = self.kwargs.get("pk")).first() 
+    success_url = reverse_lazy('dashboard:user-list')
+
+    def get(self, request, *args, **kwargs):
+        account = User.objects.filter(pk=self.kwargs.get("pk")).first()
         if account.is_active == True:
             account.is_active = False
         else:
             account.is_active = True
-        account.save(update_fields = ['is_active'])
+        account.save(update_fields=['is_active'])
 
         return redirect(self.success_url)
 # rooms
@@ -159,7 +149,7 @@ class RoomListView(AdminRequiredMixin, DashboardMixin, QuerysetMixin, ListView):
     model = Room
     paginate_by = 10
     login_url = '/login/'
-    redirect_field_name = 'room_list'
+    redirect_field_name = 'room-list'
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -173,10 +163,12 @@ class RoomListView(AdminRequiredMixin, DashboardMixin, QuerysetMixin, ListView):
                     room_type__title__contains=self.request.GET.get(
                         "room_type")
                 )
-        if "price" in self.request.GET:
-            if self.request.GET.get('price') != '':
+        if "price_from" and "price_to" in self.request.GET:
+            price_from = self.request.GET.get('price_from')
+            price_to = self.request.GET.get('price_to')
+            if price_from != '' and price_to != '':
                 queryset = queryset.filter(
-                    price=self.request.GET.get("price")
+                    price__range=(price_from, price_to)
                 )
 
         return queryset
@@ -185,9 +177,9 @@ class RoomListView(AdminRequiredMixin, DashboardMixin, QuerysetMixin, ListView):
 class RoomCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
     template_name = 'dashboard/room/roomcreate.html'
     form_class = RoomForm
-    success_url = reverse_lazy('dashboard:room_list')
+    success_url = reverse_lazy('dashboard:room-list')
     login_url = '/login/'
-    redirect_field_name = 'room_create'
+    redirect_field_name = 'room-create'
 
     # def form_valid(self, form):
     #     room = form.save()
@@ -225,9 +217,9 @@ class RoomUpdateView(AdminRequiredMixin, DashboardMixin, UpdateView):
     template_name = 'dashboard/room/roomcreate.html'
     model = Room
     form_class = RoomForm
-    success_url = reverse_lazy('dashboard:room_list')
+    success_url = reverse_lazy('dashboard:room-list')
     login_url = '/login/'
-    redirect_field_name = 'room_update'
+    redirect_field_name = 'room-update'
 
     # def form_valid(self, form):
     #     room = form.save()
@@ -242,14 +234,14 @@ class RoomDetailView(AdminRequiredMixin, DashboardMixin, DetailView):
     model = Room
     context_object_name = 'roomdetail'
     login_url = '/login/'
-    redirect_field_name = 'room_detail'
+    redirect_field_name = 'room-detail'
 
 
 class RoomDeleteView(AdminRequiredMixin, DeleteMixin, DashboardMixin, DeleteView):
     model = Room
-    success_url = reverse_lazy('dashboard:room_list')
+    success_url = reverse_lazy('dashboard:room-list')
     login_url = '/login/'
-    redirect_field_name = 'room_list'
+    redirect_field_name = 'room-list'
 
 
 class RoomCategoryListView(AdminRequiredMixin, QuerysetMixin, DashboardMixin, ListView):
@@ -289,7 +281,7 @@ class FeatureListView(AdminRequiredMixin, DashboardMixin, QuerysetMixin, ListVie
     model = Feature
     paginate_by = 10
     login_url = '/login/'
-    redirect_field_name = 'feature_list'
+    redirect_field_name = 'feature-list'
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -304,19 +296,19 @@ class FeatureListView(AdminRequiredMixin, DashboardMixin, QuerysetMixin, ListVie
 class FeatureCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
     template_name = 'dashboard/feature/featurecreate.html'
     form_class = FeatureForm
-    success_url = reverse_lazy('dashboard:feature_list')
+    success_url = reverse_lazy('dashboard:feature-list')
 
 
 class FeatureUpdateView(AdminRequiredMixin, DashboardMixin, UpdateView):
     template_name = 'dashboard/feature/featurecreate.html'
     model = Feature
     form_class = FeatureForm
-    success_url = reverse_lazy('dashboard:feature_list')
+    success_url = reverse_lazy('dashboard:feature-list')
 
 
 class FeatureDeleteView(AdminRequiredMixin, DashboardMixin, DeleteMixin, DeleteView):
     model = Feature
-    success_url = reverse_lazy('dashboard:feature_list')
+    success_url = reverse_lazy('dashboard:feature-list')
 
 
 class RoomCategoryDelete(AdminRequiredMixin, DeleteMixin, DashboardMixin, DeleteView):
@@ -331,29 +323,29 @@ class ImageListView(AdminRequiredMixin, QuerysetMixin, DashboardMixin, ListView)
     model = Image
     login_url = '/login/'
     redirect_field_name = 'image_list'
- 
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['room_image'] = RoomImage.objects.filter(deleted_at__isnull=True)
         return context
 
 
-
 class ImageCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
     template_name = 'dashboard/gallery/imagecreate.html'
     form_class = ImageForm
-    success_url = reverse_lazy('dashboard:image_list')
+    success_url = reverse_lazy('dashboard:image-list')
 
 
 class ImageUpdateView(AdminRequiredMixin, DashboardMixin, UpdateView):
     template_name = 'dashboard/gallery/imagecreate.html'
     model = Image
     form_class = ImageForm
-    success_url = reverse_lazy('dashboard:image_list')
+    success_url = reverse_lazy('dashboard:image-list')
 
 
 class ImageDeleteView(AdminRequiredMixin, DeleteMixin, DashboardMixin, DeleteView):
+    model = RoomImage
+    success_url = reverse_lazy('dashboard:image-list')
     model = Image
     success_url = reverse_lazy('dashboard:image_list')
 
@@ -365,7 +357,7 @@ class EventListView(AdminRequiredMixin, DashboardMixin, QuerysetMixin, ListView)
     model = Event
     paginate_by = 5
     login_url = '/login/'
-    redirect_field_name = 'event_list'
+    redirect_field_name = 'event-list'
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -379,14 +371,14 @@ class EventListView(AdminRequiredMixin, DashboardMixin, QuerysetMixin, ListView)
 class EventCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
     template_name = 'dashboard/event/eventcreate.html'
     form_class = EventForm
-    success_url = reverse_lazy('dashboard:event_list')
+    success_url = reverse_lazy('dashboard:event-list')
 
 
 class EventUpdateView(AdminRequiredMixin, DashboardMixin, UpdateView):
     template_name = 'dashboard/event/eventcreate.html'
     model = Event
     form_class = EventForm
-    success_url = reverse_lazy('dashboard:event_list')
+    success_url = reverse_lazy('dashboard:event-list')
 
 
 class EventDetailView(AdminRequiredMixin, DashboardMixin, DetailView):
@@ -403,7 +395,7 @@ class EventDetailView(AdminRequiredMixin, DashboardMixin, DetailView):
 
 class EventDeleteView(AdminRequiredMixin, DeleteMixin, DashboardMixin, DeleteView):
     model = Event
-    success_url = reverse_lazy('dashboard:event_list')
+    success_url = reverse_lazy('dashboard:event-list')
 
 # event comment
 
@@ -413,7 +405,7 @@ class EventCommentTemplateView(AdminRequiredMixin, QuerysetMixin, DashboardMixin
     model = Comment
     paginate_by = 5
     login_url = '/login/'
-    redirect_field_name = 'eventcomment_list'
+    redirect_field_name = 'event-comment-list'
 
     def get_queryset(self):
         queryset = super().get_queryset().filter(Q(news__isnull=True),
@@ -429,14 +421,14 @@ class EventCommentTemplateView(AdminRequiredMixin, QuerysetMixin, DashboardMixin
 class EventCommentCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
     template_name = 'dashboard/event_comment/eventcommentcreate.html'
     form_class = EventCommentForm
-    success_url = reverse_lazy('dashboard:eventcomment_list')
+    success_url = reverse_lazy('dashboard:event-comment-list')
 
 
 class EventCommentUpdateView(AdminRequiredMixin, DashboardMixin, UpdateView):
     template_name = 'dashboard/event_comment/eventcommentcreate.html'
     model = Comment
     form_class = EventCommentForm
-    success_url = reverse_lazy('dashboard:eventcomment_list')
+    success_url = reverse_lazy('dashboard:event-comment-list')
 
 
 class EventCommentDetailView(AdminRequiredMixin, DashboardMixin, DetailView):
@@ -447,7 +439,7 @@ class EventCommentDetailView(AdminRequiredMixin, DashboardMixin, DetailView):
 
 class EventCommentDeleteView(AdminRequiredMixin, DeleteMixin, DeleteView):
     model = Comment
-    success_url = reverse_lazy('dashboard:eventcomment_list')
+    success_url = reverse_lazy('dashboard:event-comment-list')
 
 
 class RoomSearchView(View):
@@ -465,7 +457,7 @@ class NewsListView(AdminRequiredMixin, QuerysetMixin, DashboardMixin, ListView):
     template_name = 'dashboard/news/list.html'
     paginate_by = 5
     login_url = '/login/'
-    redirect_field_name = 'news_list'
+    redirect_field_name = 'news-list'
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -480,14 +472,14 @@ class NewsListView(AdminRequiredMixin, QuerysetMixin, DashboardMixin, ListView):
 class NewsCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
     template_name = 'dashboard/news/form.html'
     form_class = NewsForm
-    success_url = reverse_lazy('dashboard:news_list')
+    success_url = reverse_lazy('dashboard:news-list')
 
 
 class NewsUpdateView(AdminRequiredMixin, DashboardMixin, UpdateView):
     template_name = 'dashboard/news/form.html'
     model = News
     form_class = NewsForm
-    success_url = reverse_lazy('dashboard:news_list')
+    success_url = reverse_lazy('dashboard:news-list')
 
 
 class NewsDetailView(AdminRequiredMixin, DashboardMixin, DetailView):
@@ -498,7 +490,7 @@ class NewsDetailView(AdminRequiredMixin, DashboardMixin, DetailView):
 
 class NewsDeleteView(AdminRequiredMixin, DeleteMixin, DashboardMixin, DeleteView):
     model = News
-    success_url = reverse_lazy('dashboard:news_list')
+    success_url = reverse_lazy('dashboard:news-list')
 
 
 # newscomments
@@ -509,7 +501,7 @@ class NewsCommentTemplateView(AdminRequiredMixin, QuerysetMixin, DashboardMixin,
     context_object_name = 'news'
     paginate_by = 5
     login_url = '/login/'
-    redirect_field_name = 'news_comment_list'
+    redirect_field_name = 'news-comment-list'
 
     def get_queryset(self):
         queryset = super().get_queryset().filter(Q(events__isnull=True),
@@ -526,14 +518,14 @@ class NewsCommentTemplateView(AdminRequiredMixin, QuerysetMixin, DashboardMixin,
 class NewsCommentCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
     template_name = 'dashboard/news_comment/form.html'
     form_class = NewsCommentForm
-    success_url = reverse_lazy('dashboard:news_comment_list')
+    success_url = reverse_lazy('dashboard:news-comment-list')
 
 
 class NewsCommentUpdateView(AdminRequiredMixin, DashboardMixin, UpdateView):
     template_name = 'dashboard/news_comment/form.html'
     model = Comment
     form_class = NewsCommentForm
-    success_url = reverse_lazy('dashboard:news_comment_list')
+    success_url = reverse_lazy('dashboard:news-comment-list')
 
 
 class NewsCommentDetailView(AdminRequiredMixin, DetailView):
@@ -544,7 +536,7 @@ class NewsCommentDetailView(AdminRequiredMixin, DetailView):
 
 class NewsCommentDeleteView(AdminRequiredMixin, DeleteMixin, DeleteView):
     model = Comment
-    success_url = reverse_lazy('dashboard:news_comment_list')
+    success_url = reverse_lazy('dashboard:news-comment-list')
 
 
 # testimonial
@@ -553,7 +545,7 @@ class TestimonialListView(AdminRequiredMixin, QuerysetMixin, ListView):
     template_name = 'dashboard/testimonial/list.html'
     paginate_by = 5
     login_url = '/login/'
-    redirect_field_name = 'testimonial_list'
+    redirect_field_name = 'testimonial-list'
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -573,14 +565,14 @@ class TestimonialListView(AdminRequiredMixin, QuerysetMixin, ListView):
 class TestimonialCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
     template_name = 'dashboard/testimonial/form.html'
     form_class = TestimonialForm
-    success_url = reverse_lazy('dashboard:testimonial_list')
+    success_url = reverse_lazy('dashboard:testimonial-list')
 
 
 class TestimonialUpdateView(AdminRequiredMixin, DashboardMixin, UpdateView):
     template_name = 'dashboard/testimonial/form.html'
     model = Testomonial
     form_class = TestimonialForm
-    success_url = reverse_lazy('dashboard:testimonial_list')
+    success_url = reverse_lazy('dashboard:testimonial-list')
 
 
 class TestimonialDetailView(AdminRequiredMixin, DashboardMixin, DetailView):
@@ -591,7 +583,7 @@ class TestimonialDetailView(AdminRequiredMixin, DashboardMixin, DetailView):
 
 class TestimonialDeleteView(AdminRequiredMixin, DashboardMixin, DeleteMixin, DeleteView):
     model = Testomonial
-    success_url = reverse_lazy('dashboard:testimonial_list')
+    success_url = reverse_lazy('dashboard:testimonial-list')
 
 # message
 
@@ -601,7 +593,7 @@ class MessageListView(AdminRequiredMixin, QuerysetMixin, DashboardMixin, ListVie
     template_name = 'dashboard/message/list.html'
     paginate_by = 5
     login_url = '/login/'
-    redirect_field_name = 'message_list'
+    redirect_field_name = 'message-list'
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -616,7 +608,7 @@ class MessageListView(AdminRequiredMixin, QuerysetMixin, DashboardMixin, ListVie
 class MessageCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
     template_name = 'dashboard/message/form.html'
     form_class = MessageForm
-    success_url = reverse_lazy('dashboard:message_list')
+    success_url = reverse_lazy('dashboard:message-list')
 
     def form_valid(self, form):
         email = form.cleaned_data['email']
@@ -638,7 +630,7 @@ class MessageUpdateView(AdminRequiredMixin, DashboardMixin, UpdateView):
     template_name = 'dashboard/message/form.html'
     model = Message
     form_class = MessageForm
-    success_url = reverse_lazy('dashboard:message_list')
+    success_url = reverse_lazy('dashboard:message-list')
 
 
 class MessageDetailView(AdminRequiredMixin, DashboardMixin, DetailView):
@@ -649,7 +641,7 @@ class MessageDetailView(AdminRequiredMixin, DashboardMixin, DetailView):
 
 class MessageDeleteView(AdminRequiredMixin, DeleteMixin, DeleteView):
     model = Message
-    success_url = reverse_lazy('dashboard:message_list')
+    success_url = reverse_lazy('dashboard:message-list')
 
 # reservation
 
@@ -658,7 +650,7 @@ class ReservationListView(AdminRequiredMixin, QuerysetMixin, DashboardMixin, Lis
     model = Reservation
     template_name = 'dashboard/reservation/list.html'
     login_url = '/login/'
-    redirect_field_name = 'reservation_list'
+    redirect_field_name = 'reservation-list'
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -684,7 +676,7 @@ class ReservationListView(AdminRequiredMixin, QuerysetMixin, DashboardMixin, Lis
 class ReservationCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
     template_name = 'dashboard/reservation/form.html/'
     form_class = ReservationForm
-    success_url = reverse_lazy('dashboard:reservation_list')
+    success_url = reverse_lazy('dashboard:reservation-list')
 
     # def dispatch(self, request, *args, **kwargs):
     #     if 'frontend' in self.request.GET:
@@ -697,7 +689,7 @@ class ReservationUpdateView(AdminRequiredMixin, DashboardMixin, UpdateView):
     template_name = 'dashboard/reservation/form.html'
     model = Reservation
     form_class = ReservationForm
-    success_url = reverse_lazy('dashboard:reservation_list')
+    success_url = reverse_lazy('dashboard:reservation-list')
 
 
 class ReservationDetailView(AdminRequiredMixin, DashboardMixin, DetailView):
@@ -708,7 +700,7 @@ class ReservationDetailView(AdminRequiredMixin, DashboardMixin, DetailView):
 
 class ReservationDeleteView(AdminRequiredMixin, DeleteMixin, DashboardMixin, DeleteView):
     model = Reservation
-    success_url = reverse_lazy('dashboard:reservation_list')
+    success_url = reverse_lazy('dashboard:reservation-list')
 
 
 class AboutView(AdminRequiredMixin, QuerysetMixin, DashboardMixin, ListView):
@@ -722,16 +714,16 @@ class AboutView(AdminRequiredMixin, QuerysetMixin, DashboardMixin, ListView):
 class AboutCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
     template_name = 'dashboard/about/aboutcreate.html'
     form_class = AboutForm
-    success_url = reverse_lazy('dashboard:about_list')
+    success_url = reverse_lazy('dashboard:about-list')
     login_url = '/login/'
-    redirect_field_name = 'about_list'
+    redirect_field_name = 'about-list'
 
 
 class AboutUpdateView(AdminRequiredMixin, DashboardMixin, UpdateView):
     template_name = 'dashboard/about/aboutcreate.html'
     form_class = AboutForm
     model = About
-    success_url = reverse_lazy('dashboard:about_list')
+    success_url = reverse_lazy('dashboard:about-list')
 
 
 class AboutDetailView(AdminRequiredMixin, DashboardMixin, DetailView):
@@ -742,7 +734,7 @@ class AboutDetailView(AdminRequiredMixin, DashboardMixin, DetailView):
 
 class AboutDeleteView(AdminRequiredMixin, DeleteMixin, DashboardMixin, DeleteView):
     model = About
-    success_url = reverse_lazy('dashboard:about_list')
+    success_url = reverse_lazy('dashboard:about-list')
 
 
 # Service Type
@@ -751,7 +743,7 @@ class ServiceListView (AdminRequiredMixin, QuerysetMixin, DashboardMixin, ListVi
     template_name = 'dashboard/services-type/list.html'
     model = Services_type
     login_url = '/login/'
-    redirect_field_name = 'service_type_list'
+    redirect_field_name = 'service-type-list'
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -768,14 +760,14 @@ class ServiceListView (AdminRequiredMixin, QuerysetMixin, DashboardMixin, ListVi
 class ServiceCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
     template_name = 'dashboard/services-type/form.html'
     form_class = ServiceTypeForm
-    success_url = reverse_lazy('dashboard:service_type_list')
+    success_url = reverse_lazy('dashboard:service-type-list')
 
 
 class ServiceUpdateView(AdminRequiredMixin, DashboardMixin, UpdateView):
     template_name = 'dashboard/services-type/form.html'
     model = Services_type
     form_class = ServiceTypeForm
-    success_url = reverse_lazy('dashboard:service_type_list')
+    success_url = reverse_lazy('dashboard:service-type-list')
 
 
 class ServiceDetailView(AdminRequiredMixin, DashboardMixin, DetailView):
@@ -786,7 +778,7 @@ class ServiceDetailView(AdminRequiredMixin, DashboardMixin, DetailView):
 
 class ServiceDeleteView(AdminRequiredMixin, DeleteMixin, DashboardMixin, DeleteView):
     model = Services_type
-    success_url = reverse_lazy('dashboard:service_type_list')
+    success_url = reverse_lazy('dashboard:service-type-list')
 
 
 # service video
@@ -796,7 +788,7 @@ class ServiceVideoListView (AdminRequiredMixin, QuerysetMixin, DashboardMixin, L
     model = Services_description
     context_object_name = 'servicevideo'
     login_url = '/login/'
-    redirect_field_name = 'service_video_list'
+    redirect_field_name = 'service-video-list'
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -813,14 +805,14 @@ class ServiceVideoListView (AdminRequiredMixin, QuerysetMixin, DashboardMixin, L
 class ServiceVideoCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
     template_name = 'dashboard/service-video/form.html'
     form_class = ServiceVideoForm
-    success_url = reverse_lazy('dashboard:service_video_list')
+    success_url = reverse_lazy('dashboard:service-video-list')
 
 
 class ServiceVideoUpdateView(AdminRequiredMixin, DashboardMixin, UpdateView):
     template_name = 'dashboard/service-video/form.html'
     model = Services_description
     form_class = ServiceVideoForm
-    success_url = reverse_lazy('dashboard:service_video_list')
+    success_url = reverse_lazy('dashboard:service-video-list')
 
 
 class ServiceVideoDetailView(AdminRequiredMixin, DashboardMixin, DetailView):
@@ -831,7 +823,7 @@ class ServiceVideoDetailView(AdminRequiredMixin, DashboardMixin, DetailView):
 
 class ServiceVideoDeleteView(AdminRequiredMixin, DeleteMixin, DashboardMixin, DeleteView):
     model = Services_description
-    success_url = reverse_lazy('dashboard:service_video_list')
+    success_url = reverse_lazy('dashboard:service-video-list')
 
 
 # contact
@@ -841,20 +833,20 @@ class ContactListView(AdminRequiredMixin, QuerysetMixin, ListView):
     template_name = 'dashboard/contact/list.html'
     context_object_name = 'contact'
     login_url = '/login/'
-    redirect_field_name = 'contact_list'
+    redirect_field_name = 'contact-list'
 
 
 class ContactCreateView(AdminRequiredMixin, CreateView):
     template_name = 'dashboard/contact/form.html'
     form_class = ContactForm
-    success_url = reverse_lazy('dashboard:contact_list')
+    success_url = reverse_lazy('dashboard:contact-list')
 
 
 class ContactUpdateView(AdminRequiredMixin, UpdateView):
     template_name = 'dashboard/contact/form.html'
     model = Contact
     form_class = ContactForm
-    success_url = reverse_lazy('dashboard:contact_list')
+    success_url = reverse_lazy('dashboard:contact-list')
 
 
 class ContactDetailView(AdminRequiredMixin, DetailView):
@@ -865,7 +857,7 @@ class ContactDetailView(AdminRequiredMixin, DetailView):
 
 class ContactDeleteView(AdminRequiredMixin, DeleteMixin, DeleteView):
     model = Contact
-    success_url = reverse_lazy('dashboard:contact_list')
+    success_url = reverse_lazy('dashboard:contact-list')
 
 # room comment
 
@@ -875,7 +867,7 @@ class RoomCommentListView(AdminRequiredMixin, DashboardMixin, ListView):
     model = Comment
     paginate_by = 5
     login_url = '/login/'
-    redirect_field_name = 'room_comment_lists'
+    redirect_field_name = 'room-comment-lists'
 
     def get_queryset(self):
         queryset = super().get_queryset().filter(Q(news__isnull=True),
@@ -891,14 +883,14 @@ class RoomCommentListView(AdminRequiredMixin, DashboardMixin, ListView):
 class RoomCommentCreateView(AdminRequiredMixin, DashboardMixin, CreateView):
     template_name = 'dashboard/room_comment/form.html'
     form_class = RoomCommentForm
-    success_url = reverse_lazy('dashboard:room_comment_list')
+    success_url = reverse_lazy('dashboard:room-comment-list')
 
 
 class RoomCommentUpdateView(AdminRequiredMixin, DashboardMixin, UpdateView):
     template_name = 'dashboard/room_comment/form.html'
     model = Comment
     form_class = RoomCommentForm
-    success_url = reverse_lazy('dashboard:room_comment_list')
+    success_url = reverse_lazy('dashboard:room-comment-list')
 
 
 class RoomCommentDetailView(AdminRequiredMixin, DashboardMixin, DetailView):
@@ -909,7 +901,7 @@ class RoomCommentDetailView(AdminRequiredMixin, DashboardMixin, DetailView):
 
 class RoomCommentDeleteView(AdminRequiredMixin, DeleteMixin, DashboardMixin, DeleteView):
     model = Comment
-    success_url = reverse_lazy('dashboard:room_comment_list')
+    success_url = reverse_lazy('dashboard:room-comment-list')
 
 
 # newsletter
@@ -922,4 +914,4 @@ class NewsletterListView(AdminRequiredMixin, DashboardMixin, ListView):
 
 class NewsletterDeleteView(AdminRequiredMixin, DeleteMixin, DashboardMixin, DeleteView):
     model = Subscription
-    success_url = reverse_lazy('dashboard:newsletter_list')
+    success_url = reverse_lazy('dashboard:newsletter-list')

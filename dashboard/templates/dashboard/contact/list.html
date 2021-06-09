@@ -8,14 +8,14 @@
                  <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-left">
                             <li class="breadcrumb-item">
-                                <a href="{% url 'dashboard:admin_dashboard' %}">Home</a>
+                                <a href="{% url 'dashboard:admin-dashboard' %}">Home</a>
                             </li>
                             <li class="breadcrumb-item active">Contact</li>
                         </ol>
                     </div>
                     <div class="col-sm-6">
                         <button class="btn btn-primary float-sm-right">
-                            <a class="text-white" href="{% url 'dashboard:contact_create' %}">Add Contacts</a>
+                            <a class="text-white" href="{% url 'dashboard:contact-create' %}">Add Contacts</a>
                         </button>
                     </div>
                    
@@ -62,7 +62,7 @@
                                         <tr>
                                             <td>{{forloop.counter}}</td>
                                             <td> <a
-                                                    href="{%url 'dashboard:contact_detail' c.id%} ">{{c.email}}</a>
+                                                    href="{%url 'dashboard:contact-detail' c.id%} ">{{c.email}}</a>
                                             </td>
                                             <td>
                                                 {{c.address}}
@@ -75,11 +75,11 @@
                                             </td>
                                             <td>
                                                 <span><a class="btn btn-warning mr-2"
-                                                        href="{% url 'dashboard:contact_update' c.id %}"><i
+                                                        href="{% url 'dashboard:contact-update' c.id %}"><i
                                                             class="fa fa-edit m-1"
                                                             aria-hidden="true"></i>Edit</a></span>
                                                 <span><a class="btn btn-danger delete"
-                                                        href="{% url 'dashboard:contact_delete' c.id %}"><i
+                                                        href="{% url 'dashboard:contact-delete' c.id %}"><i
                                                             class="fa fa-trash m-1"></i></a></span>
                                             </td>
                                         </tr>

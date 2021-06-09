@@ -37,7 +37,7 @@
                 <div class="col-md-6">
                   {% for img in room.image.all|slice:1 %}
                 <div class="rooms__pic">
-                    <img style="width: 400px; height: 400px;" src="{{ img.image.url }}" class="img-responsive" alt="...">
+                    <img src="{{ img.image.url }}" class="img-responsive" alt="...">
                 </div>
                 {% endfor %}
                  <!-- / .about__pic -->
@@ -66,7 +66,7 @@
                     
                     </div>
                     {% endfor %}
-                    <a href="{% url 'room_detail' room.pk %}" class="btn btn-rooms">View details</a>
+                    <a href="{% url 'room-detail' room.pk %}" class="btn btn-rooms">View details</a>
                 </div> <!-- / .rooms__desc -->
                 </div>
             </div> <!-- .rooms__item -->
