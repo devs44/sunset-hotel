@@ -176,7 +176,7 @@ class ServiceListView(TemplateView):
         context['about'] = About.objects.all()
         context['room_count'] = Room.objects.count()
 
-        context['guests'] = adult + children
+        # context['guests'] = adult + children
         return context
 
 

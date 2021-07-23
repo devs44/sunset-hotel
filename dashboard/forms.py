@@ -421,18 +421,18 @@ class ReservationForm(forms.ModelForm):
         room = Room.objects.filter(room_no=selected_room).first()
         check_in = room.checked_in_date
         check_out = room.checked_out_date
-        if check_in_date >= check_in and check_in_date < check_out:
-            raise ValidationError({
-                'check_in_date': 'This room is not available at this date'
-            })
-        if check_out_date > check_in and check_out_date < check_out:
-            raise ValidationError({
-                'check_out_date': 'This room is not available at this time.'
-            })
-        if check_in_date < check_in and check_out_date <= check_out:
-            raise ValidationError({
-                'check_out_date': 'This room is not available at this time.'
-            })
+        # if check_in_date >= check_in and check_in_date < check_out:
+        #     raise ValidationError({
+        #         'check_in_date': 'This room is not available at this date'
+        #     })
+        # if check_out_date > check_in and check_out_date < check_out:
+        #     raise ValidationError({
+        #         'check_out_date': 'This room is not available at this time.'
+        #     })
+        # if check_in_date < check_in and check_out_date <= check_out:
+        #     raise ValidationError({
+        #         'check_out_date': 'This room is not available at this time.'
+        #     })
 
 
 class AboutForm(FormControlMixin, forms.ModelForm):
